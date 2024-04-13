@@ -32,8 +32,8 @@ const GameCanvas = () => {
       const canvas = canvasRef.current;
       const context = canvas?.getContext("2d");
       if (canvas && context) {
-        canvas.width = 1024;
-        canvas.height = 576;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
         setPlayerSprite(new Image());
         const img = new Image();
