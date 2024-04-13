@@ -56,8 +56,12 @@ const GameCanvas = () => {
           [Direction.Right]: new Image(),
         };
 
-        Object.entries(directionSpriteMap).forEach(([dir, src]) => {
-          loadedSprites[dir].src = src;
+        Object.values(Direction).forEach((direction) => {
+          if (typeof direction === "number") {
+            const spriteImage = new Image();
+            spriteImage.src = directionSpriteMap[direction];
+            loadedSprites[direction] = spriteImage;
+          }
         });
 
         setSprites(loadedSprites);
