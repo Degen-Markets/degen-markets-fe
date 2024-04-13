@@ -23,6 +23,9 @@ const GameCanvas = () => {
   const [viewport, setViewport] = useState({ x: 735, y: 600 });
   const [currentFrame, setCurrentFrame] = useState(0);
   const [direction, setDirection] = useState(Direction.Down);
+  const [sprites, setSprites] = useState<
+    Record<Direction, HTMLImageElement> | undefined
+  >();
 
   const [playerSprite, setPlayerSprite] = useState<
     HTMLImageElement | undefined
@@ -45,6 +48,19 @@ const GameCanvas = () => {
           setBackgroundImage(img);
           context.drawImage(img, 0, 0);
         };
+
+        const loadedSprites: Record<Direction, HTMLImageElement> = {
+          [Direction.Down]: new Image(),
+          [Direction.Up]: new Image(),
+          [Direction.Left]: new Image(),
+          [Direction.Right]: new Image(),
+        };
+
+        Object.entries(directionSpriteMap).forEach(([dir, src]) => {
+          loadedSprites[dir].src = src;
+        });
+
+        setSprites(loadedSprites);
       }
     }
   }, []);
@@ -98,28 +114,30 @@ const GameCanvas = () => {
     if (
       canvas &&
       context &&
-      backgroundImage &&
-      backgroundImage.complete &&
-      playerSprite
+      backgroundImage?.complete &&
+      sprites &&
+      sprites[direction]?.complete
     ) {
-      playerSprite.src = directionSpriteMap[direction];
-
       const gameLoop = () => {
         drawBackground(context, backgroundImage, viewport, canvas);
-        drawPlayer(context, playerSprite, currentFrame, frameCount, canvas);
+        drawPlayer(
+          context,
+          sprites[direction],
+          currentFrame,
+          frameCount,
+          canvas
+        );
         requestAnimationFrame(gameLoop);
       };
 
-      playerSprite.onload = () => {
-        requestAnimationFrame(gameLoop);
-      };
+      requestAnimationFrame(gameLoop);
     }
-  }, [backgroundImage, currentFrame, direction, playerSprite]);
+  }, [backgroundImage, currentFrame, direction, sprites, viewport]);
 
   const drawBackground = (
     ctx: CanvasRenderingContext2D,
     bgImage: HTMLImageElement,
-    viewport: { x: any; y: any },
+    viewport: { x: number; y: number },
     canvas: HTMLCanvasElement
   ) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
