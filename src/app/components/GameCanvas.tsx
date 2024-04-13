@@ -21,7 +21,10 @@ const GameCanvas = () => {
   const [viewport, setViewport] = useState({ x: 735, y: 600 });
   const [currentFrame, setCurrentFrame] = useState(0);
   const [direction, setDirection] = useState(Direction.Down);
-  const playerSprite = new Image();
+
+  const [playerSprite, setPlayerSprite] = useState<
+    HTMLImageElement | undefined
+  >();
   const frameCount = 4;
 
   useEffect(() => {
@@ -32,6 +35,7 @@ const GameCanvas = () => {
         canvas.width = 1024;
         canvas.height = 576;
 
+        setPlayerSprite(new Image());
         const img = new Image();
         img.src = "./PelletTown.png";
         img.onload = () => {
@@ -88,7 +92,7 @@ const GameCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
-    if (canvas && context && backgroundImage.complete) {
+    if (canvas && context && backgroundImage.complete && playerSprite) {
       playerSprite.src = directionSpriteMap[direction];
 
       const gameLoop = () => {
@@ -101,7 +105,7 @@ const GameCanvas = () => {
         requestAnimationFrame(gameLoop);
       };
     }
-  }, [backgroundImage, currentFrame, direction]);
+  }, [backgroundImage, currentFrame, direction, playerSprite]);
 
   const drawBackground = (
     ctx: CanvasRenderingContext2D,
