@@ -1,3 +1,4 @@
+"use client";
 import CanvasComponent from "./components/GameCanvas";
 
 export default function Home() {
