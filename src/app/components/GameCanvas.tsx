@@ -25,18 +25,20 @@ const GameCanvas = () => {
   const frameCount = 4;
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (canvas && context) {
-      canvas.width = 1024;
-      canvas.height = 576;
+    if (typeof window !== "undefined") {
+      const canvas = canvasRef.current;
+      const context = canvas?.getContext("2d");
+      if (canvas && context) {
+        canvas.width = 1024;
+        canvas.height = 576;
 
-      const img = new Image();
-      img.src = "./PelletTown.png";
-      img.onload = () => {
-        setBackgroundImage(img);
-        context.drawImage(img, 0, 0);
-      };
+        const img = new Image();
+        img.src = "./PelletTown.png";
+        img.onload = () => {
+          setBackgroundImage(img);
+          context.drawImage(img, 0, 0);
+        };
+      }
     }
   }, []);
 

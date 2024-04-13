@@ -1,4 +1,3 @@
-import Image from "next/image";
 import CanvasComponent from "./components/GameCanvas";
 
 export default function Home() {
