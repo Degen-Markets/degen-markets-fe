@@ -1,14 +1,10 @@
 "use client";
-import dynamic from "next/dynamic";
-
-const GameCanvasWithNoSSR = dynamic(() => import("./components/GameCanvas"), {
-  ssr: false,
-});
+import GameCanvas from "./components/GameCanvas";
 
 export default function Home() {
   return (
     <main className="">
-      <GameCanvasWithNoSSR />
+      <GameCanvas />
     </main>
   );
 }

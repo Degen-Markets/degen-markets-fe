@@ -17,7 +17,9 @@ const directionSpriteMap: Record<Direction, string> = {
 
 const GameCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [backgroundImage, setBackgroundImage] = useState(new Image());
+  const [backgroundImage, setBackgroundImage] = useState<
+    HTMLImageElement | undefined
+  >();
   const [viewport, setViewport] = useState({ x: 735, y: 600 });
   const [currentFrame, setCurrentFrame] = useState(0);
   const [direction, setDirection] = useState(Direction.Down);
@@ -35,6 +37,7 @@ const GameCanvas = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+        setBackgroundImage(new Image());
         setPlayerSprite(new Image());
         const img = new Image();
         img.src = "./PelletTown.png";
@@ -92,7 +95,13 @@ const GameCanvas = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
-    if (canvas && context && backgroundImage.complete && playerSprite) {
+    if (
+      canvas &&
+      context &&
+      backgroundImage &&
+      backgroundImage.complete &&
+      playerSprite
+    ) {
       playerSprite.src = directionSpriteMap[direction];
 
       const gameLoop = () => {
