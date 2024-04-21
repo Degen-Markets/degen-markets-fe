@@ -1,6 +1,19 @@
-"use client";
-import React, { useRef, useEffect, useState } from "react";
-import { COLLISIONS, SHOW_BOUNDARIES } from "../lib/utils/game/constants";
+import { useEffect, useRef, useState } from "react";
+import {
+  CHALLENGE_SQUARE,
+  CHALLENGE_ZONE,
+  COLLISIONS,
+  COLLISION_SQUARE,
+  FRAME_COUNT,
+  MOVE_STEP,
+  ORIGINAL_HEIGHT,
+  ORIGINAL_WIDTH,
+  SCALE,
+  TILES_PER_ROW,
+  TILE_SIZE,
+} from "../lib/utils/game/constants";
+import { useRouter } from "next/navigation";
+
 enum Direction {
   Down,
   Up,
@@ -8,7 +21,7 @@ enum Direction {
   Right,
 }
 
-const directionSpriteMap: Record<Direction, string> = {
+const directionSpriteMap = {
   [Direction.Down]: "./PlayerDown.png",
   [Direction.Up]: "./PlayerUp.png",
   [Direction.Left]: "./PlayerLeft.png",
@@ -16,342 +29,166 @@ const directionSpriteMap: Record<Direction, string> = {
 };
 
 const GameCanvas = () => {
+  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [backgroundImage, setBackgroundImage] = useState<
-    HTMLImageElement | undefined
-  >();
-  const [viewport, setViewport] = useState({ x: 735, y: 600 });
-  const [currentFrame, setCurrentFrame] = useState(0);
   const [direction, setDirection] = useState(Direction.Down);
-  const [sprites, setSprites] = useState<
-    Record<Direction, HTMLImageElement> | undefined
-  >();
+  const [playerX, setPlayerX] = useState(100); // Initial X position
+  const [playerY, setPlayerY] = useState(300); // Initial Y position
+  const [currentFrame, setCurrentFrame] = useState(0);
+  const [inChallengeZone, setInChallengeZone] = useState(false); // Track if in challenge zone
 
-  const [playerSprite, setPlayerSprite] = useState<
-    HTMLImageElement | undefined
-  >();
+  const checkCollisions = (newX: number, newY: number) => {
+    // Calculate the tile index based on the player's new position
+    const xIndex = Math.floor(newX / (TILE_SIZE * SCALE));
+    const yIndex = Math.floor(newY / (TILE_SIZE * SCALE));
+    const tileIndex = yIndex * TILES_PER_ROW + xIndex;
 
-  const frameCount = 4;
-
-  const [collisions, setCollisions] = useState<number[][]>([[]]);
-  const [playerHitbox, setPlayerHitbox] = useState({
-    x: 0,
-    y: 0,
-    width: 48,
-    height: 48,
-  });
-
-  const checkCollisions = (
-    hitbox: { x: number; y: number; width: number; height: number },
-    direction: Direction,
-    moveStep: number,
-  ) => {
-    let adjustedHitbox = { ...hitbox };
-    switch (direction) {
-      case Direction.Right:
-        adjustedHitbox.x += moveStep;
-        break;
-      case Direction.Left:
-        adjustedHitbox.x -= moveStep;
-        break;
-      case Direction.Up:
-        adjustedHitbox.y -= moveStep;
-        break;
-      case Direction.Down:
-        adjustedHitbox.y += moveStep;
-        break;
-      default:
-        break;
-    }
-
-    return boundaries.some(
-      (boundary: { position: { x: number; y: number } }) => {
-        if (
-          adjustedHitbox.x < boundary.position.x + 48 &&
-          adjustedHitbox.x + adjustedHitbox.width > boundary.position.x &&
-          adjustedHitbox.y < boundary.position.y + 48 &&
-          adjustedHitbox.y + adjustedHitbox.height > boundary.position.y
-        ) {
-          console.log("collision happened", direction);
-          return true; // Collision detected
-        }
-        return false;
-      },
-    );
+    // Check if the tile index corresponds to a non-walkable tile
+    return COLLISIONS[tileIndex] === COLLISION_SQUARE;
   };
 
-  useEffect(() => {
-    if (COLLISIONS) {
-      const collisionsMap = [];
-      for (let i = 0; i < COLLISIONS.length; i += 70) {
-        collisionsMap.push(COLLISIONS.slice(i, 70 + i));
-      }
-      setCollisions(collisionsMap);
+  const checkChallengeZone = (x: number, y: number) => {
+    const xIndex = Math.floor(x / (TILE_SIZE * SCALE));
+    const yIndex = Math.floor(y / (TILE_SIZE * SCALE));
+    const tileIndex = yIndex * TILES_PER_ROW + xIndex;
+    const inZone = CHALLENGE_ZONE[tileIndex] === CHALLENGE_SQUARE;
+    setInChallengeZone(inZone);
+    if (inZone) {
+      console.log("can challenge");
     }
-  }, [COLLISIONS]);
-
-  const [boundaries, setBoundaries] = useState<any>([]);
-
+    return inZone;
+  };
   useEffect(() => {
-    const boundaries: any = [];
-    const offset = { x: -735, y: -650 }; // Adjust based on your game's layout
+    const backgroundImage = new Image();
+    backgroundImage.src = "./map54.png";
 
-    collisions.forEach((row, i) => {
-      row.forEach((symbol, j) => {
-        if (symbol === 1025) {
-          // Check for your boundary tile value
-          boundaries.push({
-            position: {
-              x: j * 48 + offset.x,
-              y: i * 48 + offset.y,
-            },
-          });
-        }
-      });
-    });
+    const playerSprite = new Image();
+    playerSprite.src = directionSpriteMap[direction];
 
-    setBoundaries(boundaries);
-  }, [collisions]);
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext("2d");
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const canvas = canvasRef.current;
-      const context = canvas?.getContext("2d");
-      if (canvas && context) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    if (canvas && context) {
+      canvas.width = ORIGINAL_WIDTH * SCALE;
+      canvas.height = ORIGINAL_HEIGHT * SCALE;
 
-        setBackgroundImage(new Image());
-        setPlayerSprite(new Image());
-        const img = new Image();
-        img.src = "./PelletTown.png";
-        img.onload = () => {
-          setBackgroundImage(img);
-          context.drawImage(img, 0, 0);
-        };
-
-        const loadedSprites: Record<Direction, HTMLImageElement> = {
-          [Direction.Down]: new Image(),
-          [Direction.Up]: new Image(),
-          [Direction.Left]: new Image(),
-          [Direction.Right]: new Image(),
-        };
-
-        Object.values(Direction).forEach((direction) => {
-          if (typeof direction === "number") {
-            const spriteImage = new Image();
-            spriteImage.src = directionSpriteMap[direction];
-            loadedSprites[direction] = spriteImage;
+      const drawCollisions = () => {
+        context.fillStyle = "rgba(255, 0, 0, 0.5)";
+        COLLISIONS.forEach((tile, index) => {
+          if (tile === COLLISION_SQUARE) {
+            const x = (index % TILES_PER_ROW) * TILE_SIZE * SCALE;
+            const y = Math.floor(index / TILES_PER_ROW) * TILE_SIZE * SCALE;
+            context.fillRect(x, y, TILE_SIZE * SCALE, TILE_SIZE * SCALE);
           }
         });
+      };
 
-        setSprites(loadedSprites);
-      }
+      const drawChallengeZone = () => {
+        context.fillStyle = "rgba(0, 0, 255, 0.5)";
+        CHALLENGE_ZONE.forEach((tile, index) => {
+          if (tile === CHALLENGE_SQUARE) {
+            const x = (index % TILES_PER_ROW) * TILE_SIZE * SCALE;
+            const y = Math.floor(index / TILES_PER_ROW) * TILE_SIZE * SCALE;
+            context.fillRect(x, y, TILE_SIZE * SCALE, TILE_SIZE * SCALE);
+          }
+        });
+      };
+
+      const drawPlayer = () => {
+        const frameWidth = playerSprite.width / FRAME_COUNT;
+        const frameHeight = playerSprite.height;
+        const playerScaledWidth = frameWidth * 0.5;
+        const playerScaledHeight = frameHeight * 0.5;
+
+        context.drawImage(
+          playerSprite,
+          frameWidth * currentFrame,
+          0,
+          frameWidth,
+          frameHeight,
+          playerX - playerScaledWidth / 2,
+          playerY - playerScaledHeight / 2,
+          playerScaledWidth,
+          playerScaledHeight,
+        );
+      };
+
+      const gameLoop = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+        drawCollisions();
+        drawChallengeZone();
+        drawPlayer();
+        requestAnimationFrame(gameLoop);
+      };
+
+      backgroundImage.onload = () => {
+        gameLoop();
+      };
     }
-  }, []);
 
-  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       let newDirection = direction;
-      let newX = viewport.x;
-      let newY = viewport.y;
-      // const moveStep = 15; // Pixels to move per key press
-      let moveStep = event.shiftKey ? 30 : 15;
+      let frameChangeOccurred = false;
+      let newX = playerX;
+      let newY = playerY;
 
-      if (canvasRef.current)
-        switch (event.key) {
-          case "ArrowRight":
-          case "d":
-            newDirection = Direction.Right;
-            const playerHitBoxMovingRight = {
-              x: canvasRef.current.width / 2 - playerHitbox.width / 2,
-              y: canvasRef.current.height / 2 - playerHitbox.height / 2,
-              width: playerHitbox.width,
-              height: playerHitbox.height,
-            };
-            const collisionRight = checkCollisions(
-              playerHitBoxMovingRight,
-              newDirection,
-              moveStep,
-            );
-            if (collisionRight) break;
-            newX += moveStep;
-            break;
-          case "ArrowLeft":
-          case "a":
-            newDirection = Direction.Left;
-            const playerHitBoxMovingLeft = {
-              x: canvasRef.current.width / 2 - playerHitbox.width / 2,
-              y: canvasRef.current.height / 2 - playerHitbox.height / 2,
-              width: playerHitbox.width,
-              height: playerHitbox.height,
-            };
-            const collisionLeft = checkCollisions(
-              playerHitBoxMovingLeft,
-              newDirection,
-              moveStep,
-            );
-            if (collisionLeft) break;
-            newX -= moveStep;
-            break;
-
-          case "ArrowUp":
-          case "w":
-            newDirection = Direction.Up;
-            const playerHitBoxMovingUp = {
-              x: canvasRef.current.width / 2 - playerHitbox.width / 2,
-              y: canvasRef.current.height / 2 - playerHitbox.height / 2,
-              width: playerHitbox.width,
-              height: playerHitbox.height,
-            };
-            const collisionUp = checkCollisions(
-              playerHitBoxMovingUp,
-              newDirection,
-              moveStep,
-            );
-            if (collisionUp) break;
-            newY -= moveStep; // Move the world down when moving up
-            break;
-          case "ArrowDown":
-          case "s":
-            newDirection = Direction.Down;
-            const playerHitBoxMovingDown = {
-              x: canvasRef.current.width / 2 - playerHitbox.width / 2,
-              y: canvasRef.current.height / 2 - playerHitbox.height / 2,
-              width: playerHitbox.width,
-              height: playerHitbox.height,
-            };
-            const collisionDown = checkCollisions(
-              playerHitBoxMovingDown,
-              newDirection,
-              moveStep,
-            );
-            if (collisionDown) break;
-            newY += moveStep; // Move the world down when moving up
-            break;
-        }
-
-      if (newDirection !== direction) {
-        setDirection(newDirection);
+      switch (event.key) {
+        case "ArrowRight":
+        case "d":
+          newDirection = Direction.Right;
+          newX += MOVE_STEP;
+          break;
+        case "ArrowLeft":
+        case "a":
+          newDirection = Direction.Left;
+          newX -= MOVE_STEP;
+          break;
+        case "ArrowUp":
+        case "w":
+          newDirection = Direction.Up;
+          newY -= MOVE_STEP;
+          break;
+        case "ArrowDown":
+        case "s":
+          newDirection = Direction.Down;
+          newY += MOVE_STEP;
+          break;
+        case "Enter":
+          if (inChallengeZone) {
+            router.push("/create-bet");
+          }
+          break;
       }
 
-      setViewport({ x: newX, y: newY });
-      setCurrentFrame((prevFrame) => (prevFrame + 1) % frameCount);
+      if (frameChangeOccurred) {
+        setCurrentFrame((prevFrame) => (prevFrame + 1) % FRAME_COUNT);
+      }
+      // Check for collisions at the new position
+      if (!checkCollisions(newX, newY)) {
+        if (newDirection !== direction) {
+          setDirection(newDirection);
+        }
 
-      // Also update the positions of the boundaries
-      const newBoundaries = boundaries.map(
-        (boundary: { position: { x: number; y: number } }) => ({
-          ...boundary,
-          position: {
-            x: boundary.position.x - (newX - viewport.x),
-            y: boundary.position.y - (newY - viewport.y),
-          },
-        }),
-      );
-      setBoundaries(newBoundaries);
+        checkChallengeZone(newX, newY);
+
+        setPlayerX(newX);
+        setPlayerY(newY);
+        setCurrentFrame((prevFrame) => (prevFrame + 1) % FRAME_COUNT);
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [direction, viewport, boundaries, playerHitbox]);
+  }, [direction, FRAME_COUNT, MOVE_STEP, playerX, playerY]);
 
-  // Animation loop
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (
-      canvas &&
-      context &&
-      backgroundImage?.complete &&
-      sprites &&
-      sprites[direction]?.complete
-    ) {
-      const gameLoop = () => {
-        drawBackground(context, backgroundImage, viewport, canvas);
-        if (SHOW_BOUNDARIES) {
-          boundaries.forEach((boundary: any) => {
-            context.fillStyle = "red";
-            context.fillRect(
-              boundary.position.x,
-              boundary.position.y + 48,
-              48,
-              48,
-            );
-          });
-        }
-
-        drawPlayer(
-          context,
-          sprites[direction],
-          currentFrame,
-          frameCount,
-          canvas,
-        );
-
-        // Update the player's hitbox position to the center of the screen
-        setPlayerHitbox({
-          x: canvas.width / 2 - playerHitbox.width / 2,
-          y: canvas.height / 2 - playerHitbox.height / 2,
-          width: playerHitbox.width,
-          height: playerHitbox.height,
-        });
-
-        // Check for collisions after drawing everything
-        // checkCollisions();
-
-        requestAnimationFrame(gameLoop);
-      };
-
-      requestAnimationFrame(gameLoop);
-    }
-  }, [backgroundImage, currentFrame, direction, sprites, viewport]);
-
-  const drawBackground = (
-    ctx: CanvasRenderingContext2D,
-    bgImage: HTMLImageElement,
-    viewport: { x: number; y: number },
-    canvas: HTMLCanvasElement,
-  ) => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(
-      bgImage,
-      viewport.x,
-      viewport.y,
-      canvas.width,
-      canvas.height,
-      0,
-      0,
-      canvas.width,
-      canvas.height,
-    );
-  };
-
-  const drawPlayer = (
-    ctx: CanvasRenderingContext2D,
-    sprite: HTMLImageElement,
-    frame: number,
-    frameCount: number,
-    canvas: HTMLCanvasElement,
-  ) => {
-    const frameWidth = sprite.width / frameCount;
-    const frameHeight = sprite.height;
-    const playerX = canvas.width / 2 - frameWidth / 2;
-    const playerY = canvas.height / 2 - frameHeight / 2;
-
-    ctx.drawImage(
-      sprite,
-      frameWidth * frame,
-      0,
-      frameWidth,
-      frameHeight,
-      playerX,
-      playerY,
-      frameWidth,
-      frameHeight,
-    );
-  };
-
-  return <canvas ref={canvasRef} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="flex items-center justify-center mx-auto"
+    />
+  );
 };
 
 export default GameCanvas;
