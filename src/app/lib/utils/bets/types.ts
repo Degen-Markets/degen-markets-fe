@@ -9,7 +9,24 @@ export enum Ticker {
   ARB = "ARB",
 }
 
-export type ReelOption = {
+export enum Currency {
+  ETH = "ETH",
+  USDC = "USDC",
+  USDbC = "USDbC",
+}
+
+export enum Metric {
+  PRICE = "price",
+  VOLUME = "volume",
+  MARKET_CAP_DOMINANCE = "market_cap_dominance",
+}
+
+export type MetricOptions = {
   key: string;
-  value: boolean | string;
+  value: Metric;
+}[];
+
+export type ReelOption<T> = {
+  key: string;
+  value: T;
 };
