@@ -1,5 +1,6 @@
 import { ReelOption } from "@/app/lib/utils/bets/types";
-import { useState, RefObject, Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
+import styles from "./reel.module.css";
 
 type ReelProps<T> = {
   reelOptions: ReelOption<T>[];
@@ -54,15 +55,17 @@ const Reel = <T,>({
 
   return (
     <div>
-      <div>{title}</div>
-      <div onClick={handleOptionBack}>BACK</div>
-      {optionsToDisplay.map((option, index) => (
-        // key for small options (Up/Down) has to be the index to avoid key conflict
-        <div key={reelOptions.length >= 3 ? option.label : index}>
-          {option.label}
-        </div>
-      ))}
-      <div onClick={handleOptionForward}>FORWARD</div>
+      <div className={styles.reel}>{title}</div>
+      <div className={styles.reel}>
+        <div onClick={handleOptionBack}>BACK</div>
+        {optionsToDisplay.map((option, index) => (
+          // key for small options (Up/Down) has to be the index to avoid key conflict
+          <div key={reelOptions.length >= 3 ? option.label : index}>
+            {option.label}
+          </div>
+        ))}
+        <div onClick={handleOptionForward}>FORWARD</div>
+      </div>
     </div>
   );
 };

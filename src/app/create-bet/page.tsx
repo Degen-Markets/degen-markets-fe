@@ -1,6 +1,6 @@
 "use client";
 
-import Reel from "@/app/components/Reel";
+import Reel from "@/app/components/Reel/Reel";
 import {
   currencyOptions,
   durationOptions,
@@ -10,6 +10,7 @@ import {
 } from "@/app/lib/utils/bets/constants";
 import { useState } from "react";
 import { Metric, ReelOption } from "@/app/lib/utils/bets/types";
+import styles from "./page.module.css";
 
 export default function CreateBet() {
   const [ticker, setTicker] = useState<ReelOption<string>>(tickerOptions[0]);
@@ -26,7 +27,7 @@ export default function CreateBet() {
 
   return (
     <main>
-      <div>
+      <div className={styles.reels}>
         <Reel<string>
           selectedOption={ticker}
           setSelectedOption={setTicker}
@@ -61,7 +62,7 @@ export default function CreateBet() {
       <br />
       <br />
       <div>
-        Bet on {ticker.label} that it&apos;s {metric.label} goes&nbsp;
+        Bet that {ticker.label} that it&apos;s {metric.label} goes&nbsp;
         {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
       </div>
     </main>
