@@ -8,7 +8,7 @@ import {
   tickerOptions,
   directionOptions,
 } from "@/app/lib/utils/bets/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import styles from "./page.module.css";
 
@@ -24,6 +24,8 @@ export default function CreateBet() {
   const [currency, setCurrency] = useState<ReelOption<string>>(
     currencyOptions[0],
   );
+
+  useEffect(() => {}, []);
 
   return (
     <main>

@@ -56,3 +56,6 @@ export const directionOptions = [
     value: false,
   },
 ];
+
+export const DEGEN_MARKETS_ADDRESS =
+  "0xA7Ee25d7Ae43A0db9c01fbeF389EcaF83Ba97A86";
