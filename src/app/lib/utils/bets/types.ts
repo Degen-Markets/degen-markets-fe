@@ -21,10 +21,12 @@ export enum Metric {
   MARKET_CAP_DOMINANCE = "market_cap_dominance",
 }
 
-export type MetricOptions = {
+export type MetricOption = {
   label: string;
   value: Metric;
-}[];
+};
+
+export type MetricOptions = MetricOption[];
 
 export type ReelOption<T> = {
   label: string;

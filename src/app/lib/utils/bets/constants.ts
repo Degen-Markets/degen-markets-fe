@@ -35,7 +35,7 @@ export const currencyOptions = [
   },
 ];
 
-export const dayOptions = [
+export const durationOptions = [
   {
     label: "1 Day",
     value: 1,
@@ -44,4 +44,15 @@ export const dayOptions = [
     label: `${dayNumber} Days`,
     value: dayNumber,
   })),
+];
+
+export const directionOptions = [
+  {
+    label: "Up",
+    value: true,
+  },
+  {
+    label: "Down",
+    value: false,
+  },
 ];

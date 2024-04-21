@@ -1,14 +1,19 @@
-import { ReelOption, Ticker } from "@/app/lib/utils/bets/types";
-import { useState } from "react";
+import { ReelOption } from "@/app/lib/utils/bets/types";
+import { useState, RefObject, Dispatch, SetStateAction } from "react";
 
 type ReelProps<T> = {
   reelOptions: ReelOption<T>[];
+  title: string;
+  selectedOption: ReelOption<T>;
+  setSelectedOption: Dispatch<SetStateAction<ReelOption<T>>>;
 };
 
-const Reel = <T,>({ reelOptions }: ReelProps<T>) => {
-  const [selectedOption, setSelectedOption] = useState<ReelOption<T>>(
-    reelOptions[0],
-  );
+const Reel = <T,>({
+  reelOptions,
+  title,
+  selectedOption,
+  setSelectedOption,
+}: ReelProps<T>) => {
   const optionIndex = reelOptions.findIndex(
     (option) => option.label === selectedOption.label,
   );
@@ -49,9 +54,13 @@ const Reel = <T,>({ reelOptions }: ReelProps<T>) => {
 
   return (
     <div>
+      <div>{title}</div>
       <div onClick={handleOptionBack}>BACK</div>
-      {optionsToDisplay.map((option) => (
-        <div key={option.label}>{option.label}</div>
+      {optionsToDisplay.map((option, index) => (
+        // key for small options (Up/Down) has to be the index to avoid key conflict
+        <div key={reelOptions.length >= 3 ? option.label : index}>
+          {option.label}
+        </div>
       ))}
       <div onClick={handleOptionForward}>FORWARD</div>
     </div>
