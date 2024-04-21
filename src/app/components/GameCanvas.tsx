@@ -44,7 +44,7 @@ const GameCanvas = () => {
   const checkCollisions = (
     hitbox: { x: number; y: number; width: number; height: number },
     direction: Direction,
-    moveStep: number
+    moveStep: number,
   ) => {
     let adjustedHitbox = { ...hitbox };
     switch (direction) {
@@ -76,7 +76,7 @@ const GameCanvas = () => {
           return true; // Collision detected
         }
         return false;
-      }
+      },
     );
   };
 
@@ -172,7 +172,7 @@ const GameCanvas = () => {
             const collisionRight = checkCollisions(
               playerHitBoxMovingRight,
               newDirection,
-              moveStep
+              moveStep,
             );
             if (collisionRight) break;
             newX += moveStep;
@@ -189,7 +189,7 @@ const GameCanvas = () => {
             const collisionLeft = checkCollisions(
               playerHitBoxMovingLeft,
               newDirection,
-              moveStep
+              moveStep,
             );
             if (collisionLeft) break;
             newX -= moveStep;
@@ -207,7 +207,7 @@ const GameCanvas = () => {
             const collisionUp = checkCollisions(
               playerHitBoxMovingUp,
               newDirection,
-              moveStep
+              moveStep,
             );
             if (collisionUp) break;
             newY -= moveStep; // Move the world down when moving up
@@ -224,7 +224,7 @@ const GameCanvas = () => {
             const collisionDown = checkCollisions(
               playerHitBoxMovingDown,
               newDirection,
-              moveStep
+              moveStep,
             );
             if (collisionDown) break;
             newY += moveStep; // Move the world down when moving up
@@ -246,7 +246,7 @@ const GameCanvas = () => {
             x: boundary.position.x - (newX - viewport.x),
             y: boundary.position.y - (newY - viewport.y),
           },
-        })
+        }),
       );
       setBoundaries(newBoundaries);
     };
@@ -275,7 +275,7 @@ const GameCanvas = () => {
               boundary.position.x,
               boundary.position.y + 48,
               48,
-              48
+              48,
             );
           });
         }
@@ -285,7 +285,7 @@ const GameCanvas = () => {
           sprites[direction],
           currentFrame,
           frameCount,
-          canvas
+          canvas,
         );
 
         // Update the player's hitbox position to the center of the screen
@@ -310,7 +310,7 @@ const GameCanvas = () => {
     ctx: CanvasRenderingContext2D,
     bgImage: HTMLImageElement,
     viewport: { x: number; y: number },
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
   ) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(
@@ -322,7 +322,7 @@ const GameCanvas = () => {
       0,
       0,
       canvas.width,
-      canvas.height
+      canvas.height,
     );
   };
 
@@ -331,7 +331,7 @@ const GameCanvas = () => {
     sprite: HTMLImageElement,
     frame: number,
     frameCount: number,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
   ) => {
     const frameWidth = sprite.width / frameCount;
     const frameHeight = sprite.height;
@@ -347,7 +347,7 @@ const GameCanvas = () => {
       playerX,
       playerY,
       frameWidth,
-      frameHeight
+      frameHeight,
     );
   };
 
