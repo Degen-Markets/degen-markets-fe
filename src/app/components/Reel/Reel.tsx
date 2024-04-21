@@ -55,8 +55,8 @@ const Reel = <T,>({
 
   return (
     <div>
-      <div className={styles.reel}>{title}</div>
-      <div className={styles.reel}>
+      <div className="p-[10px]">{title}</div>
+      <div className="p-[10px]">
         <div onClick={handleOptionBack}>BACK</div>
         {optionsToDisplay.map((option, index) => (
           // key for small options (Up/Down) has to be the index to avoid key conflict
