@@ -9,7 +9,6 @@ import {
   directionOptions,
   USDC_ADDRESS,
   DEGEN_MARKETS_ADDRESS,
-  BASE_CHAIN_ID,
   USDbC_ADDRESS,
 } from "@/app/lib/utils/bets/constants";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ import { maxInt256 } from "viem";
 import { ERC20_ABI } from "@/app/lib/utils/bets/abis";
 import { config } from "@/app/providers";
 import { useAccount } from "wagmi";
+import { base } from "wagmi/chains";
 
 export default function CreateBet() {
   const [ticker, setTicker] = useState<ReelOption<string>>(tickerOptions[0]);
@@ -46,7 +46,7 @@ export default function CreateBet() {
       address: USDC_ADDRESS,
       functionName: "allowance",
       args: [address, DEGEN_MARKETS_ADDRESS],
-      chainId: BASE_CHAIN_ID,
+      chainId: base.id,
     })) as bigint;
 
     const USDbCAllowance = (await readContract(config, {
@@ -54,7 +54,7 @@ export default function CreateBet() {
       address: USDbC_ADDRESS,
       functionName: "allowance",
       args: [address, DEGEN_MARKETS_ADDRESS],
-      chainId: BASE_CHAIN_ID,
+      chainId: base.id,
     })) as bigint;
 
     setUserAllowances({
