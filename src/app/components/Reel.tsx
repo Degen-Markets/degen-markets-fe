@@ -10,7 +10,7 @@ const Reel = <T,>({ reelOptions }: ReelProps<T>) => {
     reelOptions[0],
   );
   const optionIndex = reelOptions.findIndex(
-    (option) => option.key === selectedOption.key,
+    (option) => option.label === selectedOption.label,
   );
   const isStartOption = optionIndex === 0;
   const isEndOption = optionIndex === reelOptions.length - 1;
@@ -51,7 +51,7 @@ const Reel = <T,>({ reelOptions }: ReelProps<T>) => {
     <div>
       <div onClick={handleOptionBack}>BACK</div>
       {optionsToDisplay.map((option) => (
-        <div key={option.key}>{option.key}</div>
+        <div key={option.label}>{option.label}</div>
       ))}
       <div onClick={handleOptionForward}>FORWARD</div>
     </div>

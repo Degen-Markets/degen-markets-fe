@@ -22,11 +22,11 @@ export enum Metric {
 }
 
 export type MetricOptions = {
-  key: string;
+  label: string;
   value: Metric;
 }[];
 
 export type ReelOption<T> = {
-  key: string;
+  label: string;
   value: T;
 };
