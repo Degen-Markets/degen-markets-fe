@@ -9,6 +9,7 @@ import {
   ORIGINAL_HEIGHT,
   ORIGINAL_WIDTH,
   SCALE,
+  SHOW_BOUNDARIES,
   TILES_PER_ROW,
   TILE_SIZE,
 } from "../lib/utils/game/constants";
@@ -117,8 +118,10 @@ const GameCanvas = () => {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        drawCollisions();
-        drawChallengeZone();
+        if (SHOW_BOUNDARIES) {
+          drawCollisions();
+          drawChallengeZone();
+        }
         drawPlayer();
         requestAnimationFrame(gameLoop);
       };
