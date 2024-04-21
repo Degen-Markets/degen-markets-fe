@@ -12,61 +12,50 @@ import {
   USDbC_ADDRESS,
 } from "@/app/lib/utils/bets/constants";
 import { useEffect, useState } from "react";
-import { readContract } from "@wagmi/core";
+import { connect, injected, readContract } from "@wagmi/core";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import styles from "./page.module.css";
-import { maxInt256 } from "viem";
+import { maxInt256, parseEther, parseUnits } from "viem";
 import { ERC20_ABI } from "@/app/lib/utils/bets/abis";
 import { config } from "@/app/providers";
 import { useAccount } from "wagmi";
 import { base } from "wagmi/chains";
+import useAllowances from "@/app/lib/utils/hooks/useAllowances";
+import useBalances from "@/app/lib/utils/hooks/useBalances";
 
 export default function CreateBet() {
-  const [ticker, setTicker] = useState<ReelOption<string>>(tickerOptions[0]);
-  const [metric, setMetric] = useState<ReelOption<Metric>>(metricOptions[0]);
-  const [direction, setDirection] = useState<ReelOption<boolean>>(
-    directionOptions[0],
-  );
-  const [duration, setDuration] = useState<ReelOption<number>>(
-    durationOptions[0],
-  );
+  const [ticker, setTicker] = useState(tickerOptions[0]);
+  const [metric, setMetric] = useState(metricOptions[0]);
+  const [direction, setDirection] = useState(directionOptions[0]);
+  const [duration, setDuration] = useState(durationOptions[0]);
   const [currency, setCurrency] = useState<ReelOption<string>>(
     currencyOptions[0],
   );
-  const [userAllowances, setUserAllowances] = useState({
-    [Currency.USDC]: BigInt(0),
-    [Currency.USDbC]: BigInt(0),
-    [Currency.ETH]: maxInt256,
-  });
+  const [value, setValue] = useState("10");
   const { address } = useAccount();
+  const { userAllowances } = useAllowances(address);
+  const { userBalances } = useBalances(address);
 
-  const getERC20Allowances = async () => {
-    const usdcAllowance = (await readContract(config, {
-      abi: ERC20_ABI,
-      address: USDC_ADDRESS,
-      functionName: "allowance",
-      args: [address, DEGEN_MARKETS_ADDRESS],
-      chainId: base.id,
-    })) as bigint;
+  const isEth = currency.label === Currency.ETH;
+  const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
+  const isAllowanceEnough =
+    userAllowances[currency.label as Currency] >= valueInWei;
+  const isBalanceEnough =
+    userBalances[currency.label as Currency] >= valueInWei;
+  const isActionDisabled = !isBalanceEnough;
 
-    const USDbCAllowance = (await readContract(config, {
-      abi: ERC20_ABI,
-      address: USDbC_ADDRESS,
-      functionName: "allowance",
-      args: [address, DEGEN_MARKETS_ADDRESS],
-      chainId: base.id,
-    })) as bigint;
-
-    setUserAllowances({
-      [Currency.USDC]: usdcAllowance,
-      [Currency.USDbC]: USDbCAllowance,
-      [Currency.ETH]: maxInt256,
-    });
+  const getActionButtonText = (): string => {
+    if (!address) {
+      return "Connect Wallet";
+    }
+    if (!isBalanceEnough) {
+      return "Not enough balance";
+    }
+    if (!isAllowanceEnough) {
+      return "Approve";
+    }
+    return "Create Bet";
   };
-
-  useEffect(() => {
-    getERC20Allowances();
-  }, []);
 
   return (
     <main>
@@ -104,10 +93,27 @@ export default function CreateBet() {
       </div>
       <br />
       <br />
+      <input
+        className="text-black"
+        type="number"
+        lang="en-US"
+        step="any"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+      />
+      <br />
+      <br />
       <div>
-        Bet that {ticker.label} that it&apos;s {metric.label} goes&nbsp;
+        Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
         {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
       </div>
+      <br />
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        disabled={isActionDisabled}
+      >
+        {getActionButtonText()}
+      </button>
     </main>
   );
 }

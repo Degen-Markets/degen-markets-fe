@@ -1,6 +1,6 @@
 import { ReelOption } from "@/app/lib/utils/bets/types";
-import { Dispatch, SetStateAction } from "react";
 import styles from "./reel.module.css";
+import { Dispatch, SetStateAction } from "react";
 
 type ReelProps<T> = {
   reelOptions: ReelOption<T>[];
