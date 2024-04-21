@@ -32,20 +32,46 @@ const directionSpriteMap = {
 const GameCanvas = () => {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [direction, setDirection] = useState(Direction.Down);
-  const [playerX, setPlayerX] = useState(100); // Initial X position
-  const [playerY, setPlayerY] = useState(300); // Initial Y position
+  const [direction, setDirection] = useState(Direction.Up);
+  const [playerX, setPlayerX] = useState(540); // Initial X position
+  const [playerY, setPlayerY] = useState(720); // Initial Y position
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [inChallengeZone, setInChallengeZone] = useState(false); // Track if in challenge zone
+  const [inChallengeZone, setInChallengeZone] = useState(false);
 
-  const checkCollisions = (newX: number, newY: number) => {
-    // Calculate the tile index based on the player's new position
-    const xIndex = Math.floor(newX / (TILE_SIZE * SCALE));
-    const yIndex = Math.floor(newY / (TILE_SIZE * SCALE));
+  const checkCollisions = (
+    playerSprite: any,
+    newX: number,
+    newY: number,
+    direction: Direction,
+  ) => {
+    const spriteWidth = (playerSprite.width / FRAME_COUNT) * 0.5;
+    const spriteHeight = playerSprite.height * 0.5;
+    let checkX = newX;
+    let checkY = newY;
+
+    switch (direction) {
+      case Direction.Right:
+        checkX += spriteWidth / 2; // Use the rightmost point for rightward movement
+        break;
+      case Direction.Left:
+        checkX -= spriteWidth / 2; // Use the leftmost point for leftward movement
+        break;
+      case Direction.Up:
+        /// Use the  middle of the sprite sheet
+        break;
+      case Direction.Down:
+        checkY += spriteHeight / 2; // Use the bottommost point for downward movement
+        break;
+    }
+
+    // Calculate the tile index based on the adjusted player position
+    const xIndex = Math.floor(checkX / (TILE_SIZE * SCALE));
+    const yIndex = Math.floor(checkY / (TILE_SIZE * SCALE));
     const tileIndex = yIndex * TILES_PER_ROW + xIndex;
 
     // Check if the tile index corresponds to a non-walkable tile
-    return COLLISIONS[tileIndex] === COLLISION_SQUARE;
+    const collision = COLLISIONS[tileIndex] === COLLISION_SQUARE;
+    return collision;
   };
 
   const checkChallengeZone = (x: number, y: number) => {
@@ -112,6 +138,20 @@ const GameCanvas = () => {
           playerScaledWidth,
           playerScaledHeight,
         );
+
+        if (SHOW_BOUNDARIES) {
+          drawHitbox(playerX, playerY, playerScaledWidth, playerScaledHeight);
+        }
+      };
+
+      const drawHitbox = (
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+      ) => {
+        context.fillStyle = "rgba(0, 255, 0, 0.5)"; // Use a semi-transparent green color
+        context.fillRect(x - width / 2, y - height / 2, width, height);
       };
 
       const gameLoop = () => {
@@ -169,7 +209,7 @@ const GameCanvas = () => {
         setCurrentFrame((prevFrame) => (prevFrame + 1) % FRAME_COUNT);
       }
       // Check for collisions at the new position
-      if (!checkCollisions(newX, newY)) {
+      if (!checkCollisions(playerSprite, newX, newY, newDirection)) {
         if (newDirection !== direction) {
           setDirection(newDirection);
         }
