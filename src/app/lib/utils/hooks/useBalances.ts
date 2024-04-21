@@ -1,10 +1,9 @@
-import { readContract, getBalance } from "@wagmi/core";
+import { getBalance, readContract } from "@wagmi/core";
 import { config } from "@/app/providers";
 import { ERC20_ABI } from "@/app/lib/utils/bets/abis";
 import { USDbC_ADDRESS, USDC_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
-import { maxUint256 } from "viem";
 import { useEffect, useState } from "react";
 
 const useBalances = (address?: `0x${string}`) => {

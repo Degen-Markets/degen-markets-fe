@@ -3,6 +3,7 @@ import {
   Currency,
   Metric,
   MetricOptions,
+  ReelOption,
   Ticker,
 } from "@/app/lib/utils/bets/types";
 
@@ -29,7 +30,7 @@ export const tickerOptions = Object.keys(Ticker).map((ticker) => ({
 export const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
 export const USDbC_ADDRESS = "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca";
 
-export const currencyOptions = [
+export const currencyOptions: ReelOption<`0x${string}`>[] = [
   {
     label: Currency.ETH,
     value: zeroAddress,
@@ -44,14 +45,16 @@ export const currencyOptions = [
   },
 ];
 
+const dayInSeconds = 60 * 60 * 24;
+
 export const durationOptions = [
   {
     label: "1 Day",
-    value: 1,
+    value: dayInSeconds,
   },
   ...[2, 3, 4, 5].map((dayNumber) => ({
     label: `${dayNumber} Days`,
-    value: dayNumber,
+    value: dayNumber * dayInSeconds,
   })),
 ];
 
