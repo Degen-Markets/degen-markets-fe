@@ -13,8 +13,9 @@ import { v4 as uuid } from "uuid";
 import { useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import styles from "./page.module.css";
-import { maxUint256, parseEther, parseUnits } from "viem";
+import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
 import { useAccount, useWriteContract } from "wagmi";
+import { redirect } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { DEGEN_MARKETS_ABI, ERC20_ABI } from "@/app/lib/utils/bets/abis";
@@ -31,8 +32,8 @@ export default function CreateBet() {
   const [value, setValue] = useState("10");
   const { address } = useAccount();
   const { writeContract, data: hash } = useWriteContract();
-  const { userAllowances } = useAllowances(address);
-  const { userBalances } = useBalances(address);
+  const { userAllowances } = useAllowances(hash || zeroAddress, address);
+  const { userBalances } = useBalances(hash || zeroAddress, address);
 
   const isEth = currency.label === Currency.ETH;
   const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);

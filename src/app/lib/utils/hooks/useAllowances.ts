@@ -10,8 +10,14 @@ import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { maxUint256 } from "viem";
 import { useEffect, useState } from "react";
+import { useTransactionReceipt } from "wagmi";
 
-const useAllowances = (address?: string) => {
+const useAllowances = (hash: `0x${string}`, address?: string) => {
+  const { isSuccess } = useTransactionReceipt({
+    hash,
+    chainId: base.id,
+  });
+
   const [userAllowances, setUserAllowances] = useState({
     [Currency.USDC]: BigInt(0),
     [Currency.USDbC]: BigInt(0),
@@ -46,6 +52,12 @@ const useAllowances = (address?: string) => {
       getERC20Allowances();
     }
   }, [address]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      getERC20Allowances();
+    }
+  }, [isSuccess]);
 
   return {
     userAllowances,

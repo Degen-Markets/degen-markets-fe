@@ -5,12 +5,17 @@ import { USDbC_ADDRESS, USDC_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { useEffect, useState } from "react";
+import { useTransactionReceipt } from "wagmi";
 
-const useBalances = (address?: `0x${string}`) => {
+const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
   const [userBalances, setUserBalances] = useState({
     [Currency.USDC]: BigInt(0),
     [Currency.USDbC]: BigInt(0),
     [Currency.ETH]: BigInt(0),
+  });
+  const { isSuccess } = useTransactionReceipt({
+    hash,
+    chainId: base.id,
   });
   const getERC20Balances = async () => {
     if (address) {
@@ -45,6 +50,12 @@ const useBalances = (address?: `0x${string}`) => {
   useEffect(() => {
     getERC20Balances();
   }, [address]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      getERC20Balances();
+    }
+  }, [isSuccess]);
 
   return {
     userBalances,
