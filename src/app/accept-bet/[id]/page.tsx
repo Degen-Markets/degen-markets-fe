@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { useReadContract } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "../../lib/utils/bets/abis";
 import {
@@ -10,8 +9,11 @@ import {
 import { CreatedBetObject } from "@/app/lib/utils/bets/types";
 import { type UseReadContractReturnType } from "wagmi";
 import BetCoundown from "@/app/components/BetCoundown";
-import { betDurationInDays } from "@/app/lib/utils/bets/helpers";
-import { formatUnits, erc20Abi } from "viem";
+import {
+  betDurationInDays,
+  getCurrencySymbolByAddress,
+} from "@/app/lib/utils/bets/helpers";
+import { formatUnits, zeroAddress } from "viem";
 
 const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
@@ -36,13 +38,16 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         metric: result.data[4],
         isBetOnUp: result.data[5],
         duration: result.data[6].toString(),
-        value: formatUnits(result.data[9], STABLECOIN_DECIMALS),
-        currency: `0x${result.data[7]}`,
+        value: formatUnits(
+          result.data[9],
+          result.data[7] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
+        ),
+        currency: result.data[7],
       };
 
       setBetToAccept(localBet);
     } else {
-      console.log(
+      console.error(
         "Data is not available or not in expected format:",
         result.data,
       );
@@ -53,8 +58,8 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     <>
       <div className="h-screen w-full">
         {result && betToAccept && (
-          <>
-            <div className="w-1/2">
+          <div className="w-1/2">
+            <div>
               <BetCoundown
                 betCreationTimestamp={betToAccept.creationTimestamp}
               />
@@ -74,9 +79,14 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
               </div>
               <div className="bg-white border-amber-400 border-4 text-neutral-800">
                 Wagered:&nbsp;{betToAccept.value}&nbsp;
+                {getCurrencySymbolByAddress(betToAccept.currency)}
               </div>
             </div>
-          </>
+            <div className="flex flex-col gap-4">
+              <div>Not a chance...</div>
+              <div>Approve and bet</div>
+            </div>
+          </div>
         )}
       </div>
     </>

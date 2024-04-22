@@ -1,11 +1,11 @@
 import { getBalance, readContract } from "@wagmi/core";
 import { config } from "@/app/providers";
-import { USDbC_ADDRESS, USDC_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { useEffect, useState } from "react";
 import { useTransactionReceipt } from "wagmi";
 import { erc20Abi } from "viem";
+import { SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
 
 const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
   const [userBalances, setUserBalances] = useState({
@@ -21,7 +21,7 @@ const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
     if (address) {
       const usdcBalance = (await readContract(config, {
         abi: erc20Abi,
-        address: USDC_ADDRESS,
+        address: SETTLE_CURRENCY.USDC,
         functionName: "balanceOf",
         args: [address],
         chainId: base.id,
@@ -29,7 +29,7 @@ const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
 
       const USDbCBalance = (await readContract(config, {
         abi: erc20Abi,
-        address: USDbC_ADDRESS,
+        address: SETTLE_CURRENCY.USDBC,
         functionName: "balanceOf",
         args: [address],
         chainId: base.id,

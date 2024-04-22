@@ -2,12 +2,12 @@
 
 import Reel from "@/app/components/Reel/Reel";
 import {
-  currencyOptions,
   DEGEN_MARKETS_ADDRESS,
   directionOptions,
   durationOptions,
   metricOptions,
   tickerOptions,
+  currencyOptions,
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import { useState } from "react";

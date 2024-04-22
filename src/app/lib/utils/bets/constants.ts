@@ -27,23 +27,22 @@ export const tickerOptions = Object.keys(Ticker).map((ticker) => ({
   value: ticker,
 }));
 
-export const USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
-export const USDbC_ADDRESS = "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca";
+export const SETTLE_CURRENCY: {
+  ETH: `0x${string}`;
+  USDC: `0x${string}`;
+  USDBC: `0x${string}`;
+} = {
+  ETH: zeroAddress,
+  USDC: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+  USDBC: "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
+};
 
-export const currencyOptions: ReelOption<`0x${string}`>[] = [
-  {
-    label: Currency.ETH,
-    value: zeroAddress,
-  },
-  {
-    label: Currency.USDC,
-    value: USDC_ADDRESS,
-  },
-  {
-    label: Currency.USDbC,
-    value: USDbC_ADDRESS,
-  },
-];
+export const currencyOptions: ReelOption<`0x${string}`>[] = Object.entries(
+  SETTLE_CURRENCY,
+).map(([key, value]) => ({
+  label: Currency[key as keyof typeof Currency],
+  value,
+}));
 
 const dayInSeconds = 60 * 60 * 24;
 
