@@ -18,8 +18,9 @@ import { useAccount, useWriteContract } from "wagmi";
 import { redirect } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
-import { DEGEN_MARKETS_ABI, ERC20_ABI } from "@/app/lib/utils/bets/abis";
+import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { base } from "wagmi/chains";
+import { erc20Abi } from "viem";
 
 export default function CreateBet() {
   const [ticker, setTicker] = useState(tickerOptions[0]);
@@ -45,7 +46,7 @@ export default function CreateBet() {
 
   const approve = () => {
     writeContract({
-      abi: ERC20_ABI,
+      abi: erc20Abi,
       address: currency.value,
       functionName: "approve",
       args: [DEGEN_MARKETS_ADDRESS, maxUint256],
