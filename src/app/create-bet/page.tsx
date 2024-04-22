@@ -111,10 +111,15 @@ export default function CreateBet() {
 
   return (
     <main
-      className="bg-cover bg-center bg-no-repeat h-screen w-screen"
+      className="bg-cover bg-center bg-no-repeat w-screen min-h-screen flex-col items-center"
       style={{ backgroundImage: "url('/bet-bg.svg')" }}
     >
-      <div className="flex">
+      <div className="text-7xl w-max pt-10 pb-10 mx-auto">
+        <div className="text-7xl pt-10 pb-10 pl-5 pr-5 bg-blue-dark rounded-3xl">
+          Challenge a fren
+        </div>
+      </div>
+      <div className="flex justify-center">
         <Reel<string>
           selectedOption={ticker}
           setSelectedOption={setTicker}
