@@ -10,11 +10,11 @@ import {
   currencyOptions,
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import styles from "./page.module.css";
 import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
-import { useAccount, useWriteContract } from "wagmi";
+import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { redirect } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
@@ -32,9 +32,19 @@ export default function CreateBet() {
   );
   const [value, setValue] = useState("10");
   const { address } = useAccount();
-  const { writeContract, data: hash } = useWriteContract();
-  const { userAllowances } = useAllowances(hash || zeroAddress, address);
-  const { userBalances } = useBalances(hash || zeroAddress, address);
+  const { writeContract: sendApprovalTx, data: approvalHash } =
+    useWriteContract();
+  const { writeContract: sendCreateBetTx, data: createBetHash } =
+    useWriteContract();
+  const { isSuccess: isCreateBetTxSuccess } = useTransactionReceipt({
+    hash: createBetHash,
+    chainId: base.id,
+  });
+  const { userAllowances } = useAllowances(
+    approvalHash || zeroAddress,
+    address || zeroAddress,
+  );
+  const { userBalances } = useBalances(approvalHash || zeroAddress, address);
 
   const isEth = currency.label === Currency.ETH;
   const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
@@ -43,9 +53,10 @@ export default function CreateBet() {
   const isBalanceEnough =
     userBalances[currency.label as Currency] >= valueInWei;
   const isActionDisabled = !isBalanceEnough;
+  const randomId = uuid();
 
   const approve = () => {
-    writeContract({
+    sendApprovalTx({
       abi: erc20Abi,
       address: currency.value,
       functionName: "approve",
@@ -54,8 +65,7 @@ export default function CreateBet() {
   };
 
   const createBet = async () => {
-    const randomId = uuid();
-    writeContract({
+    sendCreateBetTx({
       abi: DEGEN_MARKETS_ABI,
       address: DEGEN_MARKETS_ADDRESS,
       functionName: "createBet",
@@ -93,6 +103,12 @@ export default function CreateBet() {
     }
     return "Create Bet";
   };
+
+  useEffect(() => {
+    if (isCreateBetTxSuccess) {
+      redirect(`/create-bet/success?id=${randomId}`);
+    }
+  }, [isCreateBetTxSuccess]);
 
   return (
     <main>

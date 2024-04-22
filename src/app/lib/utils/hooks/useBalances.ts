@@ -29,7 +29,7 @@ const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
 
       const USDbCBalance = (await readContract(config, {
         abi: erc20Abi,
-        address: SETTLE_CURRENCY.USDBC,
+        address: SETTLE_CURRENCY.USDbC,
         functionName: "balanceOf",
         args: [address],
         chainId: base.id,

@@ -11,7 +11,7 @@ import { maxUint256 } from "viem";
 import { useEffect, useState } from "react";
 import { useTransactionReceipt } from "wagmi";
 
-const useAllowances = (hash: `0x${string}`, address?: string) => {
+const useAllowances = (hash: `0x${string}`, address?: `0x${string}`) => {
   const { isSuccess } = useTransactionReceipt({
     hash,
     chainId: base.id,
@@ -23,6 +23,9 @@ const useAllowances = (hash: `0x${string}`, address?: string) => {
     [Currency.ETH]: maxUint256,
   });
   const getERC20Allowances = async () => {
+    if (!address) {
+      return;
+    }
     const usdcAllowance = (await readContract(config, {
       abi: erc20Abi,
       address: SETTLE_CURRENCY.USDC,
@@ -33,7 +36,7 @@ const useAllowances = (hash: `0x${string}`, address?: string) => {
 
     const USDbCAllowance = (await readContract(config, {
       abi: erc20Abi,
-      address: SETTLE_CURRENCY.USDBC,
+      address: SETTLE_CURRENCY.USDbC,
       functionName: "allowance",
       args: [address, DEGEN_MARKETS_ADDRESS],
       chainId: base.id,
@@ -47,9 +50,7 @@ const useAllowances = (hash: `0x${string}`, address?: string) => {
   };
 
   useEffect(() => {
-    if (address) {
-      getERC20Allowances();
-    }
+    getERC20Allowances();
   }, [address]);
 
   useEffect(() => {
