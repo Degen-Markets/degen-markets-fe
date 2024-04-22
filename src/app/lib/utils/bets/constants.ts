@@ -13,7 +13,7 @@ export const metricOptions: MetricOptions = [
     value: Metric.PRICE,
   },
   {
-    label: "Market Cap Dominance",
+    label: "Mkt Cap Dom",
     value: Metric.MARKET_CAP_DOMINANCE,
   },
   {

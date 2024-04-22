@@ -55,16 +55,21 @@ const Reel = <T,>({
 
   return (
     <div>
-      <div className="p-[10px]">{title}</div>
-      <div className="p-[10px]">
-        <div onClick={handleOptionBack}>BACK</div>
+      <span className="p-[10px] bg-blue-dark pt-3 pb-3 border-yellow-dark border-2">
+        {title}
+      </span>
+      <div className="border border-black pt-[10px] text-lg text-center bg-white text-blue-dark">
+        <div onClick={handleOptionBack}>&#9650;</div>
         {optionsToDisplay.map((option, index) => (
           // key for small options (Up/Down) has to be the index to avoid key conflict
-          <div key={reelOptions.length >= 3 ? option.label : index}>
+          <div
+            key={reelOptions.length >= 3 ? option.label : index}
+            className={`${index !== 1 && "text-slate-400"}`}
+          >
             {option.label}
           </div>
         ))}
-        <div onClick={handleOptionForward}>FORWARD</div>
+        <div onClick={handleOptionForward}>&#9660;</div>
       </div>
     </div>
   );

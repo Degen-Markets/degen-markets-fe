@@ -17,6 +17,9 @@ const config: Config = {
         blue: {
           dark: "#003A55",
         },
+        yellow: {
+          dark: "#E9BF2D",
+        },
       },
     },
   },

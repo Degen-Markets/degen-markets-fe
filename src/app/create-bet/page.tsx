@@ -115,11 +115,11 @@ export default function CreateBet() {
       style={{ backgroundImage: "url('/bet-bg.svg')" }}
     >
       <div className="text-7xl w-max pt-10 pb-10 mx-auto">
-        <div className="text-7xl pt-10 pb-10 pl-5 pr-5 bg-blue-dark rounded-3xl">
+        <div className="text-7xl pt-10 pb-10 pl-5 pr-5 bg-blue-dark">
           Challenge a fren
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center bg-blue-dark">
         <Reel<string>
           selectedOption={ticker}
           setSelectedOption={setTicker}
