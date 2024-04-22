@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Providers } from "./providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = localFont({ src: "../../public/Jersey10-regular.ttf" });
 
 export const metadata: Metadata = {
   title: "Degen Markets",
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${font.className} text-xl`}>
         <Providers>{children}</Providers>
       </body>
     </html>

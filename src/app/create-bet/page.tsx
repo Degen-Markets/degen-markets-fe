@@ -12,7 +12,6 @@ import {
 import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
-import styles from "./page.module.css";
 import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { redirect } from "next/navigation";
@@ -111,8 +110,11 @@ export default function CreateBet() {
   }, [isCreateBetTxSuccess]);
 
   return (
-    <main>
-      <div className={styles.reels}>
+    <main
+      className="bg-cover bg-center bg-no-repeat h-screen w-screen"
+      style={{ backgroundImage: "url('/bet-bg.svg')" }}
+    >
+      <div className="flex">
         <Reel<string>
           selectedOption={ticker}
           setSelectedOption={setTicker}
