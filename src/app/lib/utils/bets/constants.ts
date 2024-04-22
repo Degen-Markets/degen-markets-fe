@@ -71,3 +71,7 @@ export const directionOptions = [
 
 export const DEGEN_MARKETS_ADDRESS =
   "0xA7Ee25d7Ae43A0db9c01fbeF389EcaF83Ba97A86";
+
+export const DEFAULT_BET_DURATION = 14400;
+
+export const STABLECOIN_DECIMALS = 6;

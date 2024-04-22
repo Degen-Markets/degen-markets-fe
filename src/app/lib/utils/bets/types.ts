@@ -32,3 +32,15 @@ export type ReelOption<T> = {
   label: string;
   value: T;
 };
+
+export type CreatedBetObject = {
+  id: string;
+  creator: `0x${string}`;
+  creationTimestamp: string;
+  duration: string;
+  ticker: Ticker;
+  metric: Metric;
+  isBetOnUp: boolean;
+  value: string;
+  currency: `0x${string}`;
+};
