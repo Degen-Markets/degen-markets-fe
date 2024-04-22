@@ -1,10 +1,9 @@
 import { readContract } from "@wagmi/core";
 import { config } from "@/app/providers";
-import { ERC20_ABI } from "@/app/lib/utils/bets/abis";
+import { erc20Abi } from "viem";
 import {
   DEGEN_MARKETS_ADDRESS,
-  USDbC_ADDRESS,
-  USDC_ADDRESS,
+  SETTLE_CURRENCY,
 } from "@/app/lib/utils/bets/constants";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
@@ -25,16 +24,16 @@ const useAllowances = (hash: `0x${string}`, address?: string) => {
   });
   const getERC20Allowances = async () => {
     const usdcAllowance = (await readContract(config, {
-      abi: ERC20_ABI,
-      address: USDC_ADDRESS,
+      abi: erc20Abi,
+      address: SETTLE_CURRENCY.USDC,
       functionName: "allowance",
       args: [address, DEGEN_MARKETS_ADDRESS],
       chainId: base.id,
     })) as bigint;
 
     const USDbCAllowance = (await readContract(config, {
-      abi: ERC20_ABI,
-      address: USDbC_ADDRESS,
+      abi: erc20Abi,
+      address: SETTLE_CURRENCY.USDBC,
       functionName: "allowance",
       args: [address, DEGEN_MARKETS_ADDRESS],
       chainId: base.id,
