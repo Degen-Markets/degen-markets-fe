@@ -39,11 +39,15 @@ export default function CreateBet() {
     hash: createBetHash,
     chainId: base.id,
   });
+  const { isSuccess: isApprovalSuccess } = useTransactionReceipt({
+    hash: approvalHash,
+    chainId: base.id,
+  });
   const { userAllowances } = useAllowances(
-    approvalHash || zeroAddress,
+    isApprovalSuccess || isCreateBetTxSuccess,
     address || zeroAddress,
   );
-  const { userBalances } = useBalances(approvalHash || zeroAddress, address);
+  const { userBalances } = useBalances(isCreateBetTxSuccess, address);
 
   const isEth = currency.label === Currency.ETH;
   const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);

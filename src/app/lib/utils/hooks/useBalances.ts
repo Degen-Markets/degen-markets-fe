@@ -7,15 +7,11 @@ import { useTransactionReceipt } from "wagmi";
 import { erc20Abi } from "viem";
 import { SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
 
-const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
+const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   const [userBalances, setUserBalances] = useState({
     [Currency.USDC]: BigInt(0),
     [Currency.USDbC]: BigInt(0),
     [Currency.ETH]: BigInt(0),
-  });
-  const { isSuccess } = useTransactionReceipt({
-    hash,
-    chainId: base.id,
   });
   const getERC20Balances = async () => {
     if (address) {
@@ -52,10 +48,10 @@ const useBalances = (hash: `0x${string}`, address?: `0x${string}`) => {
   }, [address]);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (shouldReFetch) {
       getERC20Balances();
     }
-  }, [isSuccess]);
+  }, [shouldReFetch]);
 
   return {
     userBalances,

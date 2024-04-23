@@ -11,12 +11,7 @@ import { maxUint256 } from "viem";
 import { useEffect, useState } from "react";
 import { useTransactionReceipt } from "wagmi";
 
-const useAllowances = (hash: `0x${string}`, address?: `0x${string}`) => {
-  const { isSuccess } = useTransactionReceipt({
-    hash,
-    chainId: base.id,
-  });
-
+const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   const [userAllowances, setUserAllowances] = useState({
     [Currency.USDC]: BigInt(0),
     [Currency.USDbC]: BigInt(0),
@@ -54,10 +49,10 @@ const useAllowances = (hash: `0x${string}`, address?: `0x${string}`) => {
   }, [address]);
 
   useEffect(() => {
-    if (isSuccess) {
+    if (shouldReFetch) {
       getERC20Allowances();
     }
-  }, [isSuccess]);
+  }, [shouldReFetch]);
 
   return {
     userAllowances,
