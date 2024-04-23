@@ -27,13 +27,9 @@ export const tickerOptions = Object.keys(Ticker).map((ticker) => ({
   value: ticker,
 }));
 
-export const SETTLE_CURRENCY: {
-  ETH: `0x${string}`;
-  USDC: `0x${string}`;
-  USDbC: `0x${string}`;
-} = {
+export const SETTLE_CURRENCY: { [key in Currency]: `0x${string}` } = {
   USDC: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-  ETH: zeroAddress,
+  ETH: zeroAddress, // Make sure this is correctly defined.
   USDbC: "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
 };
 
@@ -71,6 +67,6 @@ export const directionOptions = [
 export const DEGEN_MARKETS_ADDRESS =
   "0xA7Ee25d7Ae43A0db9c01fbeF389EcaF83Ba97A86";
 
-export const DEFAULT_BET_DURATION = 14400;
+export const DEFAULT_BET_DURATION = 60 * 60 * 4 * 1000;
 
 export const STABLECOIN_DECIMALS = 6;

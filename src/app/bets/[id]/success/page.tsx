@@ -7,7 +7,7 @@ import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { useSearchParams } from "next/navigation";
 import BetCountdown from "@/app/components/BetCoundown";
 
-const CreateBetSuccess = () => {
+const AcceptBetSuccess = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { data }: { data?: any[] } = useReadContract({
@@ -53,7 +53,7 @@ const CreateBetSuccess = () => {
     <main className="text-center">
       <div className="flex justify-center">
         <PixelatedHeadingContainer classNames="my-10 w-[500px]">
-          Bet Created!
+          Bet Accepted!
         </PixelatedHeadingContainer>
       </div>
       <div className="flex justify-center">
@@ -92,4 +92,4 @@ const CreateBetSuccess = () => {
     </main>
   );
 };
-export default CreateBetSuccess;
+export default AcceptBetSuccess;

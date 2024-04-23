@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
 
 const BetCountdown: React.FC<{
   betCreationTimestamp: string;
-  duration: number;
+  duration?: number;
   classNames?: string;
-}> = ({ betCreationTimestamp, duration = 86400 * 1000, classNames }) => {
+}> = ({
+  betCreationTimestamp,
+  duration = DEFAULT_BET_DURATION,
+  classNames,
+}) => {
   const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
