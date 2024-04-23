@@ -120,7 +120,7 @@ export default function CreateBet() {
           Challenge a fren
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center select-none">
         <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
           <Reel<string>
             selectedOption={ticker}
