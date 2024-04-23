@@ -20,6 +20,7 @@ import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { base } from "wagmi/chains";
 import { erc20Abi } from "viem";
+import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 
 export default function CreateBet() {
   const [ticker, setTicker] = useState(tickerOptions[0]);
@@ -115,9 +116,9 @@ export default function CreateBet() {
 
   return (
     <main className="text-center">
-      <div className="text-7xl w-max pb-10 mx-auto">
-        <div className="text-7xl py-10 px-5 bg-blue-dark">Challenge a fren</div>
-      </div>
+      <PixelatedHeadingContainer classNames="my-10">
+        Challenge a fren
+      </PixelatedHeadingContainer>
       <div className="flex justify-center select-none">
         <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
           <Reel<string>
