@@ -199,7 +199,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
               <>
                 <div className="text-blue-dark">Not a chance...</div>
                 <div
-                  className="text-blue-dark bg-yellow-dark border-blue-dark border-2 px-6"
+                  className="cursor-pointer text-blue-dark bg-yellow-dark border-blue-dark border-2 px-6"
                   onClick={handleAccept}
                 >
                   Approve and bet
