@@ -164,7 +164,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     <>
       {result && betToAccept && (
         <div className="w-1/2 mx-auto">
-          <div className="bg-blue-dark border-amber-400 border-2 text-center w-3/5 mx-auto text-3xl py-2">
+          <div className="bg-blue-dark border-pink-light border-2 text-center w-3/5 mx-auto text-3xl py-2">
             <BetCoundown
               betCreationTimestamp={betToAccept.creationTimestamp}
               duration={isBetAccepted ? duration : DEFAULT_BET_DURATION}
@@ -175,7 +175,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="flex flex-col pt-16 pb-10">
             <div className="relative z-20">
-              <div className="bg-yellow-dark border-2 text-neutral-950 border-white absolute -top-5 py-2 px-4 text-center left-[50%] -translate-x-[50%] z-20">
+              <div className="bg-pink-light border-2 text-neutral-950 border-yellow-light absolute -top-5 py-2 px-4 text-center left-[50%] -translate-x-[50%] z-20">
                 {betToAccept.creator === address
                   ? "Created by you"
                   : betToAccept.creator}
@@ -184,12 +184,12 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
             <PixelatedHeadingContainer>bets that:</PixelatedHeadingContainer>
           </div>
           <div className="flex justify-center gap-x-4">
-            <div className="bg-white border-amber-400 border-4 text-neutral-800 px-4">
-              {betToAccept.ticker} - {betToAccept.metric} will&nbsp;
-              {betToAccept.isBetOnUp ? "moon" : "rug"} in&nbsp;
+            <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
+              {betToAccept.ticker}&nbsp;-&nbsp;{betToAccept.metric} will&nbsp;
+              go&nbsp;{betToAccept.isBetOnUp ? "up" : "down"}&nbsp;in&nbsp;
               {betDurationInDays(betToAccept.duration)}
             </div>
-            <div className="bg-white border-amber-400 border-4 text-neutral-800 px-4">
+            <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               Wagered:&nbsp;{betToAccept.value}&nbsp;
               {getCurrencySymbolByAddress(betToAccept.currency)}
             </div>
@@ -199,7 +199,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
               <>
                 <div className="text-blue-dark">Not a chance...</div>
                 <div
-                  className="cursor-pointer text-blue-dark bg-yellow-dark border-blue-dark border-2 px-6"
+                  className="cursor-pointer text-blue-dark bg-pink-light border-blue-dark border-2 px-6"
                   onClick={handleAccept}
                 >
                   Approve and bet

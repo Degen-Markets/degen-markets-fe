@@ -15,10 +15,14 @@ const config: Config = {
       },
       colors: {
         blue: {
-          dark: "#003A55",
+          dark: "rgb(34, 43, 55)",
         },
         yellow: {
+          light: "#fcedbd",
           dark: "#E9BF2D",
+        },
+        pink: {
+          light: "#f4b6ec",
         },
       },
     },

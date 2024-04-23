@@ -58,7 +58,7 @@ const CreateBetSuccess = () => {
       </div>
       <div className="flex justify-center">
         <BetCountdown
-          classNames="bg-blue-dark w-max p-2 border-2 border-yellow-dark"
+          classNames="bg-blue-dark w-max p-2 border-2 border-pink-light"
           betCreationTimestamp={creationTimestamp}
           duration={60 * 60 * 4 * 1000}
         />
@@ -77,13 +77,13 @@ const CreateBetSuccess = () => {
       <br />
       <div className="flex justify-center gap-[60px]">
         <button
-          className="text-blue-dark bg-yellow-dark px-3 py-1 border-2 border-blue-dark"
+          className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
           onClick={handleShare}
         >
           Share
         </button>
         <button
-          className="text-blue-dark bg-yellow-dark px-3 py-1 border-2 border-blue-dark"
+          className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
           onClick={handleCopy}
         >
           Copy

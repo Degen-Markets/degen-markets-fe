@@ -31,7 +31,7 @@ const AcceptBetSuccess = () => {
       </div>
       <div className="flex justify-center">
         <BetCountdown
-          classNames="bg-blue-dark w-max p-2 border-2 border-yellow-dark"
+          classNames="bg-blue-dark w-max p-2 border-2 border-pink-light"
           betCreationTimestamp={creationTimestamp}
           duration={durationInMs}
           message="Bet ends in"

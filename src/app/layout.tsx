@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
+import Navbar from "@/app/components/Navbar";
+import PageWrapper from "@/app/components/PageWrapper";
+import React from "react";
+import Footer from "@/app/components/Footer";
 
 export const metadata: Metadata = {
   title: "Degen Markets",
@@ -15,11 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className="text-2xl bg-cover bg-center bg-no-repeat min-h-screen"
-        style={{ backgroundImage: "url('/bet-bg.svg')" }}
-      >
-        <Providers>{children}</Providers>
+      <body className="text-2xl bg-cover bg-center bg-no-repeat min-h-screen">
+        <Providers>
+          <Navbar />
+          <PageWrapper>{children}</PageWrapper>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

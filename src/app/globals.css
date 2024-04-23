@@ -27,11 +27,14 @@ body {
   font-family: "Jersey 10", sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    to right,
+    #5bdee6,
+    #4dc9de,
+    #44b3d5,
+    #309bcb,
+    #1f77be,
+    #0050af
+  );
 }
 
 @layer utilities {
@@ -51,4 +54,80 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.border-gradient {
+  border: double 10px transparent;
+  border-radius: 90px;
+  background-image: linear-gradient(rgb(34, 43, 55), rgb(34, 43, 55)),
+    linear-gradient(to right, #fcedbd, #f4b6ec);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: background-image 0.3s ease;
+}
+
+.border-gradient-card-top {
+  border: double 4px transparent;
+  border-bottom: none;
+  background-image: linear-gradient(rgb(34, 43, 55), rgb(34, 43, 55)),
+    linear-gradient(to right, #fcedbd, #f4b6ec);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: background-image 0.3s ease;
+}
+
+.border-gradient-card-bottom {
+  border: double 4px transparent;
+  background-image: linear-gradient(rgb(34, 43, 55), rgb(34, 43, 55)),
+    linear-gradient(to right, #fcedbd, #f4b6ec);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: background-image 0.3s ease;
+}
+
+.border-gradient:hover {
+  background-image: linear-gradient(rgb(34, 43, 55), rgb(34, 43, 55)),
+    linear-gradient(to left, #fcedbd, #f4b6ec);
+}
+
+.gradient {
+  background: linear-gradient(to right, #fcedbd, #f4b6ec);
+}
+.gradient:hover {
+  background: linear-gradient(to left, #fcedbd, #f4b6ec);
+}
+
+.masked-button {
+  background: linear-gradient(to right, #fcedbd, #f4b6ec);
+}
+
+.masked-button-text {
+  background: linear-gradient(to right, #fcedbd, #f4b6ec);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-button-arrow {
+  color: #f3aef3;
+}
+
+.animated-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.animated-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 50%;
+  height: 1px;
+  background-color: #fff;
+  transition: width 0.3s;
+}
+
+.animated-link:hover::after {
+  width: 100%;
 }

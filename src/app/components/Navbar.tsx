@@ -23,7 +23,7 @@ const Navbar: React.FC<{}> = ({}) => {
         </Link>
         <div className="flex gap-4 items-center">
           <Link href={"/create-bet"}>
-            <div className="bg-neutral-950 text-neutral-200 rounded-md px-4 py-2">
+            <div className="bg-yellow-light text-blue-dark rounded-md px-4 py-2">
               create bet
             </div>
           </Link>

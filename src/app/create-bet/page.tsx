@@ -169,8 +169,8 @@ export default function CreateBet() {
       <br />
       <br />
       <div className="flex justify-center">
-        <div className="border-yellow-dark border-2 w-max flex justify-center">
-          <div className="border-yellow-dark border pr-5 pl-5 bg-blue-dark">
+        <div className="border-pink-light border-2 w-max flex justify-center">
+          <div className="border-pink-light border pr-5 pl-5 bg-blue-dark">
             AMOUNT
           </div>
           <input
@@ -191,7 +191,7 @@ export default function CreateBet() {
       </div>
       <br />
       <button
-        className={`${!isActionDisabled && "hover:bg-blue-700 cursor-pointer"} text-blue-dark font-bold py-2 px-4 rounded bg-yellow-dark border-blue-dark border-2`}
+        className={`${!isActionDisabled && "hover:bg-yellow-light cursor-pointer"} text-blue-dark font-bold py-2 px-4 rounded bg-pink-light border-blue-dark border-2`}
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
