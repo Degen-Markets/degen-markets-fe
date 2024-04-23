@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-const BetCountdown: React.FC<{ betCreationTimestamp: string }> = ({
-  betCreationTimestamp,
-}) => {
+const BetCountdown: React.FC<{
+  betCreationTimestamp: string;
+  duration: number;
+  classNames?: string;
+}> = ({ betCreationTimestamp, duration = 86400 * 1000, classNames }) => {
   const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
-    const endTime = new Date(
-      parseInt(betCreationTimestamp) * 1000 + 86400 * 1000,
-    );
+    const endTime = new Date(parseInt(betCreationTimestamp) * 1000 + duration);
 
     const updateCountdown = () => {
       const now = new Date();
@@ -35,7 +35,7 @@ const BetCountdown: React.FC<{ betCreationTimestamp: string }> = ({
   }, [betCreationTimestamp]);
 
   return (
-    <div className="tabular-nums">
+    <div className={`tabular-nums ${classNames}`}>
       <div>
         Countdown to accept bet:&nbsp;
         <span className="tracking-wider">{countdown}</span>
