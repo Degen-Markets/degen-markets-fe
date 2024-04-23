@@ -22,6 +22,7 @@ import { formatUnits, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { base } from "wagmi/chains";
+import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 
 const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
@@ -98,15 +99,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
                 {betToAccept.creator}
               </div>
             </div>
-            <div className="relative bg-blue-dark py-20">
-              <div className="text-center py-2">
-                <div className="absolute items-center top-[50%] translate-y-[calc(50%-150px)] bg-blue-dark w-[calc(100%+32px)] h-[150px] left-[50%] -translate-x-[50%]">
-                  <div className="text-[150px] flex items-center h-full justify-center">
-                    bets that:
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PixelatedHeadingContainer>bets that:</PixelatedHeadingContainer>
           </div>
           <div className="flex justify-center gap-x-4">
             <div className="bg-white border-amber-400 border-4 text-neutral-800 px-4">
