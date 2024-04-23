@@ -59,7 +59,9 @@ const Reel = <T,>({
         {title}
       </span>
       <div className="border border-blue-dark pt-[10px] text-lg text-center bg-white text-blue-dark">
-        <div onClick={handleOptionBack}>&#9650;</div>
+        <div className="cursor-pointer" onClick={handleOptionBack}>
+          &#9650;
+        </div>
         {optionsToDisplay.map((option, index) => (
           // key for small options (Up/Down) has to be the index to avoid key conflict
           <div
@@ -69,7 +71,9 @@ const Reel = <T,>({
             {option.label}
           </div>
         ))}
-        <div onClick={handleOptionForward}>&#9660;</div>
+        <div className="cursor-pointer" onClick={handleOptionForward}>
+          &#9660;
+        </div>
       </div>
     </div>
   );
