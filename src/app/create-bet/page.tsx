@@ -13,12 +13,7 @@ import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
-import {
-  useAccount,
-  useReadContract,
-  useTransactionReceipt,
-  useWriteContract,
-} from "wagmi";
+import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { redirect, useRouter } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
@@ -66,7 +61,7 @@ export default function CreateBet() {
     userAllowances[currency.label as Currency] >= valueInWei;
   const isBalanceEnough =
     userBalances[currency.label as Currency] >= valueInWei;
-  const isActionDisabled = !isBalanceEnough;
+  const isActionDisabled = !isBalanceEnough || !address;
 
   const approve = () => {
     sendApprovalTx({
@@ -107,7 +102,7 @@ export default function CreateBet() {
 
   const getActionButtonText = (): string => {
     if (!address) {
-      return "Connect Wallet";
+      return "Wallet not connected";
     }
     if (!isBalanceEnough) {
       return "Not enough balance";
@@ -196,7 +191,7 @@ export default function CreateBet() {
       </div>
       <br />
       <button
-        className="cursor-pointer hover:bg-blue-700 text-blue-dark font-bold py-2 px-4 rounded bg-yellow-dark border-blue-dark border-2"
+        className={`${!isActionDisabled && "hover:bg-blue-700 cursor-pointer"} text-blue-dark font-bold py-2 px-4 rounded bg-yellow-dark border-blue-dark border-2`}
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
