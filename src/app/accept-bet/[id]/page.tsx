@@ -1,6 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useReadContract } from "wagmi";
+import {
+  useAccount,
+  useReadContract,
+  useTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { DEGEN_MARKETS_ABI } from "../../lib/utils/bets/abis";
 import {
   DEGEN_MARKETS_ADDRESS,
@@ -14,6 +19,9 @@ import {
   getCurrencySymbolByAddress,
 } from "@/app/lib/utils/bets/helpers";
 import { formatUnits, zeroAddress } from "viem";
+import useAllowances from "@/app/lib/utils/hooks/useAllowances";
+import useBalances from "@/app/lib/utils/hooks/useBalances";
+import { base } from "wagmi/chains";
 
 const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
@@ -21,12 +29,33 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   >();
   const betId = params.id;
 
+  const { address } = useAccount();
+  const { writeContract: sendApprovalTx, data: approvalHash } =
+    useWriteContract();
+  const { writeContract: sendCreateBetTx, data: betAcceptHash } =
+    useWriteContract();
+
+  // const { isSuccess: isBetAcceptedHashSuccess } = useTransactionReceipt({
+  //   hash: betAcceptHash,
+  //   chainId: base.id,
+  // });
+  // const { isSuccess: isApprovalSuccess } = useTransactionReceipt({
+  //   hash: approvalHash,
+  //   chainId: base.id,
+  // });
+
   const result: UseReadContractReturnType = useReadContract({
     abi: DEGEN_MARKETS_ABI,
     address: DEGEN_MARKETS_ADDRESS,
     functionName: "betIdToBet",
     args: [betId],
   });
+  //
+  // const { userAllowances } = useAllowances(
+  //   isApprovalSuccess || isBetAcceptedHashSuccess,
+  //   address || zeroAddress,
+  // );
+  // const { userBalances } = useBalances(isBetAcceptedHashSuccess, address);
 
   useEffect(() => {
     if (Array.isArray(result.data) && result.data.length >= 11) {
@@ -44,9 +73,11 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         ),
         currency: result.data[7],
       };
+      console.log(result.data);
 
       setBetToAccept(localBet);
     } else {
+      console.log("error resuult data ", result.data);
       console.error(
         "Data is not available or not in expected format:",
         result.data,
@@ -61,14 +92,14 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
           <div className="bg-blue-dark border-amber-400 border-2 text-center w-3/5 mx-auto text-3xl py-2">
             <BetCoundown betCreationTimestamp={betToAccept.creationTimestamp} />
           </div>
-          <div className="flex flex-col pt-16 pb-10 ">
+          <div className="flex flex-col pt-16 pb-10">
             <div className="relative z-20">
               <div className="bg-yellow-dark border-2 text-neutral-950 border-white absolute -top-5 py-2 px-4 text-center left-[50%] -translate-x-[50%] z-20">
                 {betToAccept.creator}
               </div>
             </div>
             <div className="relative bg-blue-dark py-20">
-              <div className="text-center py-2 ">
+              <div className="text-center py-2">
                 <div className="absolute items-center top-[50%] translate-y-[calc(50%-150px)] bg-blue-dark w-[calc(100%+32px)] h-[150px] left-[50%] -translate-x-[50%]">
                   <div className="text-[150px] flex items-center h-full justify-center">
                     bets that:
@@ -79,8 +110,8 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="flex justify-center gap-x-4">
             <div className="bg-white border-amber-400 border-4 text-neutral-800 px-4">
-              {betToAccept.ticker} - {betToAccept.metric} will{" "}
-              {betToAccept.isBetOnUp ? "moon" : "rug"} in{" "}
+              {betToAccept.ticker} - {betToAccept.metric} will&nbsp;
+              {betToAccept.isBetOnUp ? "moon" : "rug"} in&nbsp;
               {betDurationInDays(betToAccept.duration)}
             </div>
             <div className="bg-white border-amber-400 border-4 text-neutral-800 px-4">

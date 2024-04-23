@@ -1,6 +1,6 @@
 "use client";
 
-import Reel from "@/app/components/Reel/Reel";
+import Reel from "@/app/components/Reel";
 import {
   DEGEN_MARKETS_ADDRESS,
   directionOptions,
