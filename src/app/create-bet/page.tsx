@@ -21,9 +21,11 @@ import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { base } from "wagmi/chains";
 import { erc20Abi } from "viem";
 import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
+import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
 
 export default function CreateBet() {
   const router = useRouter();
+  const [ethPrice, setEthPrice] = useState(3_200);
   const [ticker, setTicker] = useState(tickerOptions[0]);
   const [metric, setMetric] = useState(metricOptions[0]);
   const [direction, setDirection] = useState(directionOptions[0]);
@@ -31,6 +33,7 @@ export default function CreateBet() {
   const [currency, setCurrency] = useState<ReelOption<`0x${string}`>>(
     currencyOptions[0],
   );
+  console.log(ethPrice);
   const [value, setValue] = useState("10");
   const { address } = useAccount();
   const { writeContract: sendApprovalTx, data: approvalHash } =
@@ -125,6 +128,17 @@ export default function CreateBet() {
     }
   }, [isCreateBetTxSuccess]);
 
+  const fetchEthPrice = async () => {
+    const {
+      data: { rate },
+    } = await getETHPrice();
+    setEthPrice(Number(rate.toFixed(2)));
+  };
+
+  useEffect(() => {
+    fetchEthPrice();
+  }, []);
+
   return (
     <main className="text-center">
       <div className="flex justify-center select-none">
@@ -182,6 +196,9 @@ export default function CreateBet() {
             onChange={(e) => setValue(e.target.value)}
           />
         </div>
+      </div>
+      <div className="text-yellow-light">
+        ${(Number(value) * ethPrice).toLocaleString()}
       </div>
       <br />
       <br />
