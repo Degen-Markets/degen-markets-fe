@@ -115,7 +115,7 @@ export default function CreateBet() {
 
   return (
     <main
-      className="bg-cover bg-center bg-no-repeat w-screen min-h-screen flex-col items-center"
+      className="bg-cover bg-center bg-no-repeat min-h-screen text-center"
       style={{ backgroundImage: "url('/bet-bg.svg')" }}
     >
       <div className="text-7xl w-max pt-10 pb-10 mx-auto">
@@ -123,57 +123,66 @@ export default function CreateBet() {
           Challenge a fren
         </div>
       </div>
-      <div className="flex justify-center bg-blue-dark">
-        <Reel<string>
-          selectedOption={ticker}
-          setSelectedOption={setTicker}
-          reelOptions={tickerOptions}
-          title="Bet on:"
-        />
-        <Reel<Metric>
-          selectedOption={metric}
-          setSelectedOption={setMetric}
-          reelOptions={metricOptions}
-          title="Metric:"
-        />
-        <Reel<boolean>
-          selectedOption={direction}
-          setSelectedOption={setDirection}
-          reelOptions={directionOptions}
-          title="Direction:"
-        />
-        <Reel<number>
-          selectedOption={duration}
-          setSelectedOption={setDuration}
-          reelOptions={durationOptions}
-          title="Duration:"
-        />
-        <Reel<`0x${string}`>
-          selectedOption={currency}
-          setSelectedOption={setCurrency}
-          reelOptions={currencyOptions}
-          title="Settle Bet in:"
-        />
+      <div className="flex justify-center">
+        <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
+          <Reel<string>
+            selectedOption={ticker}
+            setSelectedOption={setTicker}
+            reelOptions={tickerOptions}
+            title="Bet on:"
+          />
+          <Reel<Metric>
+            selectedOption={metric}
+            setSelectedOption={setMetric}
+            reelOptions={metricOptions}
+            title="Metric:"
+          />
+          <Reel<boolean>
+            selectedOption={direction}
+            setSelectedOption={setDirection}
+            reelOptions={directionOptions}
+            title="Direction:"
+          />
+          <Reel<number>
+            selectedOption={duration}
+            setSelectedOption={setDuration}
+            reelOptions={durationOptions}
+            title="Duration:"
+          />
+          <Reel<`0x${string}`>
+            selectedOption={currency}
+            setSelectedOption={setCurrency}
+            reelOptions={currencyOptions}
+            title="Settle Bet in:"
+          />
+        </div>
       </div>
       <br />
       <br />
-      <input
-        className="text-black"
-        type="number"
-        lang="en-US"
-        step="any"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <div className="flex justify-center">
+        <div className="border-yellow-dark border-2 w-max flex justify-center">
+          <div className="border-yellow-dark border pr-5 pl-5 bg-blue-dark">
+            AMOUNT
+          </div>
+          <input
+            className="text-blue-dark text-center"
+            type="number"
+            lang="en-US"
+            step="any"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        </div>
+      </div>
       <br />
       <br />
-      <div>
+      <div className="text-blue-dark">
         Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
         {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
       </div>
       <br />
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="hover:bg-blue-700 text-blue-dark font-bold py-2 px-4 rounded bg-yellow-dark border-blue-dark border-2"
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >

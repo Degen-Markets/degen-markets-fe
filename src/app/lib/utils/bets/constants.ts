@@ -32,8 +32,8 @@ export const SETTLE_CURRENCY: {
   USDC: `0x${string}`;
   USDbC: `0x${string}`;
 } = {
-  ETH: zeroAddress,
   USDC: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+  ETH: zeroAddress,
   USDbC: "0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca",
 };
 
