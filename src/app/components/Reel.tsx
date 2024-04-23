@@ -55,7 +55,7 @@ const Reel = <T,>({
 
   return (
     <div>
-      <span className="p-[10px] bg-blue-dark pt-3 pb-3 border-pink-light border-2">
+      <span className="inline p-[10px] bg-blue-dark pt-3 pb-3 border-pink-light border-2 min-w-[100%]">
         {title}
       </span>
       <div className="border border-blue-dark pt-[10px] text-lg text-center bg-white text-blue-dark">

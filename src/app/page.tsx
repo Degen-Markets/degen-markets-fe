@@ -43,19 +43,6 @@ const Home = () => {
                 <br />
                 back your predictions?
               </h1>
-
-              <div>
-                <Link href="/create-bet">
-                  <button className="flex flex-row masked-button p-1 rounded-full text-3xl w-fit cursor-pointer">
-                    <span className="flex flex-row bg-blue-dark rounded-full px-2">
-                      <span className="masked-button-text flex geo-font cursor-pointer">
-                        Mama didn&apos;t raise no b
-                        <span className="gradient-button-arrow flex items-center"></span>
-                      </span>
-                    </span>
-                  </button>
-                </Link>
-              </div>
             </div>
           </div>
           {/* SCROLL DOWN */}

@@ -10,7 +10,7 @@ import {
   currencyOptions,
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
@@ -152,13 +152,13 @@ export default function CreateBet() {
             selectedOption={ticker}
             setSelectedOption={setTicker}
             reelOptions={tickerOptions}
-            title="Bet on:"
+            title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
           />
           <Reel<Metric>
             selectedOption={metric}
             setSelectedOption={setMetric}
             reelOptions={metricOptions}
-            title="Metric:"
+            title="&nbsp;Metric:&nbsp;&nbsp;"
           />
           <Reel<boolean>
             selectedOption={direction}
@@ -176,7 +176,7 @@ export default function CreateBet() {
             selectedOption={currency}
             setSelectedOption={setCurrency}
             reelOptions={currencyOptions}
-            title="Settle Bet in:"
+            title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
           />
         </div>
       </div>
@@ -198,7 +198,7 @@ export default function CreateBet() {
         </div>
       </div>
       <div className="text-yellow-light">
-        ${(Number(value) * ethPrice).toLocaleString()}
+        ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
       </div>
       <br />
       <br />
@@ -208,11 +208,16 @@ export default function CreateBet() {
       </div>
       <br />
       <button
-        className={`${!isActionDisabled && "hover:bg-yellow-light cursor-pointer"} text-blue-dark font-bold py-2 px-4 rounded bg-pink-light border-blue-dark border-2`}
+        className={`masked-button p-1 rounded-full text-3xl w-fit ${!isActionDisabled && "hover:bg-yellow-light cursor-pointer"}`}
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
-        {getActionButtonText()}
+        <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
+          <span className="masked-button-text flex geo-font cursor-pointer">
+            {getActionButtonText()}
+            <span className="gradient-button-arrow flex items-center"></span>
+          </span>
+        </span>
       </button>
     </main>
   );

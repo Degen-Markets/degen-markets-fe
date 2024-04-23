@@ -198,12 +198,17 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
             {!isBetAccepted && (
               <>
                 <div className="text-blue-dark">Not a chance...</div>
-                <div
-                  className="cursor-pointer text-blue-dark bg-pink-light border-blue-dark border-2 px-6"
+                <button
+                  className="masked-button p-1 rounded-full text-3xl w-fit cursor-pointer"
                   onClick={handleAccept}
                 >
-                  Approve and bet
-                </div>
+                  <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
+                    <span className="masked-button-text flex geo-font cursor-pointer">
+                      Approve and bet
+                      <span className="gradient-button-arrow flex items-center"></span>
+                    </span>
+                  </span>
+                </button>
               </>
             )}
           </div>
