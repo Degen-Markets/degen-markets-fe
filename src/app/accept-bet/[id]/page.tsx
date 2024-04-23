@@ -58,21 +58,25 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     <>
       <div className="h-screen w-full">
         {result && betToAccept && (
-          <div className="w-1/2">
-            <div>
+          <div className="w-1/2 mx-auto">
+            <div className="bg-blue-dark border-amber-400 border-2 text-center w-3/5 mx-auto">
               <BetCoundown
                 betCreationTimestamp={betToAccept.creationTimestamp}
               />
             </div>
-            <div className="flex flex-col">
-              <div className="bg-amber-400 border-white">
-                {betToAccept.creator}
+            <div className="flex flex-col pt-16 pb-10 ">
+              <div className="relative">
+                <div className="bg-yellow-dark border-white absolute -top-4 py-2 px-4 text-center left-[50%] -translate-x-[50%]">
+                  {betToAccept.creator}
+                </div>
               </div>
-              <div>Bets that:</div>
+              <div className="bg-blue-dark text-7xl text-center py-10">
+                Bets that:
+              </div>
             </div>
 
-            <div className="flex">
-              <div className="bg-white border-amber-400 border-4 text-neutral-800">
+            <div className="flex justify-center gap-x-4">
+              <div className="bg-blue-dark border-amber-400 border-4 text-neutral-800 px-4">
                 {betToAccept.ticker} - {betToAccept.metric} will{" "}
                 {betToAccept.isBetOnUp ? "moon" : "rug"} in{" "}
                 {betDurationInDays(betToAccept.duration)}

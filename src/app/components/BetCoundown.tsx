@@ -35,7 +35,7 @@ const BetCountdown: React.FC<{ betCreationTimestamp: string }> = ({
   }, [betCreationTimestamp]);
 
   return (
-    <div className="bg-blue-900 border-amber-400 py-1 px-2 tabular-nums">
+    <div className="tabular-nums">
       <div>Countdown to accept bet: {countdown}</div>
     </div>
   );
