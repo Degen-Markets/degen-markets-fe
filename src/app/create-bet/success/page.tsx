@@ -17,8 +17,8 @@ const CreateBetSuccess = () => {
     args: [id],
   });
   const creationTimestamp = data ? data[2] : 0;
-  const ticker = data ? data[4] : "";
-  const metric = data ? data[5] : "";
+  const ticker = data ? data[3] : "";
+  const metric = data ? data[4] : "";
   const direction = data ? (data[6] === true ? "up" : "down") : "";
 
   const handleShare = () => {

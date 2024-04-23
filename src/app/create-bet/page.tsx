@@ -39,8 +39,12 @@ export default function CreateBet() {
   const { address } = useAccount();
   const { writeContract: sendApprovalTx, data: approvalHash } =
     useWriteContract();
-  const { writeContract: sendCreateBetTx, data: createBetHash } =
-    useWriteContract();
+  const {
+    writeContract: sendCreateBetTx,
+    data: createBetHash,
+    variables: createBetVariables,
+  } = useWriteContract();
+  const id = createBetVariables?.args && createBetVariables.args[0];
   const { isSuccess: isCreateBetTxSuccess } = useTransactionReceipt({
     hash: createBetHash,
     chainId: base.id,
@@ -62,7 +66,6 @@ export default function CreateBet() {
   const isBalanceEnough =
     userBalances[currency.label as Currency] >= valueInWei;
   const isActionDisabled = !isBalanceEnough;
-  const randomId = uuid();
 
   const approve = () => {
     sendApprovalTx({
@@ -74,6 +77,7 @@ export default function CreateBet() {
   };
 
   const createBet = async () => {
+    const randomId = uuid();
     sendCreateBetTx({
       abi: DEGEN_MARKETS_ABI,
       address: DEGEN_MARKETS_ADDRESS,
@@ -115,7 +119,7 @@ export default function CreateBet() {
 
   useEffect(() => {
     if (isCreateBetTxSuccess) {
-      redirect(`/create-bet/success?id=${randomId}`);
+      redirect(`/create-bet/success?id=${id}`);
     }
   }, [isCreateBetTxSuccess]);
 
@@ -171,7 +175,7 @@ export default function CreateBet() {
             className="text-blue-dark text-center"
             type="number"
             lang="en-US"
-            step="any"
+            step=".000001" // TODO: only allow up to 6 decimals
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
