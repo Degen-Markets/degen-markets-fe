@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Providers } from "./providers";
 
-const font = localFont({ src: "../../public/fonts/Jersey10-regular.ttf" });
+const font = localFont({ src: "/fonts/Jersey10-regular.ttf" });
 
 export const metadata: Metadata = {
   title: "Degen Markets",
