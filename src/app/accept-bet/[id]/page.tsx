@@ -56,7 +56,10 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className="h-screen w-full flex items-center justify-center">
+      <div
+        className="w-full flex items-center justify-center"
+        style={{ height: "calc(100vh - 72px)" }}
+      >
         {result && betToAccept && (
           <div className="w-1/2 mx-auto">
             <div className="bg-blue-dark border-amber-400 border-2 text-center w-3/5 mx-auto text-3xl py-2">
