@@ -115,10 +115,8 @@ export default function CreateBet() {
 
   return (
     <main className="text-center">
-      <div className="text-7xl w-max pt-10 pb-10 mx-auto">
-        <div className="text-7xl pt-10 pb-10 pl-5 pr-5 bg-blue-dark">
-          Challenge a fren
-        </div>
+      <div className="text-7xl w-max pb-10 mx-auto">
+        <div className="text-7xl py-10 px-5 bg-blue-dark">Challenge a fren</div>
       </div>
       <div className="flex justify-center select-none">
         <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
