@@ -19,7 +19,7 @@ import {
   useTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
@@ -28,6 +28,7 @@ import { erc20Abi } from "viem";
 import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 
 export default function CreateBet() {
+  const router = useRouter();
   const [ticker, setTicker] = useState(tickerOptions[0]);
   const [metric, setMetric] = useState(metricOptions[0]);
   const [direction, setDirection] = useState(directionOptions[0]);
@@ -125,7 +126,7 @@ export default function CreateBet() {
 
   useEffect(() => {
     if (isCreateBetTxSuccess) {
-      redirect(`/create-bet/success?id=${id}`);
+      router.push(`/create-bet/success?id=${id}`);
     }
   }, [isCreateBetTxSuccess]);
 

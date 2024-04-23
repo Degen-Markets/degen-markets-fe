@@ -86,11 +86,11 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     if (Array.isArray(result.data) && result.data.length >= 11) {
-      setIsEth(result.data[8] === zeroAddress);
+      setIsEth(result.data[10] === zeroAddress);
       setValue(
         formatUnits(
           result.data[9],
-          result.data[8] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
+          result.data[10] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
         ),
       );
       const settleCcyTicker = getCurrencySymbolByAddress(result.data[10]);
@@ -105,7 +105,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         duration: result.data[6].toString(),
         value: formatUnits(
           result.data[9],
-          result.data[8] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
+          result.data[10] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
         ),
         currency: result.data[10],
       };
@@ -190,7 +190,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
               {betDurationInDays(betToAccept.duration)}
             </div>
             <div className="bg-white border-amber-400 border-4 text-neutral-800 px-4">
-              Wagered:&nbsp;{betToAccept.value.substring(0, 6)}&nbsp;
+              Wagered:&nbsp;{betToAccept.value}&nbsp;
               {getCurrencySymbolByAddress(betToAccept.currency)}
             </div>
           </div>
