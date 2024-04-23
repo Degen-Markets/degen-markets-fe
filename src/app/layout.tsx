@@ -17,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${font.className} text-2xl`}>
+      <body
+        className={`${font.className} text-2xl bg-cover bg-center bg-no-repeat min-h-screen`}
+        style={{ backgroundImage: "url('/bet-bg.svg')" }}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

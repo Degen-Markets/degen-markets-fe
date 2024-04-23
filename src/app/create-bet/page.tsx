@@ -114,10 +114,7 @@ export default function CreateBet() {
   }, [isCreateBetTxSuccess]);
 
   return (
-    <main
-      className="bg-cover bg-center bg-no-repeat min-h-screen text-center"
-      style={{ backgroundImage: "url('/bet-bg.svg')" }}
-    >
+    <main className="text-center">
       <div className="text-7xl w-max pt-10 pb-10 mx-auto">
         <div className="text-7xl pt-10 pb-10 pl-5 pr-5 bg-blue-dark">
           Challenge a fren
