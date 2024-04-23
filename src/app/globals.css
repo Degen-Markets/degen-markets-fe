@@ -16,7 +16,15 @@
   }
 }
 
+@font-face {
+  font-family: "Jersey 10";
+  src: url("../../fonts/Jersey10-Regular.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
+  font-family: "Jersey 10", sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
