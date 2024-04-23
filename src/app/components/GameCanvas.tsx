@@ -37,6 +37,14 @@ const GameCanvas = () => {
   const [playerY, setPlayerY] = useState(720); // Initial Y position
   const [currentFrame, setCurrentFrame] = useState(0);
   const [inChallengeZone, setInChallengeZone] = useState(false);
+  const [isGmeStarted, setIsGameStarted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    return () => {
+      audioRef.current?.pause();
+    };
+  }, []);
 
   const checkCollisions = (
     playerSprite: any,
@@ -172,6 +180,15 @@ const GameCanvas = () => {
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isGmeStarted) {
+        const audio = new Audio("/sounds/game-canvas.mp3");
+        audio.loop = true;
+        audioRef.current = audio;
+        audio.play().catch((error) => {
+          console.error("Error playing audio:", error);
+        });
+        setIsGameStarted(true);
+      }
       let newDirection = direction;
       let frameChangeOccurred = false;
       let newX = playerX;
