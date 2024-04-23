@@ -216,7 +216,7 @@ const GameCanvas = () => {
           newY += MOVE_STEP;
           break;
         case "Enter":
-          if (inChallengeZone) {
+          if (checkChallengeZone(newX, newY)) {
             router.push("/create-bet");
           }
           break;

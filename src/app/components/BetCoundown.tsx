@@ -5,10 +5,12 @@ const BetCountdown: React.FC<{
   betCreationTimestamp: string;
   duration?: number;
   classNames?: string;
+  message?: string;
 }> = ({
   betCreationTimestamp,
   duration = DEFAULT_BET_DURATION,
   classNames,
+  message = "Countdown to accept bet",
 }) => {
   const [countdown, setCountdown] = useState("");
 
@@ -42,7 +44,7 @@ const BetCountdown: React.FC<{
   return (
     <div className={`tabular-nums ${classNames}`}>
       <div>
-        Countdown to accept bet:&nbsp;
+        {message}:&nbsp;
         <span className="tracking-wider">{countdown}</span>
       </div>
     </div>

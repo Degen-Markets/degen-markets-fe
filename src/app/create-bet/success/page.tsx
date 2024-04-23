@@ -7,7 +7,7 @@ import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { useSearchParams } from "next/navigation";
 import BetCountdown from "@/app/components/BetCoundown";
 
-const AcceptBetSuccess = () => {
+const CreateBetSuccess = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const { data }: { data?: any[] } = useReadContract({
@@ -20,11 +20,10 @@ const AcceptBetSuccess = () => {
   const ticker = data ? data[3] : "";
   const metric = data ? data[4] : "";
   const direction = data ? (data[6] === true ? "up" : "down") : "";
-  const durationInMs = data ? parseInt(data[6]) * 1000 : 0;
 
   const handleShare = () => {
     if (navigator.share) {
-      const url = `${window.location.protocol}//${window.location.hostname}/accept-bet/${id}`;
+      const url = `${window.location.protocol}//${window.location.hostname}/bets/${id}`;
 
       navigator
         .share({
@@ -41,7 +40,7 @@ const AcceptBetSuccess = () => {
   };
 
   const handleCopy = async () => {
-    const url = `${window.location.protocol}//${window.location.hostname}/accept-bet/${id}`;
+    const url = `${window.location.protocol}//${window.location.hostname}/bets/${id}`;
 
     try {
       await navigator.clipboard.writeText(url);
@@ -54,15 +53,14 @@ const AcceptBetSuccess = () => {
     <main className="text-center">
       <div className="flex justify-center">
         <PixelatedHeadingContainer classNames="my-10 w-[500px]">
-          Bet Accepted!
+          Bet Created!
         </PixelatedHeadingContainer>
       </div>
       <div className="flex justify-center">
         <BetCountdown
           classNames="bg-blue-dark w-max p-2 border-2 border-yellow-dark"
           betCreationTimestamp={creationTimestamp}
-          duration={durationInMs}
-          message="Bet ends in"
+          duration={60 * 60 * 4 * 1000}
         />
       </div>
       <br />
@@ -94,4 +92,4 @@ const AcceptBetSuccess = () => {
     </main>
   );
 };
-export default AcceptBetSuccess;
+export default CreateBetSuccess;
