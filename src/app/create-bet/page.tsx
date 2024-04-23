@@ -112,10 +112,16 @@ export default function CreateBet() {
       return "Not enough balance";
     }
     if (!isAllowanceEnough) {
-      return "Approve";
+      return "Approve and bet";
     }
     return "Create Bet";
   };
+
+  useEffect(() => {
+    if (isApprovalSuccess) {
+      createBet();
+    }
+  }, [isApprovalSuccess]);
 
   useEffect(() => {
     if (isCreateBetTxSuccess) {
