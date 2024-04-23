@@ -8,6 +8,7 @@ import {
 } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "../../lib/utils/bets/abis";
 import {
+  DEFAULT_BET_DURATION,
   DEGEN_MARKETS_ADDRESS,
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
@@ -78,14 +79,18 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     functionName: "betIdToBet",
     args: [betId],
   });
+  const isBetAccepted = result.data
+    ? (result.data as any[])[7] !== zeroAddress
+    : false;
+  const duration = result.data ? parseInt((result.data as any[])[6]) * 1000 : 0;
 
   useEffect(() => {
     if (Array.isArray(result.data) && result.data.length >= 11) {
-      setIsEth(result.data[7] === zeroAddress);
+      setIsEth(result.data[8] === zeroAddress);
       setValue(
         formatUnits(
           result.data[9],
-          result.data[7] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
+          result.data[8] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
         ),
       );
       const settleCcyTicker = getCurrencySymbolByAddress(result.data[10]);
@@ -100,7 +105,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         duration: result.data[6].toString(),
         value: formatUnits(
           result.data[9],
-          result.data[7] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
+          result.data[8] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
         ),
         currency: result.data[10],
       };
@@ -160,7 +165,13 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
       {result && betToAccept && (
         <div className="w-1/2 mx-auto">
           <div className="bg-blue-dark border-amber-400 border-2 text-center w-3/5 mx-auto text-3xl py-2">
-            <BetCoundown betCreationTimestamp={betToAccept.creationTimestamp} />
+            <BetCoundown
+              betCreationTimestamp={betToAccept.creationTimestamp}
+              duration={isBetAccepted ? duration : DEFAULT_BET_DURATION}
+              message={
+                isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
+              }
+            />
           </div>
           <div className="flex flex-col pt-16 pb-10">
             <div className="relative z-20">
@@ -184,13 +195,17 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
             </div>
           </div>
           <div className="flex flex-col gap-3 items-center pt-10">
-            <div className="text-blue-dark">Not a chance...</div>
-            <div
-              className="text-blue-dark bg-yellow-dark border-blue-dark border-2 px-6"
-              onClick={handleAccept}
-            >
-              Approve and bet
-            </div>
+            {!isBetAccepted && (
+              <>
+                <div className="text-blue-dark">Not a chance...</div>
+                <div
+                  className="text-blue-dark bg-yellow-dark border-blue-dark border-2 px-6"
+                  onClick={handleAccept}
+                >
+                  Approve and bet
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
