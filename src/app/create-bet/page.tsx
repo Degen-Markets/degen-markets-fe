@@ -178,7 +178,7 @@ export default function CreateBet() {
       </div>
       <br />
       <button
-        className="hover:bg-blue-700 text-blue-dark font-bold py-2 px-4 rounded bg-yellow-dark border-blue-dark border-2"
+        className="cursor-pointer hover:bg-blue-700 text-blue-dark font-bold py-2 px-4 rounded bg-yellow-dark border-blue-dark border-2"
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >

@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, ReactNode } from "react";
 
 const PixelatedHeadingContainer: React.FC<
-  { classNames: string } & PropsWithChildren
+  { classNames?: string } & PropsWithChildren
 > = ({ children, classNames }) => {
   return (
     <div className={`relative bg-blue-dark py-20 ${classNames}`}>
