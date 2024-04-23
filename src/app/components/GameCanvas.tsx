@@ -226,7 +226,12 @@ const GameCanvas = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [direction, FRAME_COUNT, MOVE_STEP, playerX, playerY]);
 
-  return <canvas ref={canvasRef} className="mx-auto bg-blue-dark pt-5 mt-5" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="bg-blue-dark pt-14 flex w-auto h-screen mx-auto"
+    />
+  );
 };
 
 export default GameCanvas;
