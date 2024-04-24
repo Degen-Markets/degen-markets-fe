@@ -31,12 +31,16 @@ const Bets = () => {
 
   return (
     <div>
-      <div className="text-center text-7xl">Open Bets:</div>
-      <div className="p-5 flex flex-wrap gap-[40px] justify-center">
-        {openBets.map((bet) => (
-          <BetCard key={bet.id} bet={bet} />
-        ))}
-      </div>
+      {openBets.length > 0 && (
+        <>
+          <div className="text-center text-7xl">Open Bets:</div>
+          <div className="p-5 flex flex-wrap gap-[40px] justify-center">
+            {openBets.map((bet) => (
+              <BetCard key={bet.id} bet={bet} />
+            ))}
+          </div>
+        </>
+      )}
       <div className="text-center text-7xl">Expired Bets:</div>
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {expiredBets.map((bet) => (
