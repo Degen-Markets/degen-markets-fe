@@ -6,7 +6,7 @@ import React from "react";
 
 const BetCard = ({ bet }: { bet: BetResponse }) => {
   return (
-    <div className="bg-blue-dark p-3 w-[300px]">
+    <div className="bg-blue-dark p-3 w-[300px] rounded">
       <div className="bg-blue-medium text-blue-dark my-2 p-1">
         {prettifyAddress(bet.creator)} is betting that...
       </div>
