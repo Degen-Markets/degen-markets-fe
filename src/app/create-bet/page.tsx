@@ -142,11 +142,11 @@ export default function CreateBet() {
 
   return (
     <>
-      <div className="z-[-2] absolute w-full top-[100px] z-[3]">
+      <div className="absolute w-full top-[100px]">
         <Marquee speed={150}>
           <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
         </Marquee>
-        <Marquee speed={100}>
+        <Marquee speed={100} className="z-[-2]">
           <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
         </Marquee>
       </div>
