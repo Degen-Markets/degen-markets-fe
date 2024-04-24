@@ -22,6 +22,7 @@ import { base } from "wagmi/chains";
 import { erc20Abi } from "viem";
 import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
+import Marquee from "react-fast-marquee";
 
 export default function CreateBet() {
   const router = useRouter();
@@ -140,85 +141,95 @@ export default function CreateBet() {
   }, []);
 
   return (
-    <main className="text-center">
-      <div className="flex justify-center select-none">
-        <PixelatedHeadingContainer classNames="my-10 w-[600px]">
-          Challenge a fren
-        </PixelatedHeadingContainer>
+    <>
+      <div className="z-[-2] absolute w-full top-[100px] z-[3]">
+        <Marquee speed={150}>
+          <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
+        </Marquee>
+        <Marquee speed={100}>
+          <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
+        </Marquee>
       </div>
-      <div className="flex justify-center select-none">
-        <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
-          <Reel<string>
-            selectedOption={ticker}
-            setSelectedOption={setTicker}
-            reelOptions={tickerOptions}
-            title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
-          />
-          <Reel<Metric>
-            selectedOption={metric}
-            setSelectedOption={setMetric}
-            reelOptions={metricOptions}
-            title="&nbsp;Metric:&nbsp;&nbsp;"
-          />
-          <Reel<boolean>
-            selectedOption={direction}
-            setSelectedOption={setDirection}
-            reelOptions={directionOptions}
-            title="Direction:"
-          />
-          <Reel<number>
-            selectedOption={duration}
-            setSelectedOption={setDuration}
-            reelOptions={durationOptions}
-            title="Duration:"
-          />
-          <Reel<`0x${string}`>
-            selectedOption={currency}
-            setSelectedOption={setCurrency}
-            reelOptions={currencyOptions}
-            title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
-          />
+      <main className="text-center">
+        <div className="flex justify-center select-none">
+          <PixelatedHeadingContainer classNames="my-10 w-[600px]">
+            Challenge a fren
+          </PixelatedHeadingContainer>
         </div>
-      </div>
-      <br />
-      <br />
-      <div className="flex justify-center">
-        <div className="border-pink-light border-2 w-max flex justify-center">
-          <div className="border-pink-light border pr-5 pl-5 bg-blue-dark">
-            AMOUNT
+        <div className="flex justify-center select-none">
+          <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
+            <Reel<string>
+              selectedOption={ticker}
+              setSelectedOption={setTicker}
+              reelOptions={tickerOptions}
+              title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
+            />
+            <Reel<Metric>
+              selectedOption={metric}
+              setSelectedOption={setMetric}
+              reelOptions={metricOptions}
+              title="&nbsp;Metric:&nbsp;&nbsp;"
+            />
+            <Reel<boolean>
+              selectedOption={direction}
+              setSelectedOption={setDirection}
+              reelOptions={directionOptions}
+              title="Direction:"
+            />
+            <Reel<number>
+              selectedOption={duration}
+              setSelectedOption={setDuration}
+              reelOptions={durationOptions}
+              title="Duration:"
+            />
+            <Reel<`0x${string}`>
+              selectedOption={currency}
+              setSelectedOption={setCurrency}
+              reelOptions={currencyOptions}
+              title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
+            />
           </div>
-          <input
-            className="text-blue-dark text-center"
-            type="number"
-            lang="en-US"
-            step=".000001" // TODO: only allow up to 6 decimals
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
         </div>
-      </div>
-      <div className="text-yellow-light">
-        ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
-      </div>
-      <br />
-      <br />
-      <div className="text-blue-dark">
-        Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
-        {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
-      </div>
-      <br />
-      <button
-        className={`masked-button p-1 rounded-full text-3xl w-fit ${!isActionDisabled && "hover:bg-yellow-light cursor-pointer"}`}
-        disabled={isActionDisabled}
-        onClick={handleActionButtonClick}
-      >
-        <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
-          <span className="masked-button-text flex geo-font cursor-pointer">
-            {getActionButtonText()}
-            <span className="gradient-button-arrow flex items-center"></span>
+        <br />
+        <br />
+        <div className="flex justify-center">
+          <div className="border-pink-light border-2 w-max flex justify-center">
+            <div className="border-pink-light border pr-5 pl-5 bg-blue-dark">
+              AMOUNT
+            </div>
+            <input
+              className="text-blue-dark text-center"
+              type="number"
+              lang="en-US"
+              step=".000001" // TODO: only allow up to 6 decimals
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="text-yellow-light">
+          ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
+        </div>
+        <br />
+        <br />
+        <div className="text-blue-dark">
+          Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
+          {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
+        </div>
+        <br />
+        <button
+          className={`masked-button p-1 rounded-full text-3xl w-fit ${!isActionDisabled && "hover:bg-yellow-light cursor-pointer"}`}
+          disabled={isActionDisabled}
+          onClick={handleActionButtonClick}
+        >
+          <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
+            <span className="masked-button-text flex geo-font cursor-pointer">
+              {getActionButtonText()}
+              <span className="gradient-button-arrow flex items-center"></span>
+            </span>
           </span>
-        </span>
-      </button>
-    </main>
+        </button>
+      </main>
+    </>
   );
 }
