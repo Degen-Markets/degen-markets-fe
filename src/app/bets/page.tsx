@@ -41,7 +41,7 @@ const Bets = () => {
           </div>
         </>
       )}
-      <div className="text-center text-7xl">Expired Bets:</div>
+      <div className="text-center text-7xl">Closed Bets:</div>
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {expiredBets.map((bet) => (
           <BetCard key={bet.id} bet={bet} />
