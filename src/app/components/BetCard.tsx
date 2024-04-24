@@ -3,8 +3,11 @@ import { prettifyAddress } from "@/app/lib/utils/evm";
 import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
 import Link from "next/link";
 import React from "react";
+import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
 
 const BetCard = ({ bet }: { bet: BetResponse }) => {
+  const isBetExpired =
+    parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <= Date.now();
   return (
     <div className="bg-blue-dark p-3 w-[300px] rounded">
       <div className="bg-blue-medium text-blue-dark my-2 p-1">
@@ -20,7 +23,7 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
           <button className="flex flex-row masked-button p-1 rounded-full text-3xl w-fit cursor-pointer">
             <span className="flex flex-row bg-blue-dark rounded-full px-2 py-0.5">
               <span className="masked-button-text flex geo-font cursor-pointer">
-                Accept bet
+                {isBetExpired ? "View details" : "Accept bet"}
                 <span className="gradient-button-arrow flex items-center"></span>
               </span>
             </span>
