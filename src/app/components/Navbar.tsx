@@ -22,6 +22,16 @@ const Navbar: React.FC<{}> = ({}) => {
           </div>
         </Link>
         <div className="flex gap-4 items-center">
+          <Link href="/bets">
+            <button className="flex flex-row masked-button p-1 rounded-full text-3xl w-fit cursor-pointer">
+              <span className="flex flex-row bg-blue-dark rounded-full px-2 py-0.5">
+                <span className="masked-button-text flex geo-font cursor-pointer">
+                  existing bets
+                  <span className="gradient-button-arrow flex items-center"></span>
+                </span>
+              </span>
+            </button>
+          </Link>
           <Link href="/create-bet">
             <button className="flex flex-row masked-button p-1 rounded-full text-3xl w-fit cursor-pointer">
               <span className="flex flex-row bg-blue-dark rounded-full px-2 py-0.5">
