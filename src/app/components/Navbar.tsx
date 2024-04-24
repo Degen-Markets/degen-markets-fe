@@ -15,11 +15,11 @@ const Navbar: React.FC<{}> = ({}) => {
           </div>
         </Link>
         <div className="flex gap-4 items-center">
-          {/*<Link href="/bets">*/}
-          {/*  <button className="py-0.5 px-1 rounded-full text-3xl text-yellow-light w-fit cursor-pointer border-yellow-light border-4">*/}
-          {/*    existing bets*/}
-          {/*  </button>*/}
-          {/*</Link>*/}
+          <Link href="/bets">
+            <button className="py-0.5 px-1 rounded-full text-3xl text-yellow-light w-fit cursor-pointer border-yellow-light border-4">
+              existing bets
+            </button>
+          </Link>
           <Link href="/create-bet">
             <button className="py-0.5 px-1 rounded-full text-3xl text-pink-light w-fit cursor-pointer border-pink-light border-4">
               create bet
