@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         blue: {
+          medium: "#2387B6",
           dark: "rgb(34, 43, 55)",
         },
         yellow: {

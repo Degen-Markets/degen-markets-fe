@@ -44,3 +44,21 @@ export type CreatedBetObject = {
   value: string;
   currency: `0x${string}`;
 };
+
+export type BetResponse = {
+  id: string;
+  creator: string;
+  creationTimestamp: string;
+  acceptor: string | null;
+  ticker: Ticker;
+  metric: Metric;
+  isBetOnUp: boolean;
+  duration: string;
+  value: string;
+  currency: string;
+  startingMetricValue: number | null;
+  endingMetricValue: number | null;
+  winner: string | null;
+};
+
+export type BetsResponse = BetResponse[];
