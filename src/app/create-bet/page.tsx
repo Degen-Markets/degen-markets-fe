@@ -142,14 +142,6 @@ export default function CreateBet() {
 
   return (
     <>
-      <div className="absolute w-full top-[100px]">
-        <Marquee speed={80}>
-          <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
-        </Marquee>
-        <Marquee speed={55} className="z-[-2]">
-          <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
-        </Marquee>
-      </div>
       <main className="text-center">
         <div className="flex justify-center select-none">
           <PixelatedHeadingContainer classNames="my-10 w-[600px]">
