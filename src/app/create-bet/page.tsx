@@ -14,15 +14,14 @@ import React, { useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { base } from "wagmi/chains";
 import { erc20Abi } from "viem";
-import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
-import Marquee from "react-fast-marquee";
+import { Heading, Headline } from "@/app/components/Heading";
 
 export default function CreateBet() {
   const router = useRouter();
@@ -144,9 +143,9 @@ export default function CreateBet() {
     <>
       <main className="text-center">
         <div className="flex justify-center select-none">
-          <PixelatedHeadingContainer classNames="my-10 w-[600px]">
-            Challenge a fren
-          </PixelatedHeadingContainer>
+          <Heading className="my-10">
+            <Headline>Challenge a fren</Headline>
+          </Heading>
         </div>
         <div className="flex justify-center select-none">
           <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">

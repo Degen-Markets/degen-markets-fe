@@ -1,11 +1,11 @@
 "use client";
 
-import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 import { useReadContract } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { useSearchParams } from "next/navigation";
 import BetCountdown from "@/app/components/BetCoundown";
+import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 
 const CreateBetSuccess = () => {
   const searchParams = useSearchParams();
@@ -52,16 +52,15 @@ const CreateBetSuccess = () => {
   return (
     <main className="text-center">
       <div className="flex justify-center">
-        <PixelatedHeadingContainer classNames="my-10 w-[500px]">
-          Bet Created!
-        </PixelatedHeadingContainer>
-      </div>
-      <div className="flex justify-center">
-        <BetCountdown
-          classNames="bg-blue-dark w-max p-2 border-2 border-pink-light"
-          betCreationTimestamp={creationTimestamp}
-          duration={60 * 60 * 4 * 1000}
-        />
+        <Heading className="mb-8">
+          <Headline>Bet Created!</Headline>
+          <SubHeadline isTop={false}>
+            <BetCountdown
+              betCreationTimestamp={creationTimestamp}
+              duration={60 * 60 * 4 * 1000}
+            />
+          </SubHeadline>
+        </Heading>
       </div>
       <br />
       <br />
