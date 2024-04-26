@@ -29,10 +29,10 @@ const SubHeadline: FC<
   return (
     <div
       className={cx(
-        "bg-blue-dark  p-2 border-2 border-pink-light inline-block mt-8 ",
+        "bg-blue-dark  p-2 border-2 border-pink-light inline-block -translate-y-1/2",
         className,
         {
-          "absolute mt-0 left-[50%] -translate-x-[50%] -top-[50%] translate-y-[calc(50%-10px)]":
+          "absolute mt-0 left-[50%] -translate-x-[50%] -top-[20px] -translate-y-1/2":
             isTop,
         },
       )}
