@@ -131,3 +131,12 @@ input[type="number"] {
 .animated-link:hover::after {
   width: 100%;
 }
+
+.eight-bit-border-20 {
+  box-shadow:
+    20px 0 rgb(34 43 55),
+    -20px 0 rgb(34 43 55),
+    0 -20px rgb(34 43 55),
+    0 20px rgb(34 43 55);
+  margin: 20px auto;
+}

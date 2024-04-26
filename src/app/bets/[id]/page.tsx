@@ -13,7 +13,6 @@ import {
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
 import { CreatedBetObject, Currency } from "@/app/lib/utils/bets/types";
-import { type UseReadContractReturnType } from "wagmi";
 import BetCoundown from "@/app/components/BetCoundown";
 import {
   betDurationInDays,
@@ -30,8 +29,8 @@ import {
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { base } from "wagmi/chains";
-import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
 import { useRouter } from "next/navigation";
+import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 
 const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
@@ -173,15 +172,18 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
               }
             />
           </div>
-          <div className="flex flex-col pt-16 pb-10">
-            <div className="relative z-20">
-              <div className="bg-pink-light border-2 text-neutral-950 border-yellow-light absolute -top-5 py-2 px-4 text-center left-[50%] -translate-x-[50%] z-20">
+          <div className="pt-16 pb-10">
+            <Heading>
+              <Headline>Bets that</Headline>
+              <SubHeadline
+                isTop={true}
+                className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
+              >
                 {betToAccept.creator === address
                   ? "Created by you"
                   : betToAccept.creator}
-              </div>
-            </div>
-            <PixelatedHeadingContainer>bets that:</PixelatedHeadingContainer>
+              </SubHeadline>
+            </Heading>
           </div>
           <div className="flex justify-center gap-x-4">
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
