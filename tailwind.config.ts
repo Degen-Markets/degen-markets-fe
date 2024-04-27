@@ -26,6 +26,14 @@ const config: Config = {
           light: "#f4b6ec",
         },
       },
+      boxShadow: {
+        black:
+          "4px 0px 0px 0px rgba(0,0,255,1), 0px 4px 0px 0px rgba(0,0,255,1), -4px 0px 0px 0px rgba(0,0,255,1), 0px -4px 0px 0px rgba(0,0,255,1), inset -8px -8px rgba(0,0,0,0.01)",
+        button:
+          "4px 0px 0px 0px rgba(0,0,0,1), 0px 4px 0px 0px rgba(0,0,0,1), -4px 0px 0px 0px rgba(0,0,0,1), 0px -4px 0px 0px rgba(0,0,0,1), inset -8px -8px rgba(0,0,0,0.1)",
+        "button-pressed":
+          "4px 0px 0px 0px rgba(0,0,0,1), 0px 4px 0px 0px rgba(0,0,0,1), -4px 0px 0px 0px rgba(0,0,0,1), 0px -4px 0px 0px rgba(0,0,0,1), inset 8px 8px rgba(0,0,0,0.1)",
+      },
     },
   },
   plugins: [],
