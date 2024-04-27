@@ -1,6 +1,5 @@
 "use client";
 import Marquee from "react-fast-marquee";
-import Link from "next/link";
 
 const fellowsCards = [
   { title: "cryptoles" },
@@ -52,7 +51,7 @@ const Home = () => {
             </h5>
             <img
               src="./pixelated/down-arrow.png"
-              className="bounce2"
+              className="animate-bounce"
               width={100}
               height={100}
               alt=""
@@ -65,11 +64,11 @@ const Home = () => {
           id="fellow-degens"
         >
           <h1 className="arcade-font font-bold text-4xl">Fellow DEGENS</h1>
-          <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl3:grid-cols-7 gap-20">
+          <div className="flex flex-wrap gap-20 w-[60%] justify-center">
             {fellowsCards.map((card, index) => (
               <div
                 key={index + card.title}
-                className="flex flex-col items-center gap-2"
+                className="flex flex-col justify-center items-center gap-2"
               >
                 <img
                   src={`./fellows/${card.title}.png`}
