@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   useAccount,
   useReadContract,
@@ -27,40 +28,24 @@ import {
   zeroAddress,
 } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { base } from "wagmi/chains";
-import { useRouter } from "next/navigation";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 
-const AcceptBetPage = ({ params }: { params: { id: string } }) => {
+const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
     CreatedBetObject | undefined
   >();
-  const betId = params.id;
-
-  const router = useRouter();
-
   const { address } = useAccount();
-
-  const { userAllowances } = useAllowances(
-    // isApprovalSuccess || isCreateBetTxSuccess,
-    false,
-    address || zeroAddress,
-  );
-  const { userBalances } = useBalances(false, address);
-
-  const [isEth, setIsEth] = useState<boolean>(false);
+  const router = useRouter();
+  const [isEth, setIsEth] = useState(false);
   const [value, setValue] = useState("10");
-  const [settleCurrency, setSettleCurrency] = useState<Currency>(Currency.ETH);
-  const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
-  const isAllowanceEnough =
-    userAllowances[settleCurrency as Currency] >= valueInWei;
-  // const isBalanceEnough =
-  //   userBalances[currency.label as Currency] >= valueInWei;
+  const [settleCurrency, setSettleCurrency] = useState(Currency.ETH);
+  const [isBetAccepted, setIsBetAccepted] = useState(false);
+  const [duration, setDuration] = useState(0);
 
-  const { writeContract: sendApprovalTx, data: approvalHash } =
+  const { data: approvalHash, writeContract: sendApprovalTx } =
     useWriteContract();
-  const { writeContract: sendAcceptBetTx, data: betAcceptHash } =
+  const { data: betAcceptHash, writeContract: sendAcceptBetTx } =
     useWriteContract();
 
   const { isSuccess: isBetAcceptedHashSuccess } = useTransactionReceipt({
@@ -76,15 +61,11 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     abi: DEGEN_MARKETS_ABI,
     address: DEGEN_MARKETS_ADDRESS,
     functionName: "betIdToBet",
-    args: [betId],
+    args: [id],
   });
-  const isBetAccepted = result.data
-    ? (result.data as any[])[7] !== zeroAddress
-    : false;
-  const duration = result.data ? parseInt((result.data as any[])[6]) * 1000 : 0;
 
   useEffect(() => {
-    if (Array.isArray(result.data) && result.data.length >= 11) {
+    if (result.data && Array.isArray(result.data) && result.data.length >= 11) {
       setIsEth(result.data[10] === zeroAddress);
       setValue(
         formatUnits(
@@ -93,8 +74,8 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         ),
       );
       const settleCcyTicker = getCurrencySymbolByAddress(result.data[10]);
-      setSettleCurrency(settleCcyTicker ?? Currency.ETH);
-      const localBet: CreatedBetObject = {
+      setSettleCurrency(settleCcyTicker || Currency.ETH);
+      const localBet = {
         id: result.data[0],
         creator: result.data[1],
         creationTimestamp: result.data[2].toString(),
@@ -108,19 +89,26 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         ),
         currency: result.data[10],
       };
-
       setBetToAccept(localBet);
+      setIsBetAccepted(result.data[7] !== zeroAddress);
+      setDuration(parseInt(result.data[6]) * 1000);
     } else {
       console.error(
-        "Data is not available or not in expected format:",
+        "Data is not available or not in the expected format:",
         result.data,
       );
     }
   }, [result.data]);
 
+  const { userAllowances } = useAllowances(
+    isApprovalSuccess || isBetAcceptedHashSuccess,
+    address || zeroAddress,
+  );
+  const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
+  const isAllowanceEnough = userAllowances[settleCurrency] >= valueInWei;
+
   const acceptBet = () => {
     if (betToAccept) {
-      console.log("bet value is ", betToAccept.value);
       sendAcceptBetTx({
         abi: DEGEN_MARKETS_ABI,
         address: DEGEN_MARKETS_ADDRESS,
@@ -130,6 +118,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
       });
     }
   };
+
   const approve = () => {
     sendApprovalTx({
       abi: erc20Abi,
@@ -142,10 +131,16 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const handleAccept = () => {
     if (!isAllowanceEnough) {
       approve();
-      return;
+    } else {
+      acceptBet();
     }
-    acceptBet();
   };
+
+  useEffect(() => {
+    if (isBetAcceptedHashSuccess) {
+      setIsBetAccepted(true);
+    }
+  }, [isBetAcceptedHashSuccess]);
 
   useEffect(() => {
     if (isApprovalSuccess) {
@@ -154,10 +149,10 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   }, [isApprovalSuccess]);
 
   useEffect(() => {
-    if (isBetAcceptedHashSuccess) {
-      router.push(`/bets/${betId}/success`);
+    if (isBetAccepted) {
+      router.push(`/bets/${id}/success`);
     }
-  }, [isBetAcceptedHashSuccess]);
+  }, [isBetAccepted, id, router]);
 
   return (
     <>
