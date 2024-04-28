@@ -18,6 +18,7 @@ export const Button: FC<ButtonProps> = ({
     <div>
       <button
         className={`text-white py-2 px-4 shadow-button  active:shadow-button-pressed ${className} ${buttonSize}`}
+        {...props}
       >
         {children}
       </button>
