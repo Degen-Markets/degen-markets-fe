@@ -1,6 +1,11 @@
 import React from "react";
 import Link from "next/link";
-import { CustomConnectButton } from "@/app/components/Button";
+import {
+  ButtonPrimary,
+  ButtonTransparent,
+  CustomConnectButton,
+} from "@/app/components/Button";
+import { ButtonBlue } from "@/app/components/Button/NavbarButtons";
 
 const Navbar: React.FC<{}> = ({}) => {
   return (
@@ -13,16 +18,12 @@ const Navbar: React.FC<{}> = ({}) => {
             </div>
           </div>
         </Link>
-        <div className="flex gap-3 items-center ">
+        <div className="flex gap-5 items-center ">
           <Link href="/bets">
-            <button className="py-1 px-3 rounded-full text-3xl text-yellow-light w-fit cursor-pointer border-yellow-light border-4">
-              existing bets
-            </button>
+            <ButtonBlue>Existing bets</ButtonBlue>
           </Link>
           <Link href="/create-bet">
-            <button className="py-1 px-3 rounded-full text-3xl text-pink-light w-fit cursor-pointer border-pink-light border-4">
-              create bet
-            </button>
+            <ButtonBlue>create bet</ButtonBlue>
           </Link>
           <CustomConnectButton />
         </div>

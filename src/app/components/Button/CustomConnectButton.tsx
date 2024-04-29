@@ -1,7 +1,8 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
-import { GradientButton } from "@/app/components/Button/index";
+import { ButtonGradient } from "@/app/components/Button/index";
+import { ButtonBlue } from "@/app/components/Button/NavbarButtons";
 
 export const CustomConnectButton: React.FC<{}> = ({}) => {
   return (
@@ -28,25 +29,25 @@ export const CustomConnectButton: React.FC<{}> = ({}) => {
             {(() => {
               if (!mounted || !account || !chain) {
                 return (
-                  <GradientButton onClick={openConnectModal} type="button">
+                  <ButtonBlue onClick={openConnectModal} type="button">
                     Connect Wallet
-                  </GradientButton>
+                  </ButtonBlue>
                 );
               }
 
               if (chain.unsupported) {
                 return (
-                  <GradientButton onClick={openChainModal} type="button">
+                  <ButtonBlue onClick={openChainModal} type="button">
                     Wrong network
-                  </GradientButton>
+                  </ButtonBlue>
                 );
               }
 
               return (
                 <div>
-                  <GradientButton onClick={openAccountModal}>
+                  <ButtonBlue onClick={openAccountModal}>
                     {account.displayName}
-                  </GradientButton>
+                  </ButtonBlue>
                 </div>
               );
             })()}

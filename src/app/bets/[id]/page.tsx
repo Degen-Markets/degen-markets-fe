@@ -31,6 +31,7 @@ import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { base } from "wagmi/chains";
 import { useRouter } from "next/navigation";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
+import { ButtonPrimary } from "@/app/components/Button";
 
 const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
@@ -200,17 +201,9 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
             {!isBetAccepted && (
               <>
                 <div className="text-blue-dark">Not a chance...</div>
-                <button
-                  className="masked-button p-1 rounded-full text-3xl w-fit cursor-pointer"
-                  onClick={handleAccept}
-                >
-                  <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
-                    <span className="masked-button-text flex geo-font cursor-pointer">
-                      Approve and bet
-                      <span className="gradient-button-arrow flex items-center"></span>
-                    </span>
-                  </span>
-                </button>
+                <ButtonPrimary size={"regular"} onClick={handleAccept}>
+                  Approve and bet
+                </ButtonPrimary>
               </>
             )}
           </div>
