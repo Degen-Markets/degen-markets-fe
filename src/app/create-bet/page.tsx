@@ -145,7 +145,7 @@ export default function CreateBet() {
       <main className="text-center">
         <div className="flex justify-center select-none">
           <Heading className="my-10">
-            <Headline>Challenge a fren</Headline>
+            <Headline className="jersey-10-charted">Challenge a fren</Headline>
           </Heading>
         </div>
         <div className="flex justify-center select-none">
