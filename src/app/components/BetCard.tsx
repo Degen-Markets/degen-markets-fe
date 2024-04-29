@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import {
@@ -10,9 +9,10 @@ import {
 import { prettifyAddress } from "@/app/lib/utils/evm";
 import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
+import useToast from "@/app/components/Toast/useToast";
 
 const BetCard = ({ bet }: { bet: BetResponse }) => {
-  const router = useRouter();
+  const { showToast } = useToast();
   const { address } = useAccount();
   const isBetExpired =
     parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <= Date.now();
@@ -20,15 +20,25 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
 
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
-  const { isSuccess: isWithdrawBetSuccess } = useTransactionReceipt({
-    hash: withdrawBetHash,
-  });
+  const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
+    useTransactionReceipt({
+      hash: withdrawBetHash,
+    });
 
   useEffect(() => {
     if (isWithdrawBetSuccess) {
-      router.push(`/bets/${bet.id}/success`);
+      showToast(
+        "Your withdrawal request has been successfully processed!",
+        "success",
+      );
     }
-  }, [isWithdrawBetSuccess, bet.id, router]);
+  }, [isWithdrawBetSuccess, bet.id, showToast]);
+
+  useEffect(() => {
+    if (isWithdrawBetError) {
+      showToast("Withdrawal failed. Please try again later.", "error");
+    }
+  }, [isWithdrawBetError, showToast]);
 
   const onWithdraw = () => {
     sendWithdrawBetTx({

@@ -6,19 +6,20 @@ import { useEffect, useState } from "react";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { zeroAddress } from "viem";
 import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
+import useToast from "@/app/components/Toast/useToast";
 
 const MyBets = () => {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
   const [openBets, setOpenBets] = useState<BetsResponse>([]);
   const [closedBets, setClosedBets] = useState<BetsResponse>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { ToastComponent } = useToast();
 
   const fetchBetsByAddress = async (address: `0x${string}` | undefined) => {
     try {
       setIsLoading(true);
       const { data: fetchedBets } = await getBets();
       const currentTime = Date.now();
-
       const userBets = fetchedBets.filter((bet) => bet.creator === address);
       const userOpenBets = userBets.filter(
         (bet) =>
@@ -26,13 +27,11 @@ const MyBets = () => {
           parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION >
             currentTime,
       );
-
       const userClosedBets = userBets.filter(
         (bet) =>
           parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <=
           currentTime,
       );
-
       setOpenBets(userOpenBets);
       setClosedBets(userClosedBets);
     } catch (error) {
@@ -48,7 +47,7 @@ const MyBets = () => {
     }
   }, [address]);
 
-  if (!address) {
+  if (!isConnected) {
     return (
       <div className="text-center text-4xl">
         Please connect to view your bets.
@@ -57,7 +56,7 @@ const MyBets = () => {
   }
 
   return (
-    <div>
+    <>
       {isLoading && <div className="text-center text-4xl">Loading...</div>}
 
       {openBets.length > 0 && (
@@ -77,7 +76,9 @@ const MyBets = () => {
           <BetCard key={bet.id} bet={bet} />
         ))}
       </div>
-    </div>
+
+      {ToastComponent}
+    </>
   );
 };
 
