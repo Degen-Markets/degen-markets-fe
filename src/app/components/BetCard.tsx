@@ -4,6 +4,7 @@ import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
 import Link from "next/link";
 import React from "react";
 import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
+import { ButtonPrimary } from "@/app/components/Button";
 
 const BetCard = ({ bet }: { bet: BetResponse }) => {
   const isBetExpired =
@@ -20,14 +21,9 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
       </div>
       <div className="flex justify-center mt-4">
         <Link href={`/bets/${bet.id}`}>
-          <button className="flex flex-row masked-button p-1 rounded-full text-3xl w-fit cursor-pointer">
-            <span className="flex flex-row bg-blue-dark rounded-full px-2 py-0.5">
-              <span className="masked-button-text flex geo-font cursor-pointer">
-                {isBetExpired ? "View details" : "Accept bet"}
-                <span className="gradient-button-arrow flex items-center"></span>
-              </span>
-            </span>
-          </button>
+          <ButtonPrimary size={"regular"}>
+            {isBetExpired ? "View details" : "Accept bet"}
+          </ButtonPrimary>
         </Link>
       </div>
     </div>

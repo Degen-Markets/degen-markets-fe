@@ -25,6 +25,9 @@ const config: Config = {
         pink: {
           light: "#f4b6ec",
         },
+        purple: {
+          medium: "#8D68E6",
+        },
       },
       boxShadow: {
         black:

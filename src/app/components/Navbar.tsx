@@ -5,6 +5,7 @@ import {
   ButtonTransparent,
   CustomConnectButton,
 } from "@/app/components/Button";
+import { ButtonBlue } from "@/app/components/Button/NavbarButtons";
 
 const Navbar: React.FC<{}> = ({}) => {
   return (
@@ -19,12 +20,10 @@ const Navbar: React.FC<{}> = ({}) => {
         </Link>
         <div className="flex gap-5 items-center ">
           <Link href="/bets">
-            <ButtonTransparent size={"regular"}>
-              Existing bets
-            </ButtonTransparent>
+            <ButtonBlue>Existing bets</ButtonBlue>
           </Link>
           <Link href="/create-bet">
-            <ButtonPrimary size={"regular"}>Create Bet</ButtonPrimary>
+            <ButtonBlue>create bet</ButtonBlue>
           </Link>
           <CustomConnectButton />
         </div>
