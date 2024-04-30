@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { zeroAddress } from "viem";
 import { BET_ACCEPTANCE_TIME_LIMIT_IN_MS } from "@/app/lib/utils/bets/constants";
-import useToast from "@/app/components/Toast/useToast";
 import { getBetsByCreator } from "@/app/lib/utils/api/getBetsByCreator";
 
 const MyBets = () => {
@@ -13,7 +12,6 @@ const MyBets = () => {
   const [openBets, setOpenBets] = useState<BetsResponse>([]);
   const [closedBets, setClosedBets] = useState<BetsResponse>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { ToastComponent } = useToast();
 
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
@@ -57,7 +55,6 @@ const MyBets = () => {
       </div>
     );
   }
-
   return (
     <>
       {isLoading && <div className="text-center text-4xl">Loading...</div>}
@@ -71,7 +68,11 @@ const MyBets = () => {
       )}
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {openBets.map((bet) => (
-          <BetCard key={bet.id} bet={bet} />
+          <BetCard
+            key={bet.id}
+            bet={bet}
+            onWithdraw={() => address && fetchBetsByAddress(address)}
+          />
         ))}
       </div>
 
@@ -83,8 +84,6 @@ const MyBets = () => {
           <BetCard key={bet.id} bet={bet} />
         ))}
       </div>
-
-      {ToastComponent}
     </>
   );
 };
