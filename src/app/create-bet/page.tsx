@@ -209,13 +209,15 @@ export default function CreateBet() {
           {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
         </div>
         <br />
-        <ButtonPrimary
-          size={"regular"}
-          disabled={isActionDisabled}
-          onClick={handleActionButtonClick}
-        >
-          {getActionButtonText()}
-        </ButtonPrimary>
+        <div className="flex justify-center">
+          <ButtonPrimary
+            size={"regular"}
+            disabled={isActionDisabled}
+            onClick={handleActionButtonClick}
+          >
+            {getActionButtonText()}
+          </ButtonPrimary>
+        </div>
       </main>
     </>
   );

@@ -36,6 +36,10 @@ const config: Config = {
           "4px 0px 0px 0px rgba(0,0,0,1), 0px 4px 0px 0px rgba(0,0,0,1), -4px 0px 0px 0px rgba(0,0,0,1), 0px -4px 0px 0px rgba(0,0,0,1), inset -8px -8px rgba(0,0,0,0.1)",
         "button-pressed":
           "4px 0px 0px 0px rgba(0,0,0,1), 0px 4px 0px 0px rgba(0,0,0,1), -4px 0px 0px 0px rgba(0,0,0,1), 0px -4px 0px 0px rgba(0,0,0,1), inset 8px 8px rgba(0,0,0,0.1)",
+        "button-secondary":
+          "4px 0px 0px 0px rgba(34, 43, 55,1), 0px 4px 0px 0px rgba(34, 43, 55,1), -4px 0px 0px 0px rgba(34, 43, 55,1), 0px -4px 0px 0px rgba(34, 43, 55,1), inset -8px -8px rgba(34, 43, 55,0.1)",
+        "button-secondary-hover":
+          "4px 0px 0px 0px rgba(19, 25, 33, 1), 0px 4px 0px 0px rgba(19, 25, 33, 1), -4px 0px 0px 0px rgba(19, 25, 33,1), 0px -4px 0px 0px rgba(19, 25, 33, 1), inset -8px -8px rgba(19, 25, 33, 0.1);",
       },
     },
   },

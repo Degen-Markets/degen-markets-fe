@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import {
   ButtonPrimary,
+  ButtonSecondary,
   ButtonTransparent,
   CustomConnectButton,
 } from "@/app/components/Button";
@@ -18,12 +19,12 @@ const Navbar: React.FC<{}> = ({}) => {
             </div>
           </div>
         </Link>
-        <div className="flex gap-5 items-center ">
+        <div className="flex justify-center gap-5 items-center ">
           <Link href="/bets">
-            <ButtonBlue>Existing bets</ButtonBlue>
+            <ButtonSecondary size={"small"}>Existing bets</ButtonSecondary>
           </Link>
           <Link href="/create-bet">
-            <ButtonBlue>create bet</ButtonBlue>
+            <ButtonSecondary size={"small"}>create bet</ButtonSecondary>
           </Link>
           <CustomConnectButton />
         </div>

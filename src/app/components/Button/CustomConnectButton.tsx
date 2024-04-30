@@ -1,7 +1,7 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
-import { ButtonGradient } from "@/app/components/Button/index";
+import { ButtonGradient, ButtonSecondary } from "@/app/components/Button/index";
 import { ButtonBlue } from "@/app/components/Button/NavbarButtons";
 
 export const CustomConnectButton: React.FC<{}> = ({}) => {
@@ -29,25 +29,41 @@ export const CustomConnectButton: React.FC<{}> = ({}) => {
             {(() => {
               if (!mounted || !account || !chain) {
                 return (
-                  <ButtonBlue onClick={openConnectModal} type="button">
-                    Connect Wallet
-                  </ButtonBlue>
+                  <ButtonGradient
+                    size={"small"}
+                    onClick={openConnectModal}
+                    type="button"
+                    className="text-neutral-900"
+                  >
+                    <div className="text-neutral-900">Connect wallet</div>
+                  </ButtonGradient>
                 );
               }
 
               if (chain.unsupported) {
                 return (
-                  <ButtonBlue onClick={openChainModal} type="button">
-                    Wrong network
-                  </ButtonBlue>
+                  <ButtonGradient
+                    size={"small"}
+                    onClick={openChainModal}
+                    type="button"
+                    className="text-neutral-900"
+                  >
+                    <div className="text-neutral-900">Wrong network</div>
+                  </ButtonGradient>
                 );
               }
 
               return (
                 <div>
-                  <ButtonBlue onClick={openAccountModal}>
-                    {account.displayName}
-                  </ButtonBlue>
+                  <ButtonGradient
+                    size={"small"}
+                    onClick={openAccountModal}
+                    className="text-neutral-900"
+                  >
+                    <div className="text-neutral-900">
+                      {account.displayName}
+                    </div>
+                  </ButtonGradient>
                 </div>
               );
             })()}
