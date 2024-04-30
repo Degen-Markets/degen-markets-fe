@@ -52,7 +52,7 @@ const Bets = () => {
           ))}
         </div>
       </div>
-      <div className="flex w-1/4 w-full">
+      <div className="flex w-1/4">
         <RecentActivity />
       </div>
       {/* Recent Activity */}
