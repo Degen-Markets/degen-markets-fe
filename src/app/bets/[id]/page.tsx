@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import {
   useAccount,
@@ -13,11 +14,6 @@ import {
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
 import { CreatedBetObject, Currency } from "@/app/lib/utils/bets/types";
-import BetCoundown from "@/app/components/BetCoundown";
-import {
-  betDurationInDays,
-  getCurrencySymbolByAddress,
-} from "@/app/lib/utils/bets/helpers";
 import {
   erc20Abi,
   formatUnits,
@@ -31,35 +27,22 @@ import { base } from "wagmi/chains";
 import { useRouter } from "next/navigation";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
+import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
+import BetCountdown from "@/app/components/BetCoundown";
 
 const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
     CreatedBetObject | undefined
   >();
-  const betId = params.id;
-
-  const router = useRouter();
-
-  const { address } = useAccount();
-
-  const { userAllowances } = useAllowances(
-    // isApprovalSuccess || isCreateBetTxSuccess,
-    false,
-    address || zeroAddress,
-  );
-
   const [isEth, setIsEth] = useState<boolean>(false);
   const [value, setValue] = useState("10");
   const [settleCurrency, setSettleCurrency] = useState<Currency>(Currency.ETH);
-  const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
-  const isAllowanceEnough =
-    userAllowances[settleCurrency as Currency] >= valueInWei;
-
+  const router = useRouter();
+  const { address } = useAccount();
   const { writeContract: sendApprovalTx, data: approvalHash } =
     useWriteContract();
   const { writeContract: sendAcceptBetTx, data: betAcceptHash } =
     useWriteContract();
-
   const { isSuccess: isBetAcceptedHashSuccess } = useTransactionReceipt({
     hash: betAcceptHash,
     chainId: base.id,
@@ -68,6 +51,12 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     hash: approvalHash,
     chainId: base.id,
   });
+  const { userAllowances } = useAllowances(
+    isApprovalSuccess || isBetAcceptedHashSuccess,
+    address || zeroAddress,
+  );
+
+  const betId = params.id;
 
   const result = useReadContract({
     abi: DEGEN_MARKETS_ABI,
@@ -83,7 +72,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     : 0;
 
   useEffect(() => {
-    if (Array.isArray(result.data) && result.data.length >= 11) {
+    if (result && Array.isArray(result.data) && result.data.length >= 11) {
       setIsEth(result.data[10] === zeroAddress);
       setValue(
         formatUnits(
@@ -107,7 +96,6 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         ),
         currency: result.data[10],
       };
-
       setBetToAccept(localBet);
     } else {
       console.error(
@@ -119,16 +107,17 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
 
   const acceptBet = () => {
     if (betToAccept) {
-      console.log("bet value is ", betToAccept.value);
+      const betValue = isEth ? parseEther(betToAccept.value) : undefined;
       sendAcceptBetTx({
         abi: DEGEN_MARKETS_ABI,
         address: DEGEN_MARKETS_ADDRESS,
         functionName: "acceptBet",
         args: [betToAccept.id],
-        value: isEth ? parseEther(betToAccept.value) : undefined,
+        value: betValue,
       });
     }
   };
+
   const approve = () => {
     sendApprovalTx({
       abi: erc20Abi,
@@ -139,11 +128,15 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   };
 
   const handleAccept = () => {
+    const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
+    const isAllowanceEnough =
+      userAllowances[settleCurrency as Currency] >= valueInWei;
+
     if (!isAllowanceEnough) {
       approve();
-      return;
+    } else {
+      acceptBet();
     }
-    acceptBet();
   };
 
   useEffect(() => {
@@ -163,7 +156,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
       {result && betToAccept && (
         <div className="w-1/2 mx-auto">
           <div className="bg-blue-dark border-pink-light border-2 text-center w-3/5 mx-auto text-3xl py-2">
-            <BetCoundown
+            <BetCountdown
               expirationTimestamp={
                 isBetAccepted
                   ? expirationTimestamp
