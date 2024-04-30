@@ -1,12 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import {
-  ButtonPrimary,
-  ButtonSecondary,
-  ButtonTransparent,
-  CustomConnectButton,
-} from "@/app/components/Button";
-import { ButtonBlue } from "@/app/components/Button/NavbarButtons";
+import { ButtonSecondary, CustomConnectButton } from "@/app/components/Button";
 
 const Navbar: React.FC<{}> = ({}) => {
   return (

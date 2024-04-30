@@ -1,8 +1,7 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
-import { ButtonGradient, ButtonSecondary } from "@/app/components/Button/index";
-import { ButtonBlue } from "@/app/components/Button/NavbarButtons";
+import { ButtonGradient } from "@/app/components/Button/index";
 
 export const CustomConnectButton: React.FC<{}> = ({}) => {
   return (
