@@ -1,8 +1,9 @@
 import { metricOptions, SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
 import { Currency, Metric } from "@/app/lib/utils/bets/types";
 
-export const betDurationInDays = (duration: string): string => {
-  const days = Number(duration) / 86400;
+export const betDurationInDays = (expirationTimestamp: string): string => {
+  const days =
+    (Number(expirationTimestamp) * 1000 - Date.now()) / (24 * 60 * 60 * 1000);
   return days > 1 ? `${days} days` : `${days} day`;
 };
 

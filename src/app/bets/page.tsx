@@ -4,7 +4,7 @@ import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { getBets } from "@/app/lib/utils/api/getBets";
 import BetCard from "@/app/components/BetCard";
 import { zeroAddress } from "viem";
-import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
+import { BET_ACCEPTANCE_TIME_LIMIT_IN_MS } from "@/app/lib/utils/bets/constants";
 
 const Bets = () => {
   const [expiredBets, setExpiredBets] = useState<BetsResponse>([]);
@@ -14,12 +14,14 @@ const Bets = () => {
     const openBets = fetchedBets.filter(
       (bet) =>
         (bet.acceptor === null || bet.acceptor === zeroAddress) &&
-        parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION >
+        parseInt(bet.creationTimestamp) * 1000 +
+          BET_ACCEPTANCE_TIME_LIMIT_IN_MS >
           Date.now(),
     );
     const oldBets = fetchedBets.filter(
       (bet) =>
-        parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <=
+        parseInt(bet.creationTimestamp) * 1000 +
+          BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
         Date.now(),
     );
     setExpiredBets(oldBets);

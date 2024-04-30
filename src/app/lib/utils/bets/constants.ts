@@ -65,8 +65,9 @@ export const directionOptions = [
 ];
 
 export const DEGEN_MARKETS_ADDRESS =
-  "0xA7Ee25d7Ae43A0db9c01fbeF389EcaF83Ba97A86";
+  "0xe1b046Ae7b3ea1d5041274c707bc6298884E3A71";
 
-export const DEFAULT_BET_DURATION = 60 * 60 * 4 * 1000;
+export const BET_ACCEPTANCE_TIME_LIMIT_IN_MS = 60 * 60 * 4 * 1000;
+export const BET_ACCEPTANCE_TIME_LIMIT = 60 * 60 * 4;
 
 export const STABLECOIN_DECIMALS = 6;

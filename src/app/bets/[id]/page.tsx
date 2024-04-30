@@ -8,7 +8,7 @@ import {
 } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "../../lib/utils/bets/abis";
 import {
-  DEFAULT_BET_DURATION,
+  BET_ACCEPTANCE_TIME_LIMIT,
   DEGEN_MARKETS_ADDRESS,
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
@@ -27,7 +27,6 @@ import {
   zeroAddress,
 } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { base } from "wagmi/chains";
 import { useRouter } from "next/navigation";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
@@ -48,7 +47,6 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
     false,
     address || zeroAddress,
   );
-  const { userBalances } = useBalances(false, address);
 
   const [isEth, setIsEth] = useState<boolean>(false);
   const [value, setValue] = useState("10");
@@ -56,8 +54,6 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
   const isAllowanceEnough =
     userAllowances[settleCurrency as Currency] >= valueInWei;
-  // const isBalanceEnough =
-  //   userBalances[currency.label as Currency] >= valueInWei;
 
   const { writeContract: sendApprovalTx, data: approvalHash } =
     useWriteContract();
@@ -82,7 +78,9 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
   const isBetAccepted = result.data
     ? (result.data as any[])[7] !== zeroAddress
     : false;
-  const duration = result.data ? parseInt((result.data as any[])[6]) * 1000 : 0;
+  const expirationTimestamp = result.data
+    ? parseInt((result.data as any[])[6]) * 1000
+    : 0;
 
   useEffect(() => {
     if (Array.isArray(result.data) && result.data.length >= 11) {
@@ -102,7 +100,7 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         ticker: result.data[3],
         metric: result.data[4].replaceAll("_", " "),
         isBetOnUp: result.data[5],
-        duration: result.data[6].toString(),
+        expirationTimestamp: result.data[6].toString(),
         value: formatUnits(
           result.data[9],
           result.data[10] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
@@ -166,8 +164,12 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
         <div className="w-1/2 mx-auto">
           <div className="bg-blue-dark border-pink-light border-2 text-center w-3/5 mx-auto text-3xl py-2">
             <BetCoundown
-              betCreationTimestamp={betToAccept.creationTimestamp}
-              duration={isBetAccepted ? duration : DEFAULT_BET_DURATION}
+              expirationTimestamp={
+                isBetAccepted
+                  ? expirationTimestamp
+                  : Number(betToAccept.creationTimestamp) +
+                    BET_ACCEPTANCE_TIME_LIMIT
+              }
               message={
                 isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
               }
@@ -189,8 +191,11 @@ const AcceptBetPage = ({ params }: { params: { id: string } }) => {
           <div className="flex justify-center gap-x-4">
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               {betToAccept.ticker}&nbsp;-&nbsp;{betToAccept.metric} will&nbsp;
-              go&nbsp;{betToAccept.isBetOnUp ? "up" : "down"}&nbsp;in&nbsp;
-              {betDurationInDays(betToAccept.duration)}
+              be&nbsp;{betToAccept.isBetOnUp ? "up" : "down"}&nbsp;on&nbsp;
+              {new Date(
+                Number(betToAccept.expirationTimestamp) * 1000,
+              ).toLocaleString()}
+              .
             </div>
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               Wagered:&nbsp;{betToAccept.value}&nbsp;

@@ -2,7 +2,11 @@
 
 import { useReadContract } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
+import {
+  BET_ACCEPTANCE_TIME_LIMIT,
+  BET_ACCEPTANCE_TIME_LIMIT_IN_MS,
+  DEGEN_MARKETS_ADDRESS,
+} from "@/app/lib/utils/bets/constants";
 import { useSearchParams } from "next/navigation";
 import BetCountdown from "@/app/components/BetCoundown";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
@@ -56,8 +60,9 @@ const CreateBetSuccess = () => {
           <Headline>Bet Created!</Headline>
           <SubHeadline isTop={false}>
             <BetCountdown
-              betCreationTimestamp={creationTimestamp}
-              duration={60 * 60 * 4 * 1000}
+              expirationTimestamp={
+                Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
+              }
             />
           </SubHeadline>
         </Heading>

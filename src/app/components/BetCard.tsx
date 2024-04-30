@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import {
-  DEFAULT_BET_DURATION,
+  BET_ACCEPTANCE_TIME_LIMIT_IN_MS,
   DEGEN_MARKETS_ADDRESS,
 } from "@/app/lib/utils/bets/constants";
 import { prettifyAddress } from "@/app/lib/utils/evm";
@@ -16,7 +16,8 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
   const isBetExpired =
-    parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <= Date.now();
+    parseInt(bet.creationTimestamp) * 1000 + BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
+    Date.now();
   const showWithdrawButton = bet.creator === address && !isBetExpired;
 
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
@@ -72,9 +73,9 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
         {prettifyAddress(bet.creator)} is betting that...
       </div>
       <div className="bg-white text-blue-dark p-1 h-[72px]">
-        {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will go&nbsp;
-        {bet.isBetOnUp ? "up" : "down"} in{" "}
-        {parseInt(bet.expirationTimestamp) / 60 / 60 / 24} days.
+        {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
+        {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
+        {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
       </div>
 
       <div className="flex justify-center mt-4">

@@ -4,7 +4,7 @@ import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { zeroAddress } from "viem";
-import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
+import { BET_ACCEPTANCE_TIME_LIMIT_IN_MS } from "@/app/lib/utils/bets/constants";
 import useToast from "@/app/components/Toast/useToast";
 import { getBetsByCreator } from "@/app/lib/utils/api/getBetsByCreator";
 
@@ -24,13 +24,15 @@ const MyBets = () => {
         (bet) =>
           (bet.acceptor === null || bet.acceptor === zeroAddress) &&
           !bet.isWithdrawn &&
-          parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION >
+          parseInt(bet.creationTimestamp) * 1000 +
+            BET_ACCEPTANCE_TIME_LIMIT_IN_MS >
             currentTime,
       );
       const userClosedBets = bets.filter(
         (bet) =>
           bet.isWithdrawn ||
-          parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <=
+          parseInt(bet.creationTimestamp) * 1000 +
+            BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
             currentTime,
       );
       setOpenBets(userOpenBets);

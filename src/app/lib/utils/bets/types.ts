@@ -37,7 +37,7 @@ export type CreatedBetObject = {
   id: string;
   creator: `0x${string}`;
   creationTimestamp: string;
-  duration: string;
+  expirationTimestamp: string;
   ticker: Ticker;
   metric: Metric;
   isBetOnUp: boolean;
