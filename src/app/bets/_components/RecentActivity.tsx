@@ -54,7 +54,6 @@ const RecentActivity: React.FC<{}> = ({}) => {
               <div className="text-neutral-400 text-sm leading-none">
                 {shortenHash(bet.creator, 8)}
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
                   {bet.ticker}
@@ -77,8 +76,6 @@ const RecentActivity: React.FC<{}> = ({}) => {
                       )}
                 </div>
               </div>
-
-              {/*  end of row 2 */}
             </div>
           ))}
         </div>
