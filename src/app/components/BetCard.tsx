@@ -14,7 +14,7 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
       <div className="bg-blue-medium text-blue-dark my-2 p-1">
         {prettifyAddress(bet.creator)} is betting that...
       </div>
-      <div className="bg-white text-blue-dark p-1">
+      <div className="bg-white text-blue-dark p-1 h-[72px]">
         {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will go&nbsp;
         {bet.isBetOnUp ? "up" : "down"} in{" "}
         {parseInt(bet.duration) / 60 / 60 / 24} days.
