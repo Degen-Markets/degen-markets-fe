@@ -21,44 +21,44 @@ const fellowsCards = [
 const Home = () => {
   return (
     <>
-      <div className="absolute w-full top-[100px] z-[3]">
-        <Marquee speed={30} direction="right">
-          <img src="./pepe-cloud.png" alt="" className="w-[1000px] " />
-        </Marquee>
-      </div>
-      <div className="z-[2]">
-        <Marquee speed={150}>
-          <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
-        </Marquee>
-      </div>
+      <div className=" flex flex-col items-center justify-center text-white ">
+        <div className="flex flex-col items-center text-white h-screen w-screen ">
+          <div className="absolute w-screen flex-col bg-green-500">
+            <div className="absolute z-[2] w-screen">
+              <Marquee speed={60} direction="left">
+                <img src="./clouds/cloud.png" alt="" className="w-[400px]" />
+              </Marquee>
+            </div>
 
-      <div className=" flex flex-col items-center justify-center text-white">
-        {/* GRADIENT BOX */}
-        <div className="flex flex-col items-center w-full -mt-[250px] ">
-          <div className="flex flex-row items-center py-14 p-0 z-10 justify-center w-full to-md2:flex-col">
-            <div className="flex flex-col gap-6 items-center z-10 xl:translate-y-0">
-              <h1 className="text-3xl xxxs:text-4xl xxs:text-5xl lg:text-6xl  xl:text-7xl xl2:text-6xl font-bold tracking-tight text-center geo-font text-nowrap">
-                Are you DEGEN enough to
-                <br />
-                back your predictions?
-              </h1>
+            <div className="absolute z-[2] w-screen">
+              <Marquee speed={30} direction="right">
+                <img src="./pepe-cloud.png" alt="" className="w-[1000px] " />
+              </Marquee>
             </div>
           </div>
-          {/* SCROLL DOWN */}
-          <div className="flex relative flex-col items-center gap-4 z-10 ">
-            <h5 className={`arcade-font text-xl text-center scroll-text`}>
-              Scroll down to see fellow DEGENS
-            </h5>
-            <img
-              src="./pixelated/down-arrow.png"
-              className="animate-bounce"
-              width={100}
-              height={100}
-              alt=""
-            />
+
+          <div className="absolute top-1/2 z-10">
+            <div className="text-7xl z-[10]">
+              The Decentralized Prediction Market on Base
+            </div>
+            <div className="flex items-center justify-center font-[100] text-4xl">
+              By DEGENS for DEGENS
+            </div>
+            <div className="flex flex-col gap-10 justify-center items-center mt-10">
+              <div className="">Scroll down to see fellow DEGENS</div>
+              <div className="">
+                <img
+                  src="./pixelated/down-arrow.png"
+                  className="animate-bounce"
+                  width={100}
+                  height={100}
+                  alt=""
+                />
+              </div>
+            </div>
           </div>
         </div>
-        {/* FELLOW DEGENS */}
+
         <div
           className="flex flex-col items-center gap-10 p-10"
           id="fellow-degens"

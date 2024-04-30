@@ -22,6 +22,7 @@ import { base } from "wagmi/chains";
 import { erc20Abi } from "viem";
 import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
 import { Heading, Headline } from "@/app/components/Heading";
+import { ButtonPrimary } from "@/app/components/Button";
 
 export default function CreateBet() {
   const router = useRouter();
@@ -144,7 +145,7 @@ export default function CreateBet() {
       <main className="text-center">
         <div className="flex justify-center select-none">
           <Heading className="my-10">
-            <Headline>Challenge a fren</Headline>
+            <Headline className="jersey-10-charted">Challenge a fren</Headline>
           </Heading>
         </div>
         <div className="flex justify-center select-none">
@@ -208,18 +209,15 @@ export default function CreateBet() {
           {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
         </div>
         <br />
-        <button
-          className={`masked-button p-1 rounded-full text-3xl w-fit ${!isActionDisabled && "hover:bg-yellow-light cursor-pointer"}`}
-          disabled={isActionDisabled}
-          onClick={handleActionButtonClick}
-        >
-          <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
-            <span className="masked-button-text flex geo-font cursor-pointer">
-              {getActionButtonText()}
-              <span className="gradient-button-arrow flex items-center"></span>
-            </span>
-          </span>
-        </button>
+        <div className="flex justify-center">
+          <ButtonPrimary
+            size={"regular"}
+            disabled={isActionDisabled}
+            onClick={handleActionButtonClick}
+          >
+            {getActionButtonText()}
+          </ButtonPrimary>
+        </div>
       </main>
     </>
   );
