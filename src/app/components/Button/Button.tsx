@@ -17,7 +17,7 @@ export const Button: FC<ButtonProps> = ({
   return (
     <div>
       <button
-        className={`text-white py-2 px-4 shadow-button-secondary flex items-center justify-center active:shadow-button-pressed ${className} ${buttonSize}`}
+        className={`text-white py-2 px-4 shadow-button flex items-center justify-center active:shadow-button-pressed ${className} ${buttonSize}`}
         {...props}
       >
         {children}

@@ -24,7 +24,7 @@ const Navbar: React.FC<{}> = ({}) => {
             <ButtonSecondary size={"small"}>Existing bets</ButtonSecondary>
           </Link>
           <Link href="/create-bet">
-            <ButtonSecondary size={"small"}>create bet</ButtonSecondary>
+            <ButtonSecondary size={"small"}>Create bet</ButtonSecondary>
           </Link>
           <CustomConnectButton />
         </div>

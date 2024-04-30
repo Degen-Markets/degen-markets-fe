@@ -19,7 +19,7 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
         {bet.isBetOnUp ? "up" : "down"} in{" "}
         {parseInt(bet.duration) / 60 / 60 / 24} days.
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 ">
         <Link href={`/bets/${bet.id}`}>
           <ButtonPrimary size={"regular"}>
             {isBetExpired ? "View details" : "Accept bet"}
