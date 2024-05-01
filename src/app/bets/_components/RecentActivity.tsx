@@ -7,6 +7,8 @@ import {
   shortenHash,
 } from "@/app/lib/utils/bets/helpers";
 import { ArrowDown, ArrowUp } from "@/app/components/Icons";
+import { Metric } from "@/app/lib/utils/bets/types";
+import { useAccount } from "wagmi";
 
 // TODO: add check for bets expiring limitation when new api provides it
 
@@ -18,7 +20,7 @@ type BetResponse = {
   acceptor: AddressHash;
   acceptanceTimestamp: string;
   ticker: string;
-  metric: string;
+  metric: Metric;
   isBetOnUp: boolean;
   expirationTimestamp: string;
   value: string;
@@ -41,6 +43,7 @@ const RecentActivity: React.FC<{}> = ({}) => {
     refetchInterval: 10000,
   });
 
+  const { address } = useAccount();
   return (
     <div className="flex flex-col w-full items-start p-3 pr-10">
       <div className="w-full h-full">
@@ -52,7 +55,7 @@ const RecentActivity: React.FC<{}> = ({}) => {
               key={bet.id}
             >
               <div className="text-neutral-400 text-sm leading-none">
-                {shortenHash(bet.creator, 8)}
+                {bet.creator === address ? "YOU" : shortenHash(bet.creator, 8)}
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
@@ -60,7 +63,10 @@ const RecentActivity: React.FC<{}> = ({}) => {
                   <span
                     className={`${bet.isBetOnUp ? "text-green-500" : "text-red-500"} flex items-center`}
                   >
-                    {bet.metric}
+                    {bet.metric === Metric.MARKET_CAP_DOMINANCE
+                      ? "Mrkt Cap Dom"
+                      : bet.metric}
+                    {/*{bet.metric.replaceAll("_", " ")}*/}
                     {bet.isBetOnUp ? <ArrowUp /> : <ArrowDown />}
                     <span className="text-neutral-800 pl-1">{`${betDuration(bet.creationTimestamp, bet.expirationTimestamp)}`}</span>
                   </span>
