@@ -14,7 +14,7 @@ const Toast = ({ id, message, type, onClose }: Props) => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       if (onClose) onClose();
-    }, 500000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [onClose]);

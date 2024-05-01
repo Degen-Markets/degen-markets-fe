@@ -9,16 +9,21 @@ import {
 import { prettifyAddress } from "@/app/lib/utils/evm";
 import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
-import useToast from "@/app/components/Toast/useToast";
 import { ButtonPrimary } from "@/app/components/Button";
+import { useToast } from "@/app/components/Toast/ToastProvider";
 
-const BetCard = ({ bet }: { bet: BetResponse }) => {
+interface Props {
+  bet: BetResponse;
+  onWithdraw?: () => void;
+}
+const BetCard = ({ bet, onWithdraw }: Props) => {
   const { showToast } = useToast();
   const { address } = useAccount();
   const isBetExpired =
     parseInt(bet.creationTimestamp) * 1000 + BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
     Date.now();
-  const showWithdrawButton = bet.creator === address && !isBetExpired;
+  const showWithdrawButton =
+    !bet.isWithdrawn && bet.creator === address && !isBetExpired;
 
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
@@ -33,16 +38,18 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
         "Your withdrawal request has been successfully processed!",
         "success",
       );
+      onWithdraw && onWithdraw();
     }
-  }, [isWithdrawBetSuccess, bet.id, showToast]);
+  }, [isWithdrawBetSuccess]);
 
   useEffect(() => {
     if (isWithdrawBetError) {
       showToast("Withdrawal failed. Please try again later.", "error");
+      onWithdraw && onWithdraw();
     }
-  }, [isWithdrawBetError, showToast]);
+  }, [isWithdrawBetError]);
 
-  const onWithdraw = () => {
+  const onWithdrawClick = () => {
     sendWithdrawBetTx({
       abi: DEGEN_MARKETS_ABI,
       address: DEGEN_MARKETS_ADDRESS,
@@ -51,37 +58,41 @@ const BetCard = ({ bet }: { bet: BetResponse }) => {
     });
   };
 
-  const CalToAction = () => (
-    <>
-      {showWithdrawButton ? (
-        <ButtonPrimary size="regular" onClick={onWithdraw}>
+  const CTAButton = () => {
+    if (showWithdrawButton) {
+      return (
+        <ButtonPrimary size="regular" onClick={onWithdrawClick}>
           Withdraw
         </ButtonPrimary>
-      ) : (
+      );
+    } else {
+      return (
         <Link href={`/bets/${bet.id}`}>
           <ButtonPrimary size="regular">
-            {isBetExpired ? "View details" : "Accept bet"}
+            {isBetExpired || bet.isWithdrawn ? "View details" : "Accept bet"}
           </ButtonPrimary>
         </Link>
-      )}
-    </>
-  );
+      );
+    }
+  };
 
   return (
-    <div className="bg-blue-dark p-3 w-[300px] rounded">
-      <div className="bg-blue-medium text-blue-dark my-2 p-1">
-        {prettifyAddress(bet.creator)} is betting that...
-      </div>
-      <div className="bg-white text-blue-dark p-1 h-[72px]">
-        {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
-        {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
-        {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
-      </div>
+    <>
+      <div className="bg-blue-dark p-3 w-[300px] rounded">
+        <div className="bg-blue-medium text-blue-dark my-2 p-1">
+          {prettifyAddress(bet.creator)} is betting that...
+        </div>
+        <div className="bg-white text-blue-dark p-1 h-[72px]">
+          {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
+          {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
+          {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
+        </div>
 
-      <div className="flex justify-center mt-4">
-        <CalToAction />
+        <div className="flex justify-center mt-4">
+          <CTAButton />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
