@@ -37,9 +37,9 @@ const RecentActivity: React.FC<{}> = ({}) => {
   const { data: bets } = useQuery<BetResponse[]>({
     queryKey: ["repoData"],
     queryFn: () =>
-      fetch("https://api.degenmarkets.com/bets/recent").then((res) =>
-        res.json(),
-      ),
+      fetch(
+        "https://api.degenmarkets.com/bets?sort=lastActivityTimestamp:desc&limit=10",
+      ).then((res) => res.json()),
     refetchInterval: 10000,
   });
 
