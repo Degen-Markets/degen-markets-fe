@@ -9,7 +9,7 @@ import {
 } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "../../lib/utils/bets/abis";
 import {
-  DEFAULT_BET_DURATION,
+  BET_ACCEPTANCE_TIME_LIMIT,
   DEGEN_MARKETS_ADDRESS,
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
@@ -30,6 +30,7 @@ import {
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
+import { ButtonPrimary } from "@/app/components/Button";
 
 const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [betToAccept, setBetToAccept] = useState<
@@ -41,7 +42,6 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [value, setValue] = useState("10");
   const [settleCurrency, setSettleCurrency] = useState(Currency.ETH);
   const [isBetAccepted, setIsBetAccepted] = useState(false);
-  const [duration, setDuration] = useState(0);
 
   const { data: approvalHash, writeContract: sendApprovalTx } =
     useWriteContract();
@@ -64,6 +64,10 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     args: [id],
   });
 
+  const expirationTimestamp = result.data
+    ? parseInt((result.data as any[])[6]) * 1000
+    : 0;
+
   useEffect(() => {
     if (result.data && Array.isArray(result.data) && result.data.length >= 11) {
       setIsEth(result.data[10] === zeroAddress);
@@ -82,7 +86,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
         ticker: result.data[3],
         metric: result.data[4].replaceAll("_", " "),
         isBetOnUp: result.data[5],
-        duration: result.data[6].toString(),
+        expirationTimestamp: result.data[6].toString(),
         value: formatUnits(
           result.data[9],
           result.data[10] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
@@ -91,7 +95,6 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
       };
       setBetToAccept(localBet);
       setIsBetAccepted(result.data[7] !== zeroAddress);
-      setDuration(parseInt(result.data[6]) * 1000);
     } else {
       console.error(
         "Data is not available or not in the expected format:",
@@ -160,8 +163,12 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
         <div className="w-1/2 mx-auto">
           <div className="bg-blue-dark border-pink-light border-2 text-center w-3/5 mx-auto text-3xl py-2">
             <BetCoundown
-              betCreationTimestamp={betToAccept.creationTimestamp}
-              duration={isBetAccepted ? duration : DEFAULT_BET_DURATION}
+              expirationTimestamp={
+                isBetAccepted
+                  ? expirationTimestamp
+                  : Number(betToAccept.creationTimestamp) +
+                    BET_ACCEPTANCE_TIME_LIMIT
+              }
               message={
                 isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
               }
@@ -184,7 +191,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               {betToAccept.ticker}&nbsp;-&nbsp;{betToAccept.metric} will&nbsp;
               go&nbsp;{betToAccept.isBetOnUp ? "up" : "down"}&nbsp;in&nbsp;
-              {betDurationInDays(betToAccept.duration)}
+              {betDurationInDays(betToAccept.expirationTimestamp)}
             </div>
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               Wagered:&nbsp;{betToAccept.value}&nbsp;
@@ -195,17 +202,9 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
             {!isBetAccepted && (
               <>
                 <div className="text-blue-dark">Not a chance...</div>
-                <button
-                  className="masked-button p-1 rounded-full text-3xl w-fit cursor-pointer"
-                  onClick={handleAccept}
-                >
-                  <span className="flex flex-row bg-blue-dark rounded-full px-2 py-1">
-                    <span className="masked-button-text flex geo-font cursor-pointer">
-                      Approve and bet
-                      <span className="gradient-button-arrow flex items-center"></span>
-                    </span>
-                  </span>
-                </button>
+                <ButtonPrimary size={"regular"} onClick={handleAccept}>
+                  Approve and bet
+                </ButtonPrimary>
               </>
             )}
           </div>
