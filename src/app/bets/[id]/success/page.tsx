@@ -16,11 +16,10 @@ const AcceptBetSuccess = () => {
     functionName: "betIdToBet",
     args: [id],
   });
-  const creationTimestamp = data ? data[2] : 0;
   const ticker = data ? data[3] : "";
   const metric = data ? data[4] : "";
-  const oppositeDirection = data ? (data[6] === true ? "down" : "up") : "";
-  const durationInMs = data ? parseInt(data[6]) * 1000 : 0;
+  const oppositeDirection = data ? (data[5] === true ? "down" : "up") : "";
+  const expirationTimestamp = data ? parseInt(data[6]) : 0;
 
   return (
     <main className="text-center">
@@ -32,8 +31,7 @@ const AcceptBetSuccess = () => {
       <div className="flex justify-center">
         <BetCountdown
           classNames="bg-blue-dark w-max p-2 border-2 border-pink-light"
-          betCreationTimestamp={creationTimestamp}
-          duration={durationInMs}
+          expirationTimestamp={expirationTimestamp}
           message="Bet ends in"
         />
       </div>

@@ -1,36 +1,98 @@
-import { BetResponse } from "@/app/lib/utils/bets/types";
+import React, { useEffect } from "react";
+import Link from "next/link";
+import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
+import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
+import {
+  BET_ACCEPTANCE_TIME_LIMIT_IN_MS,
+  DEGEN_MARKETS_ADDRESS,
+} from "@/app/lib/utils/bets/constants";
 import { prettifyAddress } from "@/app/lib/utils/evm";
 import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
-import Link from "next/link";
-import React from "react";
-import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
+import { BetResponse } from "@/app/lib/utils/bets/types";
+import { ButtonPrimary } from "@/app/components/Button";
+import { useToast } from "@/app/components/Toast/ToastProvider";
 
-const BetCard = ({ bet }: { bet: BetResponse }) => {
+interface Props {
+  bet: BetResponse;
+  onWithdraw?: () => void;
+}
+const BetCard = ({ bet, onWithdraw }: Props) => {
+  const { showToast } = useToast();
+  const { address } = useAccount();
   const isBetExpired =
-    parseInt(bet.creationTimestamp) * 1000 + DEFAULT_BET_DURATION <= Date.now();
-  return (
-    <div className="bg-blue-dark p-3 w-[300px] rounded">
-      <div className="bg-blue-medium text-blue-dark my-2 p-1">
-        {prettifyAddress(bet.creator)} is betting that...
-      </div>
-      <div className="bg-white text-blue-dark p-1">
-        {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will go&nbsp;
-        {bet.isBetOnUp ? "up" : "down"} in{" "}
-        {parseInt(bet.duration) / 60 / 60 / 24} days.
-      </div>
-      <div className="flex justify-center mt-4">
+    parseInt(bet.creationTimestamp) * 1000 + BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
+    Date.now();
+  const showWithdrawButton =
+    !bet.isWithdrawn && bet.creator === address && !isBetExpired;
+
+  const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
+    useWriteContract();
+  const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
+    useTransactionReceipt({
+      hash: withdrawBetHash,
+    });
+
+  useEffect(() => {
+    if (isWithdrawBetSuccess) {
+      showToast(
+        "Your withdrawal request has been successfully processed!",
+        "success",
+      );
+      onWithdraw && onWithdraw();
+    }
+  }, [isWithdrawBetSuccess]);
+
+  useEffect(() => {
+    if (isWithdrawBetError) {
+      showToast("Withdrawal failed. Please try again later.", "error");
+      onWithdraw && onWithdraw();
+    }
+  }, [isWithdrawBetError]);
+
+  const onWithdrawClick = () => {
+    sendWithdrawBetTx({
+      abi: DEGEN_MARKETS_ABI,
+      address: DEGEN_MARKETS_ADDRESS,
+      functionName: "withdrawBet",
+      args: [bet.id],
+    });
+  };
+
+  const CTAButton = () => {
+    if (showWithdrawButton) {
+      return (
+        <ButtonPrimary size="regular" onClick={onWithdrawClick}>
+          Withdraw
+        </ButtonPrimary>
+      );
+    } else {
+      return (
         <Link href={`/bets/${bet.id}`}>
-          <button className="flex flex-row masked-button p-1 rounded-full text-3xl w-fit cursor-pointer">
-            <span className="flex flex-row bg-blue-dark rounded-full px-2 py-0.5">
-              <span className="masked-button-text flex geo-font cursor-pointer">
-                {isBetExpired ? "View details" : "Accept bet"}
-                <span className="gradient-button-arrow flex items-center"></span>
-              </span>
-            </span>
-          </button>
+          <ButtonPrimary size="regular">
+            {isBetExpired || bet.isWithdrawn ? "View details" : "Accept bet"}
+          </ButtonPrimary>
         </Link>
+      );
+    }
+  };
+
+  return (
+    <>
+      <div className="bg-blue-dark p-3 w-[300px] rounded">
+        <div className="bg-blue-medium text-blue-dark my-2 p-1">
+          {prettifyAddress(bet.creator)} is betting that...
+        </div>
+        <div className="bg-white text-blue-dark p-1 h-[72px]">
+          {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
+          {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
+          {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <CTAButton />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -13,12 +13,7 @@ export const DEGEN_MARKETS_ABI = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "id",
-        type: "string",
-      },
+      { indexed: false, internalType: "string", name: "id", type: "string" },
       {
         indexed: false,
         internalType: "address",
@@ -32,12 +27,7 @@ export const DEGEN_MARKETS_ABI = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "id",
-        type: "string",
-      },
+      { indexed: false, internalType: "string", name: "id", type: "string" },
       {
         indexed: false,
         internalType: "address",
@@ -62,16 +52,11 @@ export const DEGEN_MARKETS_ABI = [
         name: "metric",
         type: "string",
       },
-      {
-        indexed: false,
-        internalType: "bool",
-        name: "isBetOnUp",
-        type: "bool",
-      },
+      { indexed: false, internalType: "bool", name: "isBetOnUp", type: "bool" },
       {
         indexed: false,
         internalType: "uint256",
-        name: "duration",
+        name: "expirationTimestamp",
         type: "uint256",
       },
       {
@@ -93,12 +78,7 @@ export const DEGEN_MARKETS_ABI = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "id",
-        type: "string",
-      },
+      { indexed: false, internalType: "string", name: "id", type: "string" },
       {
         indexed: false,
         internalType: "address",
@@ -112,12 +92,7 @@ export const DEGEN_MARKETS_ABI = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "id",
-        type: "string",
-      },
+      { indexed: false, internalType: "string", name: "id", type: "string" },
     ],
     name: "BetWithdrawn",
     type: "event",
@@ -149,24 +124,28 @@ export const DEGEN_MARKETS_ABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "acceptanceTimeLimit",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [{ internalType: "string", name: "", type: "string" }],
     name: "betIdToBet",
     outputs: [
       { internalType: "string", name: "id", type: "string" },
       { internalType: "address", name: "creator", type: "address" },
-      {
-        internalType: "uint256",
-        name: "creationTimestamp",
-        type: "uint256",
-      },
+      { internalType: "uint256", name: "creationTimestamp", type: "uint256" },
       { internalType: "string", name: "ticker", type: "string" },
       { internalType: "string", name: "metric", type: "string" },
       { internalType: "bool", name: "isBetOnUp", type: "bool" },
-      { internalType: "uint256", name: "duration", type: "uint256" },
+      { internalType: "uint256", name: "expirationTimestamp", type: "uint256" },
       { internalType: "address", name: "acceptor", type: "address" },
       { internalType: "address", name: "winner", type: "address" },
       { internalType: "uint256", name: "value", type: "uint256" },
       { internalType: "address", name: "currency", type: "address" },
+      { internalType: "bool", name: "isWithdrawn", type: "bool" },
     ],
     stateMutability: "view",
     type: "function",
@@ -218,9 +197,18 @@ export const DEGEN_MARKETS_ABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_maximumBetDuration",
+        name: "_acceptanceTimeLimit",
         type: "uint256",
       },
+    ],
+    name: "setAcceptanceTimeLimit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "_maximumBetDuration", type: "uint256" },
     ],
     name: "setMaximumBetDuration",
     outputs: [],
@@ -229,11 +217,7 @@ export const DEGEN_MARKETS_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: "uint256",
-        name: "_minimumBetDuration",
-        type: "uint256",
-      },
+      { internalType: "uint256", name: "_minimumBetDuration", type: "uint256" },
     ],
     name: "setMinimumBetDuration",
     outputs: [],

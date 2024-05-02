@@ -37,7 +37,7 @@ export type CreatedBetObject = {
   id: string;
   creator: `0x${string}`;
   creationTimestamp: string;
-  duration: string;
+  expirationTimestamp: string;
   ticker: Ticker;
   metric: Metric;
   isBetOnUp: boolean;
@@ -53,12 +53,15 @@ export type BetResponse = {
   ticker: Ticker;
   metric: Metric;
   isBetOnUp: boolean;
-  duration: string;
+  expirationTimestamp: string;
   value: string;
   currency: string;
   startingMetricValue: number | null;
   endingMetricValue: number | null;
   winner: string | null;
+  isWithdrawn: boolean;
+  withdrawalTimestamp: string;
+  lastActivityTimestamp: string;
 };
 
 export type BetsResponse = BetResponse[];

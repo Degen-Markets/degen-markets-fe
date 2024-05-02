@@ -1,7 +1,7 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
-import { GradientButton } from "@/app/components/Button/index";
+import { ButtonGradient } from "@/app/components/Button/index";
 
 export const CustomConnectButton: React.FC<{}> = ({}) => {
   return (
@@ -28,25 +28,41 @@ export const CustomConnectButton: React.FC<{}> = ({}) => {
             {(() => {
               if (!mounted || !account || !chain) {
                 return (
-                  <GradientButton onClick={openConnectModal} type="button">
-                    Connect Wallet
-                  </GradientButton>
+                  <ButtonGradient
+                    size={"small"}
+                    onClick={openConnectModal}
+                    type="button"
+                    className="text-neutral-900"
+                  >
+                    <div className="text-neutral-900">Connect wallet</div>
+                  </ButtonGradient>
                 );
               }
 
               if (chain.unsupported) {
                 return (
-                  <GradientButton onClick={openChainModal} type="button">
-                    Wrong network
-                  </GradientButton>
+                  <ButtonGradient
+                    size={"small"}
+                    onClick={openChainModal}
+                    type="button"
+                    className="text-neutral-900"
+                  >
+                    <div className="text-neutral-900">Wrong network</div>
+                  </ButtonGradient>
                 );
               }
 
               return (
                 <div>
-                  <GradientButton onClick={openAccountModal}>
-                    {account.displayName}
-                  </GradientButton>
+                  <ButtonGradient
+                    size={"small"}
+                    onClick={openAccountModal}
+                    className="text-neutral-900"
+                  >
+                    <div className="text-neutral-900">
+                      {account.displayName}
+                    </div>
+                  </ButtonGradient>
                 </div>
               );
             })()}

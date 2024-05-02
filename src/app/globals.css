@@ -23,9 +23,16 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Jersey 10 Charted";
+  src: url("../../fonts/Jersey10Charted-Regular.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
   font-family: "Jersey 10", sans-serif;
-  color: rgb(var(--foreground-rgb));
+  color: white;
   background: linear-gradient(
     to right,
     #5bdee6,
@@ -139,4 +146,10 @@ input[type="number"] {
     0 -20px rgb(34 43 55),
     0 20px rgb(34 43 55);
   margin: 20px auto;
+}
+
+.jersey-10-charted {
+  font-family: "Jersey 10 Charted", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }

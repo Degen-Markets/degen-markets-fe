@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { DEFAULT_BET_DURATION } from "@/app/lib/utils/bets/constants";
+import { BET_ACCEPTANCE_TIME_LIMIT_IN_MS } from "@/app/lib/utils/bets/constants";
 
 const BetCountdown: React.FC<{
-  betCreationTimestamp: string;
-  duration?: number;
+  expirationTimestamp: number;
   classNames?: string;
   message?: string;
 }> = ({
-  betCreationTimestamp,
-  duration = DEFAULT_BET_DURATION,
+  expirationTimestamp,
   classNames,
   message = "Countdown to accept bet",
 }) => {
   const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
-    const endTime = new Date(parseInt(betCreationTimestamp) * 1000 + duration);
+    const endTime = new Date(expirationTimestamp * 1000);
+    console.log(endTime);
 
     const updateCountdown = () => {
       const now = new Date();
@@ -36,10 +35,10 @@ const BetCountdown: React.FC<{
       setCountdown(`${hours}H ${minutes}M ${seconds}S`);
     };
 
-    const timer = setInterval(updateCountdown, 1000);
+    const timer = setInterval(updateCountdown, 1_000);
 
     return () => clearInterval(timer);
-  }, [betCreationTimestamp]);
+  }, [expirationTimestamp]);
 
   return (
     <div className={`tabular-nums ${classNames}`}>
