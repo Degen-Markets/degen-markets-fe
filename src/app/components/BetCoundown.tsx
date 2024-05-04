@@ -13,12 +13,10 @@ const BetCountdown: React.FC<{
   const [countdown, setCountdown] = useState("");
 
   useEffect(() => {
-    const endTime = new Date(expirationTimestampInS * 1000);
-    console.log(endTime);
+    const endTime = expirationTimestampInS * 1000;
 
     const updateCountdown = () => {
-      const now = new Date();
-      const distance = endTime.getTime() - now.getTime();
+      const distance = endTime - Date.now();
 
       if (distance < 0) {
         setCountdown("EXPIRED");

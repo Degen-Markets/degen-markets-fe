@@ -163,13 +163,12 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
               {direction}&nbsp;in&nbsp;
-              {isExpired
-                ? `${Math.round(
-                    (Number(expirationTimestampInS) -
-                      Number(creationTimestampInS)) /
-                      (24 * 60 * 60),
-                  )} day(s)`
-                : betDurationInDays(expirationTimestampInS)}
+              {Math.round(
+                (Number(expirationTimestampInS) -
+                  Number(creationTimestampInS)) /
+                  (24 * 60 * 60),
+              )}
+              &nbsp;day(s)
             </div>
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
               Wagered:&nbsp;{valueToDisplay}&nbsp;
