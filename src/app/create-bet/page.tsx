@@ -34,7 +34,6 @@ export default function CreateBet() {
   const [currency, setCurrency] = useState<ReelOption<`0x${string}`>>(
     currencyOptions[0],
   );
-  console.log(ethPrice);
   const [value, setValue] = useState("10");
   const { address } = useAccount();
   const { writeContract: sendApprovalTx, data: approvalHash } =
@@ -145,7 +144,7 @@ export default function CreateBet() {
       <main className="text-center">
         <div className="flex justify-center select-none">
           <Heading className="my-10">
-            <Headline className="jersey-10-charted">Challenge a fren</Headline>
+            <Headline>Challenge a fren</Headline>
           </Heading>
         </div>
         <div className="flex justify-center select-none">
