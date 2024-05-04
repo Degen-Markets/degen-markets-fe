@@ -34,7 +34,6 @@ export default function CreateBet() {
   const [currency, setCurrency] = useState<ReelOption<`0x${string}`>>(
     currencyOptions[0],
   );
-  console.log(ethPrice);
   const [value, setValue] = useState("10");
   const { address } = useAccount();
   const { writeContract: sendApprovalTx, data: approvalHash } =

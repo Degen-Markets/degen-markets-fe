@@ -31,23 +31,15 @@ import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
+import useBalances from "@/app/lib/utils/hooks/useBalances";
 
 const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
-  const [betToAccept, setBetToAccept] = useState<
-    CreatedBetObject | undefined
-  >();
   const { address } = useAccount();
   const router = useRouter();
-  const [isEth, setIsEth] = useState(false);
-  const [value, setValue] = useState("10");
-  const [settleCurrency, setSettleCurrency] = useState(Currency.ETH);
-  const [isBetAccepted, setIsBetAccepted] = useState(false);
-
   const { data: approvalHash, writeContract: sendApprovalTx } =
     useWriteContract();
   const { data: betAcceptHash, writeContract: sendAcceptBetTx } =
     useWriteContract();
-
   const { isSuccess: isBetAcceptedHashSuccess } = useTransactionReceipt({
     hash: betAcceptHash,
     chainId: base.id,
@@ -56,76 +48,52 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     hash: approvalHash,
     chainId: base.id,
   });
+  const { userAllowances } = useAllowances(
+    isApprovalSuccess || isBetAcceptedHashSuccess,
+    address || zeroAddress,
+  );
 
-  const result = useReadContract({
+  const { data }: { data?: any[] } = useReadContract({
     abi: DEGEN_MARKETS_ABI,
     address: DEGEN_MARKETS_ADDRESS,
     functionName: "betIdToBet",
     args: [id],
   });
-
-  const expirationTimestamp = result.data
-    ? parseInt((result.data as any[])[6]) * 1000
-    : 0;
-
-  useEffect(() => {
-    if (result.data && Array.isArray(result.data) && result.data.length >= 11) {
-      setIsEth(result.data[10] === zeroAddress);
-      setValue(
-        formatUnits(
-          result.data[9],
-          result.data[10] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
-        ),
-      );
-      const settleCcyTicker = getCurrencySymbolByAddress(result.data[10]);
-      setSettleCurrency(settleCcyTicker || Currency.ETH);
-      const localBet = {
-        id: result.data[0],
-        creator: result.data[1],
-        creationTimestamp: result.data[2].toString(),
-        ticker: result.data[3],
-        metric: result.data[4].replaceAll("_", " "),
-        isBetOnUp: result.data[5],
-        expirationTimestamp: result.data[6].toString(),
-        value: formatUnits(
-          result.data[9],
-          result.data[10] === zeroAddress ? 18 : STABLECOIN_DECIMALS,
-        ),
-        currency: result.data[10],
-      };
-      setBetToAccept(localBet);
-      setIsBetAccepted(result.data[7] !== zeroAddress);
-    } else {
-      console.error(
-        "Data is not available or not in the expected format:",
-        result.data,
-      );
-    }
-  }, [result.data]);
-
-  const { userAllowances } = useAllowances(
-    isApprovalSuccess || isBetAcceptedHashSuccess,
-    address || zeroAddress,
+  const acceptor = data ? data[7] : zeroAddress;
+  const isBetAccepted = acceptor !== zeroAddress;
+  const currency = data ? data[10] : zeroAddress;
+  const creator = data ? data[1] : zeroAddress;
+  const isEth = currency === zeroAddress;
+  const valueInWei = data ? data[9] : "";
+  const valueToDisplay = formatUnits(
+    valueInWei,
+    isEth ? 18 : STABLECOIN_DECIMALS,
   );
-  const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
-  const isAllowanceEnough = userAllowances[settleCurrency] >= valueInWei;
+  const currencySymbol = getCurrencySymbolByAddress(currency);
+  const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
+  const { userBalances } = useBalances(false, address);
+  const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
+  const expirationTimestampInS = data ? Number(data[6]) : 0;
+  const creationTimestampInS = data ? Number(data[2]) : 0;
+  const ticker = data ? data[3] : "";
+  const metric = data ? data[4] : "";
+  const direction = data ? (data[6] === true ? "up" : "down") : "";
+  const isExpired = expirationTimestampInS * 1000 - Date.now() < 0;
 
   const acceptBet = () => {
-    if (betToAccept) {
-      sendAcceptBetTx({
-        abi: DEGEN_MARKETS_ABI,
-        address: DEGEN_MARKETS_ADDRESS,
-        functionName: "acceptBet",
-        args: [betToAccept.id],
-        value: isEth ? parseEther(betToAccept.value) : undefined,
-      });
-    }
+    sendAcceptBetTx({
+      abi: DEGEN_MARKETS_ABI,
+      address: DEGEN_MARKETS_ADDRESS,
+      functionName: "acceptBet",
+      args: [id],
+      value: isEth ? valueInWei : undefined,
+    });
   };
 
   const approve = () => {
     sendApprovalTx({
       abi: erc20Abi,
-      address: betToAccept ? betToAccept.currency : zeroAddress,
+      address: currency,
       functionName: "approve",
       args: [DEGEN_MARKETS_ADDRESS, maxUint256],
     });
@@ -140,34 +108,40 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   };
 
   useEffect(() => {
-    if (isBetAcceptedHashSuccess) {
-      setIsBetAccepted(true);
-    }
-  }, [isBetAcceptedHashSuccess]);
-
-  useEffect(() => {
     if (isApprovalSuccess) {
       acceptBet();
     }
   }, [isApprovalSuccess]);
 
   useEffect(() => {
-    if (isBetAccepted) {
+    if (isBetAcceptedHashSuccess) {
       router.push(`/bets/${id}/success`);
     }
-  }, [isBetAccepted, id, router]);
+  }, [isBetAcceptedHashSuccess, id, router]);
+
+  const getActionButtonText = (): string => {
+    if (!address) {
+      return "Wallet not connected";
+    }
+    if (!isBalanceEnough) {
+      return "Not enough balance";
+    }
+    if (!isAllowanceEnough) {
+      return "Approve and bet";
+    }
+    return "Create Bet";
+  };
 
   return (
     <>
-      {result && betToAccept && (
+      {data && (
         <div className="w-1/2 mx-auto">
           <div className="bg-blue-dark border-pink-light border-2 text-center w-3/5 mx-auto text-3xl py-2">
             <BetCoundown
-              expirationTimestamp={
+              expirationTimestampInS={
                 isBetAccepted
-                  ? expirationTimestamp
-                  : Number(betToAccept.creationTimestamp) +
-                    BET_ACCEPTANCE_TIME_LIMIT
+                  ? expirationTimestampInS
+                  : Number(creationTimestampInS) + BET_ACCEPTANCE_TIME_LIMIT
               }
               message={
                 isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
@@ -181,29 +155,33 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
                 isTop={true}
                 className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
               >
-                {betToAccept.creator === address
-                  ? "Created by you"
-                  : betToAccept.creator}
+                {creator === address ? "Created by you" : creator}
               </SubHeadline>
             </Heading>
           </div>
           <div className="flex justify-center gap-x-4">
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
-              {betToAccept.ticker}&nbsp;-&nbsp;{betToAccept.metric} will&nbsp;
-              go&nbsp;{betToAccept.isBetOnUp ? "up" : "down"}&nbsp;in&nbsp;
-              {betDurationInDays(betToAccept.expirationTimestamp)}
+              {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
+              {direction}&nbsp;in&nbsp;
+              {isExpired
+                ? `${Math.round(
+                    (Number(expirationTimestampInS) -
+                      Number(creationTimestampInS)) /
+                      (24 * 60 * 60),
+                  )} day(s)`
+                : betDurationInDays(expirationTimestampInS)}
             </div>
             <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
-              Wagered:&nbsp;{betToAccept.value}&nbsp;
-              {getCurrencySymbolByAddress(betToAccept.currency)}
+              Wagered:&nbsp;{valueToDisplay}&nbsp;
+              {getCurrencySymbolByAddress(currency)}
             </div>
           </div>
           <div className="flex flex-col gap-3 items-center pt-10">
-            {!isBetAccepted && (
+            {!isBetAccepted && !isExpired && (
               <>
                 <div className="text-blue-dark">Not a chance...</div>
                 <ButtonPrimary size={"regular"} onClick={handleAccept}>
-                  Approve and bet
+                  {getActionButtonText()}
                 </ButtonPrimary>
               </>
             )}

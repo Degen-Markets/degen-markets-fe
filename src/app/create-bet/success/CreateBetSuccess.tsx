@@ -60,7 +60,7 @@ const CreateBetSuccess = () => {
           <Headline>Bet Created!</Headline>
           <SubHeadline isTop={false}>
             <BetCountdown
-              expirationTimestamp={
+              expirationTimestampInS={
                 Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
               }
             />
