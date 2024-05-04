@@ -77,7 +77,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const creationTimestampInS = data ? Number(data[2]) : 0;
   const ticker = data ? data[3] : "";
   const metric = data ? data[4] : "";
-  const direction = data ? (data[6] === true ? "up" : "down") : "";
+  const direction = data ? (data[5] === true ? "up" : "down") : "";
   const isExpired = expirationTimestampInS * 1000 - Date.now() < 0;
 
   const acceptBet = () => {

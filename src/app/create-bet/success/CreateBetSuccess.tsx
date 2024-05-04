@@ -23,7 +23,7 @@ const CreateBetSuccess = () => {
   const creationTimestamp = data ? data[2] : 0;
   const ticker = data ? data[3] : "";
   const metric = data ? data[4] : "";
-  const direction = data ? (data[6] === true ? "up" : "down") : "";
+  const direction = data ? (data[5] === true ? "up" : "down") : "";
 
   const handleShare = () => {
     if (navigator.share) {
