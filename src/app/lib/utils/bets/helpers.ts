@@ -1,5 +1,9 @@
-import { metricOptions, SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
-import { Currency, Metric } from "@/app/lib/utils/bets/types";
+import {
+  BET_ACCEPTANCE_TIME_LIMIT,
+  metricOptions,
+  SETTLE_CURRENCY,
+} from "@/app/lib/utils/bets/constants";
+import { BetResponse, Currency, Metric } from "@/app/lib/utils/bets/types";
 
 export const betDurationInDays = (expirationTimestamp: number): string => {
   const days = Math.round(
@@ -65,3 +69,21 @@ export const checkLastActivity = (
     return "";
   }
 };
+
+export const getBetDeadline = (bet: BetResponse): number =>
+  Number(bet.creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT;
+
+export const isTimestampInFuture = (timestampInSeconds: number): boolean =>
+  timestampInSeconds > Date.now() / 1000;
+
+export const isBetOpen = (bet: BetResponse): boolean =>
+  isTimestampInFuture(getBetDeadline(bet));
+
+export const isBetRunning = (bet: BetResponse): boolean =>
+  bet.acceptor !== null && bet.winner === null;
+
+export const isBetConcluded = (bet: BetResponse): boolean =>
+  bet.winner !== null;
+
+export const isBetWithdrawable = (bet: BetResponse): boolean =>
+  !bet.isWithdrawn && bet.acceptor === null;

@@ -6,6 +6,7 @@ import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { zeroAddress } from "viem";
 import { BET_ACCEPTANCE_TIME_LIMIT_IN_MS } from "@/app/lib/utils/bets/constants";
 import { getBetsByCreator } from "@/app/lib/utils/api/getBetsByCreator";
+import { isBetWithdrawable } from "@/app/lib/utils/bets/helpers";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
@@ -16,25 +17,9 @@ const MyBets = () => {
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
       setIsLoading(true);
-      const currentTime = Date.now();
       const { data: bets } = await getBetsByCreator(address);
-      const userOpenBets = bets.filter(
-        (bet) =>
-          (bet.acceptor === null || bet.acceptor === zeroAddress) &&
-          !bet.isWithdrawn &&
-          parseInt(bet.creationTimestamp) * 1000 +
-            BET_ACCEPTANCE_TIME_LIMIT_IN_MS >
-            currentTime,
-      );
-      const userClosedBets = bets.filter(
-        (bet) =>
-          bet.isWithdrawn ||
-          parseInt(bet.creationTimestamp) * 1000 +
-            BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
-            currentTime,
-      );
-      setOpenBets(userOpenBets);
-      setClosedBets(userClosedBets);
+      setOpenBets(bets.filter(isBetWithdrawable));
+      setClosedBets(bets.filter((bet) => !isBetWithdrawable(bet)));
     } catch (error) {
       console.error("Error fetching bets:", error);
     } finally {
@@ -64,7 +49,7 @@ const MyBets = () => {
         </div>
       )}
       {openBets.length > 0 && (
-        <div className="text-center text-7xl">Open Bets:</div>
+        <div className="text-center text-7xl">Back out?</div>
       )}
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {openBets.map((bet) => (
@@ -77,7 +62,7 @@ const MyBets = () => {
       </div>
 
       {closedBets.length > 0 && (
-        <div className="text-center text-7xl">Closed Bets:</div>
+        <div className="text-center text-7xl">Good luck!</div>
       )}
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {closedBets.map((bet) => (
