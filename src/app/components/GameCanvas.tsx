@@ -87,9 +87,6 @@ const GameCanvas = () => {
     const tileIndex = yIndex * TILES_PER_ROW + xIndex;
     const inZone = CHALLENGE_ZONE[tileIndex] === CHALLENGE_SQUARE;
     setInChallengeZone(inZone);
-    if (inZone) {
-      console.log("can challenge");
-    }
     return inZone;
   };
   useEffect(() => {
