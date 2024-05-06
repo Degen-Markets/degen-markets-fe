@@ -19,11 +19,8 @@ interface Props {
 const BetCard = ({ bet, onWithdraw }: Props) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const isBetExpired =
-    parseInt(bet.creationTimestamp) * 1000 + BET_ACCEPTANCE_TIME_LIMIT_IN_MS <=
-    Date.now();
   const showWithdrawButton =
-    !bet.isWithdrawn && bet.creator === address && !isBetExpired;
+    !bet.isWithdrawn && bet.creator === address && bet.acceptor === null;
 
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
@@ -69,7 +66,7 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
       return (
         <Link href={`/bets/${bet.id}`}>
           <ButtonPrimary size="regular">
-            {isBetExpired || bet.isWithdrawn ? "View details" : "Accept bet"}
+            {showWithdrawButton ? "Accept bet" : "View details"}
           </ButtonPrimary>
         </Link>
       );
