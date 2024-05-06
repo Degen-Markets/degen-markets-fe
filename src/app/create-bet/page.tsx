@@ -2,24 +2,29 @@
 
 import Reel from "@/app/components/Reel";
 import {
+  currencyOptions,
   DEGEN_MARKETS_ADDRESS,
   directionOptions,
   durationOptions,
   metricOptions,
   tickerOptions,
-  currencyOptions,
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
-import { maxUint256, parseEther, parseUnits, zeroAddress } from "viem";
+import {
+  erc20Abi,
+  maxUint256,
+  parseEther,
+  parseUnits,
+  zeroAddress,
+} from "viem";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { useRouter } from "next/navigation";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { base } from "wagmi/chains";
-import { erc20Abi } from "viem";
 import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
 import { Heading, Headline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
@@ -139,6 +144,14 @@ export default function CreateBet() {
     fetchEthPrice();
   }, []);
 
+  const handleValueInput = async (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    const decimals = newValue.split(/\,|\./)[1];
+    if (!decimals || decimals.length < 7) {
+      setValue(newValue);
+    }
+  };
+
   return (
     <>
       <main className="text-center">
@@ -194,7 +207,7 @@ export default function CreateBet() {
               lang="en-US"
               step=".000001" // TODO: only allow up to 6 decimals
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={handleValueInput}
             />
           </div>
         </div>
