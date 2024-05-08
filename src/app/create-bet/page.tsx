@@ -11,7 +11,12 @@ import {
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import React, { ChangeEvent, PointerEvent, useEffect, useState } from "react";
-import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
+import {
+  Currency,
+  Metric,
+  ReelOption,
+  Ticker,
+} from "@/app/lib/utils/bets/types";
 import {
   erc20Abi,
   maxUint256,
@@ -28,6 +33,8 @@ import { base } from "wagmi/chains";
 import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
 import { Heading, Headline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
+import { getRandomOption } from "@/app/lib/utils/bets/helpers";
+import { boolean } from "superstruct";
 
 export default function CreateBet() {
   const router = useRouter();
@@ -152,18 +159,12 @@ export default function CreateBet() {
     }
   };
 
-  const randomizeSelection = () => {
-    setTicker(tickerOptions[Math.floor(Math.random() * tickerOptions.length)]);
-    setMetric(metricOptions[Math.floor(Math.random() * metricOptions.length)]);
-    setDirection(
-      directionOptions[Math.floor(Math.random() * directionOptions.length)],
-    );
-    setDuration(
-      durationOptions[Math.floor(Math.random() * durationOptions.length)],
-    );
-    setCurrency(
-      currencyOptions[Math.floor(Math.random() * currencyOptions.length)],
-    );
+  const randomizeAllOptions = () => {
+    setTicker(getRandomOption<Ticker>(tickerOptions));
+    setMetric(getRandomOption<Metric>(metricOptions));
+    setDirection(getRandomOption<boolean>(directionOptions));
+    setDuration(getRandomOption<number>(durationOptions));
+    setCurrency(getRandomOption<`0x${string}`>(currencyOptions));
   };
 
   return (
@@ -177,7 +178,7 @@ export default function CreateBet() {
         <div className="flex justify-center select-none">
           <div className="eight-bit-border-20 bg-blue-dark w-max pr-10 pl-10 pb-5 flex">
             <div className="flex mt-[-40px]" /* move reels out of bg on top */>
-              <Reel<string>
+              <Reel<Ticker>
                 selectedOption={ticker}
                 setSelectedOption={setTicker}
                 reelOptions={tickerOptions}
@@ -210,9 +211,10 @@ export default function CreateBet() {
             </div>
             <div className="ml-[30px] w-[140px] mt-auto mb-auto">
               <img
-                onClick={randomizeSelection}
+                onClick={randomizeAllOptions}
                 className="cursor-pointer"
                 src="./randomize-create-bet-button.svg"
+                alt="Randomize options button"
               />
             </div>
           </div>

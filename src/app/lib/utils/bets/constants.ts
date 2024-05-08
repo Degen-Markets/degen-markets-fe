@@ -24,7 +24,7 @@ export const metricOptions: MetricOptions = [
 
 export const tickerOptions = Object.keys(Ticker).map((ticker) => ({
   label: ticker,
-  value: ticker,
+  value: ticker as Ticker,
 }));
 
 export const SETTLE_CURRENCY: { [key in Currency]: `0x${string}` } = {

@@ -87,3 +87,10 @@ export const isBetConcluded = (bet: BetResponse): boolean =>
 
 export const isBetWithdrawable = (bet: BetResponse): boolean =>
   !bet.isWithdrawn && bet.acceptor === null;
+
+export const getRandomOption = <T>(
+  options: { label: string; value: T }[],
+): {
+  label: string;
+  value: T;
+} => options[Math.floor(Math.random() * options.length)];
