@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="text-2xl bg-cover bg-center bg-no-repeat min-h-screen">
+      <body className="text-sm sm:text-lg md:text-2xl bg-cover bg-center bg-no-repeat min-h-screen">
         <Providers>
           <Menu />
           <PageWrapper>{children}</PageWrapper>

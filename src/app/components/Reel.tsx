@@ -1,5 +1,4 @@
 import { ReelOption } from "@/app/lib/utils/bets/types";
-import styles from "./reel.module.css";
 import { Dispatch, SetStateAction } from "react";
 
 type ReelProps<T> = {
@@ -55,7 +54,7 @@ const Reel = <T,>({
 
   return (
     <div>
-      <span className=" inline lg:p-[10px] bg-blue-dark pt-3 pb-3 border-purple-medium border-2 min-w-[100%]">
+      <span className="inline lg:px-[10px] bg-blue-dark pt-3 pb-3 border-purple-medium border-2 min-w-[100%]">
         {title}
       </span>
       <div className="border border-blue-dark pt-[10px] text-lg text-center bg-white text-blue-dark">

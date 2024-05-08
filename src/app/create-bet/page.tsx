@@ -175,7 +175,7 @@ export default function CreateBet() {
         </Heading>
       </div>
       <div className="flex justify-center select-none">
-        <div className="eight-bit-border-20 bg-blue-dark w-max pr-10 pl-10 pb-5 flex">
+        <div className="eight-bit-border-20 bg-blue-dark pr-10 pl-10 pb-5 flex">
           <div className="flex mt-[-40px]" /* move reels out of bg on top */>
             <Reel<Ticker>
               selectedOption={ticker}
