@@ -10,7 +10,7 @@ import {
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
-import React, { ChangeEvent, PointerEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import {
   Currency,
   Metric,
