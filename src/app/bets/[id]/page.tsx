@@ -136,7 +136,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     <>
       {data && (
         <div className="w-1/2 mx-auto">
-          <div className="bg-blue-dark border-pink-light border-2 text-center w-3/5 mx-auto text-3xl py-2">
+          <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto text-3xl py-2">
             <BetCoundown
               expirationTimestampInS={
                 isBetAccepted
@@ -160,7 +160,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
             </Heading>
           </div>
           <div className="flex justify-center gap-x-4">
-            <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
+            <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
               {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
               {direction}&nbsp;in&nbsp;
               {Math.round(
@@ -170,7 +170,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
               )}
               &nbsp;day(s)
             </div>
-            <div className="bg-white border-pink-light border-4 text-neutral-800 px-4">
+            <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
               Wagered:&nbsp;{valueToDisplay}&nbsp;
               {getCurrencySymbolByAddress(currency)}
             </div>

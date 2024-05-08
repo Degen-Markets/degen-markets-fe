@@ -10,7 +10,7 @@ import {
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, PointerEvent, useEffect, useState } from "react";
 import { Currency, Metric, ReelOption } from "@/app/lib/utils/bets/types";
 import {
   erc20Abi,
@@ -152,6 +152,20 @@ export default function CreateBet() {
     }
   };
 
+  const randomizeSelection = () => {
+    setTicker(tickerOptions[Math.floor(Math.random() * tickerOptions.length)]);
+    setMetric(metricOptions[Math.floor(Math.random() * metricOptions.length)]);
+    setDirection(
+      directionOptions[Math.floor(Math.random() * directionOptions.length)],
+    );
+    setDuration(
+      durationOptions[Math.floor(Math.random() * durationOptions.length)],
+    );
+    setCurrency(
+      currencyOptions[Math.floor(Math.random() * currencyOptions.length)],
+    );
+  };
+
   return (
     <>
       <main className="text-center">
@@ -161,44 +175,51 @@ export default function CreateBet() {
           </Heading>
         </div>
         <div className="flex justify-center select-none">
-          <div className="bg-blue-dark w-max flex pr-10 pl-10 pb-5">
-            <Reel<string>
-              selectedOption={ticker}
-              setSelectedOption={setTicker}
-              reelOptions={tickerOptions}
-              title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
-            />
-            <Reel<Metric>
-              selectedOption={metric}
-              setSelectedOption={setMetric}
-              reelOptions={metricOptions}
-              title="&nbsp;Metric:&nbsp;&nbsp;"
-            />
-            <Reel<boolean>
-              selectedOption={direction}
-              setSelectedOption={setDirection}
-              reelOptions={directionOptions}
-              title="Direction:"
-            />
-            <Reel<number>
-              selectedOption={duration}
-              setSelectedOption={setDuration}
-              reelOptions={durationOptions}
-              title="Duration:"
-            />
-            <Reel<`0x${string}`>
-              selectedOption={currency}
-              setSelectedOption={setCurrency}
-              reelOptions={currencyOptions}
-              title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
-            />
+          <div className="eight-bit-border-20 bg-blue-dark w-max pr-10 pl-10 pb-5 flex">
+            <div className="flex mt-[-40px]" /* move reels out of bg on top */>
+              <Reel<string>
+                selectedOption={ticker}
+                setSelectedOption={setTicker}
+                reelOptions={tickerOptions}
+                title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
+              />
+              <Reel<Metric>
+                selectedOption={metric}
+                setSelectedOption={setMetric}
+                reelOptions={metricOptions}
+                title="&nbsp;Metric:&nbsp;&nbsp;"
+              />
+              <Reel<boolean>
+                selectedOption={direction}
+                setSelectedOption={setDirection}
+                reelOptions={directionOptions}
+                title="Direction:"
+              />
+              <Reel<number>
+                selectedOption={duration}
+                setSelectedOption={setDuration}
+                reelOptions={durationOptions}
+                title="Duration:"
+              />
+              <Reel<`0x${string}`>
+                selectedOption={currency}
+                setSelectedOption={setCurrency}
+                reelOptions={currencyOptions}
+                title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
+              />
+            </div>
+            <div className="ml-[30px] w-[140px] mt-auto mb-auto">
+              <img
+                onClick={randomizeSelection}
+                className="cursor-pointer"
+                src="./randomize-create-bet-button.svg"
+              />
+            </div>
           </div>
         </div>
-        <br />
-        <br />
-        <div className="flex justify-center">
-          <div className="border-pink-light border-2 w-max flex justify-center">
-            <div className="border-pink-light border pr-5 pl-5 bg-blue-dark">
+        <div className="flex justify-center mt-[20px]">
+          <div className="border-purple-medium border-2 w-max flex justify-center">
+            <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
               AMOUNT
             </div>
             <input
@@ -214,13 +235,10 @@ export default function CreateBet() {
         <div className="text-yellow-light">
           ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
         </div>
-        <br />
-        <br />
         <div className="text-blue-dark">
           Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
           {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
         </div>
-        <br />
         <div className="flex justify-center">
           <ButtonPrimary
             size={"regular"}
