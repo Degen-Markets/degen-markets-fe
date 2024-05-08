@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "./providers";
-import Navbar from "@/app/components/Navbar";
 import PageWrapper from "@/app/components/PageWrapper";
 import React from "react";
 import Footer from "@/app/components/Footer";
+import Menu from "@/app/components/Menu";
 
 export const metadata: Metadata = {
   title: "Degen Markets",
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="text-2xl bg-cover bg-center bg-no-repeat min-h-screen">
         <Providers>
-          <Navbar />
+          <Menu />
           <PageWrapper>{children}</PageWrapper>
           <Footer />
         </Providers>
