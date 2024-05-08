@@ -4,13 +4,15 @@ import React, { useState } from "react";
 import { ButtonSecondary, CustomConnectButton } from "@/app/components/Button";
 import HamburgerIcon from "@/app/components/Icons/HamburgerIcon";
 import CrossIcon from "@/app/components/Icons/CrossIcon";
+import { useRouter } from "next/navigation";
 
 const Menu: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
+  const router = useRouter();
   return (
     <div className="flex justify-between items-center w-full h-20 lg:px-10 px-6 text-white bg-transparent fixed nav z-50">
       <Link href="/">
-        <div className="flex gap-x-2 items-center">
+        <div className="hidden lg:flex gap-x-2 items-center">
           <div className="uppercase text-8xl tracking-wide">Degen markets</div>
         </div>
       </Link>
@@ -46,19 +48,48 @@ const Menu: React.FC = () => {
         <ul className="flex flex-col absolute top-0 left-0 w-full h-[100dvh] bg-neutral-100 text-neutral-800">
           <div className="pt-20 flex-1">
             <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <Link href="/bets">
-                <ButtonSecondary size="small">Existing bets</ButtonSecondary>
-              </Link>
+              <ButtonSecondary
+                size="small"
+                onClick={() => {
+                  router.push("/");
+                  setNav(!nav);
+                }}
+              >
+                Home
+              </ButtonSecondary>
             </div>
             <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <Link href="/create-bet">
-                <ButtonSecondary size="small">Create bet</ButtonSecondary>
-              </Link>
+              <ButtonSecondary
+                onClick={() => {
+                  router.push("/bets");
+                  setNav(!nav);
+                }}
+                size="small"
+              >
+                Existing bets
+              </ButtonSecondary>
             </div>
             <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <Link href="/my-bets">
-                <ButtonSecondary size="small">My bets</ButtonSecondary>
-              </Link>
+              <ButtonSecondary
+                onClick={() => {
+                  router.push("/create-bet");
+                  setNav(!nav);
+                }}
+                size="small"
+              >
+                Create bet
+              </ButtonSecondary>
+            </div>
+            <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
+              <ButtonSecondary
+                onClick={() => {
+                  router.push("/my-bets");
+                  setNav(!nav);
+                }}
+                size="small"
+              >
+                My bets
+              </ButtonSecondary>
             </div>
             <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
               <CustomConnectButton />

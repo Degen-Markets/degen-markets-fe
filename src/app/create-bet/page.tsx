@@ -168,89 +168,87 @@ export default function CreateBet() {
   };
 
   return (
-    <>
-      <main className="text-center">
-        <div className="flex justify-center select-none">
-          <Heading className="my-10">
-            <Headline>Challenge a fren</Headline>
-          </Heading>
-        </div>
-        <div className="flex justify-center select-none">
-          <div className="eight-bit-border-20 bg-blue-dark w-max pr-10 pl-10 pb-5 flex">
-            <div className="flex mt-[-40px]" /* move reels out of bg on top */>
-              <Reel<Ticker>
-                selectedOption={ticker}
-                setSelectedOption={setTicker}
-                reelOptions={tickerOptions}
-                title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
-              />
-              <Reel<Metric>
-                selectedOption={metric}
-                setSelectedOption={setMetric}
-                reelOptions={metricOptions}
-                title="&nbsp;Metric:&nbsp;&nbsp;"
-              />
-              <Reel<boolean>
-                selectedOption={direction}
-                setSelectedOption={setDirection}
-                reelOptions={directionOptions}
-                title="Direction:"
-              />
-              <Reel<number>
-                selectedOption={duration}
-                setSelectedOption={setDuration}
-                reelOptions={durationOptions}
-                title="Duration:"
-              />
-              <Reel<`0x${string}`>
-                selectedOption={currency}
-                setSelectedOption={setCurrency}
-                reelOptions={currencyOptions}
-                title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
-              />
-            </div>
-            <div className="ml-[30px] w-[140px] mt-auto mb-auto">
-              <img
-                onClick={randomizeAllOptions}
-                className="cursor-pointer"
-                src="./randomize-create-bet-button.svg"
-                alt="Randomize options button"
-              />
-            </div>
+    <main className="text-center">
+      <div className="flex justify-center select-none">
+        <Heading className="my-10">
+          <Headline>Challenge a fren</Headline>
+        </Heading>
+      </div>
+      <div className="flex justify-center select-none">
+        <div className="eight-bit-border-20 bg-blue-dark w-max pr-10 pl-10 pb-5 flex">
+          <div className="flex mt-[-40px]" /* move reels out of bg on top */>
+            <Reel<Ticker>
+              selectedOption={ticker}
+              setSelectedOption={setTicker}
+              reelOptions={tickerOptions}
+              title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
+            />
+            <Reel<Metric>
+              selectedOption={metric}
+              setSelectedOption={setMetric}
+              reelOptions={metricOptions}
+              title="&nbsp;Metric:&nbsp;&nbsp;"
+            />
+            <Reel<boolean>
+              selectedOption={direction}
+              setSelectedOption={setDirection}
+              reelOptions={directionOptions}
+              title="Direction:"
+            />
+            <Reel<number>
+              selectedOption={duration}
+              setSelectedOption={setDuration}
+              reelOptions={durationOptions}
+              title="Duration:"
+            />
+            <Reel<`0x${string}`>
+              selectedOption={currency}
+              setSelectedOption={setCurrency}
+              reelOptions={currencyOptions}
+              title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
+            />
           </div>
-        </div>
-        <div className="flex justify-center mt-[20px]">
-          <div className="border-purple-medium border-2 w-max flex justify-center">
-            <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
-              AMOUNT
-            </div>
-            <input
-              className="text-blue-dark text-center"
-              type="number"
-              lang="en-US"
-              step=".000001" // TODO: only allow up to 6 decimals
-              value={value}
-              onChange={handleValueInput}
+          <div className="ml-[30px] w-[140px] mt-auto mb-auto lg:block hidden">
+            <img
+              onClick={randomizeAllOptions}
+              className="cursor-pointer"
+              src="./randomize-create-bet-button.svg"
+              alt="Randomize options button"
             />
           </div>
         </div>
-        <div className="text-yellow-light">
-          ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
+      </div>
+      <div className="flex justify-center mt-[20px]">
+        <div className="border-purple-medium border-2 w-max flex justify-center">
+          <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
+            AMOUNT
+          </div>
+          <input
+            className="text-blue-dark text-center"
+            type="number"
+            lang="en-US"
+            step=".000001" // TODO: only allow up to 6 decimals
+            value={value}
+            onChange={handleValueInput}
+          />
         </div>
-        <div className="text-blue-dark">
-          Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
-          {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
-        </div>
-        <div className="flex justify-center">
-          <ButtonPrimary
-            size={"regular"}
-            disabled={isActionDisabled}
-            onClick={handleActionButtonClick}
-          >
-            {getActionButtonText()}
-          </ButtonPrimary>
-        </div>
-      </main>
-    </>
+      </div>
+      <div className="text-yellow-light">
+        ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
+      </div>
+      <div className="text-blue-dark">
+        Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
+        {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
+      </div>
+      <div className="flex justify-center">
+        <ButtonPrimary
+          size={"regular"}
+          disabled={isActionDisabled}
+          onClick={handleActionButtonClick}
+        >
+          {getActionButtonText()}
+        </ButtonPrimary>
+      </div>
+    </main>
   );
 }
