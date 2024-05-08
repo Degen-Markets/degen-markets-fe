@@ -136,7 +136,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     <>
       {data && (
         <div className="w-1/2 mx-auto">
-          <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto text-3xl py-2">
+          <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">
             <BetCoundown
               expirationTimestampInS={
                 isBetAccepted
