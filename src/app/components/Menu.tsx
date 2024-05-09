@@ -2,8 +2,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { ButtonSecondary, CustomConnectButton } from "@/app/components/Button";
-import HamburgerIcon from "@/app/components/Icons/HamburgerIcon";
-import CrossIcon from "@/app/components/Icons/CrossIcon";
+import { HamburgerIcon } from "@/app/components/Icons";
+import { CrossIcon } from "@/app/components/Icons";
 import { useRouter } from "next/navigation";
 
 const Menu: React.FC = () => {
@@ -34,11 +34,11 @@ const Menu: React.FC = () => {
         className="cursor-pointer z-10 lg:hidden ml-auto"
       >
         {nav ? (
-          <div className="text-neutral-800">
+          <div className="text-blue-dark">
             <CrossIcon />
           </div>
         ) : (
-          <div className="text-neutral-800">
+          <div className="text-blue-dark">
             <HamburgerIcon />
           </div>
         )}
@@ -104,7 +104,7 @@ const Menu: React.FC = () => {
                 <CustomConnectButton className="px-8" />
               </div>
             </li>
-            <li className="flex-end pb-10 border border-t-black">
+            <li className="flex-end bg-blue-dark text-white">
               <div className="px-6 cursor-pointer uppercase font-oswald py-4 tracking-wider text-base">
                 <Link href="https://twitter.com/DEGEN_MARKETS" target="_blank">
                   <div>Twitter</div>

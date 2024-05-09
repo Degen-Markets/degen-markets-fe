@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   useAccount,
@@ -13,20 +13,9 @@ import {
   DEGEN_MARKETS_ADDRESS,
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
-import { CreatedBetObject, Currency } from "@/app/lib/utils/bets/types";
 import BetCoundown from "@/app/components/BetCoundown";
-import {
-  betDurationInDays,
-  getCurrencySymbolByAddress,
-} from "@/app/lib/utils/bets/helpers";
-import {
-  erc20Abi,
-  formatUnits,
-  maxUint256,
-  parseEther,
-  parseUnits,
-  zeroAddress,
-} from "viem";
+import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
+import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
@@ -148,16 +137,18 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
               }
             />
           </div>
-          <div className="pt-16 pb-10">
-            <Heading className="w-[100%]">
-              <Headline>Bets that</Headline>
-              <SubHeadline
-                isTop={true}
-                className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
-              >
-                {creator === address ? "Created by you" : creator}
-              </SubHeadline>
-            </Heading>
+          <div className="pt-16 pb-10 flex justify-center md:block">
+            <div>
+              <Heading className="w-72">
+                <Headline>Bets that</Headline>
+                <SubHeadline
+                  isTop={true}
+                  className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
+                >
+                  {creator === address ? "Created by you" : creator}
+                </SubHeadline>
+              </Heading>
+            </div>
           </div>
           <div className="flex flex-col md:flex-row justify-center gap-4 text-center md:text-left">
             <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
@@ -175,16 +166,14 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
               {getCurrencySymbolByAddress(currency)}
             </div>
           </div>
-          <div className="flex flex-col gap-3 items-center pt-10">
-            {!isBetAccepted && !isExpired && (
-              <>
-                <div className="text-blue-dark">Not a chance...</div>
-                <ButtonPrimary size={"regular"} onClick={handleAccept}>
-                  {getActionButtonText()}
-                </ButtonPrimary>
-              </>
-            )}
-          </div>
+          {!isBetAccepted && !isExpired && (
+            <div className="flex flex-col gap-3 items-center pt-10">
+              <div className="text-blue-dark">Not a chance...</div>
+              <ButtonPrimary size={"regular"} onClick={handleAccept}>
+                {getActionButtonText()}
+              </ButtonPrimary>
+            </div>
+          )}
         </div>
       )}
     </>
