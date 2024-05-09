@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   useAccount,
@@ -137,16 +137,18 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
               }
             />
           </div>
-          <div className="pt-16 pb-10">
-            <Heading className="w-[100%]">
-              <Headline>Bets that</Headline>
-              <SubHeadline
-                isTop={true}
-                className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
-              >
-                {isCreatedByCurrentUser ? "Created by you" : creator}
-              </SubHeadline>
-            </Heading>
+          <div className="pt-16 pb-10 flex justify-center md:block">
+            <div>
+              <Heading className="w-72">
+                <Headline>Bets that</Headline>
+                <SubHeadline
+                  isTop={true}
+                  className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
+                >
+                  {isCreatedByCurrentUser ? "Created by you" : creator}
+                </SubHeadline>
+              </Heading>
+            </div>
           </div>
           <div className="flex flex-col md:flex-row justify-center gap-4 text-center md:text-left">
             <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">

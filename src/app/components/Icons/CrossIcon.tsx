@@ -1,11 +1,11 @@
-const CrossIcon = () => (
+export const CrossIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth="1.5"
     stroke="currentColor"
-    className="w-6 h-6"
+    className="w-8 h-8"
   >
     <path
       strokeLinecap="round"
@@ -14,5 +14,3 @@ const CrossIcon = () => (
     />
   </svg>
 );
-
-export default CrossIcon;
