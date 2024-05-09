@@ -13,20 +13,9 @@ import {
   DEGEN_MARKETS_ADDRESS,
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
-import { CreatedBetObject, Currency } from "@/app/lib/utils/bets/types";
 import BetCoundown from "@/app/components/BetCoundown";
-import {
-  betDurationInDays,
-  getCurrencySymbolByAddress,
-} from "@/app/lib/utils/bets/helpers";
-import {
-  erc20Abi,
-  formatUnits,
-  maxUint256,
-  parseEther,
-  parseUnits,
-  zeroAddress,
-} from "viem";
+import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
+import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
@@ -79,7 +68,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const metric = data ? data[4] : "";
   const direction = data ? (data[5] === true ? "up" : "down") : "";
   const isExpired = expirationTimestampInS * 1000 - Date.now() < 0;
-
+  const isCreatedByCurrentUser = creator === address;
   const acceptBet = () => {
     sendAcceptBetTx({
       abi: DEGEN_MARKETS_ABI,
@@ -155,7 +144,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
                 isTop={true}
                 className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
               >
-                {creator === address ? "Created by you" : creator}
+                {isCreatedByCurrentUser ? "Created by you" : creator}
               </SubHeadline>
             </Heading>
           </div>
@@ -176,7 +165,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
             </div>
           </div>
           <div className="flex flex-col gap-3 items-center pt-10">
-            {!isBetAccepted && !isExpired && (
+            {!isBetAccepted && !isExpired && !isCreatedByCurrentUser && (
               <>
                 <div className="text-blue-dark">Not a chance...</div>
                 <ButtonPrimary size={"regular"} onClick={handleAccept}>
