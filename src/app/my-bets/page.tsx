@@ -35,21 +35,23 @@ const MyBets = () => {
 
   if (!isConnected) {
     return (
-      <div className="text-center text-4xl">
+      <div className="text-center text-xl md:text-2xl">
         Please connect to view your bets.
       </div>
     );
   }
   return (
     <>
-      {isLoading && <div className="text-center text-4xl">Loading...</div>}
+      {isLoading && (
+        <div className="text-center text-xl md:text-2xl">Loading...</div>
+      )}
       {openBets.length === 0 && closedBets.length === 0 && (
-        <div className="text-center text-4xl">
+        <div className="text-center text-xl md:text-2xl">
           You currently do not have any bets.
         </div>
       )}
       {openBets.length > 0 && (
-        <div className="text-center text-7xl">Back out?</div>
+        <div className="text-center text-4xl md:text-7xl">Back out?</div>
       )}
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {openBets.map((bet) => (
@@ -62,7 +64,7 @@ const MyBets = () => {
       </div>
 
       {closedBets.length > 0 && (
-        <div className="text-center text-7xl">Good luck!</div>
+        <div className="text-center text-4xl md:text-7xl">Good luck!</div>
       )}
       <div className="p-5 flex flex-wrap gap-[40px] justify-center">
         {closedBets.map((bet) => (

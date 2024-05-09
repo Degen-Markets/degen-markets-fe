@@ -45,64 +45,74 @@ const Menu: React.FC = () => {
       </div>
 
       {nav && (
-        <ul className="flex flex-col absolute top-0 left-0 w-full h-[100dvh] bg-neutral-100 text-neutral-800">
-          <div className="pt-20 flex-1">
-            <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <ButtonSecondary
-                size="small"
-                onClick={() => {
-                  router.push("/");
-                  setNav(!nav);
-                }}
-              >
-                Home
-              </ButtonSecondary>
-            </div>
-            <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <ButtonSecondary
-                onClick={() => {
-                  router.push("/bets");
-                  setNav(!nav);
-                }}
-                size="small"
-              >
-                Existing bets
-              </ButtonSecondary>
-            </div>
-            <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <ButtonSecondary
-                onClick={() => {
-                  router.push("/create-bet");
-                  setNav(!nav);
-                }}
-                size="small"
-              >
-                Create bet
-              </ButtonSecondary>
-            </div>
-            <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <ButtonSecondary
-                onClick={() => {
-                  router.push("/my-bets");
-                  setNav(!nav);
-                }}
-                size="small"
-              >
-                My bets
-              </ButtonSecondary>
-            </div>
-            <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-              <CustomConnectButton />
-            </div>
-          </div>
-          <div className="flex-end pb-10 border border-t-black">
-            <div className="px-6 cursor-pointer uppercase font-oswald py-4 tracking-wider text-base">
-              <Link href="https://twitter.com/DEGEN_MARKETS" target="_blank">
-                <div>Twitter</div>
-              </Link>
-            </div>
-          </div>
-        </ul>
+        <>
+          <div
+            onClick={() => setNav(!nav)}
+            className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900  h-[100dvh] bg-opacity-80"
+          ></div>
+          <ul className="flex flex-col absolute top-0 right-0 w-[80%] h-[100dvh] bg-neutral-100 text-neutral-800">
+            <li className="pt-20 flex-1">
+              <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base ">
+                <ButtonSecondary
+                  className="px-8"
+                  size="small"
+                  onClick={() => {
+                    router.push("/");
+                    setNav(!nav);
+                  }}
+                >
+                  Home
+                </ButtonSecondary>
+              </div>
+              <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
+                <ButtonSecondary
+                  className="px-8"
+                  onClick={() => {
+                    router.push("/bets");
+                    setNav(!nav);
+                  }}
+                  size="small"
+                >
+                  Existing bets
+                </ButtonSecondary>
+              </div>
+              <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
+                <ButtonSecondary
+                  className="px-8"
+                  onClick={() => {
+                    router.push("/create-bet");
+                    setNav(!nav);
+                  }}
+                  size="small"
+                >
+                  Create bet
+                </ButtonSecondary>
+              </div>
+              <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
+                <ButtonSecondary
+                  className="px-8"
+                  onClick={() => {
+                    router.push("/my-bets");
+                    setNav(!nav);
+                  }}
+                  size="small"
+                >
+                  My bets
+                </ButtonSecondary>
+              </div>
+              <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
+                <CustomConnectButton className="px-8" />
+              </div>
+            </li>
+            <li className="flex-end pb-10 border border-t-black">
+              <div className="px-6 cursor-pointer uppercase font-oswald py-4 tracking-wider text-base">
+                <Link href="https://twitter.com/DEGEN_MARKETS" target="_blank">
+                  <div>Twitter</div>
+                </Link>
+              </div>
+            </li>
+          </ul>
+        </>
       )}
     </div>
   );

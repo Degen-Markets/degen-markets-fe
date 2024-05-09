@@ -2,8 +2,12 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
 import { ButtonGradient } from "@/app/components/Button/index";
+import cx from "classnames";
 
-export const CustomConnectButton: React.FC<{}> = ({}) => {
+interface Props {
+  className?: string;
+}
+export const CustomConnectButton: React.FC<Props> = ({ className }) => {
   return (
     <ConnectButton.Custom>
       {({
@@ -32,7 +36,7 @@ export const CustomConnectButton: React.FC<{}> = ({}) => {
                     size={"small"}
                     onClick={openConnectModal}
                     type="button"
-                    className="text-neutral-900"
+                    className={cx("text-neutral-900", className)}
                   >
                     <div className="text-neutral-900">Connect wallet</div>
                   </ButtonGradient>
@@ -45,7 +49,7 @@ export const CustomConnectButton: React.FC<{}> = ({}) => {
                     size={"small"}
                     onClick={openChainModal}
                     type="button"
-                    className="text-neutral-900"
+                    className={cx("text-neutral-900", className)}
                   >
                     <div className="text-neutral-900">Wrong network</div>
                   </ButtonGradient>
@@ -57,7 +61,7 @@ export const CustomConnectButton: React.FC<{}> = ({}) => {
                   <ButtonGradient
                     size={"small"}
                     onClick={openAccountModal}
-                    className="text-neutral-900"
+                    className={cx("text-neutral-900", className)}
                   >
                     <div className="text-neutral-900">
                       {account.displayName}
