@@ -129,7 +129,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     if (!isAllowanceEnough) {
       return "Approve and bet";
     }
-    return "Create Bet";
+    return "Accept Bet";
   };
 
   return (
