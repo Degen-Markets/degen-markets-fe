@@ -13,20 +13,9 @@ import {
   DEGEN_MARKETS_ADDRESS,
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
-import { CreatedBetObject, Currency } from "@/app/lib/utils/bets/types";
 import BetCoundown from "@/app/components/BetCoundown";
-import {
-  betDurationInDays,
-  getCurrencySymbolByAddress,
-} from "@/app/lib/utils/bets/helpers";
-import {
-  erc20Abi,
-  formatUnits,
-  maxUint256,
-  parseEther,
-  parseUnits,
-  zeroAddress,
-} from "viem";
+import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
+import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
