@@ -135,7 +135,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <>
       {data && (
-        <div className="w-1/2 mx-auto">
+        <div className="w-[80%] md:w-1/2 mx-auto">
           <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">
             <BetCoundown
               expirationTimestampInS={
@@ -149,7 +149,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
             />
           </div>
           <div className="pt-16 pb-10">
-            <Heading>
+            <Heading className="w-[100%]">
               <Headline>Bets that</Headline>
               <SubHeadline
                 isTop={true}
@@ -159,7 +159,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
               </SubHeadline>
             </Heading>
           </div>
-          <div className="flex justify-center gap-x-4">
+          <div className="flex flex-col md:flex-row justify-center gap-4 text-center md:text-left">
             <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
               {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
               {direction}&nbsp;in&nbsp;
