@@ -5,7 +5,11 @@ const Heading: FC<{ className?: string } & PropsWithChildren> = ({
   children,
   className,
 }) => {
-  return <div className={cx("relative text-white", className)}>{children}</div>;
+  return (
+    <div className={cx("relative text-white w-[80%] md:w-auto", className)}>
+      {children}
+    </div>
+  );
 };
 
 const Headline: FC<{ className?: string } & PropsWithChildren> = ({
@@ -13,10 +17,8 @@ const Headline: FC<{ className?: string } & PropsWithChildren> = ({
   className,
 }) => {
   return (
-    <div className={cx("relative", className)}>
-      <div
-        className={`eight-bit-border-20 bg-blue-dark py-8 text-8xl px-6 text-center`}
-      >
+    <div className={cx("relative text-3xl md:text-8xl", className)}>
+      <div className={`eight-bit-border-20 bg-blue-dark py-8 px-6 text-center`}>
         {children}
       </div>
     </div>

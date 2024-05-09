@@ -170,13 +170,15 @@ export default function CreateBet() {
   return (
     <main className="text-center">
       <div className="flex justify-center select-none">
-        <Heading className="my-10">
+        <Heading className="mt-10 mb-12">
           <Headline>Challenge a fren</Headline>
         </Heading>
       </div>
       <div className="flex justify-center select-none">
-        <div className="eight-bit-border-20 bg-blue-dark pr-10 pl-10 pb-5 flex">
-          <div className="flex mt-[-40px]" /* move reels out of bg on top */>
+        <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5 flex">
+          <div
+            className="flex mt-[-30px] md:mt-[-40px]" /* move reels out of bg on top */
+          >
             <Reel<Ticker>
               selectedOption={ticker}
               setSelectedOption={setTicker}
@@ -236,7 +238,7 @@ export default function CreateBet() {
       <div className="text-yellow-light">
         ${isEth ? (Number(value) * ethPrice).toLocaleString() : value}
       </div>
-      <div className="text-blue-dark">
+      <div className="text-blue-dark mb-4">
         Bet that {ticker.label}&apos;s {metric.label} goes&nbsp;
         {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
       </div>
