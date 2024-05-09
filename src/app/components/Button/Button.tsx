@@ -15,13 +15,11 @@ export const Button: FC<ButtonProps> = ({
   const buttonSize = size === "regular" ? "h-10 md:h-12" : "h-8 md:h-10";
 
   return (
-    <div>
-      <button
-        className={`text-white py-2 px-2 md:px-4 shadow-button flex items-center justify-center active:shadow-button-pressed my-auto ${className} ${buttonSize}`}
-        {...props}
-      >
-        {children}
-      </button>
-    </div>
+    <button
+      className={`text-white py-2 px-2 md:px-4 shadow-button flex items-center justify-center active:shadow-button-pressed my-auto ${className} ${buttonSize}`}
+      {...props}
+    >
+      {children}
+    </button>
   );
 };

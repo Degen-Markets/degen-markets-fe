@@ -2,10 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import {
-  BET_ACCEPTANCE_TIME_LIMIT_IN_MS,
-  DEGEN_MARKETS_ADDRESS,
-} from "@/app/lib/utils/bets/constants";
+import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { prettifyAddress } from "@/app/lib/utils/evm";
 import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
@@ -37,7 +34,7 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
       );
       onWithdraw && onWithdraw();
     }
-  }, [isWithdrawBetSuccess]);
+  }, [isWithdrawBetSuccess, onWithdraw, showToast]);
 
   useEffect(() => {
     if (isWithdrawBetError) {
@@ -79,7 +76,7 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
         <div className="bg-blue-medium text-blue-dark my-2 p-1">
           {prettifyAddress(bet.creator)} is betting that...
         </div>
-        <div className="bg-white text-blue-dark p-1 h-[72px]">
+        <div className="bg-white text-blue-dark px-1 py-2 md:p-1 md:h-[72px]">
           {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
           {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
           {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
