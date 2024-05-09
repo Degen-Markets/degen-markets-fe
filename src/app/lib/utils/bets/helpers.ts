@@ -94,3 +94,5 @@ export const getRandomOption = <T>(
   label: string;
   value: T;
 } => options[Math.floor(Math.random() * options.length)];
+
+export const getLastLetter = (str: string): string => str.slice(str.length - 1);
