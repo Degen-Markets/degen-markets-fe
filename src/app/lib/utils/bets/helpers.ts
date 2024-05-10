@@ -96,3 +96,6 @@ export const getRandomOption = <T>(
 } => options[Math.floor(Math.random() * options.length)];
 
 export const getLastLetter = (str: string): string => str.slice(str.length - 1);
+
+export const getDisplayNameForAddress = (address: string): string =>
+  address.slice(0, 4) + "..." + address.slice(-5);

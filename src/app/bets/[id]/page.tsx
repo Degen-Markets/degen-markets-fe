@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   useAccount,
@@ -14,13 +14,17 @@ import {
   STABLECOIN_DECIMALS,
 } from "../../lib/utils/bets/constants";
 import BetCoundown from "@/app/components/BetCoundown";
-import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
+import {
+  getCurrencySymbolByAddress,
+  getDisplayNameForAddress,
+} from "@/app/lib/utils/bets/helpers";
 import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
+import UserAvatar from "@/app/components/UserAvatar";
 
 const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const { address } = useAccount();
@@ -121,36 +125,88 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     return "Accept Bet";
   };
 
+  const getHeadline = () => {
+    return isBetAccepted ? (
+      <div>
+        <div className="flex justify-center">
+          <div className="flex text-lg md:text-[1.75rem] items-center gap-2 md:gap-x-16">
+            <div className="flex flex-col gap-1 items-center">
+              <UserAvatar
+                width={100}
+                height={100}
+                address={creator}
+                className="w-10 h-10 md:w-24 md:h-24"
+              />
+              <span>{getDisplayNameForAddress(creator)}</span>
+            </div>
+            <span className="text-2xl md:text-[175px]">VS</span>
+            <div className="flex flex-col gap-1 items-center">
+              <UserAvatar
+                width={100}
+                height={100}
+                address={acceptor}
+                className="w-10 h-10 md:w-24 md:h-24"
+              />
+              <span>{getDisplayNameForAddress(acceptor)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : (
+      "Bets that"
+    );
+  };
+
+  const getSubHeadline = () => {
+    return (
+      <SubHeadline
+        isTop={true}
+        className="bg-white border-purple-medium text-neutral-950"
+      >
+        {isBetAccepted ? (
+          <BetCoundown
+            expirationTimestampInS={
+              isBetAccepted
+                ? expirationTimestampInS
+                : Number(creationTimestampInS) + BET_ACCEPTANCE_TIME_LIMIT
+            }
+            message={isBetAccepted ? "Bet ends in" : "Countdown to accept bet"}
+          />
+        ) : isCreatedByCurrentUser ? (
+          "Created by you"
+        ) : (
+          creator
+        )}
+      </SubHeadline>
+    );
+  };
   return (
     <>
       {data && (
         <div className="w-[80%] md:w-1/2 mx-auto">
-          <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">
-            <BetCoundown
-              expirationTimestampInS={
-                isBetAccepted
-                  ? expirationTimestampInS
-                  : Number(creationTimestampInS) + BET_ACCEPTANCE_TIME_LIMIT
-              }
-              message={
-                isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
-              }
-            />
-          </div>
-          <div className="pt-16 pb-10 flex justify-center md:block">
+          {!isBetAccepted && (
+            <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">
+              <BetCoundown
+                expirationTimestampInS={
+                  isBetAccepted
+                    ? expirationTimestampInS
+                    : Number(creationTimestampInS) + BET_ACCEPTANCE_TIME_LIMIT
+                }
+                message={
+                  isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
+                }
+              />
+            </div>
+          )}
+          <div className="pt-16 flex justify-center md:block">
             <div>
-              <Heading className="w-72">
-                <Headline>Bets that</Headline>
-                <SubHeadline
-                  isTop={true}
-                  className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
-                >
-                  {isCreatedByCurrentUser ? "Created by you" : creator}
-                </SubHeadline>
+              <Heading className="w-full ">
+                <Headline>{getHeadline()}</Headline>
+                {getSubHeadline()}
               </Heading>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-center gap-4 text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-4 md:mt-0 md:-translate-y-1/2">
             <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
               {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
               {direction}&nbsp;in&nbsp;
