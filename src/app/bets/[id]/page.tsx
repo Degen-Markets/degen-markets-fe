@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   useAccount,
@@ -17,6 +17,9 @@ import BetCoundown from "@/app/components/BetCoundown";
 import {
   getCurrencySymbolByAddress,
   getDisplayNameForAddress,
+  isBetConcluded,
+  isBetOpen,
+  isBetRunning,
 } from "@/app/lib/utils/bets/helpers";
 import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
@@ -25,8 +28,23 @@ import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import UserAvatar from "@/app/components/UserAvatar";
+import { getBetById } from "@/app/lib/utils/api/getBetById";
+import { BetResponse } from "@/app/lib/utils/bets/types";
+import WinnerState from "@/app/bets/[id]/_compoenets/WinnerState";
 
 const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
+  const [bet, setBet] = useState<BetResponse>();
+  const fetchBet = async () => {
+    const { data: bet } = await getBetById(id);
+    setBet(bet);
+  };
+  useEffect(() => {
+    fetchBet();
+  }, []);
+
+  // eslint-disable-next-line no-console
+  console.log("bet :", bet);
+
   const { address } = useAccount();
   const router = useRouter();
   const { data: approvalHash, writeContract: sendApprovalTx } =
@@ -52,27 +70,31 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     functionName: "betIdToBet",
     args: [id],
   });
-  const acceptor = data ? data[7] : zeroAddress;
+
+  const { currency = zeroAddress, creator, acceptor } = bet || {};
   const isBetAccepted = acceptor !== zeroAddress;
-  const currency = data ? data[10] : zeroAddress;
-  const creator = data ? data[1] : zeroAddress;
   const isEth = currency === zeroAddress;
   const valueInWei = data ? data[9] : "";
   const valueToDisplay = formatUnits(
     valueInWei,
     isEth ? 18 : STABLECOIN_DECIMALS,
   );
+
   const currencySymbol = getCurrencySymbolByAddress(currency);
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const { userBalances } = useBalances(false, address);
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
   const expirationTimestampInS = data ? Number(data[6]) : 0;
   const creationTimestampInS = data ? Number(data[2]) : 0;
-  const ticker = data ? data[3] : "";
-  const metric = data ? data[4] : "";
+  const ticker = bet ? bet.ticker : "";
+  const metric = bet ? bet.metric : "";
   const direction = data ? (data[5] === true ? "up" : "down") : "";
   const isExpired = expirationTimestampInS * 1000 - Date.now() < 0;
   const isCreatedByCurrentUser = creator === address;
+
+  const [winner, loser] =
+    bet?.winner === creator ? [creator, acceptor] : [acceptor, creator];
+
   const acceptBet = () => {
     sendAcceptBetTx({
       abi: DEGEN_MARKETS_ABI,
@@ -126,7 +148,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   };
 
   const getHeadline = () => {
-    return isBetAccepted ? (
+    return isBetAccepted && acceptor ? (
       <div>
         <div className="flex justify-center">
           <div className="flex text-lg md:text-[1.75rem] items-center gap-2 md:gap-x-16">
@@ -180,9 +202,18 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
       </SubHeadline>
     );
   };
+
+  if (winner && loser) {
+    return (
+      <div className="w-[80%] md:w-1/2 mx-auto">
+        <WinnerState winner={winner} loser={loser} />
+      </div>
+    );
+  }
+
   return (
     <>
-      {data && (
+      {data && bet && (
         <div className="w-[80%] md:w-1/2 mx-auto">
           {!isBetAccepted && (
             <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">

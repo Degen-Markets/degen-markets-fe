@@ -1,10 +1,9 @@
 import { FC, PropsWithChildren } from "react";
 import cx from "classnames";
 
-const Heading: FC<{ className?: string } & PropsWithChildren> = ({
-  children,
-  className,
-}) => {
+const Heading: FC<
+  { className?: string; color?: string } & PropsWithChildren
+> = ({ children, className }) => {
   return (
     <div className={cx("relative text-white w-[80%] md:w-auto", className)}>
       {children}
@@ -12,13 +11,14 @@ const Heading: FC<{ className?: string } & PropsWithChildren> = ({
   );
 };
 
-const Headline: FC<{ className?: string } & PropsWithChildren> = ({
-  children,
-  className,
-}) => {
+const Headline: FC<
+  { className?: string; color?: string } & PropsWithChildren
+> = ({ children, className, color = "blue-dark" }) => {
   return (
     <div className={cx("relative text-3xl md:text-8xl", className)}>
-      <div className={`eight-bit-border-20 bg-blue-dark py-8 px-6 text-center`}>
+      <div
+        className={`eight-bit-border-20 border-white  py-8 px-6 text-center bg-${color}`}
+      >
         {children}
       </div>
     </div>

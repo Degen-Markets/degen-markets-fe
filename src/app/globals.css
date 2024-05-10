@@ -134,9 +134,9 @@ input[type="number"] {
 
 .eight-bit-border-20 {
   box-shadow:
-    20px 0 rgb(34 43 55),
-    -20px 0 rgb(34 43 55),
-    0 -20px rgb(34 43 55),
-    0 20px rgb(34 43 55);
+    20px 0 currentColor,
+    -20px 0 currentColor,
+    0 -20px currentColor,
+    0 20px currentColor;
   margin: 20px auto;
 }
