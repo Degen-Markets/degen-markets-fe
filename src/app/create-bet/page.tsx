@@ -34,7 +34,6 @@ import { getETHPrice } from "@/app/lib/utils/api/getETHPrice";
 import { Heading, Headline } from "@/app/components/Heading";
 import { ButtonPrimary } from "@/app/components/Button";
 import { getRandomOption } from "@/app/lib/utils/bets/helpers";
-import { boolean } from "superstruct";
 
 export default function CreateBet() {
   const router = useRouter();
