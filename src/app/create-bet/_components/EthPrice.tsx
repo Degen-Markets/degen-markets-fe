@@ -1,4 +1,6 @@
 import axios, { AxiosResponse } from "axios";
+import React from "react";
+import BetValue from "@/app/create-bet/_components/BetValue";
 
 const apiKey = "458a12c1-9d91-4147-99fd-c604dc37471b";
 
@@ -23,3 +25,15 @@ const getETHPrice = async (): Promise<{
     return { rate: null, error: true };
   }
 };
+
+const EthPrice = async () => {
+  const { rate, error } = await getETHPrice();
+
+  return (
+    <div>
+      <BetValue ethPrice={rate} />
+    </div>
+  );
+};
+
+export default EthPrice;
