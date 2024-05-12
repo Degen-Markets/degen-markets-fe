@@ -21,16 +21,6 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
     }
   };
 
-  const totalBetValue = (): string => {
-    if (isEth && !ethPrice) {
-      return "0";
-    } else if (isEth && ethPrice) {
-      return (Number(value) * ethPrice).toLocaleString();
-    } else {
-      return value;
-    }
-  };
-
   return (
     <div>
       <div className="flex justify-center mt-[20px]">
@@ -42,7 +32,7 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
             className="text-blue-dark text-center"
             type="number"
             lang="en-US"
-            step=".000001" // TODO: only allow up to 6 decimals
+            step=".000001"
             value={value}
             onChange={handleValueInput}
           />

@@ -34,15 +34,25 @@ interface BetContextProps {
   randomizeAllOptions: () => void;
 }
 
-const BetContext = createContext<BetContextProps | undefined>(undefined);
-
-export const useBetContext = (): BetContextProps => {
-  const context = useContext(BetContext);
-  if (!context) {
-    throw new Error("useBetContext must be used within a BetProvider");
-  }
-  return context;
+const defaultValues: BetContextProps = {
+  ticker: tickerOptions[0],
+  metric: metricOptions[0],
+  direction: directionOptions[0],
+  duration: durationOptions[0],
+  currency: currencyOptions[0],
+  value: "10",
+  setTicker: () => {},
+  setMetric: () => {},
+  setDirection: () => {},
+  setDuration: () => {},
+  setCurrency: () => {},
+  setValue: () => {},
+  randomizeAllOptions: () => {},
 };
+
+const BetContext = createContext<BetContextProps>(defaultValues);
+
+export const useBetContext = (): BetContextProps => useContext(BetContext);
 
 export const BetProvider = ({ children }: { children: ReactNode }) => {
   const [ticker, setTicker] = useState(tickerOptions[0]);
@@ -52,14 +62,14 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
   const [currency, setCurrency] = useState<ReelOption<`0x${string}`>>(
     currencyOptions[0],
   );
-  const [value, setValue] = useState("10");
+  const [value, setValue] = useState<string>("10");
 
   const randomizeAllOptions = () => {
-    setTicker(getRandomOption(tickerOptions));
-    setMetric(getRandomOption(metricOptions));
-    setDirection(getRandomOption(directionOptions));
-    setDuration(getRandomOption(durationOptions));
-    setCurrency(getRandomOption(currencyOptions));
+    setTicker(getRandomOption<Ticker>(tickerOptions));
+    setMetric(getRandomOption<Metric>(metricOptions));
+    setDirection(getRandomOption<boolean>(directionOptions));
+    setDuration(getRandomOption<number>(durationOptions));
+    setCurrency(getRandomOption<`0x${string}`>(currencyOptions));
   };
 
   return (
