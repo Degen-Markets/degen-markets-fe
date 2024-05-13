@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, FC } from "react";
 
-const PageWrapper: React.FC<{ children: ReactNode }> = ({ children }) => {
+const PageWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div
       style={{ minHeight: "calc(100% - 88px)" }}

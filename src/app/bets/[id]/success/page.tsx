@@ -35,9 +35,6 @@ const AcceptBetSuccess = () => {
           message="Bet ends in"
         />
       </div>
-      <br />
-      <br />
-      <br />
       <div className="text-blue-dark">
         So you think {ticker}&apos;s {metric} is going {oppositeDirection}?
         Let&apos;s see who wins!

@@ -74,7 +74,7 @@ export type BetResponse = {
   currency: Address;
   startingMetricValue: number | null;
   endingMetricValue: number | null;
-  winner: string | null;
+  winner: Address | null;
   isWithdrawn: boolean;
   withdrawalTimestamp: string;
   lastActivityTimestamp: string;

@@ -25,12 +25,16 @@ import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import { base } from "wagmi/chains";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
-import { ButtonPrimary } from "@/app/components/Button";
+import { ButtonGradient, ButtonPrimary } from "@/app/components/Button";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getBetById } from "@/app/lib/utils/api/getBetById";
-import { BetResponse } from "@/app/lib/utils/bets/types";
-import WinnerState from "@/app/bets/[id]/_compoenets/WinnerState";
+import { Address, BetResponse } from "@/app/lib/utils/bets/types";
+import WinnerHeading from "@/app/bets/[id]/_compoenets/WinnerHeading";
+import AcceptedHeading from "@/app/bets/[id]/_compoenets/AcceptedHeading";
+import Metric from "@/app/bets/[id]/_compoenets/Metric";
+import BetHeading from "@/app/bets/[id]/_compoenets/BetHeading";
+import CreatedHeading from "@/app/bets/[id]/_compoenets/CreatedHeading";
 
 const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [bet, setBet] = useState<BetResponse>();
@@ -72,13 +76,9 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   });
 
   const { currency = zeroAddress, creator, acceptor } = bet || {};
-  const isBetAccepted = acceptor !== zeroAddress;
+  const isBetAccepted = acceptor !== zeroAddress && creator && acceptor;
   const isEth = currency === zeroAddress;
   const valueInWei = data ? data[9] : "";
-  const valueToDisplay = formatUnits(
-    valueInWei,
-    isEth ? 18 : STABLECOIN_DECIMALS,
-  );
 
   const currencySymbol = getCurrencySymbolByAddress(currency);
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
@@ -86,14 +86,19 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
   const expirationTimestampInS = data ? Number(data[6]) : 0;
   const creationTimestampInS = data ? Number(data[2]) : 0;
-  const ticker = bet ? bet.ticker : "";
-  const metric = bet ? bet.metric : "";
-  const direction = data ? (data[5] === true ? "up" : "down") : "";
-  const isExpired = expirationTimestampInS * 1000 - Date.now() < 0;
+
   const isCreatedByCurrentUser = creator === address;
 
-  const [winner, loser] =
-    bet?.winner === creator ? [creator, acceptor] : [acceptor, creator];
+  const winner = bet?.winner ?? null;
+  const loser =
+    winner === creator ? acceptor : winner === acceptor ? creator : null;
+
+  const showWinnerHeading = winner && loser;
+  const showAcceptedHeading =
+    !showWinnerHeading && acceptor && creator && bet?.expirationTimestamp;
+  const showCreatedHeading =
+    !showWinnerHeading && !showAcceptedHeading && isCreatedByCurrentUser;
+  const showBetHeading = !showCreatedHeading;
 
   const acceptBet = () => {
     sendAcceptBetTx({
@@ -148,7 +153,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
   };
 
   const getHeadline = () => {
-    return isBetAccepted && acceptor ? (
+    return isBetAccepted ? (
       <div>
         <div className="flex justify-center">
           <div className="flex text-lg md:text-[1.75rem] items-center gap-2 md:gap-x-16">
@@ -161,7 +166,7 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
               />
               <span>{getDisplayNameForAddress(creator)}</span>
             </div>
-            <span className="text-2xl md:text-[175px]">VS</span>
+            <div className="text-2xl md:text-[175px]">VS</div>
             <div className="flex flex-col gap-1 items-center">
               <UserAvatar
                 width={100}
@@ -203,66 +208,41 @@ const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
     );
   };
 
-  if (winner && loser) {
-    return (
-      <div className="w-[80%] md:w-1/2 mx-auto">
-        <WinnerState winner={winner} loser={loser} />
-      </div>
-    );
-  }
-
   return (
     <>
-      {data && bet && (
+      {bet && (
         <div className="w-[80%] md:w-1/2 mx-auto">
-          {!isBetAccepted && (
-            <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">
-              <BetCoundown
-                expirationTimestampInS={
-                  isBetAccepted
-                    ? expirationTimestampInS
-                    : Number(creationTimestampInS) + BET_ACCEPTANCE_TIME_LIMIT
-                }
-                message={
-                  isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
-                }
+          {showWinnerHeading && (
+            <>
+              <WinnerHeading winner={winner} loser={loser} />
+            </>
+          )}
+
+          {showAcceptedHeading && (
+            <>
+              <AcceptedHeading
+                creator={creator}
+                acceptor={acceptor}
+                expirationTimestamp={Number(bet.expirationTimestamp)}
               />
+              <Metric bet={bet} />
+            </>
+          )}
+          {showBetHeading && <BetHeading />}
+
+          {showCreatedHeading && <CreatedHeading />}
+          {(showWinnerHeading || showAcceptedHeading) && (
+            <div className="flex justify-center mt-12">
+              <ButtonGradient size="small" className="w-2/5">
+                Replicate this bet!
+              </ButtonGradient>
+              {showWinnerHeading && (
+                <ButtonGradient size="small" className="w-2/5">
+                  Share
+                </ButtonGradient>
+              )}
             </div>
           )}
-          <div className="pt-16 flex justify-center md:block">
-            <div>
-              <Heading className="w-full ">
-                <Headline>{getHeadline()}</Headline>
-                {getSubHeadline()}
-              </Heading>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-4 md:mt-0 md:-translate-y-1/2">
-            <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
-              {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
-              {direction}&nbsp;in&nbsp;
-              {Math.round(
-                (Number(expirationTimestampInS) -
-                  Number(creationTimestampInS)) /
-                  (24 * 60 * 60),
-              )}
-              &nbsp;day(s)
-            </div>
-            <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
-              Wagered:&nbsp;{valueToDisplay}&nbsp;
-              {getCurrencySymbolByAddress(currency)}
-            </div>
-          </div>
-          <div className="flex flex-col gap-3 items-center pt-10">
-            {!isBetAccepted && !isExpired && !isCreatedByCurrentUser && (
-              <>
-                <div className="text-blue-dark">Not a chance...</div>
-                <ButtonPrimary size={"regular"} onClick={handleAccept}>
-                  {getActionButtonText()}
-                </ButtonPrimary>
-              </>
-            )}
-          </div>
         </div>
       )}
     </>

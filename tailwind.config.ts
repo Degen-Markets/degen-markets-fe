@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import pixelArtBorderPlugin from "./tailwind-plugins/pixelArtBorder";
 
 const config: Config = {
   content: [
@@ -26,6 +27,7 @@ const config: Config = {
           light: "#f4b6ec",
         },
         purple: {
+          light: "#C0A6FE",
           medium: "#8D68E6",
         },
       },
@@ -43,6 +45,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [pixelArtBorderPlugin],
 };
 export default config;

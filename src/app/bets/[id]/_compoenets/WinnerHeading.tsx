@@ -7,27 +7,29 @@ interface Props {
   winner: Address;
   loser: Address;
 }
-const WinnerState = ({ winner, loser }: Props) => {
+const WinnerHeading = ({ winner, loser }: Props) => {
   return (
-    <div>
-      <Heading className="">
-        <Headline>
-          <div className="flex flex-col text-xl items-center -translate-y-1/2">
-            <UserAvatar address={winner} />
-            <div>{getDisplayNameForAddress(winner)}</div>
-          </div>
-        </Headline>
-      </Heading>
+    <>
       <Heading>
         <Headline>
           <div className="flex flex-col text-xl items-center -translate-y-1/2">
             <UserAvatar address={winner} />
             <div>{getDisplayNameForAddress(winner)}</div>
           </div>
+          <div className="uppercase">Winner</div>
         </Headline>
       </Heading>
-    </div>
+      <Heading>
+        <Headline variant="light" className="text-blue-dark">
+          <div className="flex flex-col text-xl items-center -translate-y-1/2">
+            <UserAvatar address={loser} />
+            <div>{getDisplayNameForAddress(loser)}</div>
+          </div>
+          <div className="uppercase">Loser</div>
+        </Headline>
+      </Heading>
+    </>
   );
 };
 
-export default WinnerState;
+export default WinnerHeading;
