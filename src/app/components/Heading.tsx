@@ -13,15 +13,33 @@ const Heading: FC<{ className?: string } & PropsWithChildren> = ({
 };
 
 const Headline: FC<
-  { className?: string; variant?: "light" | "dark" } & PropsWithChildren
-> = ({ children, className, variant = "dark" }) => {
+  {
+    className?: string;
+    variant?: "light" | "dark";
+    size?: "regular" | "compact";
+  } & PropsWithChildren
+> = ({ children, className, variant = "dark", size = "regular" }) => {
   return (
     <div className={cx("relative text-3xl md:text-8xl", className)}>
       <div
         className={cx(
-          " py-8 px-6 text-center",
-          { "pixel-art-border-lg-dark bg-blue-dark ": variant === "dark" },
-          { "pixel-art-border-lg-light bg-white ": variant === "light" },
+          " text-center",
+          {
+            "pixel-art-border-lg-dark bg-blue-dark  py-8 px-6":
+              variant === "dark" && size === "regular",
+          },
+          {
+            "pixel-art-border-lg-light bg-white text-blue-dark  py-8 px-6":
+              variant === "light" && size === "regular",
+          },
+          {
+            "pixel-art-border-sm-dark bg-blue-dark py-2 px-1":
+              variant === "dark" && size === "compact",
+          },
+          {
+            "pixel-art-border-sm-light bg-white text-blue-dark py-2 px-1":
+              variant === "light" && size === "compact",
+          },
         )}
       >
         {children}

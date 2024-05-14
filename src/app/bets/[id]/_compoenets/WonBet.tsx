@@ -1,33 +1,53 @@
-import { Address } from "@/app/lib/utils/bets/types";
+import { BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
+import Metric from "@/app/bets/[id]/_compoenets/Metric";
+import ReplicateBetAction from "@/app/bets/[id]/_compoenets/ReplicateBetAction";
+import { ButtonGradient } from "@/app/components/Button";
+import shareContent from "@/app/lib/utils/shareContent";
 
 interface Props {
-  winner: Address;
-  loser: Address;
+  bet: BetResponse;
 }
-const WonBet = ({ winner, loser }: Props) => {
+
+const WonBet = ({ bet }: Props) => {
+  const { winner, creator, acceptor, id } = bet;
+  const loser = winner ? (winner === creator ? acceptor : creator) : null;
+  if (!winner || !loser) return;
+
+  const handleShare = () => {
+    const url = `${window.location.protocol}//${window.location.hostname}/bets/${id}`;
+    shareContent("I just won a bet", "Check out my winning bet:", url);
+  };
   return (
     <>
       <Heading>
-        <Headline>
-          <div className="flex flex-col text-xl items-center -translate-y-1/2">
+        <Headline>Winner</Headline>
+        <SubHeadline isTop={true} className="bg-transparent border-transparent">
+          <div className="flex flex-col text-xl items-center ">
             <UserAvatar address={winner} />
             <div>{getDisplayNameForAddress(winner)}</div>
           </div>
-          <div className="uppercase">Winner</div>
-        </Headline>
+        </SubHeadline>
       </Heading>
-      <Heading>
-        <Headline variant="light" className="text-blue-dark">
-          <div className="flex flex-col text-xl items-center -translate-y-1/2">
-            <UserAvatar address={loser} />
-            <div>{getDisplayNameForAddress(loser)}</div>
+      <Metric bet={bet} hideStartingMetric={true} />
+      <Heading className="justify-center flex">
+        <Headline className="w-2/5 " variant="light" size="compact">
+          <div className="flex  text-xl justify-center items-center gap-4 ">
+            <UserAvatar address={loser} className="w-8 h-8" />
+            <div className="text-lg">{getDisplayNameForAddress(loser)}</div>
+            <div className="uppercase text-2xl">Loser</div>
           </div>
-          <div className="uppercase">Loser</div>
         </Headline>
       </Heading>
+
+      <div className="flex justify-center mt-8 gap-4">
+        <ReplicateBetAction bet={bet} />
+        <ButtonGradient size="small" className="w-2/5" onClick={handleShare}>
+          Share
+        </ButtonGradient>
+      </div>
     </>
   );
 };

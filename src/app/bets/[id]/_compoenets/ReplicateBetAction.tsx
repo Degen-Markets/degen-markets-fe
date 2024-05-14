@@ -1,6 +1,8 @@
-import { BetResponse, Currency } from "@/app/lib/utils/bets/types";
+import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonGradient } from "@/app/components/Button";
 import { useRouter } from "next/navigation";
+import { formatUnits, zeroAddress } from "viem";
+import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 
 interface Props {
   bet: BetResponse;
@@ -16,8 +18,14 @@ const ReplicateBetAction = ({ bet }: Props) => {
         86400,
     );
     const direction = isBetOnUp ? "up" : "down";
+    const isEth = currency === zeroAddress;
+
+    const formattedValueToDisplay = formatUnits(
+      BigInt(value),
+      isEth ? 18 : STABLECOIN_DECIMALS,
+    );
     router.push(
-      `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${value}`,
+      `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}`,
     );
   };
 

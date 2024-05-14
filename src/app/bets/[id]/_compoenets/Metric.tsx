@@ -5,9 +5,10 @@ import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 
 interface Props {
   bet: BetResponse;
+  hideStartingMetric?: boolean;
 }
 
-const Metric = ({ bet }: Props) => {
+const Metric = ({ bet, hideStartingMetric }: Props) => {
   const {
     ticker,
     metric,
@@ -43,7 +44,7 @@ const Metric = ({ bet }: Props) => {
           {getCurrencySymbolByAddress(currency)}
         </div>
       </div>
-      {startingMetricValue && (
+      {startingMetricValue && !hideStartingMetric && (
         <div className="flex justify-center">
           <span className=" bg-white border-purple-medium border-4 text-neutral-800 px-4 -mt-4">
             starting {metric}: ${Number(startingMetricValue).toFixed(2)}
