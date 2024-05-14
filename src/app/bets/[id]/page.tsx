@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { getBetById } from "@/app/lib/utils/api/getBetById";
 import { BetResponse } from "@/app/lib/utils/bets/types";
-import WonBet from "@/app/bets/[id]/_compoenets/WonBet";
-import AcceptedBet from "@/app/bets/[id]/_compoenets/AcceptedBet";
-import BetThat from "@/app/bets/[id]/_compoenets/BetThat";
+import WonBet from "@/app/bets/[id]/_components/WonBet";
+import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
+import BetThat from "@/app/bets/[id]/_components/BetThat";
 
 const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [bet, setBet] = useState<BetResponse | null>(null);

@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import pixelArtBorderPlugin from "./tailwind-plugins/pixelArtBorder";
 
 const config: Config = {
   content: [

@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import AcceptedBet from "@/app/bets/[id]/_compoenets/AcceptedBet";
+import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
 import { useEffect, useState } from "react";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { getBetById } from "@/app/lib/utils/api/getBetById";

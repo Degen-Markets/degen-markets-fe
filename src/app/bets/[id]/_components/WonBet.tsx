@@ -2,8 +2,8 @@ import { BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import Metric from "@/app/bets/[id]/_compoenets/Metric";
-import ReplicateBetAction from "@/app/bets/[id]/_compoenets/ReplicateBetAction";
+import Metric from "@/app/bets/[id]/_components/Metric";
+import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { ButtonGradient } from "@/app/components/Button";
 import shareContent from "@/app/lib/utils/shareContent";
 

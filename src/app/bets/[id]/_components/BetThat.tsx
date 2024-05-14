@@ -4,7 +4,7 @@ import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { erc20Abi, maxUint256, zeroAddress } from "viem";
 import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
-import Metric from "@/app/bets/[id]/_compoenets/Metric";
+import Metric from "@/app/bets/[id]/_components/Metric";
 import { ButtonGradient } from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";

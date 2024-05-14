@@ -3,8 +3,8 @@ import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import BetCoundown from "@/app/components/BetCoundown";
-import Metric from "@/app/bets/[id]/_compoenets/Metric";
-import ReplicateBetAction from "@/app/bets/[id]/_compoenets/ReplicateBetAction";
+import Metric from "@/app/bets/[id]/_components/Metric";
+import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 
 interface Props {
   bet: BetResponse;
