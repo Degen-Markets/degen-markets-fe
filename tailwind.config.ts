@@ -19,13 +19,14 @@ const config: Config = {
           dark: "rgb(34, 43, 55)",
         },
         yellow: {
-          light: "#fcedbd",
+          light: "#F9DD71",
           dark: "#E9BF2D",
         },
         pink: {
-          light: "#f4b6ec",
+          light: "#ED72BF",
         },
         purple: {
+          light: "#C0A6FE",
           medium: "#8D68E6",
         },
       },

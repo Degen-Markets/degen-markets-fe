@@ -1,185 +1,42 @@
 "use client";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import {
-  useAccount,
-  useReadContract,
-  useTransactionReceipt,
-  useWriteContract,
-} from "wagmi";
-import { DEGEN_MARKETS_ABI } from "../../lib/utils/bets/abis";
-import {
-  BET_ACCEPTANCE_TIME_LIMIT,
-  DEGEN_MARKETS_ADDRESS,
-  STABLECOIN_DECIMALS,
-} from "../../lib/utils/bets/constants";
-import BetCoundown from "@/app/components/BetCoundown";
-import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
-import { erc20Abi, formatUnits, maxUint256, zeroAddress } from "viem";
-import useAllowances from "@/app/lib/utils/hooks/useAllowances";
-import { base } from "wagmi/chains";
-import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
-import { ButtonPrimary } from "@/app/components/Button";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+import { getBetById } from "@/app/lib/utils/api/getBetById";
+import { BetResponse } from "@/app/lib/utils/bets/types";
+import WonBet from "@/app/bets/[id]/_components/WonBet";
+import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
+import InProgressBet from "@/app/bets/[id]/_components/InProgressBet";
 
-const AcceptBetPage = ({ params: { id } }: { params: { id: string } }) => {
+const BetPage = ({ params: { id } }: { params: { id: string } }) => {
+  const [bet, setBet] = useState<BetResponse | null>(null);
   const { address } = useAccount();
-  const router = useRouter();
-  const { data: approvalHash, writeContract: sendApprovalTx } =
-    useWriteContract();
-  const { data: betAcceptHash, writeContract: sendAcceptBetTx } =
-    useWriteContract();
-  const { isSuccess: isBetAcceptedHashSuccess } = useTransactionReceipt({
-    hash: betAcceptHash,
-    chainId: base.id,
-  });
-  const { isSuccess: isApprovalSuccess } = useTransactionReceipt({
-    hash: approvalHash,
-    chainId: base.id,
-  });
-  const { userAllowances } = useAllowances(
-    isApprovalSuccess || isBetAcceptedHashSuccess,
-    address || zeroAddress,
-  );
-
-  const { data }: { data?: any[] } = useReadContract({
-    abi: DEGEN_MARKETS_ABI,
-    address: DEGEN_MARKETS_ADDRESS,
-    functionName: "betIdToBet",
-    args: [id],
-  });
-  const acceptor = data ? data[7] : zeroAddress;
-  const isBetAccepted = acceptor !== zeroAddress;
-  const currency = data ? data[10] : zeroAddress;
-  const creator = data ? data[1] : zeroAddress;
-  const isEth = currency === zeroAddress;
-  const valueInWei = data ? data[9] : "";
-  const valueToDisplay = formatUnits(
-    valueInWei,
-    isEth ? 18 : STABLECOIN_DECIMALS,
-  );
-  const currencySymbol = getCurrencySymbolByAddress(currency);
-  const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
-  const { userBalances } = useBalances(false, address);
-  const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
-  const expirationTimestampInS = data ? Number(data[6]) : 0;
-  const creationTimestampInS = data ? Number(data[2]) : 0;
-  const ticker = data ? data[3] : "";
-  const metric = data ? data[4] : "";
-  const direction = data ? (data[5] === true ? "up" : "down") : "";
-  const isExpired = expirationTimestampInS * 1000 - Date.now() < 0;
-  const isCreatedByCurrentUser = creator === address;
-  const acceptBet = () => {
-    sendAcceptBetTx({
-      abi: DEGEN_MARKETS_ABI,
-      address: DEGEN_MARKETS_ADDRESS,
-      functionName: "acceptBet",
-      args: [id],
-      value: isEth ? valueInWei : undefined,
-    });
-  };
-
-  const approve = () => {
-    sendApprovalTx({
-      abi: erc20Abi,
-      address: currency,
-      functionName: "approve",
-      args: [DEGEN_MARKETS_ADDRESS, maxUint256],
-    });
-  };
-
-  const handleAccept = () => {
-    if (!isAllowanceEnough) {
-      approve();
-    } else {
-      acceptBet();
-    }
-  };
 
   useEffect(() => {
-    if (isApprovalSuccess) {
-      acceptBet();
-    }
-  }, [isApprovalSuccess]);
+    const fetchBet = async () => {
+      try {
+        const { data: fetchedBet } = await getBetById(id);
+        setBet(fetchedBet);
+      } catch (error) {
+        console.error("Error fetching bet:", error);
+      }
+    };
+    fetchBet();
+  }, [id]);
 
-  useEffect(() => {
-    if (isBetAcceptedHashSuccess) {
-      router.push(`/bets/${id}/success`);
-    }
-  }, [isBetAcceptedHashSuccess, id, router]);
+  if (!bet) return null;
 
-  const getActionButtonText = (): string => {
-    if (!address) {
-      return "Wallet not connected";
-    }
-    if (!isBalanceEnough) {
-      return "Not enough balance";
-    }
-    if (!isAllowanceEnough) {
-      return "Approve and bet";
-    }
-    return "Accept Bet";
-  };
+  const { creator, acceptor, winner, expirationTimestamp } = bet;
+  const loser = winner ? (winner === creator ? acceptor : creator) : null;
 
   return (
-    <>
-      {data && (
-        <div className="w-[80%] md:w-1/2 mx-auto">
-          <div className="bg-blue-dark border-purple-medium border-2 text-center w-3/5 mx-auto sm:text-3xl py-2">
-            <BetCoundown
-              expirationTimestampInS={
-                isBetAccepted
-                  ? expirationTimestampInS
-                  : Number(creationTimestampInS) + BET_ACCEPTANCE_TIME_LIMIT
-              }
-              message={
-                isBetAccepted ? "Bet ends in" : "Countdown to accept bet"
-              }
-            />
-          </div>
-          <div className="pt-16 pb-10 flex justify-center md:block">
-            <div>
-              <Heading className="w-72">
-                <Headline>Bets that</Headline>
-                <SubHeadline
-                  isTop={true}
-                  className="bg-pink-light border-2 text-neutral-950 border-yellow-light"
-                >
-                  {isCreatedByCurrentUser ? "Created by you" : creator}
-                </SubHeadline>
-              </Heading>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-center gap-4 text-center md:text-left">
-            <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
-              {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
-              {direction}&nbsp;in&nbsp;
-              {Math.round(
-                (Number(expirationTimestampInS) -
-                  Number(creationTimestampInS)) /
-                  (24 * 60 * 60),
-              )}
-              &nbsp;day(s)
-            </div>
-            <div className="bg-white border-purple-medium border-4 text-neutral-800 px-4">
-              Wagered:&nbsp;{valueToDisplay}&nbsp;
-              {getCurrencySymbolByAddress(currency)}
-            </div>
-          </div>
-          <div className="flex flex-col gap-3 items-center pt-10">
-            {!isBetAccepted && !isExpired && !isCreatedByCurrentUser && (
-              <>
-                <div className="text-blue-dark">Not a chance...</div>
-                <ButtonPrimary size={"regular"} onClick={handleAccept}>
-                  {getActionButtonText()}
-                </ButtonPrimary>
-              </>
-            )}
-          </div>
-        </div>
+    <div className="w-[80%] md:w-1/2 mx-auto">
+      {winner && loser && <WonBet bet={bet} />}
+      {!winner && acceptor && creator && <AcceptedBet bet={bet} />}
+      {!winner && !acceptor && address && (
+        <InProgressBet bet={bet} address={address} />
       )}
-    </>
+    </div>
   );
 };
 
-export default AcceptBetPage;
+export default BetPage;

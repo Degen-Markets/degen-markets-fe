@@ -1,46 +1,35 @@
 "use client";
-
-import PixelatedHeadingContainer from "@/app/components/PixelatedHeadingContainer";
-import { useReadContract } from "wagmi";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
-import { useParams, useSearchParams } from "next/navigation";
-import BetCountdown from "@/app/components/BetCoundown";
+import { useParams } from "next/navigation";
+import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
+import { useEffect, useState } from "react";
+import { BetResponse } from "@/app/lib/utils/bets/types";
+import { getBetById } from "@/app/lib/utils/api/getBetById";
 
 const AcceptBetSuccess = () => {
-  const searchParams = useParams<{ id?: string }>();
-  const id = searchParams.id;
-  const { data }: { data?: any[] } = useReadContract({
-    abi: DEGEN_MARKETS_ABI,
-    address: DEGEN_MARKETS_ADDRESS,
-    functionName: "betIdToBet",
-    args: [id],
-  });
-  const ticker = data ? data[3] : "";
-  const metric = data ? data[4] : "";
-  const oppositeDirection = data ? (data[5] === true ? "down" : "up") : "";
-  const expirationTimestamp = data ? parseInt(data[6]) : 0;
+  const { id } = useParams<{ id?: string }>();
+
+  const [bet, setBet] = useState<BetResponse | null>(null);
+
+  useEffect(() => {
+    if (id) {
+      const fetchBet = async () => {
+        try {
+          const { data: bet } = await getBetById(id);
+          setBet(bet);
+        } catch (error) {
+          console.error("Error fetching bet:", error);
+        }
+      };
+      fetchBet();
+    }
+  }, [id]);
+
+  if (!bet) return null;
 
   return (
     <main className="text-center">
-      <div className="flex justify-center">
-        <PixelatedHeadingContainer classNames="my-10 w-[500px]">
-          Bet Accepted!
-        </PixelatedHeadingContainer>
-      </div>
-      <div className="flex justify-center">
-        <BetCountdown
-          classNames="bg-blue-dark w-max p-2 border-2 border-purple-medium"
-          expirationTimestampInS={expirationTimestamp}
-          message="Bet ends in"
-        />
-      </div>
-      <br />
-      <br />
-      <br />
-      <div className="text-blue-dark">
-        So you think {ticker}&apos;s {metric} is going {oppositeDirection}?
-        Let&apos;s see who wins!
+      <div className="w-[80%] md:w-1/2 mx-auto">
+        <AcceptedBet bet={bet} />
       </div>
     </main>
   );

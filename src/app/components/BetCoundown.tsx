@@ -40,7 +40,7 @@ const BetCountdown: React.FC<{
 
   return (
     <div className={`tabular-nums ${classNames}`}>
-      <div className="">
+      <div className="flex items-center">
         {message}:&nbsp;
         <span className="tracking-wider">{countdown}</span>
       </div>

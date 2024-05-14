@@ -47,32 +47,34 @@ export type ReelOption<T> = {
   value: T;
 };
 
+export type Address = `0x${string}`;
+
 export type CreatedBetObject = {
   id: string;
-  creator: `0x${string}`;
+  creator: Address;
   creationTimestamp: string;
   expirationTimestamp: string;
   ticker: Ticker;
   metric: Metric;
   isBetOnUp: boolean;
   value: string;
-  currency: `0x${string}`;
+  currency: Address;
 };
 
 export type BetResponse = {
   id: string;
-  creator: string;
+  creator: Address;
   creationTimestamp: string;
-  acceptor: string | null;
+  acceptor: Address | null;
   ticker: Ticker;
   metric: Metric;
   isBetOnUp: boolean;
   expirationTimestamp: string;
   value: string;
-  currency: string;
+  currency: Address;
   startingMetricValue: number | null;
   endingMetricValue: number | null;
-  winner: string | null;
+  winner: Address | null;
   isWithdrawn: boolean;
   withdrawalTimestamp: string;
   lastActivityTimestamp: string;
