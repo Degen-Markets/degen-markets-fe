@@ -32,7 +32,7 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
     <div className="w-[80%] md:w-1/2 mx-auto">
       {winner && loser && <WonBet bet={bet} />}
       {!winner && acceptor && creator && <AcceptedBet bet={bet} />}
-      {!winner && !acceptor && !creator && address && (
+      {!winner && !acceptor && address && (
         <BetThat bet={bet} address={address} />
       )}
     </div>
