@@ -42,7 +42,7 @@ const BetCountdown: React.FC<{
     <div className={`tabular-nums ${classNames}`}>
       <div className="flex items-center">
         {message}:&nbsp;
-        <span className="tracking-wider text-purple-light ">{countdown}</span>
+        <span className="tracking-wider">{countdown}</span>
       </div>
     </div>
   );
