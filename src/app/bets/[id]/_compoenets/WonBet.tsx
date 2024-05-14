@@ -7,7 +7,7 @@ interface Props {
   winner: Address;
   loser: Address;
 }
-const WinnerHeading = ({ winner, loser }: Props) => {
+const WonBet = ({ winner, loser }: Props) => {
   return (
     <>
       <Heading>
@@ -32,4 +32,4 @@ const WinnerHeading = ({ winner, loser }: Props) => {
   );
 };
 
-export default WinnerHeading;
+export default WonBet;

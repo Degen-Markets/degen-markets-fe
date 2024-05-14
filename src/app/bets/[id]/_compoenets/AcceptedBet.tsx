@@ -10,7 +10,7 @@ interface Props {
   expirationTimestamp: number;
 }
 
-const AcceptedHeading = ({ creator, acceptor, expirationTimestamp }: Props) => {
+const AcceptedBet = ({ creator, acceptor, expirationTimestamp }: Props) => {
   return (
     <Heading>
       <Headline>
@@ -51,4 +51,4 @@ const AcceptedHeading = ({ creator, acceptor, expirationTimestamp }: Props) => {
   );
 };
 
-export default AcceptedHeading;
+export default AcceptedBet;
