@@ -5,9 +5,10 @@ import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 
 interface Props {
   bet: BetResponse;
+  hideStartingMetric?: boolean;
 }
 
-const Metric = ({ bet }: Props) => {
+const Metric = ({ bet, hideStartingMetric }: Props) => {
   const {
     ticker,
     metric,
@@ -18,32 +19,34 @@ const Metric = ({ bet }: Props) => {
     creationTimestamp,
     startingMetricValue,
   } = bet;
+
   const direction = isBetOnUp ? "up" : "down";
   const isEth = currency === zeroAddress;
-  const valueToDisplay = formatUnits(
+  const formattedValueToDisplay = formatUnits(
     BigInt(value),
     isEth ? 18 : STABLECOIN_DECIMALS,
   );
-  const daysUntilExpiration = Math.round(
+  const expirationDays = Math.round(
     (Number(expirationTimestamp) - Number(creationTimestamp)) / (24 * 60 * 60),
   );
+
   return (
     <div>
-      <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-4 md:mt-0 md:-translate-y-1/2">
+      <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-8 md:mt-0 md:-translate-y-1/2">
         <div className="bg-white border-purple-medium border-8 text-neutral-800 px-4">
           {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
           {direction}&nbsp;in&nbsp;
-          {daysUntilExpiration}
+          {expirationDays}
           &nbsp;day(s)
         </div>
         <div className="bg-white border-purple-medium border-8 text-neutral-800 px-4">
-          Wagered:&nbsp;{valueToDisplay}&nbsp;
+          Wagered:&nbsp;{formattedValueToDisplay}&nbsp;
           {getCurrencySymbolByAddress(currency)}
         </div>
       </div>
-      {startingMetricValue && (
+      {startingMetricValue && !hideStartingMetric && (
         <div className="flex justify-center">
-          <span className=" bg-white border-purple-medium border-4 text-neutral-800 px-4 -mt-4">
+          <span className=" bg-white border-purple-medium border-4 text-neutral-800 px-4 mt-4 md:-mt-4">
             starting {metric}: ${Number(startingMetricValue).toFixed(2)}
           </span>
         </div>

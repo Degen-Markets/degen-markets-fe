@@ -23,3 +23,5 @@ const getETHPrice = async (): Promise<{
     return { rate: null, error: true };
   }
 };
+
+export default getETHPrice;

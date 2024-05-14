@@ -11,12 +11,12 @@ const CreateBetPage = () => {
           <Headline>Challenge a friend</Headline>
           <SubHeadline>Test Build error</SubHeadline>
         </Heading>
+        <div className="flex justify-center select-none">
+          <SlotMachine />
+        </div>
+        <EthPrice />
+        <ActionButton />
       </div>
-      <div className="flex justify-center select-none">
-        <SlotMachine />
-      </div>
-      <EthPrice />
-      <ActionButton />
     </main>
   );
 };

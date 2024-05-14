@@ -134,9 +134,49 @@ input[type="number"] {
 
 .eight-bit-border-20 {
   box-shadow:
-    20px 0 currentColor,
-    -20px 0 currentColor,
-    0 -20px currentColor,
-    0 20px currentColor;
+    20px 0 rgb(34 43 55),
+    -20px 0 rgb(34 43 55),
+    0 -20px rgb(34 43 55),
+    0 20px rgb(34 43 55);
   margin: 20px auto;
+}
+
+/* Large Light Pixel Art Border */
+.pixel-art-border-lg-light {
+  box-shadow:
+    20px 0 white,
+    -20px 0 white,
+    0 -20px white,
+    0 20px white;
+  margin: 20px auto;
+}
+
+/* Large Dark Pixel Art Border */
+.pixel-art-border-lg-dark {
+  box-shadow:
+    20px 0 #222b37,
+    -20px 0 #222b37,
+    0 -20px #222b37,
+    0 20px #222b37;
+  margin: 20px auto;
+}
+
+/* Small Light Pixel Art Border */
+.pixel-art-border-sm-light {
+  box-shadow:
+    8px 0 white,
+    -8px 0 white,
+    0 -8px white,
+    0 8px white;
+  margin: 8px auto;
+}
+
+/* Small Dark Pixel Art Border */
+.pixel-art-border-sm-dark {
+  box-shadow:
+    8px 0 #222b37,
+    -8px 0 #222b37,
+    0 -8px #222b37,
+    0 8px #222b37;
+  margin: 8px auto;
 }
