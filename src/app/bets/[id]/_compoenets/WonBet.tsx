@@ -26,14 +26,17 @@ const WonBet = ({ bet }: Props) => {
         <Headline>Winner</Headline>
         <SubHeadline isTop={true} className="bg-transparent border-transparent">
           <div className="flex flex-col text-xl items-center ">
-            <UserAvatar address={winner} />
+            <UserAvatar
+              address={winner}
+              className="w-16 h-16 md:h-32 md:w-32"
+            />
             <div>{getDisplayNameForAddress(winner)}</div>
           </div>
         </SubHeadline>
       </Heading>
       <Metric bet={bet} hideStartingMetric={true} />
-      <Heading className="justify-center flex">
-        <Headline className="w-2/5 " variant="light" size="compact">
+      <Heading className="justify-center flex mt-4 md:mt-0">
+        <Headline className="md:w-2/5 " variant="light" size="compact">
           <div className="flex  text-xl justify-center items-center gap-4 ">
             <UserAvatar address={loser} className="w-8 h-8" />
             <div className="text-lg">{getDisplayNameForAddress(loser)}</div>

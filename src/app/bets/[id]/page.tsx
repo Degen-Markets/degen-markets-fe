@@ -14,8 +14,8 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchBet = async () => {
       try {
-        const { data: bet } = await getBetById(id);
-        setBet(bet);
+        const { data: fetchedBet } = await getBetById(id);
+        setBet(fetchedBet);
       } catch (error) {
         console.error("Error fetching bet:", error);
       }
@@ -27,20 +27,14 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
 
   const { creator, acceptor, winner, expirationTimestamp } = bet;
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
-  const showWonBet = winner && loser;
-  const showAcceptedBet =
-    !showWonBet && acceptor && creator && expirationTimestamp;
-  const showBetThat = !showAcceptedBet;
 
   return (
     <div className="w-[80%] md:w-1/2 mx-auto">
-      {showWonBet && <WonBet bet={bet} />}
-      {showAcceptedBet && (
-        <>
-          <AcceptedBet bet={bet} />
-        </>
+      {winner && loser && <WonBet bet={bet} />}
+      {!winner && acceptor && creator && <AcceptedBet bet={bet} />}
+      {!winner && !acceptor && !creator && address && (
+        <BetThat bet={bet} address={address} />
       )}
-      {showBetThat && address && <BetThat bet={bet} address={address} />}
     </div>
   );
 };
