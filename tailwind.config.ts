@@ -45,6 +45,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [pixelArtBorderPlugin],
+  plugins: [],
 };
 export default config;

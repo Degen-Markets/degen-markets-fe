@@ -26,12 +26,11 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   if (!bet) return null;
 
   const { creator, acceptor, winner, expirationTimestamp } = bet;
-  const isCreatedByCurrentUser = creator === address;
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
   const showWonBet = winner && loser;
   const showAcceptedBet =
     !showWonBet && acceptor && creator && expirationTimestamp;
-  const showBetThat = !showAcceptedBet && isCreatedByCurrentUser;
+  const showBetThat = !showAcceptedBet;
 
   return (
     <div className="w-[80%] md:w-1/2 mx-auto">

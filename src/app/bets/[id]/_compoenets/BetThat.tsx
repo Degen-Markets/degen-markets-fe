@@ -1,11 +1,11 @@
-import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
+import { useTransactionReceipt, useWriteContract } from "wagmi";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { erc20Abi, maxUint256, zeroAddress } from "viem";
 import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import Metric from "@/app/bets/[id]/_compoenets/Metric";
-import { ButtonGradient, ButtonPrimary } from "@/app/components/Button";
+import { ButtonGradient } from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const BetThat = ({ bet, address }: Props) => {
-  const { id, creator, ticker, metric, value, currency } = bet;
+  const { id, creator, value, currency } = bet;
   const isEth = currency === zeroAddress;
   const valueInWei = BigInt(value);
 
@@ -48,6 +48,7 @@ const BetThat = ({ bet, address }: Props) => {
 
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
+  const isCreatedByCurrentUser = creator === address;
 
   const acceptBet = () => {
     sendAcceptBetTx({
@@ -114,19 +115,21 @@ const BetThat = ({ bet, address }: Props) => {
             address={creator}
             className="w-4 h-4 md:w-6 md:h-6"
           />
-          <div>{creator}</div>
+          <div>{isCreatedByCurrentUser ? "Created by you" : creator}</div>
         </SubHeadline>
       </Heading>
       <Metric bet={bet} />
 
-      <div className="flex flex-col gap-3 items-center pt-10">
-        <>
-          <div className="text-blue-dark">Not a chance...</div>
-          <ButtonGradient size={"regular"} onClick={handleAccept}>
-            {getActionButtonText()}
-          </ButtonGradient>
-        </>
-      </div>
+      {!isCreatedByCurrentUser && (
+        <div className="flex flex-col gap-3 items-center pt-10">
+          <>
+            <div className="text-blue-dark">Not a chance...</div>
+            <ButtonGradient size={"regular"} onClick={handleAccept}>
+              {getActionButtonText()}
+            </ButtonGradient>
+          </>
+        </div>
+      )}
     </div>
   );
 };

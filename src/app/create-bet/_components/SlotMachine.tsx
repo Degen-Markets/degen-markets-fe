@@ -10,11 +10,9 @@ import {
 } from "@/app/lib/utils/bets/constants";
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const SlotMachine: React.FC<{}> = ({}) => {
-  const router = useRouter();
-
   const {
     ticker,
     metric,
@@ -31,15 +29,14 @@ const SlotMachine: React.FC<{}> = ({}) => {
   } = useBetContext();
 
   const searchParams = useSearchParams();
+  const defaultTicker = searchParams.get("ticker");
+  const defaultMetric = searchParams.get("metric");
+  const defaultDirection = searchParams.get("direction");
+  const defaultDuration = searchParams.get("duration");
+  const defaultCurrency = searchParams.get("currency");
+  const defaultValue = searchParams.get("value");
 
   useEffect(() => {
-    const defaultTicker = searchParams.get("ticker");
-    const defaultMetric = searchParams.get("metric");
-    const defaultDirection = searchParams.get("direction");
-    const defaultDuration = searchParams.get("duration");
-    const defaultCurrency = searchParams.get("currency");
-    const defaultValue = searchParams.get("value");
-
     const defaultMetricOption: MetricOption | undefined = metricOptions.find(
       (option) => option.value === defaultMetric,
     );
@@ -49,19 +46,10 @@ const SlotMachine: React.FC<{}> = ({}) => {
     const defaultDurationOption = durationOptions.find(
       (option) => option.value === Number(defaultDuration),
     );
-    // eslint-disable-next-line no-console
-    console.log("defaultDurationOption :", defaultDurationOption);
 
     const defaultCurrencyOption = currencyOptions.find(
       (option) => option.value === defaultCurrency,
     );
-    // eslint-disable-next-line no-console
-    console.log("durationOptions :", durationOptions);
-
-    // eslint-disable-next-line no-console
-    console.log("defaultDurationOption :", defaultDurationOption);
-    // eslint-disable-next-line no-console
-    console.log("defaultDuration :", defaultDuration);
 
     if (defaultTickerOption) setTicker(defaultTickerOption);
     if (defaultMetricOption) setMetric(defaultMetricOption);
@@ -69,7 +57,14 @@ const SlotMachine: React.FC<{}> = ({}) => {
     if (defaultDurationOption) setDuration(defaultDurationOption);
     if (defaultCurrencyOption) setCurrency(defaultCurrencyOption);
     if (defaultValue) setValue(defaultValue);
-  }, [searchParams.toString()]);
+  }, [
+    defaultTicker,
+    defaultMetric,
+    defaultDirection,
+    defaultDuration,
+    defaultCurrency,
+    defaultValue,
+  ]);
 
   return (
     <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5 flex">
