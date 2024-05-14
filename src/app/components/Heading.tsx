@@ -6,7 +6,12 @@ const Heading: FC<{ className?: string } & PropsWithChildren> = ({
   className,
 }) => {
   return (
-    <div className={cx("relative text-white w-[80%] md:w-auto", className)}>
+    <div
+      className={cx(
+        "relative text-white w-[100%] md:w-auto mx-auto",
+        className,
+      )}
+    >
       {children}
     </div>
   );

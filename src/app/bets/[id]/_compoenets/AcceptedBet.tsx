@@ -54,7 +54,7 @@ const AcceptedBet = ({ bet }: Props) => {
       </Heading>
 
       <Metric bet={bet} />
-      <div className="flex justify-center mt-12">
+      <div className="flex justify-center mt-4 md:mt-12">
         <ReplicateBetAction bet={bet} />
       </div>
     </>

@@ -32,7 +32,7 @@ const Metric = ({ bet, hideStartingMetric }: Props) => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-4 md:mt-0 md:-translate-y-1/2">
+      <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-8 md:mt-0 md:-translate-y-1/2">
         <div className="bg-white border-purple-medium border-8 text-neutral-800 px-4">
           {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
           {direction}&nbsp;in&nbsp;
@@ -46,7 +46,7 @@ const Metric = ({ bet, hideStartingMetric }: Props) => {
       </div>
       {startingMetricValue && !hideStartingMetric && (
         <div className="flex justify-center">
-          <span className=" bg-white border-purple-medium border-4 text-neutral-800 px-4 -mt-4">
+          <span className=" bg-white border-purple-medium border-4 text-neutral-800 px-4 mt-4 md:-mt-4">
             starting {metric}: ${Number(startingMetricValue).toFixed(2)}
           </span>
         </div>
