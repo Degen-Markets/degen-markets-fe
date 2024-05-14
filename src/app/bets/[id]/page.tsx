@@ -29,7 +29,7 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
 
   return (
-    <div className="w-[80%] md:w-1/2 mx-auto">
+    <div className="w-[80%] md:w-1/2 mx-auto ">
       {winner && loser && <WonBet bet={bet} />}
       {!winner && acceptor && creator && <AcceptedBet bet={bet} />}
       {!winner && !acceptor && address && (
