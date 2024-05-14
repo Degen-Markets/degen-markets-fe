@@ -1,6 +1,6 @@
 "use client";
 import Reel from "@/app/components/Reel";
-import { Metric, Ticker } from "@/app/lib/utils/bets/types";
+import { Metric, MetricOption, Ticker } from "@/app/lib/utils/bets/types";
 import {
   currencyOptions,
   directionOptions,
@@ -8,10 +8,13 @@ import {
   metricOptions,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
-import React from "react";
+import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 const SlotMachine: React.FC<{}> = ({}) => {
+  const router = useRouter();
+
   const {
     ticker,
     metric,
@@ -26,6 +29,39 @@ const SlotMachine: React.FC<{}> = ({}) => {
     setValue,
     randomizeAllOptions,
   } = useBetContext();
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const defaultTicker = searchParams.get("ticker");
+    const defaultMetric = searchParams.get("metric");
+    const defaultDirection = searchParams.get("direction");
+    const defaultDuration = searchParams.get("duration");
+    const defaultCurrency = searchParams.get("currency");
+    const defaultValue = searchParams.get("value");
+
+    const defaultMetricOption: MetricOption | undefined = metricOptions.find(
+      (option) => option.value === defaultMetric,
+    );
+    const defaultTickerOption = tickerOptions.find(
+      (option) => option.value === defaultTicker,
+    );
+    const defaultDurationOption = durationOptions.find(
+      (option) => option.value === Number(defaultDuration),
+    );
+    // eslint-disable-next-line no-console
+    console.log("defaultDurationOption :", defaultDurationOption);
+    // eslint-disable-next-line no-console
+    console.log("defaultDuration :", defaultDuration);
+
+    if (defaultTickerOption) setTicker(defaultTickerOption);
+    if (defaultMetricOption) setMetric(defaultMetricOption);
+    if (defaultDirection) setDirection(direction);
+    if (defaultDurationOption) setDuration(defaultDurationOption);
+    if (defaultCurrency) setCurrency(`0x${defaultCurrency}`);
+    if (defaultValue) setValue(defaultValue);
+  }, [searchParams.toString()]);
+
   return (
     <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5 flex">
       <div
