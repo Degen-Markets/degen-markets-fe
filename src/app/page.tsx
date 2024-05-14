@@ -47,7 +47,7 @@ const Home = () => {
 
           <div className="px-4 md:px-0 absolute top-1/2 z-10">
             <div className="text-4xl md:text-7xl z-[10] text-center">
-              The Decentralized Prediction Market on Base
+              The Decentralized Prediction Market on Base TEST
             </div>
             <div className="flex items-center justify-center font-[100] text-2xl md:text-4xl">
               By DEGENS for DEGENS
