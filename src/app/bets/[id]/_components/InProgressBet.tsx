@@ -19,7 +19,7 @@ interface Props {
   address: Address;
 }
 
-const BetThat = ({ bet, address }: Props) => {
+const InProgressBet = ({ bet, address }: Props) => {
   const { id, creator, value, currency } = bet;
   const isEth = currency === zeroAddress;
   const valueInWei = BigInt(value);
@@ -107,7 +107,7 @@ const BetThat = ({ bet, address }: Props) => {
         <Headline>Bets that</Headline>
         <SubHeadline
           isTop={true}
-          className="flex gap-2  items-center bg-gradient-to-r from-pink-light to bg-yellow-light border-2 text-white border-blue-dark"
+          className="flex gap-2  items-center justify-center bg-gradient-to-r from-pink-light to bg-yellow-light border-2 text-white border-blue-dark w-[92%] md:w-[74%]"
         >
           <UserAvatar
             width={16}
@@ -134,4 +134,4 @@ const BetThat = ({ bet, address }: Props) => {
   );
 };
 
-export default BetThat;
+export default InProgressBet;
