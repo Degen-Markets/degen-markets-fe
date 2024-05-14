@@ -10,13 +10,14 @@ const ReplicateBetAction = ({ bet }: Props) => {
   const router = useRouter();
   const replicateBet = async () => {
     const { ticker, metric, isBetOnUp, value, currency } = bet;
-    const duration = Math.round(
-      (Number(bet.expirationTimestamp) - Number(bet.creationTimestamp)) /
-        (24 * 60 * 60),
+    const durationInSeconds = Math.round(
+      ((Number(bet.expirationTimestamp) - Number(bet.creationTimestamp)) /
+        (24 * 60 * 60)) *
+        86400,
     );
     const direction = isBetOnUp ? "up" : "down";
     router.push(
-      `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${duration}&currency=${currency}&value=${value}`,
+      `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${value}`,
     );
   };
 

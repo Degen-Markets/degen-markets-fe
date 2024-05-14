@@ -51,6 +51,15 @@ const SlotMachine: React.FC<{}> = ({}) => {
     );
     // eslint-disable-next-line no-console
     console.log("defaultDurationOption :", defaultDurationOption);
+
+    const defaultCurrencyOption = currencyOptions.find(
+      (option) => option.value === defaultCurrency,
+    );
+    // eslint-disable-next-line no-console
+    console.log("durationOptions :", durationOptions);
+
+    // eslint-disable-next-line no-console
+    console.log("defaultDurationOption :", defaultDurationOption);
     // eslint-disable-next-line no-console
     console.log("defaultDuration :", defaultDuration);
 
@@ -58,7 +67,7 @@ const SlotMachine: React.FC<{}> = ({}) => {
     if (defaultMetricOption) setMetric(defaultMetricOption);
     if (defaultDirection) setDirection(direction);
     if (defaultDurationOption) setDuration(defaultDurationOption);
-    if (defaultCurrency) setCurrency(`0x${defaultCurrency}`);
+    if (defaultCurrencyOption) setCurrency(defaultCurrencyOption);
     if (defaultValue) setValue(defaultValue);
   }, [searchParams.toString()]);
 
