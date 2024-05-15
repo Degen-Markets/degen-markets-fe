@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center font-kadwa text-white text-xl px-10 pb-0 pt-[4vh] md:pt-16 gap-4">
+    <div className="flex flex-col items-center font-kadwa text-white text-xl  gap-4">
       <h3>
         For media requests:&nbsp;
         <span className="animated-link">
