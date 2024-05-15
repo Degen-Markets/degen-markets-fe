@@ -2,6 +2,7 @@ import { Heading, Headline } from "@/app/components/Heading";
 import EthPrice from "@/app/create-bet/_components/EthPrice";
 import SlotMachine from "@/app/create-bet/_components/SlotMachine";
 import ActionButton from "@/app/create-bet/_components/ActionButton";
+import { Suspense } from "react";
 
 const CreateBetPage = () => {
   return (
@@ -11,7 +12,9 @@ const CreateBetPage = () => {
           <Headline>Challenge a fren</Headline>
         </Heading>
         <div className="flex justify-center select-none">
-          <SlotMachine />
+          <Suspense>
+            <SlotMachine />
+          </Suspense>
         </div>
         <EthPrice />
         <ActionButton />
