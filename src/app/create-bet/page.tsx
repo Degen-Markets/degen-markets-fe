@@ -12,7 +12,7 @@ const CreateBetPage = () => {
           <Headline>Challenge a fren</Headline>
         </Heading>
         <div className="flex justify-center select-none">
-          <Suspense>
+          <Suspense fallback={<></>}>
             <SlotMachine />
           </Suspense>
         </div>
