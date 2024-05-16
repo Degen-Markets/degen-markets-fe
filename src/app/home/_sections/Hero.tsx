@@ -3,10 +3,11 @@ import Wrapper from "@/app/components/Wrapper";
 import { ButtonGradient } from "@/app/components/Button";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
+import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="flex flex-col items-center text-white h-[300px] md:h-[600px] w-screen ">
+    <div className="flex flex-col items-center text-white h-[230px] md:h-[600px] w-screen ">
       <div className="absolute top-[60px] md:top-[140px] w-screen bg-green-500">
         <div className="absolute z-[2] w-screen">
           <Marquee speed={60} direction="left">
@@ -43,9 +44,11 @@ const Hero = () => {
           </div>
           <div className="text-center">Market on Base</div>
           <div className="flex flex-col gap-4 md:gap-10 justify-center items-center mt-8 md:mt-10">
-            <ButtonGradient size="regular" className="md:px-12">
-              Predict now!
-            </ButtonGradient>
+            <Link href="/create-bet">
+              <ButtonGradient size="regular" className="md:px-12">
+                Predict now!
+              </ButtonGradient>
+            </Link>
             <div className="">
               <Image
                 src="./pixelated/down-arrow.svg"

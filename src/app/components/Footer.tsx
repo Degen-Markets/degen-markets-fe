@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center font-kadwa text-white text-xl  gap-4">
+    <footer className="flex flex-col items-center font-kadwa text-white text-xl  gap-4 mt-8 md:mt-12">
       <h3>
         For media requests:&nbsp;
         <span className="animated-link">
@@ -37,7 +37,7 @@ const Footer = () => {
       </div>
       <h3>© degensmarkets 2024</h3>
       <img src="footer-image.png" alt="" className="w-screen" />
-    </div>
+    </footer>
   );
 };
 

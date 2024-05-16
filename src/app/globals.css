@@ -172,3 +172,11 @@ input[type="number"] {
     0 8px #222b37;
   margin: 8px auto;
 }
+
+.text-stroke-3 {
+  text-shadow:
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
+}
