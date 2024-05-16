@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 const CreateBetPage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<></>}>
       <main className="text-center">
         <div className="w-[80%] md:w-1/2 mx-auto">
           <Heading className="mt-10 mb-16 md:mb-20">
