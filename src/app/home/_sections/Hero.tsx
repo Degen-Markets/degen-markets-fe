@@ -7,8 +7,8 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="flex flex-col items-center text-white h-[230px] md:h-[600px] w-screen ">
-      <div className="absolute top-[60px] md:top-[140px] w-screen bg-green-500">
+    <div className="flex flex-col items-center text-white h-[230px] md:h-[500px] w-screen ">
+      <div className="absolute top-[60px] md:top-[170px] w-screen bg-green-500">
         <div className="absolute z-[2] w-screen">
           <Marquee speed={60} direction="left">
             <Image
@@ -34,7 +34,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="px-4 md:px-0 absolute top-[130px] md:top-[25%] z-10  md:leading-[0.8]">
+      <div className="px-4 md:px-0 absolute top-[130px] md:top-[30%] z-10  md:leading-[0.8]">
         <Wrapper>
           <div className="text-4xl md:text-8xl z-[10] text-center uppercase md:mx-20">
             THE DECENTRALIZED PREDICTION MARKET ON BASE
