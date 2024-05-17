@@ -9,7 +9,7 @@ const Navbar: React.FC = ({}) => {
   const router = useRouter();
   return (
     <>
-      <ul className="hidden lg:flex gap-x-5">
+      <ul className="hidden lg:flex gap-x-4">
         <Link href="/bets">
           <ButtonSecondary size="small">Existing bets</ButtonSecondary>
         </Link>

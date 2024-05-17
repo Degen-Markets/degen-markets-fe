@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const Footer = () => {
   return (
@@ -17,7 +18,12 @@ const Footer = () => {
           className="flex items-centers"
         >
           <button className="hover:scale-110 w-10 social">
-            <img src={"./socials/twitter.png"} alt="Twitter" className="w-20" />
+            <Image
+              src="/socials/twitter.png"
+              alt="Twitter"
+              width={20}
+              height={20}
+            />
           </button>
         </a>
         <a
@@ -27,10 +33,11 @@ const Footer = () => {
           className="flex items-centers"
         >
           <button className="hover:scale-110 w-10" rel="noopener noreferrer">
-            <img
-              src={"./socials/telegram.png"}
-              alt="Twitter"
-              className="w-20"
+            <Image
+              src="/socials/telegram.png"
+              alt="Telegram"
+              width={20}
+              height={20}
             />
           </button>
         </a>

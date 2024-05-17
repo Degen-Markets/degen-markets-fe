@@ -7,7 +7,7 @@ import { Suspense } from "react";
 const CreateBetPage = () => {
   return (
     <main className="text-center">
-      <div className="w-[80%] md:w-1/2 mx-auto">
+      <div>
         <Heading className="mt-10 mb-16 md:mb-20">
           <Headline>Challenge a fren</Headline>
         </Heading>

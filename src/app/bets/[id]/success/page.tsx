@@ -28,9 +28,7 @@ const AcceptBetSuccess = () => {
 
   return (
     <main className="text-center">
-      <div className="w-[80%] md:w-1/2 mx-auto">
-        <AcceptedBet bet={bet} />
-      </div>
+      <AcceptedBet bet={bet} />
     </main>
   );
 };
