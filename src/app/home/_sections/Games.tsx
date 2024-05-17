@@ -54,7 +54,7 @@ const GameCard = ({
 };
 
 const Games = () => (
-  <div className="flex justify-start max-w-[90%] md:max-w-[70%] mb-8 md:mb-12">
+  <div className="flex justify-start mb-8 md:mb-12">
     <div className="flex flex-col space-y-2" id="fellow-degens">
       <h1 className="text-left font-bold text-2xl md:text-6xl pl-4 md:pl-8">
         Games
