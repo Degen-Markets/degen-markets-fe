@@ -5,7 +5,7 @@ import CreateBetSuccess from "@/app/create-bet/success/CreateBetSuccess";
 
 const Page = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<></>}>
       <CreateBetSuccess />
     </Suspense>
   );

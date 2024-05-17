@@ -1,8 +1,9 @@
 import React from "react";
+import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center font-kadwa text-white text-xl px-10 pb-0 pt-[4vh] md:pt-16 gap-4">
+    <footer className="flex flex-col items-center font-kadwa text-white text-xl  gap-4 mt-8 md:mt-12">
       <h3>
         For media requests:&nbsp;
         <span className="animated-link">
@@ -17,7 +18,12 @@ const Footer = () => {
           className="flex items-centers"
         >
           <button className="hover:scale-110 w-10 social">
-            <img src={"./socials/twitter.png"} alt="Twitter" className="w-20" />
+            <Image
+              src="/socials/twitter.png"
+              alt="Twitter"
+              width={20}
+              height={20}
+            />
           </button>
         </a>
         <a
@@ -27,17 +33,18 @@ const Footer = () => {
           className="flex items-centers"
         >
           <button className="hover:scale-110 w-10" rel="noopener noreferrer">
-            <img
-              src={"./socials/telegram.png"}
-              alt="Twitter"
-              className="w-20"
+            <Image
+              src="/socials/telegram.png"
+              alt="Telegram"
+              width={20}
+              height={20}
             />
           </button>
         </a>
       </div>
       <h3>© degensmarkets 2024</h3>
       <img src="footer-image.png" alt="" className="w-screen" />
-    </div>
+    </footer>
   );
 };
 

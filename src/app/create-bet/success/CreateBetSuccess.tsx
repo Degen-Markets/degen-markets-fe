@@ -42,44 +42,42 @@ const CreateBetSuccess = () => {
 
   return (
     <main className="text-center">
-      <div className="w-[80%] md:w-1/2 mx-auto">
-        <Heading className="mb-8">
-          <Headline>Bet Created!</Headline>
-          <SubHeadline isTop={false}>
-            <BetCountdown
-              expirationTimestampInS={
-                Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
-              }
-            />
-          </SubHeadline>
-        </Heading>
+      <Heading className="mb-8">
+        <Headline>Bet Created!</Headline>
+        <SubHeadline isTop={false}>
+          <BetCountdown
+            expirationTimestampInS={
+              Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
+            }
+          />
+        </SubHeadline>
+      </Heading>
 
+      <br />
+      <br />
+      <br />
+      <div className="text-blue-dark">
+        Your bet on {ticker}&apos;s {metric} going {direction} was successfully
+        created!
         <br />
-        <br />
-        <br />
-        <div className="text-blue-dark">
-          Your bet on {ticker}&apos;s {metric} going {direction} was
-          successfully created!
-          <br />
-          Challenge your frens by giving them a link to this bet. They have 4
-          hours to accept!
-        </div>
-        <br />
-        <br />
-        <div className="flex justify-center gap-[60px]">
-          <button
-            className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
-            onClick={handleShare}
-          >
-            Share
-          </button>
-          <button
-            className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
-            onClick={handleCopy}
-          >
-            Copy
-          </button>
-        </div>
+        Challenge your frens by giving them a link to this bet. They have 4
+        hours to accept!
+      </div>
+      <br />
+      <br />
+      <div className="flex justify-center gap-[60px]">
+        <button
+          className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
+          onClick={handleShare}
+        >
+          Share
+        </button>
+        <button
+          className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
+          onClick={handleCopy}
+        >
+          Copy
+        </button>
       </div>
     </main>
   );
