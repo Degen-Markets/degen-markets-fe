@@ -24,7 +24,7 @@ const fellowsCards = [
 
 const FellowCard = ({ title }: { title: string }) => (
   <div className="flex flex-col justify-center items-center">
-    <div className="w-20 items-center flex flex-col items-center">
+    <div className="w-20 flex flex-col items-center">
       <Image
         width={50}
         height={50}
@@ -52,7 +52,7 @@ const FellowDegens = () => (
       <h1 className="text-right font-bold text-2xl md:text-6xl pl-r md:pr-8">
         Fellow DEGENS
       </h1>
-      <div className="flex flex-wrap gap-3 md:gap-10 p-4 md:p-10 border-t-8 border-b-8 border-l-8 rounded-l-xl">
+      <div className="grid grid-cols-6  gap-1  md:gap-10 p-4 md:p-10 border-t-8 border-b-8 border-l-8 rounded-l-xl">
         {fellowsCards.map((title) => (
           <FellowCard key={title} title={title} />
         ))}
