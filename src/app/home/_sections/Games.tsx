@@ -54,12 +54,12 @@ const GameCard = ({
 };
 
 const Games = () => (
-  <div className="flex justify-start max-w-[90%] md:max-w-[70%] mb-8 md:mb-12">
+  <div className="flex justify-start mb-8 md:mb-12">
     <div className="flex flex-col space-y-2" id="fellow-degens">
       <h1 className="text-left font-bold text-2xl md:text-6xl pl-4 md:pl-8">
         Games
       </h1>
-      <div className="flex flex-wrap gap-2 md:gap-10 p-4 md:p-10 border-t-8 border-b-8 border-r-8 rounded-r-xl">
+      <div className="flex flex-wrap gap-2 md:gap-10 p-2 md:p-10 border-t-8 border-b-8 border-r-8 rounded-r-xl">
         {games.map(({ id, label, link }) => (
           <GameCard key={id} label={label} id={id} link={link} />
         ))}

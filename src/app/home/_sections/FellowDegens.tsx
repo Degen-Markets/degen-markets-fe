@@ -29,7 +29,7 @@ const FellowCard = ({ title }: { title: string }) => (
       height={100}
       src={`/fellows/${title}.jpg`}
       alt={`@${title}`}
-      className="h-12 w-12 md:h-24 md:w-24 rounded-md"
+      className="h-12 w-12 md:h-32 md:w-32 rounded-md"
     />
     <Link
       className="geo-font font-normal md:font-bold text-xs md:text-lg"
@@ -42,15 +42,12 @@ const FellowCard = ({ title }: { title: string }) => (
 );
 
 const FellowDegens = () => (
-  <div className="flex justify-end">
-    <div
-      className="flex flex-col max-w-[90%] md:max-w-[70%] space-y-2"
-      id="fellow-degens"
-    >
-      <h1 className="text-left font-bold text-2xl md:text-6xl">
+  <div className="flex ">
+    <div className="flex flex-col space-y-2" id="fellow-degens">
+      <h1 className="text-left font-bold text-2xl md:text-6xl pl-4 md:pl-8">
         Fellow DEGENS
       </h1>
-      <div className="flex flex-wrap gap-3 md:gap-10 p-4 md:p-10 border-t-8 border-b-8 border-l-8 rounded-l-xl">
+      <div className="grid grid-cols-6  gap-1 md:gap-10 p-2 md:p-10 border-t-8 border-b-8 border-r-8 rounded-r-xl">
         {fellowsCards.map((title) => (
           <FellowCard key={title} title={title} />
         ))}
