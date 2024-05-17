@@ -35,7 +35,7 @@ const GameCard = ({
         src={`/games/${id}.jpg`}
         alt={label}
         className={cx(
-          "w-20 h-28 md:h-48 md:w-40 rounded-md object-cover border-2 border-white ",
+          "w-20 h-28 md:h-64 md:w-52 rounded-md object-cover border-2 border-white ",
           { "opacity-50": !link },
           { "cursor-pointer": link },
         )}
