@@ -37,12 +37,11 @@ const Hero = () => {
       <div className="px-4 md:px-0 absolute top-[130px] md:top-[25%] z-10  md:leading-[0.8]">
         <Wrapper>
           <div className="text-4xl md:text-8xl z-[10] text-center uppercase md:mx-20">
-            THE DECENTRALIZED DEGEN MARKETS PREDICTION
+            THE DECENTRALIZED PREDICTION MARKET ON BASE
           </div>
           <div className="text-center font-[100] text-2xl md:text-4xl">
             By DEGENS for DEGENS
           </div>
-          <div className="text-center">Market on Base</div>
           <div className="flex flex-col gap-4 md:gap-10 justify-center items-center mt-8 md:mt-10">
             <Link href="/create-bet">
               <ButtonGradient size="regular" className="md:px-12">
