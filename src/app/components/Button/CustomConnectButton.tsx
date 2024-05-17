@@ -2,7 +2,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
 import { ButtonGradient } from "@/app/components/Button/index";
-import cx from "classnames";
 
 interface Props {
   className?: string;
@@ -33,12 +32,12 @@ export const CustomConnectButton: React.FC<Props> = ({ className }) => {
               if (!mounted || !account || !chain) {
                 return (
                   <ButtonGradient
-                    size={"small"}
+                    size="small"
                     onClick={openConnectModal}
                     type="button"
-                    className={cx("text-neutral-900", className)}
+                    className={className}
                   >
-                    <div className="text-neutral-900">Connect wallet</div>
+                    Connect wallet
                   </ButtonGradient>
                 );
               }
@@ -46,12 +45,12 @@ export const CustomConnectButton: React.FC<Props> = ({ className }) => {
               if (chain.unsupported) {
                 return (
                   <ButtonGradient
-                    size={"small"}
+                    size="small"
                     onClick={openChainModal}
                     type="button"
-                    className={cx("text-neutral-900", className)}
+                    className={className}
                   >
-                    <div className="text-neutral-900">Wrong network</div>
+                    Wrong network
                   </ButtonGradient>
                 );
               }
@@ -59,13 +58,11 @@ export const CustomConnectButton: React.FC<Props> = ({ className }) => {
               return (
                 <div>
                   <ButtonGradient
-                    size={"small"}
+                    size="small"
                     onClick={openAccountModal}
-                    className={cx("text-neutral-900", className)}
+                    className={className}
                   >
-                    <div className="text-neutral-900">
-                      {account.displayName}
-                    </div>
+                    {account.displayName}
                   </ButtonGradient>
                 </div>
               );

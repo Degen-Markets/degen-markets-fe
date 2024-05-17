@@ -7,27 +7,27 @@ import Image from "next/image";
 
 const CreateBetPage = () => {
   return (
-    <Suspense fallback={<></>}>
-      <main className="text-center relative">
-        <div className="absolute -top-20 right-0 -z-[1]">
-          <Image src={"../Bull.svg"} width={243} height={377} alt="Bull" />
-        </div>
-        <div className="absolute bottom-0 left-0 -z-[1]">
-          <Image src={'../Bear.svg'} width={217} height={486} alt="Bear" />
-        </div>
+    <main className="text-center relative w-full">
+      <div className="absolute -top-20 right-0 -z-[1]">
+        <Image src={"../Bull.svg"} width={243} height={377} alt="Bull" />
+      </div>
+      <div className="absolute bottom-0 left-0 -z-[1]">
+        <Image src={'../Bear.svg'} width={217} height={486} alt="Bear" />
+      </div>
 
-        <div className="w-[80%] md:w-1/2 mx-auto">
-          <Heading className="mt-10 mb-16 md:mb-20">
-            <Headline>Challenge a fren</Headline>
-          </Heading>
-          <div className="flex justify-center select-none">
+      <div className="w-[80%] md:w-1/2 mx-auto">
+        <Heading className="mt-10 mb-16 md:mb-20">
+          <Headline>Challenge a fren</Headline>
+        </Heading>
+        <div className="flex justify-center select-none">
+          <Suspense fallback={<></>}>
             <SlotMachine />
-          </div>
-          <EthPrice />
-          <ActionButton />
+          </Suspense>
         </div>
-      </main>
-    </Suspense>
+        <EthPrice />
+        <ActionButton />
+      </div>
+    </main>
   );
 };
 

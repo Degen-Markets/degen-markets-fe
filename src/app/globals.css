@@ -26,15 +26,7 @@
 body {
   font-family: "Jersey 10", sans-serif;
   color: white;
-  background: linear-gradient(
-    to right,
-    #5bdee6,
-    #4dc9de,
-    #44b3d5,
-    #309bcb,
-    #1f77be,
-    #0050af
-  );
+  background: linear-gradient(to right, rgb(169, 184, 202), rgb(68, 117, 175));
 }
 
 @layer utilities {
@@ -179,4 +171,12 @@ input[type="number"] {
     0 -8px #222b37,
     0 8px #222b37;
   margin: 8px auto;
+}
+
+.text-stroke-3 {
+  text-shadow:
+    -1px -1px 0 black,
+    1px -1px 0 black,
+    -1px 1px 0 black,
+    1px 1px 0 black;
 }
