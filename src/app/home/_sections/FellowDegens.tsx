@@ -49,7 +49,7 @@ const FellowDegens = () => (
       className="flex flex-col max-w-[90%] md:max-w-[70%] space-y-2"
       id="fellow-degens"
     >
-      <h1 className="text-left font-bold text-2xl md:text-6xl">
+      <h1 className="text-right font-bold text-2xl md:text-6xl pl-r md:pr-8">
         Fellow DEGENS
       </h1>
       <div className="flex flex-wrap gap-3 md:gap-10 p-4 md:p-10 border-t-8 border-b-8 border-l-8 rounded-l-xl">
