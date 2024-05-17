@@ -31,7 +31,7 @@ const Metric = ({ bet, hideStartingMetric }: Props) => {
   );
 
   return (
-    <div>
+    <div className="text-xl">
       <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-8 md:mt-0 md:-translate-y-1/2">
         <div className="bg-white border-purple-medium border-8 text-neutral-800 px-4">
           {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
