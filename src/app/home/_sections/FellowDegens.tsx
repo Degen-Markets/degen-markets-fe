@@ -1,24 +1,25 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const fellowsCards = [
-  "3qyEeEom",
-  "8iGfjlMj",
-  "COwaR",
-  "Ds7ZTZ",
-  "b1lvC45d",
-  "CPNdKAm3",
-  "CzQz1rOb",
-  "ezW6zWx7",
-  "HD9kpklf",
-  "KILbcfmY",
-  "lHoszyAe",
-  "lI1ge7Nu",
-  "oOAKXzy",
-  "P48EOw0F",
-  "qyQ7S_6_",
-  "RXUJwuB5",
-  "tMx3y7je",
-  "wT_9FIxy",
+  "PatMetheus",
+  "TheOnlyDarwin",
+  "high_fades",
+  "jpegplug",
+  "Enter_the_Krypt",
+  "AutonomyCapital",
+  "TheEuroSniper",
+  "TheGemHunters",
+  "ShardiB2",
+  "TylerDurden",
+  "bullish_teddy",
+  "CaptClutchEth",
+  "BTC_NFT",
+  "Trader1sz",
+  "Dylanleeeth",
+  "TraderDaink",
+  "TheCryptoLes",
+  "Crypto_Altology",
 ];
 
 const FellowCard = ({ title }: { title: string }) => (
@@ -30,9 +31,13 @@ const FellowCard = ({ title }: { title: string }) => (
       alt={`@${title}`}
       className="h-12 w-12 md:h-24 md:w-24 rounded-md"
     />
-    <h2 className="geo-font font-normal md:font-bold text-xs md:text-lg">
+    <Link
+      className="geo-font font-normal md:font-bold text-xs md:text-lg"
+      href={`https://twitter.com/${title}`}
+      target="_blank"
+    >
       @{title}
-    </h2>
+    </Link>
   </div>
 );
 
