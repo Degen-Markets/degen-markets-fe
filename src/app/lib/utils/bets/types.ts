@@ -31,7 +31,7 @@ export enum Currency {
 
 export enum Metric {
   PRICE = "price",
-  VOLUME = "volume",
+  VOLUME = "volume_24h",
   MARKET_CAP_DOMINANCE = "market_cap_dominance",
 }
 
