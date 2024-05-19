@@ -8,7 +8,9 @@ interface Props extends PropsWithChildren {
 const Wrapper = ({ children, className }: Props) => {
   return (
     <div className="w-full">
-      <div className={cx("mx-auto  max-w-screen-xl px-4 lg:px-6", className)}>
+      <div
+        className={cx("md:mx-auto md:max-w-screen-xl px-4 lg:px-6", className)}
+      >
         {children}
       </div>
     </div>

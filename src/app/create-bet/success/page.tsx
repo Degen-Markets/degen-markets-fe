@@ -2,11 +2,14 @@
 
 import React, { Suspense } from "react";
 import CreateBetSuccess from "@/app/create-bet/success/CreateBetSuccess";
+import Wrapper from "@/app/components/Wrapper";
 
 const Page = () => {
   return (
     <Suspense fallback={<></>}>
-      <CreateBetSuccess />
+      <Wrapper className="lg:max-w-screen-md">
+        <CreateBetSuccess />
+      </Wrapper>
     </Suspense>
   );
 };

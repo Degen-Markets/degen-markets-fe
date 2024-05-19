@@ -103,7 +103,7 @@ const InProgressBet = ({ bet, address }: Props) => {
 
   return (
     <div>
-      <Heading className="w-72">
+      <Heading>
         <Headline>Bets that</Headline>
         <SubHeadline
           isTop={true}

@@ -4,6 +4,7 @@ import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
 import { useEffect, useState } from "react";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { getBetById } from "@/app/lib/utils/api/getBetById";
+import Wrapper from "@/app/components/Wrapper";
 
 const AcceptBetSuccess = () => {
   const { id } = useParams<{ id?: string }>();
@@ -28,7 +29,9 @@ const AcceptBetSuccess = () => {
 
   return (
     <main className="text-center">
-      <AcceptedBet bet={bet} />
+      <Wrapper className="lg:max-w-screen-md">
+        <AcceptedBet bet={bet} />
+      </Wrapper>
     </main>
   );
 };

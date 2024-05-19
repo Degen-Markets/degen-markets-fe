@@ -17,7 +17,7 @@ export const metricOptions: MetricOptions = [
     value: Metric.MARKET_CAP_DOMINANCE,
   },
   {
-    label: "Volume",
+    label: "24h Volume",
     value: Metric.VOLUME,
   },
 ];
