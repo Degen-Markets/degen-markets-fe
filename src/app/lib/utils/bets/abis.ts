@@ -248,4 +248,4 @@ export const DEGEN_MARKETS_ABI = [
     stateMutability: "payable",
     type: "function",
   },
-];
+] as const;

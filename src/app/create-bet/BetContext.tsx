@@ -1,5 +1,5 @@
 "use client";
-import React, {
+import {
   createContext,
   Dispatch,
   ReactNode,
@@ -25,6 +25,8 @@ interface BetContextProps {
   duration: ReelOption<number>;
   currency: ReelOption<`0x${string}`>;
   value: string;
+  customDuration: ReelOption<number>;
+  isProMode: boolean;
   setTicker: Dispatch<SetStateAction<ReelOption<Ticker>>>;
   setMetric: Dispatch<SetStateAction<ReelOption<Metric>>>;
   setDirection: Dispatch<SetStateAction<ReelOption<boolean>>>;
@@ -32,6 +34,8 @@ interface BetContextProps {
   setCurrency: Dispatch<SetStateAction<ReelOption<`0x${string}`>>>;
   setValue: Dispatch<SetStateAction<string>>;
   randomizeAllOptions: () => void;
+  setCustomDuration: Dispatch<SetStateAction<ReelOption<number>>>;
+  setIsProMode: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultValues: BetContextProps = {
@@ -41,6 +45,8 @@ const defaultValues: BetContextProps = {
   duration: durationOptions[0],
   currency: currencyOptions[0],
   value: "10",
+  customDuration: { label: "", value: 0 },
+  isProMode: false,
   setTicker: () => {},
   setMetric: () => {},
   setDirection: () => {},
@@ -48,6 +54,8 @@ const defaultValues: BetContextProps = {
   setCurrency: () => {},
   setValue: () => {},
   randomizeAllOptions: () => {},
+  setCustomDuration: () => {},
+  setIsProMode: () => {},
 };
 
 const BetContext = createContext<BetContextProps>(defaultValues);
@@ -63,6 +71,13 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
     currencyOptions[0],
   );
   const [value, setValue] = useState<string>("10");
+
+  const [customDuration, setCustomDuration] = useState<ReelOption<number>>({
+    label: "",
+    value: 0,
+  });
+
+  const [isProMode, setIsProMode] = useState<boolean>(false);
 
   const randomizeAllOptions = () => {
     setTicker(getRandomOption<Ticker>(tickerOptions));
@@ -81,6 +96,8 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
         duration,
         currency,
         value,
+        customDuration,
+        isProMode,
         setTicker,
         setMetric,
         setDirection,
@@ -88,6 +105,8 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
         setCurrency,
         setValue,
         randomizeAllOptions,
+        setCustomDuration,
+        setIsProMode,
       }}
     >
       {children}

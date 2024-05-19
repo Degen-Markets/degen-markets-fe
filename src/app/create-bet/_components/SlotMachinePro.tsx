@@ -8,9 +8,13 @@ import {
   metricOptions,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { useSearchParams } from "next/navigation";
+import TokenSearch from "./SearchTicker";
+import TimePicker from "./TimePicker";
+import { Address } from "viem";
+import { Button, ButtonPrimary } from "@/app/components/Button";
 
 const SlotMachinePro: React.FC<{}> = ({}) => {
   const {
@@ -19,13 +23,13 @@ const SlotMachinePro: React.FC<{}> = ({}) => {
     direction,
     duration,
     currency,
+    customDuration,
     setTicker,
     setMetric,
     setDirection,
     setDuration,
     setCurrency,
     setValue,
-    randomizeAllOptions,
   } = useBetContext();
 
   const searchParams = useSearchParams();
@@ -66,51 +70,71 @@ const SlotMachinePro: React.FC<{}> = ({}) => {
     defaultValue,
   ]);
 
+  console.log({
+    ticker,
+    metric,
+    direction,
+    duration,
+    currency,
+    customDuration,
+  });
+
   return (
-    <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5 flex">
-      <div
-        className="flex mt-[-30px] md:mt-[-40px]" /* move reels out of bg on top */
-      >
-        <Reel<Ticker>
-          selectedOption={ticker}
-          setSelectedOption={setTicker}
-          reelOptions={tickerOptions}
-          title="&nbsp;&nbsp;Bet on:&nbsp;&nbsp;"
-        />
-        <Reel<Metric>
-          selectedOption={metric}
-          setSelectedOption={setMetric}
-          reelOptions={metricOptions}
-          title="&nbsp;Metric:&nbsp;&nbsp;"
-        />
-        <Reel<boolean>
-          selectedOption={direction}
-          setSelectedOption={setDirection}
-          reelOptions={directionOptions}
-          title="Direction:"
-        />
-        <Reel<number>
-          selectedOption={duration}
-          setSelectedOption={setDuration}
-          reelOptions={durationOptions}
-          title="Duration:"
-        />
-        <Reel<`0x${string}`>
-          selectedOption={currency}
-          setSelectedOption={setCurrency}
-          reelOptions={currencyOptions}
-          title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
-        />
+    <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5">
+      <div>
+        <h3 className="text-4xl">PRO</h3>
+        <div className="">
+          <div className="flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5">
+            <TokenSearch<Ticker>
+              selectedOption={ticker}
+              setSelectedOption={setTicker}
+              placeHolder="Search Token"
+              searchOption={tickerOptions}
+              title="&nbsp;Bet on:&nbsp;&nbsp;"
+            />
+            <TimePicker<number> title="Duration:" placeHolder="Search Token" />
+          </div>
+
+          <div className="flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5">
+            <TokenSearch<Metric>
+              selectedOption={metric}
+              setSelectedOption={setMetric}
+              placeHolder="Search Metric"
+              searchOption={metricOptions}
+              title="&nbsp;Metric:&nbsp;&nbsp;"
+            />
+            <TokenSearch<boolean>
+              selectedOption={direction}
+              setSelectedOption={setDirection}
+              placeHolder="Select Direction"
+              searchOption={directionOptions}
+              title="&nbsp;Direction:"
+            />
+          </div>
+          <div className="flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5">
+            <TokenSearch<Address>
+              selectedOption={currency}
+              setSelectedOption={setCurrency}
+              placeHolder="Select Currency"
+              searchOption={currencyOptions}
+              title="&nbsp;Currency:&nbsp;&nbsp;"
+            />
+            {/* <div className="w-full">
+              <h4 className="pt-3 text-left whitespace-nowrap">Reset Fields</h4>
+              <ButtonPrimary
+                size="regular"
+                className="w-full"
+                onClick={() => {
+                  resetMachine();
+                  setIsRandom(true);
+                }}
+              >
+                Reset
+              </ButtonPrimary>
+            </div> */}
+          </div>
+        </div>
       </div>
-      <div className="ml-[30px] w-[140px] mt-auto mb-auto lg:block hidden">
-        <img
-          onClick={randomizeAllOptions}
-          className="cursor-pointer"
-          src="../randomize-create-bet-button.svg"
-          alt="Randomize options button"
-        />
-      </div>
-      PRO
     </div>
   );
 };

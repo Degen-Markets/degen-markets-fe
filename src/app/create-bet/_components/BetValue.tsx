@@ -5,10 +5,22 @@ import { useBetContext } from "@/app/create-bet/BetContext";
 import { Currency } from "@/app/lib/utils/bets/types";
 
 const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
-  const { currency, value, setValue, ticker, duration, metric, direction } =
-    useBetContext();
+  const {
+    currency,
+    value,
+    setValue,
+    ticker,
+    duration,
+    metric,
+    direction,
+    isProMode,
+    customDuration,
+  } = useBetContext();
 
   const isEth = currency.label === Currency.ETH;
+  const durationLabel = isProMode
+    ? customDuration.label.toLowerCase()
+    : duration.label.toLowerCase();
 
   const calculatedValue =
     isEth && ethPrice ? (Number(value) * ethPrice).toLocaleString() : value;
@@ -45,7 +57,7 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
         ) : null}
         that&nbsp;
         {ticker.label}&apos;s {metric.label} goes&nbsp;
-        {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
+        {direction.label.toLowerCase()} in {durationLabel}.
       </div>
     </div>
   );
