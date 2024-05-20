@@ -32,11 +32,6 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
       label: inputTime,
       value: unixTime,
     });
-
-    console.log({
-      time,
-      unixTime,
-    });
   };
 
   // Getting the current date and time in the format to Disable the past date

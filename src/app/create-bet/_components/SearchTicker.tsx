@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ReelOption } from "@/app/lib/utils/bets/types";
 
@@ -8,9 +8,7 @@ interface TokenSearchProps<T> {
   setSelectedOption: Dispatch<SetStateAction<ReelOption<T>>>;
   title: string;
   placeHolder: string;
-
-  // isRandom: boolean
-  // setIsRandom: React.Dispatch<React.SetStateAction<boolean>>
+  isTicker?: boolean;
 }
 
 const TokenSearch = <T,>({
@@ -19,28 +17,24 @@ const TokenSearch = <T,>({
   setSelectedOption,
   title,
   placeHolder,
-  // isRandom,
-  // setIsRandom
+  isTicker = false,
 }: TokenSearchProps<T>) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(selectedOption.label);
   const [filteredTokens, setFilteredTokens] = useState(searchOption);
   const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = React.useRef<HTMLUListElement>(null);
+  const dropdownRef = useRef<HTMLUListElement>(null);
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   setInputValue(value);
-  //   setIsRandom(false)
-  //   console.log({
-  //     isRandom, value, inputValue
-  //   })
-  //   setFilteredTokens(
-  //     searchOption.filter(token =>
-  //       token.label.toLowerCase().includes(value.toLowerCase())
-  //     )
-  //   );
-  //   setShowDropdown(true);
-  // };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    setFilteredTokens(
+      searchOption.filter((token) =>
+        token.label.toLowerCase().includes(value.toLowerCase()),
+      ),
+    );
+    setShowDropdown(true);
+  };
 
   const handleTokenSelect = (token: ReelOption<T>) => {
     setInputValue(token.label);
@@ -54,16 +48,19 @@ const TokenSearch = <T,>({
       !dropdownRef.current.contains(event.target as Node)
     ) {
       setShowDropdown(false);
-      // setIsRandom(false)
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    setInputValue(selectedOption.label);
+  }, [selectedOption]);
 
   return (
     <div className="relative w-fit">
@@ -90,22 +87,26 @@ const TokenSearch = <T,>({
       <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
       <input
         type="text"
-        value={selectedOption.label}
-        // onChange={handleInputChange}
-        onFocus={() => setShowDropdown(!showDropdown)}
+        value={inputValue}
+        onChange={isTicker ? handleInputChange : undefined}
+        onFocus={() => setShowDropdown(true)}
         className="px-4 py-2 ring-purple-medium  text-[#000] uppercase w-fit"
         placeholder={`${placeHolder}...`}
       />
       {showDropdown && (
         <ul
           ref={dropdownRef}
-          className="absolute w-full bg-white border  mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
+          className="absolute w-full bg-white border mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
         >
           {filteredTokens.map((token, index) => (
             <li
               key={index}
               onClick={() => handleTokenSelect(token)}
-              className={`px-4 py-2 cursor-pointer ${selectedOption.label === token.label ? "text-[#fff] bg-blue-dark" : "text-[#000] hover:bg-gray-200"}`}
+              className={`px-4 py-2 cursor-pointer ${
+                selectedOption.label === token.label
+                  ? "text-[#fff] bg-blue-dark"
+                  : "text-[#000] hover:bg-gray-200"
+              }`}
             >
               {token.label}
             </li>

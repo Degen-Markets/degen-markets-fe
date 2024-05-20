@@ -22,9 +22,20 @@ import { useRouter } from "next/navigation";
 
 const ActionButton: React.FC<{}> = () => {
   const router = useRouter();
-  const { value, currency, duration, ticker, metric, direction } =
-    useBetContext();
+  const {
+    value,
+    currency,
+    duration,
+    ticker,
+    metric,
+    direction,
+    isProMode,
+    customDuration,
+  } = useBetContext();
 
+  const durationValue = isProMode
+    ? BigInt(customDuration.value)
+    : BigInt(duration.value);
   const { address } = useAccount();
   const { writeContract: sendApprovalTx, data: approvalHash } =
     useWriteContract();
@@ -80,7 +91,7 @@ const ActionButton: React.FC<{}> = () => {
       functionName: "createBet",
       args: [
         randomId,
-        BigInt(duration.value),
+        durationValue,
         ticker.value,
         metric.value,
         direction.value,

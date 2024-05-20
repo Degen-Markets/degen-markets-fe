@@ -1,5 +1,4 @@
 "use client";
-import Reel from "@/app/components/Reel";
 import { Metric, MetricOption, Ticker } from "@/app/lib/utils/bets/types";
 import {
   currencyOptions,
@@ -8,13 +7,12 @@ import {
   metricOptions,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { useSearchParams } from "next/navigation";
 import TokenSearch from "./SearchTicker";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
-import { Button, ButtonPrimary } from "@/app/components/Button";
 
 const SlotMachinePro: React.FC<{}> = ({}) => {
   const {
@@ -70,15 +68,6 @@ const SlotMachinePro: React.FC<{}> = ({}) => {
     defaultValue,
   ]);
 
-  console.log({
-    ticker,
-    metric,
-    direction,
-    duration,
-    currency,
-    customDuration,
-  });
-
   return (
     <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5">
       <div>
@@ -91,6 +80,7 @@ const SlotMachinePro: React.FC<{}> = ({}) => {
               placeHolder="Search Token"
               searchOption={tickerOptions}
               title="&nbsp;Bet on:&nbsp;&nbsp;"
+              isTicker={true}
             />
             <TimePicker<number> title="Duration:" placeHolder="Search Token" />
           </div>
