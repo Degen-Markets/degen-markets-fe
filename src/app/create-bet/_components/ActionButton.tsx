@@ -66,8 +66,6 @@ const ActionButton: React.FC<{}> = () => {
 
   const id = createBetVariables?.args && createBetVariables.args[0];
 
-  console.log({ createBetVariables });
-
   const isAllowanceEnough =
     userAllowances[currency.label as Currency] >= valueInWei;
   const isBalanceEnough =
