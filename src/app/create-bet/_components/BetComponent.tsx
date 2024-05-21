@@ -10,8 +10,8 @@ const BetComponent = () => {
 
   return (
     <>
-      <div className="flex justify-center space-x-4 flex-col w-full">
-        <div className="flex my-10 justify-center">
+      <div className="flex justify-center  flex-col w-full">
+        <div className="flex mt-6 mb-10 sm:my-10 justify-center">
           <Button
             size="regular"
             className={

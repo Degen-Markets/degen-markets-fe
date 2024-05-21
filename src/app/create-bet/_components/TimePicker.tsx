@@ -1,6 +1,4 @@
 import React, { ChangeEvent, useState } from "react";
-import { Dispatch, SetStateAction } from "react";
-import { ReelOption } from "@/app/lib/utils/bets/types";
 import { useBetContext } from "../BetContext";
 import {
   getCurrentDateTime,
@@ -22,7 +20,6 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
 
   const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTime = event.target.value.trim();
-    const inputTimeWOT = event.target.value;
     setTime(inputTime);
     const unixTime = getTimeDifferenceInSeconds(inputTime);
     setCustomDuration({
@@ -43,7 +40,7 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
   const errorMessage = validateTime();
 
   return (
-    <div className="flex justify-start items-center">
+    <div className="relative">
       <div>
         <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
 
@@ -54,11 +51,13 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
           value={time}
           onChange={handleTimeChange}
           min={getCurrentDateTime()} // disabling the past Date
-          className={`styled-time-input w-full sm:w-fit p-2  ${time === "" ? "text-gray-500" : "text-[#000]"} bg-gray-50 border border-gray-300 sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none ${errorMessage && "border border-red-500"}`}
+          className={`styled-time-input w-full sm:w-fit p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"} bg-gray-50 border border-gray-300 text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none ${errorMessage && "border-1 border-red-500"}`}
           placeholder={placeHolder}
         />
         {errorMessage && (
-          <p className="text-red-500 sm:text-xl text-left">{errorMessage}</p>
+          <p className="text-red-500 text-sm sm:text-xl text-left sm:absolute sm:-bottom-6">
+            {errorMessage}
+          </p>
         )}
       </div>
     </div>

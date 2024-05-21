@@ -1,15 +1,13 @@
 "use client";
-import { Metric, MetricOption, Ticker } from "@/app/lib/utils/bets/types";
+import { Metric, Ticker } from "@/app/lib/utils/bets/types";
 import {
   currencyOptions,
   directionOptions,
-  durationOptions,
   metricOptions,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
-import React, { useEffect } from "react";
+import React from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { useSearchParams } from "next/navigation";
 import Dropdown from "./Dropdown";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
@@ -19,23 +17,22 @@ const BetProForm: React.FC<{}> = ({}) => {
     ticker,
     metric,
     direction,
-    duration,
     currency,
-    customDuration,
     setTicker,
     setMetric,
     setDirection,
-    setDuration,
     setCurrency,
-    setValue,
   } = useBetContext();
+
+  const commonStyle =
+    "flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5";
 
   return (
     <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5">
       <div>
         <h3 className="text-4xl">PRO</h3>
         <div className="">
-          <div className="flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5">
+          <div className={commonStyle}>
             <Dropdown<Ticker>
               selectedOption={ticker}
               setSelectedOption={setTicker}
@@ -47,7 +44,7 @@ const BetProForm: React.FC<{}> = ({}) => {
             <TimePicker<number> title="Duration:" placeHolder="Search Token" />
           </div>
 
-          <div className="flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5">
+          <div className={commonStyle}>
             <Dropdown<Metric>
               selectedOption={metric}
               setSelectedOption={setMetric}
@@ -63,7 +60,7 @@ const BetProForm: React.FC<{}> = ({}) => {
               title="&nbsp;Direction:"
             />
           </div>
-          <div className="flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5">
+          <div className={commonStyle}>
             <Dropdown<Address>
               selectedOption={currency}
               setSelectedOption={setCurrency}

@@ -1,4 +1,3 @@
-import { Heading, Headline } from "@/app/components/Heading";
 import EthPrice from "@/app/create-bet/_components/EthPrice";
 import ActionButton from "@/app/create-bet/_components/ActionButton";
 import Image from "next/image";
@@ -15,9 +14,9 @@ const CreateBetPage = () => {
       </div>
 
       <div className="w-[80%] md:w-1/2 mx-auto">
-        <Heading className="mt-10 mb-16 md:mb-20">
-          <Headline>Challenge a fren</Headline>
-        </Heading>
+        <h2 className="pixel-art-border-lg-dark bg-blue-dark text-3xl sm:text-5xl">
+          Challenge a fren
+        </h2>
         <BetComponent />
         <EthPrice />
         <ActionButton />

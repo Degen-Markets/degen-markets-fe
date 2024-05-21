@@ -1,6 +1,6 @@
 "use client";
 import Reel from "@/app/components/Reel";
-import { Metric, MetricOption, Ticker } from "@/app/lib/utils/bets/types";
+import { Metric, Ticker } from "@/app/lib/utils/bets/types";
 import {
   currencyOptions,
   directionOptions,
@@ -8,9 +8,8 @@ import {
   metricOptions,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
-import React, { useEffect } from "react";
+import React from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { useSearchParams } from "next/navigation";
 
 const SlotMachine: React.FC<{}> = ({}) => {
   const {
@@ -24,7 +23,6 @@ const SlotMachine: React.FC<{}> = ({}) => {
     setDirection,
     setDuration,
     setCurrency,
-    setValue,
     randomizeAllOptions,
   } = useBetContext();
 

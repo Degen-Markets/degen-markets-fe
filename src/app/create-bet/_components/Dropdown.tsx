@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ReelOption } from "@/app/lib/utils/bets/types";
 import { debounce } from "@/app/lib/utils/bets/helpers";
@@ -74,16 +74,16 @@ export default function Dropdown<T>({
   }, [selectedOption]);
 
   return (
-    <div className="relative w-fit">
+    <div className="relative w-full sm:w-fit">
       <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
       <input
         ref={inputRef}
         type="text"
-        readOnly={isSearchable ? false : true}
+        readOnly={!isSearchable}
         defaultValue={selectedOption.label}
         onChange={isSearchable ? debouncedHandleInputChange : undefined}
         onFocus={() => setShowDropdown(true)}
-        className="px-4 py-2 ring-purple-medium text-[#000] uppercase w-fit"
+        className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase w-full sm:w-fit"
         placeholder={`${placeHolder}...`}
       />
       {showDropdown && (
@@ -92,9 +92,9 @@ export default function Dropdown<T>({
           className="absolute w-full bg-white border mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
         >
           {filteredTokens.length > 0 ? (
-            filteredTokens.map((token, index) => (
+            filteredTokens.map((token) => (
               <li
-                key={index}
+                key={token.label}
                 onClick={() => handleTokenSelect(token)}
                 className={`px-4 py-2 cursor-pointer outlne-none  outline-0 border-none ${
                   selectedOption.label === token.label
