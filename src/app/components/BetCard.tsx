@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
@@ -76,7 +78,10 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
         <div className="bg-blue-medium text-blue-dark my-2 p-1">
           {prettifyAddress(bet.creator)} is betting that...
         </div>
-        <div className="bg-white text-blue-dark px-1 py-2 md:p-1 md:h-[72px]">
+        <div
+          className="bg-white text-blue-dark px-1 py-2 md:p-1 md:h-[72px]"
+          suppressHydrationWarning
+        >
           {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
           {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
           {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.

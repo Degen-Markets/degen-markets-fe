@@ -1,5 +1,3 @@
-"use client";
-import { useEffect, useState } from "react";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { getBets } from "@/app/lib/utils/api/getBets";
 import BetCard from "@/app/components/BetCard";
@@ -9,24 +7,18 @@ import {
   isBetRunning,
   isBetConcluded,
 } from "@/app/lib/utils/bets/helpers";
+import BetsTab from "@/app/bets/_components/BetsTab";
 
-const Bets = () => {
-  const [unacceptedBets, setUnacceptedBets] = useState<BetsResponse>([]);
-  const [runningBets, setRunningBets] = useState<BetsResponse>([]);
-  const [concludedBets, setConcludedBets] = useState<BetsResponse>([]);
-  const fetchBets = async () => {
-    const { data: fetchedBets } = await getBets();
-    setUnacceptedBets(fetchedBets.filter(isBetOpen));
-    setRunningBets(fetchedBets.filter(isBetRunning));
-    setConcludedBets(fetchedBets.filter(isBetConcluded));
-  };
-  useEffect(() => {
-    fetchBets();
-  }, []);
+const Bets = async () => {
+  const { data: fetchedBets } = await getBets();
+  const unacceptedBets = fetchedBets.filter(isBetOpen);
+  const runningBets = fetchedBets.filter(isBetRunning);
+  const concludedBets = fetchedBets.filter(isBetConcluded);
 
   return (
     <div className="flex">
       <div className="flex flex-col md:w-3/4 h-screen overflow-y-scroll">
+        <BetsTab />
         {unacceptedBets.length > 0 && (
           <>
             <div className="text-center text-4xl md:text-7xl">

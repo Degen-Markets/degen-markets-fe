@@ -27,7 +27,13 @@ const config: Config = {
         },
         purple: {
           light: "#C0A6FE",
-          medium: "#8D68E6",
+          medium: "#8E68E5",
+        },
+        indigo: {
+          medium: "#5662D4",
+        },
+        prussian: {
+          dark: "#003A55",
         },
       },
       boxShadow: {
