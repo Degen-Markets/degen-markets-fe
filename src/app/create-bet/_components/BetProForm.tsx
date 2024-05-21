@@ -30,15 +30,6 @@ const BetProForm: React.FC<{}> = ({}) => {
     setValue,
   } = useBetContext();
 
-  console.log({
-    ticker,
-    metric,
-    direction,
-    duration,
-    currency,
-    customDuration,
-  });
-
   return (
     <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5">
       <div>
