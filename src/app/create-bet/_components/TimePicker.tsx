@@ -23,10 +23,6 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
   const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTime = event.target.value.trim();
     const inputTimeWOT = event.target.value;
-    console.log({
-      inputTimeWithTrim: inputTime,
-      inputTimeWOT,
-    });
     setTime(inputTime);
     const unixTime = getTimeDifferenceInSeconds(inputTime);
     setCustomDuration({
