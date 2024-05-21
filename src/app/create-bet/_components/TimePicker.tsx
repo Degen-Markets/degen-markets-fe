@@ -2,14 +2,10 @@ import React, { ChangeEvent, useState } from "react";
 import { Dispatch, SetStateAction } from "react";
 import { ReelOption } from "@/app/lib/utils/bets/types";
 import { useBetContext } from "../BetContext";
-
-function getTimeDifferenceInSeconds(customDateTimeString: string): number {
-  const currentTime = Math.floor(Date.now() / 1000);
-  const customDateTime = new Date(customDateTimeString);
-  const customUnixTimestamp = Math.floor(customDateTime.getTime() / 1000);
-  const timeDifferenceInSeconds = customUnixTimestamp - currentTime;
-  return timeDifferenceInSeconds;
-}
+import {
+  getCurrentDateTime,
+  getTimeDifferenceInSeconds,
+} from "@/app/lib/utils/bets/helpers";
 
 interface TokenSearchProps<T> {
   title: string;
@@ -25,7 +21,12 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
   }, [customDuration]);
 
   const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputTime = event.target.value;
+    const inputTime = event.target.value.trim();
+    const inputTimeWOT = event.target.value;
+    console.log({
+      inputTimeWithTrim: inputTime,
+      inputTimeWOT,
+    });
     setTime(inputTime);
     const unixTime = getTimeDifferenceInSeconds(inputTime);
     setCustomDuration({
@@ -34,21 +35,11 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
     });
   };
 
-  // Getting the current date and time in the format to Disable the past date
-  const getCurrentDateTime = (): string => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-  };
   const validateTime = () => {
     const timeDifference = getTimeDifferenceInSeconds(time);
     if (timeDifference < 86400) {
       // 86400 seconds = 1 day
-      return "At least one day ahead is required.";
+      return "Bet must last at least 1 day";
     }
     return "";
   };
@@ -71,7 +62,7 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
           placeholder={placeHolder}
         />
         {errorMessage && (
-          <p className="text-red-500 sm:text-xl">{errorMessage}</p>
+          <p className="text-red-500 sm:text-xl text-left">{errorMessage}</p>
         )}
       </div>
     </div>

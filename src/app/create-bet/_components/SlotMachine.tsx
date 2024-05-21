@@ -28,44 +28,6 @@ const SlotMachine: React.FC<{}> = ({}) => {
     randomizeAllOptions,
   } = useBetContext();
 
-  const searchParams = useSearchParams();
-  const defaultTicker = searchParams.get("ticker");
-  const defaultMetric = searchParams.get("metric");
-  const defaultDirection = searchParams.get("direction");
-  const defaultDuration = searchParams.get("duration");
-  const defaultCurrency = searchParams.get("currency");
-  const defaultValue = searchParams.get("value");
-
-  useEffect(() => {
-    const defaultMetricOption: MetricOption | undefined = metricOptions.find(
-      (option) => option.value === defaultMetric,
-    );
-    const defaultTickerOption = tickerOptions.find(
-      (option) => option.value === defaultTicker,
-    );
-    const defaultDurationOption = durationOptions.find(
-      (option) => option.value === Number(defaultDuration),
-    );
-
-    const defaultCurrencyOption = currencyOptions.find(
-      (option) => option.value === defaultCurrency,
-    );
-
-    if (defaultTickerOption) setTicker(defaultTickerOption);
-    if (defaultMetricOption) setMetric(defaultMetricOption);
-    if (defaultDirection) setDirection(direction);
-    if (defaultDurationOption) setDuration(defaultDurationOption);
-    if (defaultCurrencyOption) setCurrency(defaultCurrencyOption);
-    if (defaultValue) setValue(defaultValue);
-  }, [
-    defaultTicker,
-    defaultMetric,
-    defaultDirection,
-    defaultDuration,
-    defaultCurrency,
-    defaultValue,
-  ]);
-
   return (
     <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5 flex">
       <div

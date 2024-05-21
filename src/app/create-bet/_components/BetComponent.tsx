@@ -1,12 +1,11 @@
 "use client";
-import React, { Suspense, useState } from "react";
+import { Suspense } from "react";
 import SlotMachine from "./SlotMachine";
 import { Button } from "@/app/components/Button";
-import SlotMachinePro from "./SlotMachinePro";
 import { useBetContext } from "../BetContext";
+import BetProForm from "./BetProForm";
 
 const BetComponent = () => {
-  // const [isPro, setIsPro] = useState(false);
   const { isProMode, setIsProMode } = useBetContext();
 
   return (
@@ -37,7 +36,7 @@ const BetComponent = () => {
 
         <div className="flex justify-center select-none">
           <Suspense fallback={<></>}>
-            {isProMode ? <SlotMachinePro /> : <SlotMachine />}
+            {isProMode ? <BetProForm /> : <SlotMachine />}
           </Suspense>
         </div>
       </div>

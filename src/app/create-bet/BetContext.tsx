@@ -6,9 +6,15 @@ import {
   SetStateAction,
   useContext,
   useState,
+  useEffect,
 } from "react";
 
-import { Metric, ReelOption, Ticker } from "@/app/lib/utils/bets/types";
+import {
+  Metric,
+  MetricOption,
+  ReelOption,
+  Ticker,
+} from "@/app/lib/utils/bets/types";
 import { getRandomOption } from "@/app/lib/utils/bets/helpers";
 import {
   currencyOptions,
@@ -17,6 +23,7 @@ import {
   metricOptions,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
+import { useSearchParams } from "next/navigation";
 
 interface BetContextProps {
   ticker: ReelOption<Ticker>;
@@ -71,13 +78,49 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
     currencyOptions[0],
   );
   const [value, setValue] = useState<string>("10");
-
   const [customDuration, setCustomDuration] = useState<ReelOption<number>>({
     label: "",
     value: 0,
   });
-
   const [isProMode, setIsProMode] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  const defaultTicker = searchParams.get("ticker");
+  const defaultMetric = searchParams.get("metric");
+  const defaultDirection = searchParams.get("direction");
+  const defaultDuration = searchParams.get("duration");
+  const defaultCurrency = searchParams.get("currency");
+  const defaultValue = searchParams.get("value");
+
+  useEffect(() => {
+    const defaultMetricOption: MetricOption | undefined = metricOptions.find(
+      (option) => option.value === defaultMetric,
+    );
+    const defaultTickerOption = tickerOptions.find(
+      (option) => option.value === defaultTicker,
+    );
+    const defaultDurationOption = durationOptions.find(
+      (option) => option.value === Number(defaultDuration),
+    );
+
+    const defaultCurrencyOption = currencyOptions.find(
+      (option) => option.value === defaultCurrency,
+    );
+
+    if (defaultTickerOption) setTicker(defaultTickerOption);
+    if (defaultMetricOption) setMetric(defaultMetricOption);
+    if (defaultDirection) setDirection(direction);
+    if (defaultDurationOption) setDuration(defaultDurationOption);
+    if (defaultCurrencyOption) setCurrency(defaultCurrencyOption);
+    if (defaultValue) setValue(defaultValue);
+  }, [
+    defaultTicker,
+    defaultMetric,
+    defaultDirection,
+    defaultDuration,
+    defaultCurrency,
+    defaultValue,
+  ]);
 
   const randomizeAllOptions = () => {
     setTicker(getRandomOption<Ticker>(tickerOptions));
