@@ -108,12 +108,14 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
             </div>
           )}
         </div>
-        <BetMetric bet={bet} />
-        <BetCoundown
-          classNames="bg-vivid p-2 border-2 border-white text-prussian-dark text-lg"
-          expirationTimestampInS={Number(expirationTimestamp)}
-          message="Countdown to END of the bet"
-        />
+        <div className="flex flex-col items-center -space-y-2">
+          <BetMetric bet={bet} />
+          <BetCoundown
+            classNames="bg-vivid p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5"
+            expirationTimestampInS={Number(expirationTimestamp)}
+            message="Countdown to END of the bet"
+          />
+        </div>
       </div>
       <CTAButton />
     </div>

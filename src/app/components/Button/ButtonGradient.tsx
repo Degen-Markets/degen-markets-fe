@@ -12,9 +12,9 @@ export const ButtonGradient: FC<ButtonProps> = ({
     <Button
       size={size}
       {...props}
-      className={`bg-gradient-to-r from-pink-light to bg-yellow-light hover:from-yellow-light hover:to-pink-light active:from-yellow-light active:to-pink-light disabled:bg-neutral-500 disabled:text-neutral-400 text-neutral-900 ${className}`}
+      className={`bg-gradient-to-r from-pink-light to bg-yellow-light hover:from-yellow-light hover:to-pink-light active:from-yellow-light active:to-pink-light disabled:bg-neutral-500 disabled:text-neutral-400 !text-neutral-900 ${className}`}
     >
-      <div className="text-neutral-900">{children}</div>
+      {children}
     </Button>
   );
 };

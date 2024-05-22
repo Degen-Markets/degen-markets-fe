@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { BET_ACCEPTANCE_TIME_LIMIT_IN_MS } from "@/app/lib/utils/bets/constants";
 
 const BetCountdown: React.FC<{
   expirationTimestampInS: number;
@@ -39,11 +38,9 @@ const BetCountdown: React.FC<{
   }, [expirationTimestampInS]);
 
   return (
-    <div className={`tabular-nums ${classNames}`}>
-      <div className="flex items-center">
-        {message}:&nbsp;
-        <span className="tracking-wider">{countdown}</span>
-      </div>
+    <div className={`flex items-center text-sm md:text-lg  ${classNames}`}>
+      {message}:&nbsp;
+      <span className="tracking-wider">{countdown}</span>
     </div>
   );
 };

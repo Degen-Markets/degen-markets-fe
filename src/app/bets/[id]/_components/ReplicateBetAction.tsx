@@ -6,9 +6,10 @@ import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 
 interface Props {
   bet: BetResponse;
+  className?: string;
 }
 
-const ReplicateBetAction = ({ bet }: Props) => {
+const ReplicateBetAction = ({ bet, className }: Props) => {
   const router = useRouter();
   const replicateBet = async () => {
     const { ticker, metric, isBetOnUp, value, currency } = bet;
@@ -30,7 +31,11 @@ const ReplicateBetAction = ({ bet }: Props) => {
   };
 
   return (
-    <ButtonGradient size="small" className="w-2/5" onClick={replicateBet}>
+    <ButtonGradient
+      size="small"
+      className={`w-auto !px-6 !text-white ${className}`}
+      onClick={replicateBet}
+    >
       Replicate this bet!
     </ButtonGradient>
   );

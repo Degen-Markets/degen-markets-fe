@@ -26,17 +26,17 @@ const BetsTab = async () => {
   const betCategories = [
     {
       label: "Open bets",
-      className: "bg-indigo-medium text-2xl",
+      className: "bg-indigo-medium md:text-2xl",
       bets: categorizedBets.open,
     },
     {
       label: "Running bets",
-      className: "bg-purple-medium text-2xl",
+      className: "bg-purple-medium md:text-2xl",
       bets: categorizedBets.running,
     },
     {
       label: "Done bets",
-      className: "bg-white text-prussian-dark text-2xl",
+      className: "bg-white text-prussian-dark md:text-2xl",
       bets: categorizedBets.concluded,
     },
   ];
@@ -49,7 +49,7 @@ const BetsTab = async () => {
 
   return (
     <Tabs defaultActiveIndex={defaultActiveIndex}>
-      <TabList className="border-b-2 border-white">
+      <TabList className="border-b border-white">
         {betCategories.map((category, index) => (
           <Tab key={index} index={index} className={category.className}>
             {category.label}
