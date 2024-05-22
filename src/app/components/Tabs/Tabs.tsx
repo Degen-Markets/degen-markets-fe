@@ -60,14 +60,18 @@ export const Tab: FC<{
   );
 };
 
-export const TabPanels: FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="mt-4">{children}</div>;
+export const TabPanels: FC<{ children: ReactNode; className: string }> = ({
+  children,
+  className,
+}) => {
+  return <div className={`mt-4 ${className}`}>{children}</div>;
 };
 
-export const TabPanel: FC<{ children: ReactNode; index: number }> = ({
-  children,
-  index,
-}) => {
+export const TabPanel: FC<{
+  children: ReactNode;
+  index: number;
+  className?: string;
+}> = ({ className, children, index }) => {
   const { activeIndex } = useContext(TabsContext) as ITabsContext;
   if (activeIndex === undefined)
     throw new Error(
@@ -76,5 +80,7 @@ export const TabPanel: FC<{ children: ReactNode; index: number }> = ({
 
   const isActive = activeIndex === index;
 
-  return isActive ? <div className="mt-4">{children}</div> : null;
+  return isActive ? (
+    <div className={`mt-4 ${className}`}>{children}</div>
+  ) : null;
 };

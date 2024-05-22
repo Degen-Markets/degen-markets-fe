@@ -1,32 +1,35 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
-import { prettifyAddress } from "@/app/lib/utils/evm";
-import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
+import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonPrimary } from "@/app/components/Button";
 import { useToast } from "@/app/components/Toast/ToastProvider";
+import UserAvatar from "@/app/components/UserAvatar";
+import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
+import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
+import cx from "classnames";
 
 interface Props {
   bet: BetResponse;
   onWithdraw?: () => void;
+  className?: string;
 }
-const BetCard = ({ bet, onWithdraw }: Props) => {
+
+const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const showWithdrawButton =
-    !bet.isWithdrawn && bet.creator === address && bet.acceptor === null;
+  const { creator, acceptor, winner, id, isWithdrawn } = bet;
+
+  const showWithdrawButton = !isWithdrawn && creator === address && !acceptor;
 
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
   const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
-    useTransactionReceipt({
-      hash: withdrawBetHash,
-    });
+    useTransactionReceipt({ hash: withdrawBetHash });
 
   useEffect(() => {
     if (isWithdrawBetSuccess) {
@@ -34,25 +37,25 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
         "Your withdrawal request has been successfully processed!",
         "success",
       );
-      onWithdraw && onWithdraw();
+      onWithdraw?.();
     }
-  }, [isWithdrawBetSuccess, onWithdraw, showToast]);
+  }, [isWithdrawBetSuccess, showToast, onWithdraw]);
 
   useEffect(() => {
     if (isWithdrawBetError) {
       showToast("Withdrawal failed. Please try again later.", "error");
-      onWithdraw && onWithdraw();
+      onWithdraw?.();
     }
-  }, [isWithdrawBetError]);
+  }, [isWithdrawBetError, showToast, onWithdraw]);
 
-  const onWithdrawClick = () => {
+  const onWithdrawClick = useCallback(() => {
     sendWithdrawBetTx({
       abi: DEGEN_MARKETS_ABI,
       address: DEGEN_MARKETS_ADDRESS,
       functionName: "withdrawBet",
-      args: [bet.id],
+      args: [id],
     });
-  };
+  }, [sendWithdrawBetTx, id]);
 
   const CTAButton = () => {
     if (showWithdrawButton) {
@@ -61,37 +64,50 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
           Withdraw
         </ButtonPrimary>
       );
-    } else {
-      return (
-        <Link href={`/bets/${bet.id}`}>
-          <ButtonPrimary size="regular">
-            {showWithdrawButton ? "Accept bet" : "View details"}
-          </ButtonPrimary>
-        </Link>
-      );
     }
+    if (!winner && acceptor) {
+      return <ReplicateBetAction bet={bet} />;
+    }
+    return (
+      <Link href={`/bets/${id}`}>
+        <ButtonPrimary size="regular">View details</ButtonPrimary>
+      </Link>
+    );
   };
 
   return (
-    <>
-      <div className="bg-blue-dark p-3 w-[300px] rounded">
-        <div className="bg-blue-medium text-blue-dark my-2 p-1">
-          {prettifyAddress(bet.creator)} is betting that...
-        </div>
-        <div
-          className="bg-white text-blue-dark px-1 py-2 md:p-1 md:h-[72px]"
-          suppressHydrationWarning
-        >
-          {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
-          {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
-          {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
-        </div>
-
-        <div className="flex justify-center mt-4">
-          <CTAButton />
+    <div
+      className={cx("flex flex-col gap-4 items-center", {
+        className: className,
+      })}
+    >
+      <div className="bg-blue-dark p-3 border-4 border-white w-full">
+        <div className="flex items-center justify-center gap-16">
+          <div className="flex flex-col gap-1 items-center">
+            <UserAvatar
+              width={100}
+              height={100}
+              address={creator}
+              className="w-10 h-10 md:w-11 md:h-11"
+            />
+            <span>{getDisplayNameForAddress(creator)}</span>
+          </div>
+          <div className="text-2xl md:text-[64px]">VS</div>
+          {acceptor && (
+            <div className="flex flex-col gap-1 items-center">
+              <UserAvatar
+                width={100}
+                height={100}
+                address={acceptor}
+                className="w-10 h-10 md:w-11 md:h-11"
+              />
+              <span>{getDisplayNameForAddress(acceptor)}</span>
+            </div>
+          )}
         </div>
       </div>
-    </>
+      <CTAButton />
+    </div>
   );
 };
 
