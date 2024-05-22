@@ -40,8 +40,11 @@ export const Tabs: FC<TabsProps> = ({ children, defaultActiveIndex = 0 }) => {
   );
 };
 
-export const TabList: FC<{ children: ReactNode }> = ({ children }) => {
-  return <div>{children}</div>;
+export const TabList: FC<{ children: ReactNode; className?: string }> = ({
+  children,
+  className,
+}) => {
+  return <div className={className}>{children}</div>;
 };
 
 export const Tab: FC<{

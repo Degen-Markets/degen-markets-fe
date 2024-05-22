@@ -49,7 +49,7 @@ const BetsTab = async () => {
 
   return (
     <Tabs defaultActiveIndex={defaultActiveIndex}>
-      <TabList>
+      <TabList className="border-b-2 border-white">
         {betCategories.map((category, index) => (
           <Tab key={index} index={index} className={category.className}>
             {category.label}

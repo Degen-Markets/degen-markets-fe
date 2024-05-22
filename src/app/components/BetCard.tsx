@@ -12,6 +12,8 @@ import UserAvatar from "@/app/components/UserAvatar";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import cx from "classnames";
+import BetMetric from "@/app/components/BetMetric";
+import BetCoundown from "@/app/components/BetCoundown";
 
 interface Props {
   bet: BetResponse;
@@ -22,7 +24,8 @@ interface Props {
 const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const { creator, acceptor, winner, id, isWithdrawn } = bet;
+  const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
+    bet;
 
   const showWithdrawButton = !isWithdrawn && creator === address && !acceptor;
 
@@ -81,7 +84,7 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
         className: className,
       })}
     >
-      <div className="bg-blue-dark p-3 border-4 border-white w-full">
+      <div className="bg-blue-dark p-3 border-4 border-white w-full space-y-4">
         <div className="flex items-center justify-center gap-16">
           <div className="flex flex-col gap-1 items-center">
             <UserAvatar
@@ -105,6 +108,12 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
             </div>
           )}
         </div>
+        <BetMetric bet={bet} />
+        <BetCoundown
+          classNames="bg-vivid p-2 border-2 border-white text-prussian-dark text-lg"
+          expirationTimestampInS={Number(expirationTimestamp)}
+          message="Countdown to END of the bet"
+        />
       </div>
       <CTAButton />
     </div>

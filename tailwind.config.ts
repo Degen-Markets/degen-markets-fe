@@ -35,6 +35,8 @@ const config: Config = {
         prussian: {
           dark: "#003A55",
         },
+        pippin: "#FFE6E6",
+        vivid: "#FF8A8A",
       },
       boxShadow: {
         black:
