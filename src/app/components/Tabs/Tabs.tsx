@@ -16,8 +16,13 @@ interface ITabsContext {
 
 const TabsContext = createContext<ITabsContext | undefined>(undefined);
 
-export const Tabs: FC<{ children: ReactNode }> = ({ children }) => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+interface TabsProps {
+  children: ReactNode;
+  defaultActiveIndex?: number;
+}
+
+export const Tabs: FC<TabsProps> = ({ children, defaultActiveIndex = 0 }) => {
+  const [activeIndex, setActiveIndex] = useState<number>(defaultActiveIndex);
 
   const selectTab = useCallback((index: number) => {
     setActiveIndex(index);

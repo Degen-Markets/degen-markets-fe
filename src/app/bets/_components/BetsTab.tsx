@@ -41,8 +41,14 @@ const BetsTab = async () => {
     },
   ];
 
+  const defaultActiveIndex = categorizedBets.open.length
+    ? 0
+    : categorizedBets.running.length
+      ? 1
+      : 2;
+
   return (
-    <Tabs>
+    <Tabs defaultActiveIndex={defaultActiveIndex}>
       <TabList>
         {betCategories.map((category, index) => (
           <Tab key={index} index={index} className={category.className}>
