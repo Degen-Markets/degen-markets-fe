@@ -12,7 +12,7 @@ import Dropdown from "./Dropdown";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
 
-const BetProForm: React.FC<{}> = ({}) => {
+const BetProForm: React.FC = () => {
   const {
     ticker,
     metric,
