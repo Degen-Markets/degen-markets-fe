@@ -6,21 +6,22 @@ import {
   Tabs,
   TabPanels,
 } from "@/app/components/Tabs/Tabs";
-import { getBets } from "@/app/lib/utils/api/getBets";
 import {
   isBetConcluded,
   isBetOpen,
   isBetRunning,
 } from "@/app/lib/utils/bets/helpers";
 import BetCard from "@/app/components/BetCard";
+import { BetsResponse } from "@/app/lib/utils/bets/types";
 
-const BetsTab = async () => {
-  const { data: fetchedBets } = await getBets();
-
+interface Props {
+  bets: BetsResponse;
+}
+const BetsTab = ({ bets }: Props) => {
   const categorizedBets = {
-    open: fetchedBets.filter(isBetOpen),
-    running: fetchedBets.filter(isBetRunning),
-    concluded: fetchedBets.filter(isBetConcluded),
+    open: bets.filter(isBetOpen),
+    running: bets.filter(isBetRunning),
+    concluded: bets.filter(isBetConcluded),
   };
 
   const betCategories = [
@@ -56,7 +57,7 @@ const BetsTab = async () => {
           </Tab>
         ))}
       </TabList>
-      <TabPanels className="h-screen overflow-y-scroll">
+      <TabPanels className="">
         {betCategories.map((category, index) => (
           <TabPanel
             key={index}

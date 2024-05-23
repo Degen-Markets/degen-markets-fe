@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useCallback } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
@@ -13,7 +12,7 @@ import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import cx from "classnames";
 import BetMetric from "@/app/components/BetMetric";
-import BetCoundown from "@/app/components/BetCoundown";
+import BetCountdown from "@/app/components/BetCoundown";
 
 interface Props {
   bet: BetResponse;
@@ -24,15 +23,34 @@ interface Props {
 const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
-    bet;
+  const { creator, acceptor, id, isWithdrawn, expirationTimestamp } = bet;
+
+  const endTime = Number(expirationTimestamp) * 1000;
+  const distance = endTime - Date.now();
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  );
+
+  const bgClassForCountDown =
+    hours < 5
+      ? "bg-vivid-dark"
+      : hours < 24
+        ? "bg-koromiko-dark"
+        : "bg-mantis-dark";
+  const bgClassForMetric =
+    hours < 5
+      ? "bg-vivid-light"
+      : hours < 24
+        ? "bg-koromiko-light"
+        : "bg-mantis-light";
 
   const showWithdrawButton = !isWithdrawn && creator === address && !acceptor;
-
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
   const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
-    useTransactionReceipt({ hash: withdrawBetHash });
+    useTransactionReceipt({
+      hash: withdrawBetHash,
+    });
 
   useEffect(() => {
     if (isWithdrawBetSuccess) {
@@ -68,7 +86,7 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
         </ButtonPrimary>
       );
     }
-    if (!winner && acceptor) {
+    if (!acceptor) {
       return <ReplicateBetAction bet={bet} />;
     }
     return (
@@ -79,11 +97,7 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
   };
 
   return (
-    <div
-      className={cx("flex flex-col gap-4 items-center", {
-        className: className,
-      })}
-    >
+    <div className={cx("flex flex-col gap-4 items-center", className)}>
       <div className="bg-blue-dark p-3 border-4 border-white w-full space-y-4">
         <div className="flex items-center justify-center gap-16">
           <div className="flex flex-col gap-1 items-center">
@@ -109,9 +123,9 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
           )}
         </div>
         <div className="flex flex-col items-center -space-y-2">
-          <BetMetric bet={bet} />
-          <BetCoundown
-            classNames="bg-vivid p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5"
+          <BetMetric bet={bet} className={bgClassForMetric} />
+          <BetCountdown
+            classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 ${bgClassForCountDown}`}
             expirationTimestampInS={Number(expirationTimestamp)}
             message="Countdown to END of the bet"
           />

@@ -6,9 +6,10 @@ import Image from "next/image";
 
 interface Props {
   bet: BetResponse;
+  className?: string;
 }
 
-const BetMetric = ({ bet }: Props) => {
+const BetMetric = ({ bet, className }: Props) => {
   const {
     ticker,
     metric,
@@ -30,7 +31,9 @@ const BetMetric = ({ bet }: Props) => {
   );
 
   return (
-    <div className="flex justify-between  bg-pippin text-prussian-dark px-2 py-3 md:text-xl w-full">
+    <div
+      className={`flex justify-between text-prussian-dark px-2 py-3 md:text-xl w-full ${className}`}
+    >
       <div>{ticker}</div>
       <div
         className={`flex gap-x-1 ${direction === "up" ? "text-green-700" : "text-red-700"}`}

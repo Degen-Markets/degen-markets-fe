@@ -36,7 +36,18 @@ const config: Config = {
           dark: "#003A55",
         },
         pippin: "#FFE6E6",
-        vivid: "#FF8A8A",
+        vivid: {
+          light: "#FFE6E6",
+          dark: "#FF8A8A",
+        },
+        koromiko: {
+          light: "#FFDCA7",
+          dark: "#FCBF63",
+        },
+        mantis: {
+          light: "#5EC269",
+          dark: "#5EC269",
+        },
       },
       boxShadow: {
         black:

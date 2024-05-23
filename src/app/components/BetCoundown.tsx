@@ -6,7 +6,7 @@ const BetCountdown: React.FC<{
   message?: string;
 }> = ({
   expirationTimestampInS,
-  classNames,
+  classNames = "",
   message = "Countdown to accept bet",
 }) => {
   const [countdown, setCountdown] = useState("");
@@ -32,13 +32,15 @@ const BetCountdown: React.FC<{
       setCountdown(`${hours}H ${minutes}M ${seconds}S`);
     };
 
-    const timer = setInterval(updateCountdown, 1_000);
+    const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
   }, [expirationTimestampInS]);
 
   return (
-    <div className={`flex items-center text-sm md:text-lg  ${classNames}`}>
+    <div
+      className={`flex items-center text-sm md:text-lg bg-white  ${classNames}`}
+    >
       {message}:&nbsp;
       <span className="tracking-wider">{countdown}</span>
     </div>
