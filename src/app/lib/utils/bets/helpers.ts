@@ -110,6 +110,36 @@ export function getTimeDifferenceInSeconds(
   return timeDifferenceInSeconds;
 }
 
+export function getTimeRange(seconds: number): string {
+  if (seconds < 0) {
+    throw new Error("Seconds cannot be negative");
+  }
+  const secondsInHour = 3600;
+  const secondsInDay = 86400;
+  const secondsInMonth = 2592000; // Assuming an average month length of 30 days ( We can Adjust it with Moment.js package )
+
+  let result: string;
+
+  switch (true) {
+    case seconds >= secondsInMonth:
+      const months = Math.floor(seconds / secondsInMonth);
+      result = `${months} ${months > 1 ? "Months" : "Month"}`;
+      break;
+    case seconds >= secondsInDay:
+      const days = Math.floor(seconds / secondsInDay);
+      result = `${days} ${days > 1 ? "Days" : "Day"}`;
+      break;
+    case seconds >= secondsInHour:
+      const hours = Math.floor(seconds / secondsInHour);
+      result = `${hours}  ${hours > 1 ? "Hours" : "Hour"}`;
+      break;
+    default:
+      result = `${seconds} Seconds`;
+  }
+
+  return result;
+}
+
 // Getting the current date and time in the format to Disable the past date
 export const getCurrentDateTime = (): string => {
   const now = new Date();

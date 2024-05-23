@@ -35,21 +35,23 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
 
   return (
     <div>
-      <div className="flex justify-center mt-[20px]">
-        <div className="border-purple-medium border-2 w-max flex justify-center">
-          <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
-            AMOUNT
+      {isProMode ? null : (
+        <div className="flex justify-center mt-[20px]">
+          <div className="border-purple-medium border-2 w-max flex justify-center">
+            <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
+              AMOUNT
+            </div>
+            <input
+              className="text-blue-dark text-center"
+              type="number"
+              lang="en-US"
+              step=".000001"
+              value={value}
+              onChange={handleValueInput}
+            />
           </div>
-          <input
-            className="text-blue-dark text-center"
-            type="number"
-            lang="en-US"
-            step=".000001"
-            value={value}
-            onChange={handleValueInput}
-          />
         </div>
-      </div>
+      )}
       <div className="text-blue-dark mb-4">
         Bet&nbsp;
         {Number(value) > 0 && (!isEth || (isEth && ethPrice)) ? (
