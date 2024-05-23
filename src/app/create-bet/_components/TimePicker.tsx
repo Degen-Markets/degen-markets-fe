@@ -24,7 +24,7 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
     functionName: "minimumBetDuration",
   });
 
-  const miniBetTime = Number(minimBetDuration) ?? 21600; //  6HR
+  const miniBetTime = Number(minimBetDuration) ?? 21_600; //  6HR
 
   React.useEffect(() => {
     setTime(customDuration.label);

@@ -29,8 +29,8 @@ export default function ProBetAmount<T>({
         type="number"
         lang="en-US"
         step=".000001"
-        className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase w-full sm:w-fit"
-        placeholder={`${placeHolder}`}
+        className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase w-full sm:w-fit"
+        placeholder={placeHolder}
       />
     </div>
   );
