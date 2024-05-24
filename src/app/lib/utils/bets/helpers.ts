@@ -24,13 +24,8 @@ export const getCurrencySymbolByAddress = (address: string): Currency => {
 export const getHumanFriendlyMetric = (metric: Metric): string =>
   metricOptions.find((option) => option.value === metric)?.label || "price";
 
-export const shortenHash = (hash: string, shortenBy?: number): string => {
-  const shortenedString =
-    hash.substring(0, shortenBy ?? 4) +
-    "..." +
-    hash.substring(hash.length - (shortenBy ?? 4));
-  return shortenedString;
-};
+export const shortenHash = (hash: string, shortenBy?: number): string =>
+  `${hash.substring(0, shortenBy ?? 4)}...${hash.substring(hash.length - (shortenBy ?? 4))}`;
 
 export const betDuration = (
   creationTimestamp: string,
@@ -77,7 +72,7 @@ export const isTimestampInFuture = (timestampInSeconds: number): boolean =>
   timestampInSeconds > Date.now() / 1000;
 
 export const isBetOpen = (bet: BetResponse): boolean =>
-  isTimestampInFuture(getBetDeadline(bet));
+  isTimestampInFuture(getBetDeadline(bet)) && bet.acceptor == null;
 
 export const isBetRunning = (bet: BetResponse): boolean =>
   bet.acceptor !== null && bet.winner === null;

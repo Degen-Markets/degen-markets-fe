@@ -122,10 +122,10 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col items-center -space-y-2">
+        <div className="flex flex-col items-center -space-y-2 ">
           <BetMetric bet={bet} className={bgClassForMetric} />
           <BetCountdown
-            classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 ${bgClassForCountDown}`}
+            classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 bg-vivid-dark ${bgClassForCountDown}`}
             expirationTimestampInS={Number(expirationTimestamp)}
             message="Countdown to END of the bet"
           />
