@@ -1,18 +1,8 @@
-import { useTransactionReceipt, useWriteContract } from "wagmi";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
-import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
-import { erc20Abi, maxUint256, zeroAddress } from "viem";
 import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import Metric from "@/app/bets/[id]/_components/Metric";
-import { ButtonGradient } from "@/app/components/Button";
-import { useRouter } from "next/navigation";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
-import { useEffect } from "react";
-import { base } from "wagmi/chains";
-import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import UserAvatar from "@/app/components/UserAvatar";
+import AcceptBetButton from "@/app/components/AcceptBetButton";
 
 interface Props {
   bet: BetResponse;
@@ -20,86 +10,8 @@ interface Props {
 }
 
 const InProgressBet = ({ bet, address }: Props) => {
-  const { id, creator, value, currency } = bet;
-  const isEth = currency === zeroAddress;
-  const valueInWei = BigInt(value);
-
-  const router = useRouter();
-  const { data: approvalHash, writeContract: sendApprovalTx } =
-    useWriteContract();
-  const { data: betAcceptHash, writeContract: sendAcceptBetTx } =
-    useWriteContract();
-
-  const { isSuccess: isBetAcceptedHashSuccess } = useTransactionReceipt({
-    hash: betAcceptHash,
-    chainId: base.id,
-  });
-  const { isSuccess: isApprovalSuccess } = useTransactionReceipt({
-    hash: approvalHash,
-    chainId: base.id,
-  });
-
-  const { userAllowances } = useAllowances(
-    isApprovalSuccess || isBetAcceptedHashSuccess,
-    address || zeroAddress,
-  );
-  const currencySymbol = getCurrencySymbolByAddress(currency);
-  const { userBalances } = useBalances(false, address);
-
-  const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
-  const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
+  const { creator } = bet;
   const isCreatedByCurrentUser = creator === address;
-
-  const acceptBet = () => {
-    sendAcceptBetTx({
-      abi: DEGEN_MARKETS_ABI,
-      address: DEGEN_MARKETS_ADDRESS,
-      functionName: "acceptBet",
-      args: [id],
-      value: isEth ? valueInWei : undefined,
-    });
-  };
-
-  const approve = () => {
-    sendApprovalTx({
-      abi: erc20Abi,
-      address: currency,
-      functionName: "approve",
-      args: [DEGEN_MARKETS_ADDRESS, maxUint256],
-    });
-  };
-  const handleAccept = () => {
-    if (!isAllowanceEnough) {
-      approve();
-    } else {
-      acceptBet();
-    }
-  };
-
-  useEffect(() => {
-    if (isApprovalSuccess) {
-      acceptBet();
-    }
-  }, [isApprovalSuccess]);
-
-  useEffect(() => {
-    if (isBetAcceptedHashSuccess) {
-      router.push(`/bets/${id}/success`);
-    }
-  }, [isBetAcceptedHashSuccess, id, router]);
-
-  const getActionButtonText = (): string => {
-    if (!address) {
-      return "Wallet not connected";
-    }
-    if (!isBalanceEnough) {
-      return "Not enough balance";
-    }
-    if (!isAllowanceEnough) {
-      return "Approve and bet";
-    }
-    return "Accept Bet";
-  };
 
   return (
     <div>
@@ -124,9 +36,7 @@ const InProgressBet = ({ bet, address }: Props) => {
         <div className="flex flex-col gap-3 items-center pt-10">
           <>
             <div className="text-blue-dark">Not a chance...</div>
-            <ButtonGradient size={"regular"} onClick={handleAccept}>
-              {getActionButtonText()}
-            </ButtonGradient>
+            <AcceptBetButton bet={bet} address={address} />
           </>
         </div>
       )}

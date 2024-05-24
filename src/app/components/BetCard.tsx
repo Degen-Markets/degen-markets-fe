@@ -13,6 +13,7 @@ import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import cx from "classnames";
 import BetMetric from "@/app/components/BetMetric";
 import BetCountdown from "@/app/components/BetCoundown";
+import AcceptBetButton from "@/app/components/AcceptBetButton";
 
 interface Props {
   bet: BetResponse;
@@ -44,7 +45,9 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         ? "bg-koromiko-light"
         : "bg-mantis-light";
 
-  const showWithdrawButton = !isWithdrawn && creator === address && !acceptor;
+  const createdByCurrentUser = creator === address;
+  const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
+
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
   const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
@@ -85,6 +88,9 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
           Withdraw
         </ButtonPrimary>
       );
+    }
+    if (!createdByCurrentUser) {
+      return <AcceptBetButton bet={bet} address={address} />;
     }
     if (!acceptor) {
       return <ReplicateBetAction bet={bet} />;
