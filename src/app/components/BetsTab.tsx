@@ -36,7 +36,7 @@ const BetsTab = ({ bets }: Props) => {
       bets: categorizedBets.running,
     },
     {
-      label: "Done bets",
+      label: "Closed bets",
       className: "bg-white text-prussian-dark md:text-2xl",
       bets: categorizedBets.concluded,
     },
