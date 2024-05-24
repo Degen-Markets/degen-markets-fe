@@ -4,6 +4,7 @@ import {
   SETTLE_CURRENCY,
 } from "@/app/lib/utils/bets/constants";
 import { BetResponse, Currency, Metric } from "@/app/lib/utils/bets/types";
+import { Hash } from "viem";
 
 export const betDurationInDays = (expirationTimestamp: number): string => {
   const days = Math.round(
@@ -92,5 +93,5 @@ export const getRandomOption = <T>(
 
 export const getLastLetter = (str: string): string => str.slice(str.length - 1);
 
-export const getDisplayNameForAddress = (address: string): string =>
+export const getDisplayNameForAddress = (address: Hash): string =>
   address.slice(0, 4) + "..." + address.slice(-5);

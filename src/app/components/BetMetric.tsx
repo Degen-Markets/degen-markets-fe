@@ -2,7 +2,8 @@ import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { formatUnits, zeroAddress } from "viem";
 import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
-import Image from "next/image";
+import { ArrowDown, ArrowUp } from "@/app/components/Icons";
+import React from "react";
 
 interface Props {
   bet: BetResponse;
@@ -20,7 +21,6 @@ const BetMetric = ({ bet, className }: Props) => {
     creationTimestamp,
   } = bet;
 
-  const direction = isBetOnUp ? "up" : "down";
   const isEth = currency === zeroAddress;
   const formattedValueToDisplay = formatUnits(
     BigInt(value),
@@ -36,15 +36,10 @@ const BetMetric = ({ bet, className }: Props) => {
     >
       <div>{ticker}</div>
       <div
-        className={`flex gap-x-1 ${direction === "up" ? "text-green-700" : "text-red-700"}`}
+        className={`flex gap-x-1 ${isBetOnUp ? "text-green-700" : "text-red-700"}`}
       >
         {metric}
-        <Image
-          src={`/icons/${direction}.png`}
-          alt={direction}
-          width={33}
-          height={30}
-        />
+        {bet.isBetOnUp ? <ArrowUp /> : <ArrowDown />}
       </div>
       <div>{expirationDays} day(s)</div>
       <div>

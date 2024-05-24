@@ -1,3 +1,5 @@
+import { Hash } from "viem";
+
 export enum Ticker {
   BTC = "BTC",
   DOGE = "DOGE",
@@ -47,7 +49,7 @@ export type ReelOption<T> = {
   value: T;
 };
 
-export type Address = `0x${string}`;
+export type Address = Hash;
 
 export type CreatedBetObject = {
   id: string;

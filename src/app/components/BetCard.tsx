@@ -14,6 +14,7 @@ import cx from "classnames";
 import BetMetric from "@/app/components/BetMetric";
 import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
+import { Hash } from "viem";
 
 interface Props {
   bet: BetResponse;
@@ -24,7 +25,9 @@ interface Props {
 const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const { creator, acceptor, id, isWithdrawn, expirationTimestamp } = bet;
+  const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
+    bet;
+  const loser = winner ? (winner === creator ? acceptor : creator) : null;
 
   const endTime = Number(expirationTimestamp) * 1000;
   const distance = endTime - Date.now();
@@ -89,7 +92,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         </ButtonPrimary>
       );
     }
-    if (!createdByCurrentUser) {
+    if (!createdByCurrentUser && winner == null && acceptor == null) {
       return <AcceptBetButton bet={bet} address={address} />;
     }
     if (!acceptor) {
@@ -102,36 +105,58 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
     );
   };
 
+  const UserAvatarWithDisplayName: FC<{ address: Hash }> = ({ address }) => (
+    <div className="flex flex-col gap-1 items-center">
+      <UserAvatar
+        width={100}
+        height={100}
+        address={address}
+        className="w-10 h-10 md:w-11 md:h-11"
+      />
+      <span>{getDisplayNameForAddress(address)}</span>
+    </div>
+  );
+
+  const Avatars = () => {
+    if (!winner && !loser) {
+      return (
+        <>
+          <UserAvatarWithDisplayName address={creator} />
+          {acceptor && <div className="text-2xl md:text-[64px]">VS</div>}
+          {acceptor && <UserAvatarWithDisplayName address={acceptor} />}
+        </>
+      );
+    }
+
+    return (
+      <>
+        {winner && (
+          <div className="flex flex-col items-center">
+            <UserAvatarWithDisplayName address={winner} />
+            <h3 className="uppercase text-3xl text-mantis-dark">Winner</h3>
+          </div>
+        )}
+        <div className="text-2xl md:text-[64px]">VS</div>
+        {loser && (
+          <div className="flex flex-col items-center">
+            <UserAvatarWithDisplayName address={loser} />
+            <h3 className="uppercase text-3xl text-vivid-dark">Loser</h3>
+          </div>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className={cx("flex flex-col gap-4 items-center", className)}>
       <div className="bg-blue-dark p-3 border-4 border-white w-full space-y-4">
         <div className="flex items-center justify-center gap-16">
-          <div className="flex flex-col gap-1 items-center">
-            <UserAvatar
-              width={100}
-              height={100}
-              address={creator}
-              className="w-10 h-10 md:w-11 md:h-11"
-            />
-            <span>{getDisplayNameForAddress(creator)}</span>
-          </div>
-          {acceptor && <div className="text-2xl md:text-[64px]">VS</div>}
-          {acceptor && (
-            <div className="flex flex-col gap-1 items-center">
-              <UserAvatar
-                width={100}
-                height={100}
-                address={acceptor}
-                className="w-10 h-10 md:w-11 md:h-11"
-              />
-              <span>{getDisplayNameForAddress(acceptor)}</span>
-            </div>
-          )}
+          <Avatars />
         </div>
         <div className="flex flex-col items-center -space-y-2 ">
           <BetMetric bet={bet} className={bgClassForMetric} />
           <BetCountdown
-            classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 bg-vivid-dark ${bgClassForCountDown}`}
+            classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 ${bgClassForCountDown}`}
             expirationTimestampInS={Number(expirationTimestamp)}
             message="Countdown to END of the bet"
           />

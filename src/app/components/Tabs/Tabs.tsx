@@ -60,7 +60,7 @@ export const Tab: FC<{
 
   return (
     <button
-      className={`px-4 pt-2 pb-2 ${className} ${isActive ? "active" : ""}`}
+      className={`px-4 pt-2 pb-2 ${className} ${isActive ? "pt-4" : ""}`}
       onClick={() => selectTab(index)}
     >
       {children}
