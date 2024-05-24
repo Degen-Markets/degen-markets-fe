@@ -73,16 +73,15 @@ export const isTimestampInFuture = (timestampInSeconds: number): boolean =>
   timestampInSeconds > Date.now() / 1000;
 
 export const isBetOpen = (bet: BetResponse): boolean =>
-  isTimestampInFuture(getBetDeadline(bet)) && bet.acceptor == null;
+  isTimestampInFuture(getBetDeadline(bet)) &&
+  bet.acceptor == null &&
+  isTimestampInFuture(Number(bet.expirationTimestamp));
 
 export const isBetRunning = (bet: BetResponse): boolean =>
   bet.acceptor !== null && bet.winner === null;
 
 export const isBetConcluded = (bet: BetResponse): boolean =>
   bet.winner !== null;
-
-export const isBetWithdrawable = (bet: BetResponse): boolean =>
-  !bet.isWithdrawn && bet.acceptor === null;
 
 export const getRandomOption = <T>(
   options: { label: string; value: T }[],
