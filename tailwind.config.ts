@@ -27,7 +27,26 @@ const config: Config = {
         },
         purple: {
           light: "#C0A6FE",
-          medium: "#8D68E6",
+          medium: "#8E68E5",
+        },
+        indigo: {
+          medium: "#5662D4",
+        },
+        prussian: {
+          dark: "#003A55",
+        },
+        pippin: "#FFE6E6",
+        vivid: {
+          light: "#FFE6E6",
+          dark: "#FF8A8A",
+        },
+        koromiko: {
+          light: "#FFDCA7",
+          dark: "#FCBF63",
+        },
+        mantis: {
+          light: "#5EC269",
+          dark: "#5EC269",
         },
       },
       boxShadow: {

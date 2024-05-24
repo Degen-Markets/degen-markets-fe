@@ -4,6 +4,7 @@ import {
   SETTLE_CURRENCY,
 } from "@/app/lib/utils/bets/constants";
 import { BetResponse, Currency, Metric } from "@/app/lib/utils/bets/types";
+import { Hash } from "viem";
 
 export const betDurationInDays = (expirationTimestamp: number): string => {
   const days = Math.round(
@@ -24,13 +25,8 @@ export const getCurrencySymbolByAddress = (address: string): Currency => {
 export const getHumanFriendlyMetric = (metric: Metric): string =>
   metricOptions.find((option) => option.value === metric)?.label || "price";
 
-export const shortenHash = (hash: string, shortenBy?: number): string => {
-  const shortenedString =
-    hash.substring(0, shortenBy ?? 4) +
-    "..." +
-    hash.substring(hash.length - (shortenBy ?? 4));
-  return shortenedString;
-};
+export const shortenHash = (hash: string, shortenBy?: number): string =>
+  `${hash.substring(0, shortenBy ?? 4)}...${hash.substring(hash.length - (shortenBy ?? 4))}`;
 
 export const betDuration = (
   creationTimestamp: string,
@@ -77,7 +73,7 @@ export const isTimestampInFuture = (timestampInSeconds: number): boolean =>
   timestampInSeconds > Date.now() / 1000;
 
 export const isBetOpen = (bet: BetResponse): boolean =>
-  isTimestampInFuture(getBetDeadline(bet));
+  isTimestampInFuture(getBetDeadline(bet)) && bet.acceptor == null;
 
 export const isBetRunning = (bet: BetResponse): boolean =>
   bet.acceptor !== null && bet.winner === null;
@@ -97,7 +93,7 @@ export const getRandomOption = <T>(
 
 export const getLastLetter = (str: string): string => str.slice(str.length - 1);
 
-export const getDisplayNameForAddress = (address: string): string =>
+export const getDisplayNameForAddress = (address: Hash): string =>
   address.slice(0, 4) + "..." + address.slice(-5);
 
 export function getTimeDifferenceInSeconds(

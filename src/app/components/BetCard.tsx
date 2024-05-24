@@ -1,23 +1,55 @@
-import React, { useEffect } from "react";
+"use client";
+import { useEffect, useCallback, FC } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
-import { prettifyAddress } from "@/app/lib/utils/evm";
-import { getHumanFriendlyMetric } from "@/app/lib/utils/bets/helpers";
+import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonPrimary } from "@/app/components/Button";
 import { useToast } from "@/app/components/Toast/ToastProvider";
+import UserAvatar from "@/app/components/UserAvatar";
+import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
+import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
+import cx from "classnames";
+import BetMetric from "@/app/components/BetMetric";
+import BetCountdown from "@/app/components/BetCoundown";
+import AcceptBetButton from "@/app/components/AcceptBetButton";
+import { Hash } from "viem";
 
 interface Props {
   bet: BetResponse;
   onWithdraw?: () => void;
+  className?: string;
 }
-const BetCard = ({ bet, onWithdraw }: Props) => {
+
+const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const showWithdrawButton =
-    !bet.isWithdrawn && bet.creator === address && bet.acceptor === null;
+  const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
+    bet;
+  const loser = winner ? (winner === creator ? acceptor : creator) : null;
+
+  const endTime = Number(expirationTimestamp) * 1000;
+  const distance = endTime - Date.now();
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  );
+
+  const bgClassForCountDown =
+    hours < 5
+      ? "bg-vivid-dark"
+      : hours < 24
+        ? "bg-koromiko-dark"
+        : "bg-mantis-dark";
+  const bgClassForMetric =
+    hours < 5
+      ? "bg-vivid-light"
+      : hours < 24
+        ? "bg-koromiko-light"
+        : "bg-mantis-light";
+
+  const createdByCurrentUser = creator === address;
+  const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
 
   const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
     useWriteContract();
@@ -32,25 +64,25 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
         "Your withdrawal request has been successfully processed!",
         "success",
       );
-      onWithdraw && onWithdraw();
+      onWithdraw?.();
     }
-  }, [isWithdrawBetSuccess, onWithdraw, showToast]);
+  }, [isWithdrawBetSuccess, showToast, onWithdraw]);
 
   useEffect(() => {
     if (isWithdrawBetError) {
       showToast("Withdrawal failed. Please try again later.", "error");
-      onWithdraw && onWithdraw();
+      onWithdraw?.();
     }
-  }, [isWithdrawBetError]);
+  }, [isWithdrawBetError, showToast, onWithdraw]);
 
-  const onWithdrawClick = () => {
+  const onWithdrawClick = useCallback(() => {
     sendWithdrawBetTx({
       abi: DEGEN_MARKETS_ABI,
       address: DEGEN_MARKETS_ADDRESS,
       functionName: "withdrawBet",
-      args: [bet.id],
+      args: [id],
     });
-  };
+  }, [sendWithdrawBetTx, id]);
 
   const CTAButton = () => {
     if (showWithdrawButton) {
@@ -59,34 +91,79 @@ const BetCard = ({ bet, onWithdraw }: Props) => {
           Withdraw
         </ButtonPrimary>
       );
-    } else {
+    }
+    if (!createdByCurrentUser && winner == null && acceptor == null) {
+      return <AcceptBetButton bet={bet} address={address} />;
+    }
+    if (!acceptor) {
+      return <ReplicateBetAction bet={bet} />;
+    }
+    return (
+      <Link href={`/bets/${id}`}>
+        <ButtonPrimary size="regular">View details</ButtonPrimary>
+      </Link>
+    );
+  };
+
+  const UserAvatarWithDisplayName: FC<{ address: Hash }> = ({ address }) => (
+    <div className="flex flex-col gap-1 items-center">
+      <UserAvatar
+        width={100}
+        height={100}
+        address={address}
+        className="w-10 h-10 md:w-11 md:h-11"
+      />
+      <span>{getDisplayNameForAddress(address)}</span>
+    </div>
+  );
+
+  const Avatars = () => {
+    if (!winner && !loser) {
       return (
-        <Link href={`/bets/${bet.id}`}>
-          <ButtonPrimary size="regular">
-            {showWithdrawButton ? "Accept bet" : "View details"}
-          </ButtonPrimary>
-        </Link>
+        <>
+          <UserAvatarWithDisplayName address={creator} />
+          {acceptor && <div className="text-2xl md:text-[64px]">VS</div>}
+          {acceptor && <UserAvatarWithDisplayName address={acceptor} />}
+        </>
       );
     }
+
+    return (
+      <>
+        {winner && (
+          <div className="flex flex-col items-center">
+            <UserAvatarWithDisplayName address={winner} />
+            <h3 className="uppercase text-3xl text-mantis-dark">Winner</h3>
+          </div>
+        )}
+        <div className="text-2xl md:text-[64px]">VS</div>
+        {loser && (
+          <div className="flex flex-col items-center">
+            <UserAvatarWithDisplayName address={loser} />
+            <h3 className="uppercase text-3xl text-vivid-dark">Loser</h3>
+          </div>
+        )}
+      </>
+    );
   };
 
   return (
-    <>
-      <div className="bg-blue-dark p-3 w-[300px] rounded">
-        <div className="bg-blue-medium text-blue-dark my-2 p-1">
-          {prettifyAddress(bet.creator)} is betting that...
+    <div className={cx("flex flex-col gap-4 items-center", className)}>
+      <div className="bg-blue-dark p-3 border-4 border-white w-full space-y-4">
+        <div className="flex items-center justify-center gap-16">
+          <Avatars />
         </div>
-        <div className="bg-white text-blue-dark px-1 py-2 md:p-1 md:h-[72px]">
-          {bet.ticker}&apos;s {getHumanFriendlyMetric(bet.metric)} will be&nbsp;
-          {bet.isBetOnUp ? "up" : "down"} on&nbsp;the&nbsp;
-          {new Date(Number(bet.expirationTimestamp) * 1000).toLocaleString()}.
-        </div>
-
-        <div className="flex justify-center mt-4">
-          <CTAButton />
+        <div className="flex flex-col items-center -space-y-2 ">
+          <BetMetric bet={bet} className={bgClassForMetric} />
+          <BetCountdown
+            classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 ${bgClassForCountDown}`}
+            expirationTimestampInS={Number(expirationTimestamp)}
+            message="Countdown to END of the bet"
+          />
         </div>
       </div>
-    </>
+      <CTAButton />
+    </div>
   );
 };
 
