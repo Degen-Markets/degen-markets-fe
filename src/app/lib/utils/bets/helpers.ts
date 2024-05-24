@@ -95,3 +95,65 @@ export const getLastLetter = (str: string): string => str.slice(str.length - 1);
 
 export const getDisplayNameForAddress = (address: Hash): string =>
   address.slice(0, 4) + "..." + address.slice(-5);
+
+export function getTimeDifferenceInSeconds(
+  customDateTimeString: string,
+): number {
+  const currentTime = Math.floor(Date.now() / 1000);
+  const customDateTime = new Date(customDateTimeString);
+  const customUnixTimestamp = Math.floor(customDateTime.getTime() / 1000);
+  const timeDifferenceInSeconds = customUnixTimestamp - currentTime;
+  return timeDifferenceInSeconds;
+}
+
+export function getTimeRange(seconds: number): string {
+  if (seconds < 0) {
+    throw new Error("Seconds cannot be negative");
+  }
+  const secondsInHour = 3600;
+  const secondsInDay = 86400;
+  const secondsInMonth = 2592000; // Assuming an average month length of 30 days ( We can Adjust it with Moment.js package )
+
+  let result: string;
+
+  switch (true) {
+    case seconds >= secondsInMonth:
+      const months = Math.floor(seconds / secondsInMonth);
+      result = `${months} ${months > 1 ? "Months" : "Month"}`;
+      break;
+    case seconds >= secondsInDay:
+      const days = Math.floor(seconds / secondsInDay);
+      result = `${days} ${days > 1 ? "Days" : "Day"}`;
+      break;
+    case seconds >= secondsInHour:
+      const hours = Math.floor(seconds / secondsInHour);
+      result = `${hours}  ${hours > 1 ? "Hours" : "Hour"}`;
+      break;
+    default:
+      result = `${seconds} Seconds`;
+  }
+
+  return result;
+}
+
+// Getting the current date and time in the format to Disable the past date
+export const getCurrentDateTime = (): string => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
+
+export const debounce = <T extends (...args: any[]) => void>(
+  func: T,
+  wait: number,
+): ((...args: Parameters<T>) => void) => {
+  let timeout: NodeJS.Timeout;
+  return (...args: Parameters<T>): void => {
+    clearTimeout(timeout); // Cancel the previous timeout
+    timeout = setTimeout(() => func(...args), wait); // Set a new timeout
+  };
+};

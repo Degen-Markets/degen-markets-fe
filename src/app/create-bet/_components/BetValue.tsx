@@ -5,10 +5,22 @@ import { useBetContext } from "@/app/create-bet/BetContext";
 import { Currency } from "@/app/lib/utils/bets/types";
 
 const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
-  const { currency, value, setValue, ticker, duration, metric, direction } =
-    useBetContext();
+  const {
+    currency,
+    value,
+    setValue,
+    ticker,
+    duration,
+    metric,
+    direction,
+    isProMode,
+    customDuration,
+  } = useBetContext();
 
   const isEth = currency.label === Currency.ETH;
+  const durationLabel = isProMode
+    ? customDuration.label.toLowerCase()
+    : duration.label.toLowerCase();
 
   const calculatedValue =
     isEth && ethPrice ? (Number(value) * ethPrice).toLocaleString() : value;
@@ -23,21 +35,23 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
 
   return (
     <div>
-      <div className="flex justify-center mt-[20px]">
-        <div className="border-purple-medium border-2 w-max flex justify-center">
-          <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
-            AMOUNT
+      {isProMode ? null : (
+        <div className="flex justify-center mt-[20px]">
+          <div className="border-purple-medium border-2 w-max flex justify-center">
+            <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
+              AMOUNT
+            </div>
+            <input
+              className="text-blue-dark text-center"
+              type="number"
+              lang="en-US"
+              step=".000001"
+              value={value}
+              onChange={handleValueInput}
+            />
           </div>
-          <input
-            className="text-blue-dark text-center"
-            type="number"
-            lang="en-US"
-            step=".000001"
-            value={value}
-            onChange={handleValueInput}
-          />
         </div>
-      </div>
+      )}
       <div className="text-blue-dark mb-4">
         Bet&nbsp;
         {Number(value) > 0 && (!isEth || (isEth && ethPrice)) ? (
@@ -45,7 +59,7 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
         ) : null}
         that&nbsp;
         {ticker.label}&apos;s {metric.label} goes&nbsp;
-        {direction.label.toLowerCase()} in {duration.label.toLowerCase()}.
+        {direction.label.toLowerCase()} in {durationLabel}.
       </div>
     </div>
   );
