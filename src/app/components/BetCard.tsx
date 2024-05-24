@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useCallback } from "react";
+import { useEffect, useCallback, FC } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
@@ -20,7 +20,7 @@ interface Props {
   className?: string;
 }
 
-const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
+const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
   const { creator, acceptor, id, isWithdrawn, expirationTimestamp } = bet;
@@ -109,7 +109,7 @@ const BetCard: React.FC<Props> = ({ bet, onWithdraw, className }) => {
             />
             <span>{getDisplayNameForAddress(creator)}</span>
           </div>
-          <div className="text-2xl md:text-[64px]">VS</div>
+          {acceptor && <div className="text-2xl md:text-[64px]">VS</div>}
           {acceptor && (
             <div className="flex flex-col gap-1 items-center">
               <UserAvatar
