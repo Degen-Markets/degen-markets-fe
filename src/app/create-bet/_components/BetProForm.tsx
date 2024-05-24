@@ -11,6 +11,7 @@ import { useBetContext } from "@/app/create-bet/BetContext";
 import Dropdown from "./Dropdown";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
+import ProBetAmount from "./ProBetAmount";
 
 const BetProForm: React.FC = () => {
   const {
@@ -22,6 +23,8 @@ const BetProForm: React.FC = () => {
     setMetric,
     setDirection,
     setCurrency,
+    value,
+    setValue,
   } = useBetContext();
 
   const commonStyle =
@@ -68,6 +71,8 @@ const BetProForm: React.FC = () => {
               searchOption={currencyOptions}
               title="&nbsp;Currency:&nbsp;&nbsp;"
             />
+
+            <ProBetAmount<string> title="Amount" placeHolder="Ex: 10" />
           </div>
         </div>
       </div>

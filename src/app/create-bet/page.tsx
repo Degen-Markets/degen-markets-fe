@@ -14,7 +14,7 @@ const CreateBetPage = () => {
       </div>
 
       <div className="w-[80%] md:w-1/2 mx-auto">
-        <h2 className="pixel-art-border-lg-dark bg-blue-dark text-3xl sm:text-5xl">
+        <h2 className="pixel-art-border-lg-dark bg-blue-dark text-3xl sm:text-5xl w-fit px-8">
           Challenge a fren
         </h2>
         <BetComponent />

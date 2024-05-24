@@ -3,7 +3,11 @@ import { useBetContext } from "../BetContext";
 import {
   getCurrentDateTime,
   getTimeDifferenceInSeconds,
+  getTimeRange,
 } from "@/app/lib/utils/bets/helpers";
+import { useReadContract } from "wagmi";
+import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
+import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 
 interface TokenSearchProps<T> {
   title: string;
@@ -13,6 +17,14 @@ interface TokenSearchProps<T> {
 const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
   const { customDuration, setCustomDuration } = useBetContext();
   const [time, setTime] = useState<string>("");
+
+  const { data: minimBetDuration } = useReadContract({
+    abi: DEGEN_MARKETS_ABI,
+    address: DEGEN_MARKETS_ADDRESS,
+    functionName: "minimumBetDuration",
+  });
+
+  const miniBetTime = Number(minimBetDuration) ?? 21_600; //  6HR
 
   React.useEffect(() => {
     setTime(customDuration.label);
@@ -30,9 +42,9 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
 
   const validateTime = () => {
     const timeDifference = getTimeDifferenceInSeconds(time);
-    if (timeDifference < 86400) {
+    if (timeDifference < miniBetTime) {
       // 86400 seconds = 1 day
-      return "Bet must last at least 1 day";
+      return `Bet must last at least ${getTimeRange(miniBetTime)}`;
     }
     return "";
   };
@@ -40,7 +52,7 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
   const errorMessage = validateTime();
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <div>
         <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
 
@@ -51,7 +63,7 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
           value={time}
           onChange={handleTimeChange}
           min={getCurrentDateTime()} // disabling the past Date
-          className={`styled-time-input w-full sm:w-fit p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"} bg-gray-50 border border-gray-300 text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none ${errorMessage && "border-1 border-red-500"}`}
+          className={`styled-time-input w-full  p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"} bg-gray-50 border border-gray-300 text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none ${errorMessage && "border-1 border-red-500"}`}
           placeholder={placeHolder}
         />
         {errorMessage && (
