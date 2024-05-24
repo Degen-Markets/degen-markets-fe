@@ -49,7 +49,6 @@ const CreateBetSuccess = () => {
             expirationTimestampInS={
               Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
             }
-            classNames="bg-white"
           />
         </SubHeadline>
       </Heading>
