@@ -2,7 +2,7 @@ import { readContract } from "@wagmi/core";
 import { config } from "@/app/providers";
 import { erc20Abi } from "viem";
 import {
-  DEGEN_MARKETS_ADDRESS,
+  DEGEN_BETS_ADDRESS,
   SETTLE_CURRENCY,
 } from "@/app/lib/utils/bets/constants";
 import { base } from "wagmi/chains";
@@ -25,7 +25,7 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
       abi: erc20Abi,
       address: SETTLE_CURRENCY.USDC,
       functionName: "allowance",
-      args: [address, DEGEN_MARKETS_ADDRESS],
+      args: [address, DEGEN_BETS_ADDRESS],
       chainId: base.id,
     })) as bigint;
 
@@ -33,7 +33,7 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
       abi: erc20Abi,
       address: SETTLE_CURRENCY.USDbC,
       functionName: "allowance",
-      args: [address, DEGEN_MARKETS_ADDRESS],
+      args: [address, DEGEN_BETS_ADDRESS],
       chainId: base.id,
     })) as bigint;
 

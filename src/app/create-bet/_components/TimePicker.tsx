@@ -5,9 +5,7 @@ import {
   getTimeDifferenceInSeconds,
   getTimeRange,
 } from "@/app/lib/utils/bets/helpers";
-import { useReadContract } from "wagmi";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
+import { MINIMUM_BET_DURATION } from "@/app/lib/utils/bets/constants";
 
 interface TokenSearchProps<T> {
   title: string;
@@ -17,14 +15,6 @@ interface TokenSearchProps<T> {
 const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
   const { customDuration, setCustomDuration } = useBetContext();
   const [time, setTime] = useState<string>("");
-
-  const { data: minimBetDuration } = useReadContract({
-    abi: DEGEN_MARKETS_ABI,
-    address: DEGEN_MARKETS_ADDRESS,
-    functionName: "minimumBetDuration",
-  });
-
-  const miniBetTime = Number(minimBetDuration) ?? 21_600; //  6HR
 
   React.useEffect(() => {
     setTime(customDuration.label);
@@ -42,9 +32,9 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
 
   const validateTime = () => {
     const timeDifference = getTimeDifferenceInSeconds(time);
-    if (timeDifference < miniBetTime) {
+    if (timeDifference < MINIMUM_BET_DURATION) {
       // 86400 seconds = 1 day
-      return `Bet must last at least ${getTimeRange(miniBetTime)}`;
+      return `Bet must last at least ${getTimeRange(MINIMUM_BET_DURATION)}`;
     }
     return "";
   };

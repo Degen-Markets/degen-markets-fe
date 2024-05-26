@@ -2,14 +2,14 @@
 import { useEffect, useCallback, FC } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
+import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonPrimary } from "@/app/components/Button";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import UserAvatar from "@/app/components/UserAvatar";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
+import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import cx from "classnames";
 import BetMetric from "@/app/components/BetMetric";
 import BetCountdown from "@/app/components/BetCoundown";
@@ -51,11 +51,11 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const createdByCurrentUser = creator === address;
   const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
 
-  const { writeContract: sendWithdrawBetTx, data: withdrawBetHash } =
+  const { writeContract: sendWithdrawBetsTx, data: withdrawBetsHash } =
     useWriteContract();
   const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
     useTransactionReceipt({
-      hash: withdrawBetHash,
+      hash: withdrawBetsHash,
     });
 
   useEffect(() => {
@@ -76,13 +76,13 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   }, [isWithdrawBetError, showToast, onWithdraw]);
 
   const onWithdrawClick = useCallback(() => {
-    sendWithdrawBetTx({
-      abi: DEGEN_MARKETS_ABI,
-      address: DEGEN_MARKETS_ADDRESS,
-      functionName: "withdrawBet",
-      args: [id],
+    sendWithdrawBetsTx({
+      abi: DEGEN_BETS_ABI,
+      address: DEGEN_BETS_ADDRESS,
+      functionName: "withdrawBets",
+      args: [[id]],
     });
-  }, [sendWithdrawBetTx, id]);
+  }, [sendWithdrawBetsTx, id]);
 
   const CTAButton = () => {
     if (showWithdrawButton) {

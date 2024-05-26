@@ -15,9 +15,9 @@ import {
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
+import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
+import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
 import { useRouter } from "next/navigation";
 
 const ActionButton: React.FC<{}> = () => {
@@ -77,21 +77,23 @@ const ActionButton: React.FC<{}> = () => {
       abi: erc20Abi,
       address: currency.value,
       functionName: "approve",
-      args: [DEGEN_MARKETS_ADDRESS, maxUint256],
+      args: [DEGEN_BETS_ADDRESS, maxUint256],
     });
   };
 
   const createBet = async () => {
     const randomId = uuid();
     sendCreateBetTx({
-      abi: DEGEN_MARKETS_ABI,
-      address: DEGEN_MARKETS_ADDRESS,
+      abi: DEGEN_BETS_ABI,
+      address: DEGEN_BETS_ADDRESS,
       functionName: "createBet",
       args: [
         randomId,
+        "binary",
         durationValue,
         ticker.value,
         metric.value,
+        "",
         direction.value,
         valueInWei,
         currency.value,
@@ -117,7 +119,7 @@ const ActionButton: React.FC<{}> = () => {
       return "Not enough balance";
     }
     if (!isAllowanceEnough) {
-      return "Approve and bet";
+      return `Approve ${currency.label}`;
     }
     return "Create Bet";
   };

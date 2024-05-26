@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { useRouter } from "next/navigation";
 import { erc20Abi, maxUint256, zeroAddress } from "viem";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import { DEGEN_MARKETS_ADDRESS } from "@/app/lib/utils/bets/constants";
+import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
+import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
@@ -48,10 +48,10 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
 
   const acceptBet = () => {
     sendAcceptBetTx({
-      abi: DEGEN_MARKETS_ABI,
-      address: DEGEN_MARKETS_ADDRESS,
+      abi: DEGEN_BETS_ABI,
+      address: DEGEN_BETS_ADDRESS,
       functionName: "acceptBet",
-      args: [id],
+      args: [id, ""],
       value: isEth ? valueInWei : undefined,
     });
   };
@@ -61,7 +61,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       abi: erc20Abi,
       address: currency,
       functionName: "approve",
-      args: [DEGEN_MARKETS_ADDRESS, maxUint256],
+      args: [DEGEN_BETS_ADDRESS, maxUint256],
     });
   };
 
@@ -72,12 +72,6 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       acceptBet();
     }
   };
-
-  useEffect(() => {
-    if (isApprovalSuccess) {
-      acceptBet();
-    }
-  }, [isApprovalSuccess]);
 
   useEffect(() => {
     if (isBetAcceptedHashSuccess) {
@@ -93,7 +87,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       return "Not enough balance";
     }
     if (!isAllowanceEnough) {
-      return "Approve and bet";
+      return `Approve ${currencySymbol}`;
     }
     return "Accept Bet";
   };
