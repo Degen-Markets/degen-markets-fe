@@ -55,7 +55,9 @@ const RecentActivity: React.FC<{}> = ({}) => {
               key={bet.id}
             >
               <div className="text-neutral-400 text-sm leading-none">
-                {bet.creator === address ? "YOU" : shortenHash(bet.creator, 8)}
+                {bet.creator.toLowerCase() === address?.toLowerCase()
+                  ? "YOU"
+                  : shortenHash(bet.creator, 8)}
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">

@@ -48,7 +48,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         ? "bg-koromiko-light"
         : "bg-mantis-light";
 
-  const createdByCurrentUser = creator === address;
+  const createdByCurrentUser = creator.toLowerCase() === address?.toLowerCase();
   const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
 
   const { writeContract: sendWithdrawBetsTx, data: withdrawBetsHash } =
