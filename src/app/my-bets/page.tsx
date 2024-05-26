@@ -41,7 +41,7 @@ const MyBets = () => {
       {isLoading && (
         <div className="text-center text-xl md:text-2xl">Loading...</div>
       )}
-      <BetsTab bets={bets} />
+      {bets.length > 0 && <BetsTab bets={bets} />}
     </Wrapper>
   );
 };
