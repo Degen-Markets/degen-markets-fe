@@ -11,7 +11,8 @@ interface Props {
 
 const InProgressBet = ({ bet, address }: Props) => {
   const { creator } = bet;
-  const isCreatedByCurrentUser = creator === address;
+  const isCreatedByCurrentUser =
+    creator.toLowerCase() === address?.toLowerCase();
 
   return (
     <div>

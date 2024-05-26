@@ -5,13 +5,16 @@ import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import BetCoundown from "@/app/components/BetCoundown";
 import Metric from "@/app/bets/[id]/_components/Metric";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
+import { useAccount } from "wagmi";
 
 interface Props {
   bet: BetResponse;
 }
 
 const AcceptedBet = ({ bet }: Props) => {
-  const { creator, acceptor, expirationTimestamp } = bet;
+  const { creator, expirationTimestamp } = bet;
+  const { address } = useAccount();
+  const acceptor = bet.acceptor || address; // use connected wallet if acceptor is null
   return (
     <>
       <Heading>
