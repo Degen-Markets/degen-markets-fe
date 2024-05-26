@@ -2,7 +2,7 @@
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
-import { getBetsByCreator } from "@/app/lib/utils/api/getBetsByCreator";
+import { getBetsForAddress } from "@/app/lib/utils/api/getBetsForAddress";
 import BetsTab from "@/app/components/BetsTab";
 import Wrapper from "@/app/components/Wrapper";
 
@@ -14,7 +14,8 @@ const MyBets = () => {
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
       setIsLoading(true);
-      const { data: bets } = await getBetsByCreator(address);
+      const { data: bets } = await getBetsForAddress(address);
+      console.log(bets);
       setBets(bets);
     } catch (error) {
       console.error("Error fetching bets:", error);
@@ -41,7 +42,7 @@ const MyBets = () => {
       {isLoading && (
         <div className="text-center text-xl md:text-2xl">Loading...</div>
       )}
-      {bets.length > 0 && <BetsTab bets={bets} />}
+      <BetsTab bets={bets} />
     </Wrapper>
   );
 };
