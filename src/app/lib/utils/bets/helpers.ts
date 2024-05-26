@@ -75,7 +75,8 @@ export const isTimestampInFuture = (timestampInSeconds: number): boolean =>
 export const isBetOpen = (bet: BetResponse): boolean =>
   isTimestampInFuture(getBetDeadline(bet)) &&
   bet.acceptor == null &&
-  isTimestampInFuture(Number(bet.expirationTimestamp));
+  isTimestampInFuture(Number(bet.expirationTimestamp)) &&
+  !bet.isWithdrawn;
 
 export const isBetRunning = (bet: BetResponse): boolean =>
   bet.acceptor !== null && bet.winner === null;
