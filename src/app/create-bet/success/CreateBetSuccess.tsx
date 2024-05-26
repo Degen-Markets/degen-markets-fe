@@ -1,11 +1,6 @@
 "use client";
 
-import { useAccount, useReadContract } from "wagmi";
-import { DEGEN_MARKETS_ABI } from "@/app/lib/utils/bets/abis";
-import {
-  BET_ACCEPTANCE_TIME_LIMIT,
-  DEGEN_BETS_ADDRESS,
-} from "@/app/lib/utils/bets/constants";
+import { BET_ACCEPTANCE_TIME_LIMIT } from "@/app/lib/utils/bets/constants";
 import { useSearchParams } from "next/navigation";
 import BetCountdown from "@/app/components/BetCoundown";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
@@ -32,12 +27,6 @@ const CreateBetSuccess = () => {
     };
     fetchBet();
   }, [id]);
-  const { data }: { data?: any[] } = useReadContract({
-    abi: DEGEN_MARKETS_ABI,
-    address: DEGEN_BETS_ADDRESS,
-    functionName: "betIdToBet",
-    args: [id],
-  });
   const creationTimestamp = bet?.creationTimestamp || "0";
   const ticker = bet?.ticker || "";
   const metric = bet?.metric || "";
