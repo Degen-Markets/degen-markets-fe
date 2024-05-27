@@ -2,7 +2,7 @@ import RecentActivity from "@/app/bets/_components/RecentActivity";
 import BetsTab from "@/app/components/BetsTab";
 import Wrapper from "@/app/components/Wrapper";
 import { getBets } from "@/app/lib/utils/api/getBets";
-
+export const dynamic = "force-dynamic";
 const Bets = async () => {
   const { data: fetchedBets } = await getBets();
   return (
