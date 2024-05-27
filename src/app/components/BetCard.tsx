@@ -11,10 +11,10 @@ import UserAvatar from "@/app/components/UserAvatar";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import cx from "classnames";
-import BetMetric from "@/app/components/BetMetric";
 import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import { Hash } from "viem";
+import BetMetric from "@/app/components/BetMetric";
 
 interface Props {
   bet: BetResponse;
@@ -150,7 +150,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   return (
     <div className={cx("flex flex-col gap-4 items-center", className)}>
       <div className="bg-blue-dark p-3 border-4 border-white w-full space-y-4">
-        <div className="flex items-center justify-center gap-16">
+        <div className="flex items-center justify-center gap-16 md:gap-8 xl:gap-16">
           <Avatars />
         </div>
         <div className="flex flex-col items-center -space-y-2 ">
