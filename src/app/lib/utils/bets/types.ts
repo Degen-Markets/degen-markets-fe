@@ -80,6 +80,7 @@ export type BetResponse = {
   isWithdrawn: boolean;
   withdrawalTimestamp: string;
   lastActivityTimestamp: string;
+  isPaid: boolean;
 };
 
 export type BetsResponse = BetResponse[];
