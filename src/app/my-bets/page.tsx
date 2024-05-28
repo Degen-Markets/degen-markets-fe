@@ -9,6 +9,10 @@ import Wrapper from "@/app/components/Wrapper";
 import { ButtonGradient } from "../components/Button";
 import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "../lib/utils/bets/constants";
+import { Address } from "viem";
+import { waitForTransactionReceipt } from "wagmi/actions";
+import { config } from "../providers";
+import { writeContract } from "wagmi/actions";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
@@ -16,25 +20,15 @@ const MyBets = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [unclaimedBets, setUnclaimedBets] = useState<BetsResponse>([]);
 
-  const { writeContract: getPaid, data: getPaidHash } = useWriteContract();
-
-  const { isSuccess: getPaidSuccess } = useTransactionReceipt({
-    hash: getPaidHash,
-  });
-
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
       setIsLoading(true);
       const { data: bets } = await getBetsForAddress(address);
       const unclaimed = bets.filter(
-        (bet) => !bet.isPaid && bet.winner === address.toLowerCase(),
+        (bet) =>
+          !bet.isPaid && bet.winner?.toLowerCase() === address.toLowerCase(),
       );
       setUnclaimedBets(unclaimed);
-      console.log({
-        unclaimed,
-        unclaimedBets,
-        address,
-      });
       setBets(bets);
     } catch (error) {
       console.error("Error fetching bets:", error);
@@ -47,7 +41,7 @@ const MyBets = () => {
     if (address) {
       fetchBetsByAddress(address);
     }
-  }, [address, getPaidSuccess]);
+  }, [address]);
 
   if (!isConnected) {
     return (
@@ -57,16 +51,22 @@ const MyBets = () => {
     );
   }
 
-  const handleGetPaid = () => {
+  const handleGetPaid = async () => {
     const unclaimedBetsId = unclaimedBets.map((bet) => bet.id);
     try {
-      getPaid({
+      const getPaidHash = await writeContract(config, {
         abi: DEGEN_BETS_ABI,
         address: DEGEN_BETS_ADDRESS,
         functionName: "getPaid",
         args: [unclaimedBetsId],
         chainId: base.id,
       });
+      const { status } = await waitForTransactionReceipt(config, {
+        hash: getPaidHash as Address,
+      });
+      if (status === "success") {
+        fetchBetsByAddress(address as Address);
+      }
     } catch (error) {
       console.error("Error processing withdrawal:", error);
     }
