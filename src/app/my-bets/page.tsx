@@ -2,7 +2,7 @@
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
 import { useEffect, useState } from "react";
-import { BetsResponse } from "@/app/lib/utils/bets/types";
+import { BetsResponse, Tx } from "@/app/lib/utils/bets/types";
 import { getBetsForAddress } from "@/app/lib/utils/api/getBetsForAddress";
 import BetsTab from "@/app/components/BetsTab";
 import Wrapper from "@/app/components/Wrapper";
@@ -13,12 +13,18 @@ import { Address } from "viem";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { config } from "../providers";
 import { writeContract } from "wagmi/actions";
+import PixelArtLoader from "../components/PixelArtLoading";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
   const [bets, setBets] = useState<BetsResponse>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [txClaim, setTxClaim] = useState<Tx>(Tx.Idle);
   const [unclaimedBets, setUnclaimedBets] = useState<BetsResponse>([]);
+
+  const isClaimIdle = txClaim === Tx.Idle;
+  const isClaimPending = txClaim === Tx.Pending;
+  const isClaimProcessing = txClaim === Tx.Processing;
 
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
@@ -54,6 +60,7 @@ const MyBets = () => {
   const handleGetPaid = async () => {
     const unclaimedBetsId = unclaimedBets.map((bet) => bet.id);
     try {
+      setTxClaim(Tx.Pending);
       const getPaidHash = await writeContract(config, {
         abi: DEGEN_BETS_ABI,
         address: DEGEN_BETS_ADDRESS,
@@ -61,6 +68,7 @@ const MyBets = () => {
         args: [unclaimedBetsId],
         chainId: base.id,
       });
+      setTxClaim(Tx.Processing);
       const { status } = await waitForTransactionReceipt(config, {
         hash: getPaidHash as Address,
       });
@@ -69,6 +77,8 @@ const MyBets = () => {
       }
     } catch (error) {
       console.error("Error processing withdrawal:", error);
+    } finally {
+      setTxClaim(Tx.Idle);
     }
   };
 
@@ -81,12 +91,18 @@ const MyBets = () => {
               <ButtonGradient
                 size="regular"
                 onClick={handleGetPaid}
-                disabled={unclaimedBets.length === 0}
+                disabled={unclaimedBets.length === 0 || !isClaimIdle}
                 className="flex justify-center items-center space-x-2"
               >
-                Rake In Profits
+                {isClaimIdle && `Rake In Profits`}
+                {isClaimPending && (
+                  <PixelArtLoader text="Pending..." textSize="2xl" />
+                )}
+                {isClaimProcessing && (
+                  <PixelArtLoader text="Processing..." textSize="2xl" />
+                )}
               </ButtonGradient>
-              <p className="text-black drop-shadow-sm">
+              <p className="text-yellow-main drop-shadow-sm">
                 You have {unclaimedBets.length} unclaimed bet win(s)
               </p>
             </div>

@@ -212,3 +212,16 @@ input[type="number"] {
   background-color: #f1f1f1;
   border-radius: 4px;
 }
+
+/* Pixel Art Loading... */
+
+@keyframes pixel-animation {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
