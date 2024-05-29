@@ -3,11 +3,7 @@ import getETHPrice from "@/app/lib/utils/api/getETHPrice";
 
 const EthPrice = async () => {
   const { rate, error } = await getETHPrice();
-  return (
-    <div>
-      <BetValue ethPrice={rate} />
-    </div>
-  );
+  return <BetValue ethPrice={rate} />;
 };
 
 export default EthPrice;

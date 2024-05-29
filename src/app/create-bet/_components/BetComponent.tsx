@@ -34,7 +34,7 @@ const BetComponent = () => {
           </Button>
         </div>
 
-        <div className="flex justify-center select-none">
+        <div className="flex justify-center select-none  mt-6">
           <Suspense fallback={<></>}>
             {isProMode ? <BetProForm /> : <SlotMachine />}
           </Suspense>

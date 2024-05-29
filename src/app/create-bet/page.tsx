@@ -2,6 +2,7 @@ import EthPrice from "@/app/create-bet/_components/EthPrice";
 import ActionButton from "@/app/create-bet/_components/ActionButton";
 import Image from "next/image";
 import BetComponent from "./_components/BetComponent";
+import Wrapper from "@/app/components/Wrapper";
 
 const CreateBetPage = () => {
   return (
@@ -13,14 +14,14 @@ const CreateBetPage = () => {
         <Image src={"../Bear.svg"} width={217} height={486} alt="Bear" />
       </div>
 
-      <div className="w-[80%] md:w-1/2 mx-auto">
-        <h2 className="pixel-art-border-lg-dark bg-blue-dark text-3xl sm:text-5xl w-fit px-8">
+      <Wrapper>
+        <h2 className="pixel-art-border-sm-dark lg:pixel-art-border-lg-dark bg-prussian-dark text-4xl lg:text-8xl w-fit px-8">
           Challenge a fren
         </h2>
         <BetComponent />
         <EthPrice />
         <ActionButton />
-      </div>
+      </Wrapper>
     </main>
   );
 };

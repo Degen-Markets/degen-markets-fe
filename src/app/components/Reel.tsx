@@ -1,5 +1,6 @@
 import { ReelOption } from "@/app/lib/utils/bets/types";
 import { Dispatch, SetStateAction } from "react";
+import { MdArrowBackIos } from "react-icons/md";
 
 type ReelProps<T> = {
   reelOptions: ReelOption<T>[];
@@ -53,25 +54,37 @@ const Reel = <T,>({
   };
 
   return (
-    <div>
-      <span className="inline text-sm md:text-base lg:px-[10px] bg-blue-dark pt-3 pb-3 border-purple-medium border-2 min-w-[100%] whitespace-nowrap">
+    <div className="relative ">
+      <div className="absolute -top-12 lg:-top-14 text-sm md:text-lg lg:px-2 bg-prussian-dark pt-3 pb-3 border-purple-medium border-2  whitespace-nowrap w-full">
         {title}
-      </span>
-      <div className="border border-blue-dark pt-[10px] text-sm md:text-lg text-center bg-white text-blue-dark">
-        <div className="cursor-pointer" onClick={handleOptionBack}>
-          &#9650;
+      </div>
+      <div
+        className="border border-prussian-dark py-2 text-sm md:text-lg text-center bg-white text-blue-dark "
+        style={{
+          background:
+            "linear-gradient(to bottom, #999 0%, #e8e8e8 15%, #ffffff 50%, #e8e8e8 85%, #999 100%)",
+        }}
+      >
+        <div
+          className="cursor-pointer flex justify-center "
+          onClick={handleOptionBack}
+        >
+          <MdArrowBackIos className="rotate-90 text-lg lg:text-4xl" />
         </div>
         {optionsToDisplay.map((option, index) => (
           // key for small options (Up/Down) has to be the index to avoid key conflict
           <div
             key={reelOptions.length >= 3 ? option.label : index}
-            className={`${index !== 1 && "text-slate-400"}`}
+            className={`text-sm lg:text-2xl ${index !== 1 && "text-slate-400"}`}
           >
             {option.label}
           </div>
         ))}
-        <div className="cursor-pointer" onClick={handleOptionForward}>
-          &#9660;
+        <div
+          className="cursor-pointer flex justify-center "
+          onClick={handleOptionForward}
+        >
+          <MdArrowBackIos className=" -rotate-90 text-lg lg:text-4xl" />
         </div>
       </div>
     </div>
