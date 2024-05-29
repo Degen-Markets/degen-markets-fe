@@ -33,20 +33,20 @@ const Metric = ({ bet, hideStartingMetric }: Props) => {
   return (
     <div className="text-xl">
       <div className="flex flex-col md:flex-row justify-center gap-2 md:gap-4 text-center md:text-left mt-8 md:mt-0 md:-translate-y-1/2">
-        <div className="bg-white border-purple-medium border-8 text-neutral-800 px-4">
+        <div className="bg-prussian-dark border-white border-2 text-white p-2">
           {ticker}&nbsp;-&nbsp;{metric} will&nbsp; go&nbsp;
           {direction}&nbsp;in&nbsp;
           {expirationDays}
           &nbsp;day(s)
         </div>
-        <div className="bg-white border-purple-medium border-8 text-neutral-800 px-4">
+        <div className="bg-prussian-dark border-white border-2 text-white p-2">
           Wagered:&nbsp;{formattedValueToDisplay}&nbsp;
           {getCurrencySymbolByAddress(currency)}
         </div>
       </div>
       {startingMetricValue && !hideStartingMetric && (
         <div className="flex justify-center">
-          <span className=" bg-white border-purple-medium border-4 text-neutral-800 px-4 mt-4 md:-mt-4">
+          <span className="bg-prussian-dark border-white border-2 text-white p-2 mt-4 md:-mt-4">
             starting {metric}: ${Number(startingMetricValue).toFixed(2)}
           </span>
         </div>

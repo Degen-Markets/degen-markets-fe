@@ -23,19 +23,19 @@ const Headline: FC<
         className={cx(
           " text-center",
           {
-            "pixel-art-border-lg-dark bg-blue-dark  py-8 px-6":
+            "pixel-art-border-lg-dark bg-prussian-dark  py-8 px-6":
               variant === "dark" && size === "regular",
           },
           {
-            "pixel-art-border-lg-light bg-white text-blue-dark  py-8 px-6":
+            "pixel-art-border-lg-light bg-white text-prussian-dark  py-8 px-6":
               variant === "light" && size === "regular",
           },
           {
-            "pixel-art-border-sm-dark bg-blue-dark py-2 px-1":
+            "pixel-art-border-sm-dark bg-prussian-dark py-2 px-1":
               variant === "dark" && size === "compact",
           },
           {
-            "pixel-art-border-sm-light bg-white text-blue-dark py-2 px-1":
+            "pixel-art-border-sm-light bg-white text-prussian-dark py-2 px-1":
               variant === "light" && size === "compact",
           },
         )}
@@ -52,7 +52,7 @@ const SubHeadline: FC<
   return (
     <div
       className={cx(
-        "bg-blue-dark  p-2 border-4 border-purple-medium inline-block -translate-y-1/2",
+        "bg-prussian-dark  p-2 border-4 border-purple-medium inline-block -translate-y-1/2",
         className,
         {
           "absolute mt-0 left-[50%] -translate-x-[50%] -top-[20px] -translate-y-1/2":

@@ -48,6 +48,9 @@ const config: Config = {
           light: "#5EC269",
           dark: "#5EC269",
         },
+        red: {
+          main: "#F21212",
+        },
       },
       boxShadow: {
         black:
