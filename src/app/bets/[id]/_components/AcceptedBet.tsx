@@ -47,7 +47,7 @@ const AcceptedBet = ({ bet }: Props) => {
         </Headline>
         <SubHeadline
           isTop={true}
-          className="bg-white border-purple-medium text-neutral-950"
+          className="bg-mantis-dark border-white border-2 text-prussian-dark"
         >
           <BetCoundown
             expirationTimestampInS={Number(expirationTimestamp)}

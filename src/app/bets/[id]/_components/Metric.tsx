@@ -46,7 +46,7 @@ const Metric = ({ bet, hideStartingMetric }: Props) => {
       </div>
       {startingMetricValue && !hideStartingMetric && (
         <div className="flex justify-center">
-          <span className="bg-prussian-dark border-white border-2 text-white p-2 mt-4 md:-mt-4">
+          <span className="bg-prussian-dark text-white p-2 px-6 mt-4 md:-mt-6">
             starting {metric}: ${Number(startingMetricValue).toFixed(2)}
           </span>
         </div>
