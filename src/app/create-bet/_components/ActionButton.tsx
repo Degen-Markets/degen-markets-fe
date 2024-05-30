@@ -22,6 +22,7 @@ import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
 import { writeContract, waitForTransactionReceipt } from "wagmi/actions";
 import { config } from "@/app/providers";
+import { useToast } from "@/app/components/Toast/ToastProvider";
 
 const ActionButton: React.FC<{}> = () => {
   const router = useRouter();
@@ -44,6 +45,7 @@ const ActionButton: React.FC<{}> = () => {
   const [createBetHash, setCreateBetHash] = useState<string | null>(null);
   const [txState, setTxState] = useState<Tx>(Tx.Idle);
   const [betId, setBetId] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   const isStateIdle = txState === Tx.Idle;
 
@@ -110,9 +112,10 @@ const ActionButton: React.FC<{}> = () => {
       setCreateBetHash(hash);
       setTxState(Tx.Processing);
       await waitForTransactionReceipt(config, { hash });
-    } catch (error) {
-      console.error("Error creating Bet", error);
+    } catch (error: any) {
+      console.error("Error creating Bet", { error });
       setTxState(Tx.Idle);
+      showToast(error.shortMessage ?? error, "error");
     } finally {
       setTxState(Tx.Idle);
     }

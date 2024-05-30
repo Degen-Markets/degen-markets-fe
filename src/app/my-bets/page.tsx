@@ -13,6 +13,7 @@ import { Address } from "viem";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { config } from "../providers";
 import { writeContract } from "wagmi/actions";
+import { useToast } from "../components/Toast/ToastProvider";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
@@ -20,6 +21,8 @@ const MyBets = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [txClaim, setTxClaim] = useState<Tx>(Tx.Idle);
   const [unclaimedBets, setUnclaimedBets] = useState<BetsResponse>([]);
+  const { showToast } = useToast();
+
   const isClaimIdle = txClaim === Tx.Idle;
 
   const fetchBetsByAddress = async (address: `0x${string}`) => {
@@ -71,8 +74,9 @@ const MyBets = () => {
       if (status === "success") {
         fetchBetsByAddress(address as Address);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error processing withdrawal:", error);
+      showToast(error.shortMessage ?? error, "error");
     } finally {
       setTxClaim(Tx.Idle);
     }

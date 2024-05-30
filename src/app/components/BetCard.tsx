@@ -81,9 +81,10 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         showToast("Withdrawal failed. Please try again later.", "error");
         onWithdraw?.();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creating Bet", error);
       setTxState(Tx.Idle);
+      showToast(error.shortMessage ?? error, "error");
     } finally {
       setTxState(Tx.Idle);
     }

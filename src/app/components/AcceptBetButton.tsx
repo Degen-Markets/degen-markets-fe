@@ -11,6 +11,7 @@ import { base } from "wagmi/chains";
 import { Address, BetResponse, Tx } from "@/app/lib/utils/bets/types";
 import { waitForTransactionReceipt, writeContract } from "wagmi/actions";
 import { config } from "../providers";
+import { useToast } from "./Toast/ToastProvider";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
@@ -21,6 +22,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   const [approvalHash, setApprovalHash] = useState<string | null>(null);
   const [acceptBetHash, setAcceptBetHash] = useState<string | null>(null);
   const [txState, setTxState] = useState<Tx>(Tx.Idle);
+  const { showToast } = useToast();
   const { id, value, currency } = bet;
   const isEth = currency === zeroAddress;
   const valueInWei = BigInt(value);
@@ -53,9 +55,10 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       setAcceptBetHash(hash);
       setTxState(Tx.Processing);
       await waitForTransactionReceipt(config, { hash });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error acceptBet", error);
       setTxState(Tx.Idle);
+      showToast(error.shortMessage ?? error, "error");
     } finally {
       setTxState(Tx.Idle);
     }
