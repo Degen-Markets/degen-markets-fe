@@ -78,9 +78,10 @@ const ActionButton: React.FC<{}> = () => {
       setTxState(Tx.Processing);
       await waitForTransactionReceipt(config, { hash });
       await refreshAllowances();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error during approval:", error);
       setTxState(Tx.Idle);
+      showToast(error.shortMessage ?? error, "error");
     } finally {
       setTxState(Tx.Idle);
     }

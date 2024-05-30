@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-type ToastType = "success" | "error" | "warning";
+type ToastType = "success" | "error" | "warning" | "info";
 
 interface Props {
   id: string;
