@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useCallback, FC } from "react";
+import { useCallback, FC, useState } from "react";
 import Link from "next/link";
-import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount } from "wagmi";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import { BetResponse } from "@/app/lib/utils/bets/types";
+import { BetResponse, Tx } from "@/app/lib/utils/bets/types";
 import { ButtonPrimary } from "@/app/components/Button";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import UserAvatar from "@/app/components/UserAvatar";
@@ -15,6 +15,9 @@ import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import { Hash } from "viem";
 import BetMetric from "@/app/components/BetMetric";
+import { waitForTransactionReceipt, writeContract } from "wagmi/actions";
+import { config } from "../providers";
+import { base } from "wagmi/chains";
 
 interface Props {
   bet: BetResponse;
@@ -25,6 +28,10 @@ interface Props {
 const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
+  const [txState, setTxState] = useState<Tx>(Tx.Idle);
+
+  const isStateIdle = txState === Tx.Idle;
+
   const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
     bet;
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
@@ -51,43 +58,47 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const createdByCurrentUser = creator.toLowerCase() === address?.toLowerCase();
   const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
 
-  const { writeContract: sendWithdrawBetsTx, data: withdrawBetsHash } =
-    useWriteContract();
-  const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
-    useTransactionReceipt({
-      hash: withdrawBetsHash,
-    });
-
-  useEffect(() => {
-    if (isWithdrawBetSuccess) {
-      showToast(
-        "Your withdrawal request has been successfully processed!",
-        "success",
-      );
-      onWithdraw?.();
+  const onWithdrawClick = useCallback(async () => {
+    try {
+      setTxState(Tx.Pending);
+      const hash = await writeContract(config, {
+        abi: DEGEN_BETS_ABI,
+        address: DEGEN_BETS_ADDRESS,
+        functionName: "withdrawBets",
+        args: [[id]],
+        chainId: base.id,
+      });
+      setTxState(Tx.Processing);
+      const { status } = await waitForTransactionReceipt(config, { hash });
+      if (status === "success") {
+        showToast(
+          "Your withdrawal request has been successfully processed!",
+          "success",
+        );
+        onWithdraw?.();
+      }
+      if (status === "reverted") {
+        showToast("Withdrawal failed. Please try again later.", "error");
+        onWithdraw?.();
+      }
+    } catch (error) {
+      console.error("Error creating Bet", error);
+      setTxState(Tx.Idle);
+    } finally {
+      setTxState(Tx.Idle);
     }
-  }, [isWithdrawBetSuccess, showToast, onWithdraw]);
-
-  useEffect(() => {
-    if (isWithdrawBetError) {
-      showToast("Withdrawal failed. Please try again later.", "error");
-      onWithdraw?.();
-    }
-  }, [isWithdrawBetError, showToast, onWithdraw]);
-
-  const onWithdrawClick = useCallback(() => {
-    sendWithdrawBetsTx({
-      abi: DEGEN_BETS_ABI,
-      address: DEGEN_BETS_ADDRESS,
-      functionName: "withdrawBets",
-      args: [[id]],
-    });
-  }, [sendWithdrawBetsTx, id]);
+  }, [id, onWithdraw, showToast]);
 
   const CTAButton = () => {
     if (showWithdrawButton) {
       return (
-        <ButtonPrimary size="regular" onClick={onWithdrawClick}>
+        <ButtonPrimary
+          loader={true}
+          txState={txState}
+          disabled={!isStateIdle}
+          size="regular"
+          onClick={onWithdrawClick}
+        >
           Withdraw
         </ButtonPrimary>
       );

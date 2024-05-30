@@ -8,8 +8,7 @@ import {
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { maxUint256 } from "viem";
-import { useEffect, useState } from "react";
-import { useTransactionReceipt } from "wagmi";
+import { useCallback, useEffect, useState } from "react";
 
 const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   const [userAllowances, setUserAllowances] = useState({
@@ -17,7 +16,7 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
     [Currency.USDbC]: BigInt(0),
     [Currency.ETH]: maxUint256,
   });
-  const getERC20Allowances = async () => {
+  const getERC20Allowances = useCallback(async () => {
     if (!address) {
       return;
     }
@@ -42,7 +41,11 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
       [Currency.USDbC]: USDbCAllowance,
       [Currency.ETH]: maxUint256,
     });
-  };
+  }, [address]);
+
+  const refreshAllowances = useCallback(async () => {
+    await getERC20Allowances();
+  }, [getERC20Allowances]);
 
   useEffect(() => {
     getERC20Allowances();
@@ -56,6 +59,7 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
 
   return {
     userAllowances,
+    refreshAllowances,
   };
 };
 

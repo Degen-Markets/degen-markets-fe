@@ -1,5 +1,5 @@
 "use client";
-import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount } from "wagmi";
 import { base } from "wagmi/chains";
 import { useEffect, useState } from "react";
 import { BetsResponse, Tx } from "@/app/lib/utils/bets/types";
@@ -13,7 +13,6 @@ import { Address } from "viem";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { config } from "../providers";
 import { writeContract } from "wagmi/actions";
-import PixelArtLoader from "../components/PixelArtLoading";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
@@ -21,10 +20,7 @@ const MyBets = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [txClaim, setTxClaim] = useState<Tx>(Tx.Idle);
   const [unclaimedBets, setUnclaimedBets] = useState<BetsResponse>([]);
-
   const isClaimIdle = txClaim === Tx.Idle;
-  const isClaimPending = txClaim === Tx.Pending;
-  const isClaimProcessing = txClaim === Tx.Processing;
 
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
@@ -89,18 +85,14 @@ const MyBets = () => {
           <div className="flex justify-end">
             <div className="flex flex-col items-end">
               <ButtonGradient
+                loader={true}
+                txState={txClaim}
                 size="regular"
                 onClick={handleGetPaid}
                 disabled={unclaimedBets.length === 0 || !isClaimIdle}
                 className="flex justify-center items-center space-x-2"
               >
-                {isClaimIdle && `Rake In Profits`}
-                {isClaimPending && (
-                  <PixelArtLoader text="Pending..." textSize="2xl" />
-                )}
-                {isClaimProcessing && (
-                  <PixelArtLoader text="Processing..." textSize="2xl" />
-                )}
+                Rake In Profits
               </ButtonGradient>
               <p className="text-yellow-main drop-shadow-sm">
                 You have {unclaimedBets.length} unclaimed bet win(s)

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { PixelArtLoaderProps, TextSize } from "../lib/utils/bets/types";
+import cx from "classnames";
 
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
   size = 20,
@@ -12,27 +13,13 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
   const numPixels = 9;
   const pixels = [...Array(numPixels)];
 
-  const textSizeClass = {
-    sm: "text-sm",
-    md: "text-md",
-    base: "text-base",
-    lg: "text-lg",
-    xl: "text-xl",
-    "2xl": "text-2xl",
-    "3xl": "text-3xl",
-    "4xl": "text-4xl",
-    "5xl": "text-5xl",
-    "6xl": "text-6xl",
-    "7xl": "text-7xl",
-    "8xl": "text-8xl",
-    "9xl": "text-9xl",
-  }[textSize];
+  const textSizeClass = `text-${textSize}`;
 
   return (
     <>
       <div className="flex items-center space-x-2">
         <div
-          className="relative"
+          className={`relative`}
           style={{
             width: `${size}px`,
             height: `${size}px`,
@@ -41,7 +28,7 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
           {pixels.map((_, index) => (
             <div
               key={index}
-              className="absolute bg-blue-dark"
+              className={"absolute bg-blue-dark"}
               style={{
                 width: `${pixelSize}px`,
                 height: `${pixelSize}px`,
@@ -68,6 +55,15 @@ PixelArtLoader.propTypes = {
     "md",
     "base",
     "lg",
+    "xl",
+    "2xl",
+    "3xl",
+    "4xl",
+    "5xl",
+    "6xl",
+    "7xl",
+    "8xl",
+    "9xl",
     "xl",
     "2xl",
     "3xl",

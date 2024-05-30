@@ -1,11 +1,12 @@
 "use client";
 
 import { ButtonPrimary } from "@/app/components/Button";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { Currency } from "@/app/lib/utils/bets/types";
+import { Currency, Tx } from "@/app/lib/utils/bets/types";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import {
+  Address,
   erc20Abi,
   maxUint256,
   parseEther,
@@ -13,12 +14,14 @@ import {
   zeroAddress,
 } from "viem";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
-import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
+import { useAccount } from "wagmi";
 import { base } from "wagmi/chains";
 import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
+import { writeContract, waitForTransactionReceipt } from "wagmi/actions";
+import { config } from "@/app/providers";
 
 const ActionButton: React.FC<{}> = () => {
   const router = useRouter();
@@ -37,34 +40,22 @@ const ActionButton: React.FC<{}> = () => {
     ? BigInt(customDuration.value)
     : BigInt(duration.value);
   const { address } = useAccount();
-  const { writeContract: sendApprovalTx, data: approvalHash } =
-    useWriteContract();
-  const {
-    writeContract: sendCreateBetTx,
-    data: createBetHash,
-    variables: createBetVariables,
-  } = useWriteContract();
+  const [approvalHash, setApprovalHash] = useState<string | null>(null);
+  const [createBetHash, setCreateBetHash] = useState<string | null>(null);
+  const [txState, setTxState] = useState<Tx>(Tx.Idle);
+  const [betId, setBetId] = useState<string | null>(null);
 
-  const { isSuccess: isCreateBetTxSuccess } = useTransactionReceipt({
-    hash: createBetHash,
-    chainId: base.id,
-  });
+  const isStateIdle = txState === Tx.Idle;
 
-  const { isSuccess: isApprovalSuccess } = useTransactionReceipt({
-    hash: approvalHash,
-    chainId: base.id,
-  });
-  const { userAllowances } = useAllowances(
-    isApprovalSuccess || isCreateBetTxSuccess,
+  const { userAllowances, refreshAllowances } = useAllowances(
+    !!approvalHash || !!createBetHash,
     address || zeroAddress,
   );
 
-  const { userBalances } = useBalances(isCreateBetTxSuccess, address);
+  const { userBalances } = useBalances(!!createBetHash, address);
 
   const isEth = currency.label === Currency.ETH;
   const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
-
-  const id = createBetVariables?.args && createBetVariables.args[0];
 
   const isAllowanceEnough =
     userAllowances[currency.label as Currency] >= valueInWei;
@@ -72,35 +63,59 @@ const ActionButton: React.FC<{}> = () => {
     userBalances[currency.label as Currency] >= valueInWei;
   const isActionDisabled = !isBalanceEnough || !address || Number(value) <= 0;
 
-  const approve = () => {
-    sendApprovalTx({
-      abi: erc20Abi,
-      address: currency.value,
-      functionName: "approve",
-      args: [DEGEN_BETS_ADDRESS, maxUint256],
-    });
+  const approve = async () => {
+    try {
+      setTxState(Tx.Pending);
+      const hash = await writeContract(config, {
+        abi: erc20Abi,
+        address: currency.value,
+        functionName: "approve",
+        args: [DEGEN_BETS_ADDRESS, maxUint256],
+      });
+      setApprovalHash(hash);
+      setTxState(Tx.Processing);
+      await waitForTransactionReceipt(config, { hash });
+      await refreshAllowances();
+    } catch (error) {
+      console.error("Error during approval:", error);
+      setTxState(Tx.Idle);
+    } finally {
+      setTxState(Tx.Idle);
+    }
   };
 
   const createBet = async () => {
-    const randomId = uuid();
-    sendCreateBetTx({
-      abi: DEGEN_BETS_ABI,
-      address: DEGEN_BETS_ADDRESS,
-      functionName: "createBet",
-      args: [
-        randomId,
-        "binary",
-        durationValue,
-        ticker.value,
-        metric.value,
-        "",
-        direction.value,
-        valueInWei,
-        currency.value,
-      ],
-      value: isEth ? valueInWei : undefined,
-      chainId: base.id,
-    });
+    try {
+      const randomId = uuid();
+      setBetId(randomId);
+      setTxState(Tx.Pending);
+      const hash = await writeContract(config, {
+        abi: DEGEN_BETS_ABI,
+        address: DEGEN_BETS_ADDRESS,
+        functionName: "createBet",
+        args: [
+          randomId,
+          "binary",
+          durationValue,
+          ticker.value,
+          metric.value,
+          "",
+          direction.value,
+          valueInWei,
+          currency.value,
+        ],
+        value: isEth ? valueInWei : undefined,
+        chainId: base.id,
+      });
+      setCreateBetHash(hash);
+      setTxState(Tx.Processing);
+      await waitForTransactionReceipt(config, { hash });
+    } catch (error) {
+      console.error("Error creating Bet", error);
+      setTxState(Tx.Idle);
+    } finally {
+      setTxState(Tx.Idle);
+    }
   };
 
   const handleActionButtonClick = async () => {
@@ -125,16 +140,26 @@ const ActionButton: React.FC<{}> = () => {
   };
 
   useEffect(() => {
-    if (isCreateBetTxSuccess) {
-      router.push(`/create-bet/success?id=${id}`);
+    if (createBetHash) {
+      const checkTransactionReceipt = async () => {
+        const receipt = await waitForTransactionReceipt(config, {
+          hash: createBetHash as Address,
+        });
+        if (receipt.status === "success") {
+          router.push(`/create-bet/success?id=${betId}`);
+        }
+      };
+      checkTransactionReceipt();
     }
-  }, [isCreateBetTxSuccess]);
+  }, [createBetHash]);
 
   return (
     <div className="flex justify-center">
       <ButtonPrimary
+        loader={true}
+        txState={txState}
         size={"regular"}
-        disabled={isActionDisabled}
+        disabled={isActionDisabled || !isStateIdle}
         onClick={handleActionButtonClick}
       >
         {getActionButtonText()}

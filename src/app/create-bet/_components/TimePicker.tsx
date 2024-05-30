@@ -3,9 +3,7 @@ import { useBetContext } from "../BetContext";
 import {
   getCurrentDateTime,
   getTimeDifferenceInSeconds,
-  getTimeRange,
 } from "@/app/lib/utils/bets/helpers";
-import { MINIMUM_BET_DURATION } from "@/app/lib/utils/bets/constants";
 
 interface TokenSearchProps<T> {
   title: string;
@@ -30,17 +28,6 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
     });
   };
 
-  const validateTime = () => {
-    const timeDifference = getTimeDifferenceInSeconds(time);
-    if (timeDifference < MINIMUM_BET_DURATION) {
-      // 86400 seconds = 1 day
-      return `Bet must last at least ${getTimeRange(MINIMUM_BET_DURATION)}`;
-    }
-    return "";
-  };
-
-  const errorMessage = validateTime();
-
   return (
     <div className="relative w-full">
       <div>
@@ -53,14 +40,9 @@ const TimePicker = <T,>({ title, placeHolder }: TokenSearchProps<T>) => {
           value={time}
           onChange={handleTimeChange}
           min={getCurrentDateTime()} // disabling the past Date
-          className={`styled-time-input w-full  p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"} bg-gray-50 border border-gray-300 text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none ${errorMessage && "border-1 border-red-500"}`}
+          className={`styled-time-input w-full  p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"} bg-gray-50 border border-gray-300 text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
           placeholder={placeHolder}
         />
-        {errorMessage && (
-          <p className="text-red-500 text-sm sm:text-xl text-left sm:absolute sm:-bottom-6">
-            {errorMessage}
-          </p>
-        )}
       </div>
     </div>
   );
