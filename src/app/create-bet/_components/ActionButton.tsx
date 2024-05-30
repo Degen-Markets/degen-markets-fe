@@ -49,7 +49,7 @@ const ActionButton: React.FC<{}> = () => {
 
   const isStateIdle = txState === Tx.Idle;
 
-  const { userAllowances, refreshAllowances } = useAllowances(
+  const { userAllowances } = useAllowances(
     !!approvalHash || !!createBetHash,
     address || zeroAddress,
   );
@@ -74,10 +74,10 @@ const ActionButton: React.FC<{}> = () => {
         functionName: "approve",
         args: [DEGEN_BETS_ADDRESS, maxUint256],
       });
-      setApprovalHash(hash);
       setTxState(Tx.Processing);
       await waitForTransactionReceipt(config, { hash });
-      await refreshAllowances();
+      setApprovalHash(hash);
+      // await refreshAllowances();
     } catch (error: any) {
       console.error("Error during approval:", error);
       setTxState(Tx.Idle);

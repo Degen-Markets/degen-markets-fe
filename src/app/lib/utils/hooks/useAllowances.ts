@@ -43,10 +43,6 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
     });
   }, [address]);
 
-  const refreshAllowances = useCallback(async () => {
-    await getERC20Allowances();
-  }, [getERC20Allowances]);
-
   useEffect(() => {
     getERC20Allowances();
   }, [address]);
@@ -59,7 +55,6 @@ const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
 
   return {
     userAllowances,
-    refreshAllowances,
   };
 };
 

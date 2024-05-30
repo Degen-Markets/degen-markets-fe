@@ -31,7 +31,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
 
   const router = useRouter();
 
-  const { userAllowances, refreshAllowances } = useAllowances(
+  const { userAllowances } = useAllowances(
     !!approvalHash || !!acceptBetHash,
     address || zeroAddress,
   );
@@ -52,9 +52,9 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
         value: isEth ? valueInWei : undefined,
         chainId: base.id,
       });
-      setAcceptBetHash(hash);
       setTxState(Tx.Processing);
       await waitForTransactionReceipt(config, { hash });
+      setAcceptBetHash(hash);
     } catch (error: any) {
       console.error("Error acceptBet", error);
       setTxState(Tx.Idle);
@@ -73,10 +73,9 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
         functionName: "approve",
         args: [DEGEN_BETS_ADDRESS, maxUint256],
       });
-      setApprovalHash(hash);
       setTxState(Tx.Processing);
       await waitForTransactionReceipt(config, { hash });
-      await refreshAllowances();
+      setApprovalHash(hash);
     } catch (error) {
       console.error("Error during approval:", error);
       setTxState(Tx.Idle);
