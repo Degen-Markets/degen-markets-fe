@@ -12,6 +12,7 @@ import { Address, BetResponse, Tx } from "@/app/lib/utils/bets/types";
 import { waitForTransactionReceipt, writeContract } from "wagmi/actions";
 import { config } from "../providers";
 import { useToast } from "./Toast/ToastProvider";
+import { useTransactionReceipt, useWriteContract } from "wagmi";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
@@ -19,20 +20,39 @@ interface AcceptBetButtonProps {
 }
 
 const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
-  const [approvalHash, setApprovalHash] = useState<string | null>(null);
-  const [acceptBetHash, setAcceptBetHash] = useState<string | null>(null);
-  const [txState, setTxState] = useState<Tx>(Tx.Idle);
+  const {
+    data: approvalHash,
+    writeContract: sendApprovalTx,
+    isIdle: isApprovalButtonIdle,
+    isPending: isApprovalButtonPending,
+    isSuccess: isApprovalProcessing,
+  } = useWriteContract();
+  const {
+    data: betAcceptHash,
+    writeContract: sendAcceptBetTx,
+    isIdle: isAcceptButtonIdle,
+    isPending: isAcceptButtonPending,
+    isSuccess: isAcceptanceProcessing,
+  } = useWriteContract();
+  const { isSuccess: isBetAcceptedSuccess, error: betAcceptanceError } =
+    useTransactionReceipt({
+      hash: betAcceptHash,
+      chainId: base.id,
+    });
+  const { isSuccess: isApprovalSuccess, error: approvalError } =
+    useTransactionReceipt({
+      hash: approvalHash,
+      chainId: base.id,
+    });
   const { showToast } = useToast();
   const { id, value, currency } = bet;
   const isEth = currency === zeroAddress;
   const valueInWei = BigInt(value);
 
-  const isStateIdle = txState === Tx.Idle;
-
   const router = useRouter();
 
   const { userAllowances } = useAllowances(
-    !!approvalHash || !!acceptBetHash,
+    isApprovalSuccess || isBetAcceptedSuccess,
     address || zeroAddress,
   );
   const currencySymbol = getCurrencySymbolByAddress(currency);
@@ -42,54 +62,22 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
 
   const acceptBet = async () => {
-    try {
-      setTxState(Tx.Pending);
-      const hash = await writeContract(config, {
-        abi: DEGEN_BETS_ABI,
-        address: DEGEN_BETS_ADDRESS,
-        functionName: "acceptBet",
-        args: [id, ""],
-        value: isEth ? valueInWei : undefined,
-        chainId: base.id,
-      });
-      setTxState(Tx.Processing);
-      const { status } = await waitForTransactionReceipt(config, { hash });
-      if (status === "success") {
-        setAcceptBetHash(hash);
-      } else if (status === "reverted") {
-        setAcceptBetHash("");
-      }
-    } catch (error: any) {
-      console.error("Error acceptBet", error);
-      setTxState(Tx.Idle);
-      showToast(error.shortMessage ?? error, "error");
-    } finally {
-      setTxState(Tx.Idle);
-    }
+    sendAcceptBetTx({
+      abi: DEGEN_BETS_ABI,
+      address: DEGEN_BETS_ADDRESS,
+      functionName: "acceptBet",
+      args: [id, ""],
+      value: isEth ? valueInWei : undefined,
+    });
   };
 
   const approve = async () => {
-    try {
-      setTxState(Tx.Pending);
-      const hash = await writeContract(config, {
-        abi: erc20Abi,
-        address: currency,
-        functionName: "approve",
-        args: [DEGEN_BETS_ADDRESS, maxUint256],
-      });
-      setTxState(Tx.Processing);
-      const { status } = await waitForTransactionReceipt(config, { hash });
-      if (status === "success") {
-        setApprovalHash(hash);
-      } else if (status === "reverted") {
-        setApprovalHash("");
-      }
-    } catch (error) {
-      console.error("Error during approval:", error);
-      setTxState(Tx.Idle);
-    } finally {
-      setTxState(Tx.Idle);
-    }
+    sendApprovalTx({
+      abi: erc20Abi,
+      address: currency,
+      functionName: "approve",
+      args: [DEGEN_BETS_ADDRESS, maxUint256],
+    });
   };
 
   const handleAccept = () => {
@@ -101,18 +89,19 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   };
 
   useEffect(() => {
-    if (acceptBetHash) {
-      const checkTransactionReceipt = async () => {
-        const receipt = await waitForTransactionReceipt(config, {
-          hash: acceptBetHash as Address,
-        });
-        if (receipt.status === "success") {
-          router.push(`/bets/${id}/success`);
-        }
-      };
-      checkTransactionReceipt();
+    if (!!betAcceptanceError) {
+      showToast(betAcceptanceError.message, "error");
     }
-  }, [acceptBetHash, id, router]);
+    if (!!approvalError) {
+      showToast(approvalError.message, "error");
+    }
+  }, [approvalError, betAcceptanceError]);
+
+  useEffect(() => {
+    if (isBetAcceptedSuccess) {
+      router.push(`/bets/${id}/success`);
+    }
+  }, [isBetAcceptedSuccess, id, router]);
 
   const getActionButtonText = (): string => {
     if (!address) {
@@ -127,11 +116,24 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     return "Accept Bet";
   };
 
+  const getTxState = (): Tx => {
+    if (isAcceptButtonIdle && isApprovalButtonIdle) {
+      return Tx.Idle;
+    }
+    if (isAcceptButtonPending || isApprovalButtonPending) {
+      return Tx.Pending;
+    }
+    if (isAcceptanceProcessing || isApprovalProcessing) {
+      return Tx.Processing;
+    }
+    return Tx.Idle;
+  };
+
   return (
     <ButtonGradient
       loader={true}
-      disabled={!isStateIdle}
-      txState={txState}
+      disabled={!isApprovalButtonIdle || !isAcceptButtonIdle}
+      txState={getTxState()}
       size={"regular"}
       onClick={handleAccept}
     >
