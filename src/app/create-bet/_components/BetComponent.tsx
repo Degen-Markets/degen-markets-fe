@@ -15,7 +15,9 @@ const BetComponent = () => {
           <Button
             size="regular"
             className={
-              !isProMode ? "bg-purple-medium text-white" : "bg-blue-dark"
+              !isProMode
+                ? "bg-purple-medium text-white"
+                : "bg-blue-dark text-white"
             }
             onClick={() => setIsProMode(false)}
           >
@@ -26,7 +28,7 @@ const BetComponent = () => {
             className={
               isProMode
                 ? "bg-purple-medium !hover:bg-purple-light text-white"
-                : "bg-blue-dark"
+                : "bg-blue-dark text-white"
             }
             onClick={() => setIsProMode(true)}
           >
