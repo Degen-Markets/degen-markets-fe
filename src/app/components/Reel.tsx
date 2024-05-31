@@ -55,7 +55,7 @@ const Reel = <T,>({
 
   return (
     <div className="relative ">
-      <div className="absolute -top-12 lg:-top-14 text-sm md:text-lg lg:px-2 bg-prussian-dark pt-3 pb-3 border-purple-medium border-2  whitespace-nowrap w-full">
+      <div className="absolute -top-10 lg:-top-12 text-sm md:text-lg lg:px-2 bg-prussian-dark py-1 border-purple-medium border-2  whitespace-nowrap w-full">
         {title}
       </div>
       <div

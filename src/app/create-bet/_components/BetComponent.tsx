@@ -11,7 +11,7 @@ const BetComponent = () => {
   return (
     <>
       <div className="flex justify-center  flex-col w-full">
-        <div className="flex mt-6 mb-10 sm:my-10 justify-center">
+        <div className="flex mt-6 mb-10 justify-center">
           <Button
             size="regular"
             className={
