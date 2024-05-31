@@ -98,7 +98,7 @@ const MyBets = () => {
               >
                 Rake In Profits
               </ButtonGradient>
-              <p className="text-yellow-main drop-shadow-sm">
+              <p className="text-yellow-main drop-shadow-sm mt-1">
                 You have {unclaimedBets.length} unclaimed bet win(s)
               </p>
             </div>

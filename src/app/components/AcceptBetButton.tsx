@@ -53,8 +53,12 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
         chainId: base.id,
       });
       setTxState(Tx.Processing);
-      await waitForTransactionReceipt(config, { hash });
-      setAcceptBetHash(hash);
+      const { status } = await waitForTransactionReceipt(config, { hash });
+      if (status === "success") {
+        setAcceptBetHash(hash);
+      } else if (status === "reverted") {
+        setAcceptBetHash("");
+      }
     } catch (error: any) {
       console.error("Error acceptBet", error);
       setTxState(Tx.Idle);
@@ -74,8 +78,12 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
         args: [DEGEN_BETS_ADDRESS, maxUint256],
       });
       setTxState(Tx.Processing);
-      await waitForTransactionReceipt(config, { hash });
-      setApprovalHash(hash);
+      const { status } = await waitForTransactionReceipt(config, { hash });
+      if (status === "success") {
+        setApprovalHash(hash);
+      } else if (status === "reverted") {
+        setApprovalHash("");
+      }
     } catch (error) {
       console.error("Error during approval:", error);
       setTxState(Tx.Idle);

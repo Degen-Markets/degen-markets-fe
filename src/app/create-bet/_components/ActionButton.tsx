@@ -75,9 +75,13 @@ const ActionButton: React.FC<{}> = () => {
         args: [DEGEN_BETS_ADDRESS, maxUint256],
       });
       setTxState(Tx.Processing);
-      await waitForTransactionReceipt(config, { hash });
-      setApprovalHash(hash);
-      // await refreshAllowances();
+      const { status } = await waitForTransactionReceipt(config, { hash });
+
+      if (status === "success") {
+        setApprovalHash(hash);
+      } else if (status === "reverted") {
+        setApprovalHash("");
+      }
     } catch (error: any) {
       console.error("Error during approval:", error);
       setTxState(Tx.Idle);
@@ -112,7 +116,13 @@ const ActionButton: React.FC<{}> = () => {
       });
       setCreateBetHash(hash);
       setTxState(Tx.Processing);
-      await waitForTransactionReceipt(config, { hash });
+      const { status } = await waitForTransactionReceipt(config, { hash });
+
+      if (status === "success") {
+        setApprovalHash(hash);
+      } else if (status === "reverted") {
+        setApprovalHash("");
+      }
     } catch (error: any) {
       console.error("Error creating Bet", { error });
       setTxState(Tx.Idle);
