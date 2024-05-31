@@ -117,9 +117,6 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   };
 
   const getTxState = (): Tx => {
-    if (isAcceptButtonIdle && isApprovalButtonIdle) {
-      return Tx.Idle;
-    }
     if (isAcceptButtonPending || isApprovalButtonPending) {
       return Tx.Pending;
     }
