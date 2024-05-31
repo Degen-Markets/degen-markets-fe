@@ -114,14 +114,13 @@ const ActionButton: React.FC<{}> = () => {
         value: isEth ? valueInWei : undefined,
         chainId: base.id,
       });
-      setCreateBetHash(hash);
       setTxState(Tx.Processing);
       const { status } = await waitForTransactionReceipt(config, { hash });
 
       if (status === "success") {
-        setApprovalHash(hash);
+        setCreateBetHash(hash);
       } else if (status === "reverted") {
-        setApprovalHash("");
+        setCreateBetHash("");
       }
     } catch (error: any) {
       console.error("Error creating Bet", { error });

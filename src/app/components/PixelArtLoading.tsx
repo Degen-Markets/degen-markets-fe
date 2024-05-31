@@ -4,36 +4,24 @@ import { PixelArtLoaderProps, TextSize } from "../lib/utils/bets/types";
 import cx from "classnames";
 
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
-  size = 20,
-  pixelSize = 4,
-  gap = 2,
   text = "Loading",
   textSize = "2xl",
 }) => {
   const numPixels = 9;
   const pixels = [...Array(numPixels)];
-
   const textSizeClass = `text-${textSize}`;
 
   return (
     <>
       <div className="flex items-center space-x-2">
-        <div
-          className={`relative`}
-          style={{
-            width: `${size}px`,
-            height: `${size}px`,
-          }}
-        >
+        <div className={`relative w-5 h-5`}>
           {pixels.map((_, index) => (
             <div
               key={index}
-              className={"absolute bg-blue-dark"}
+              className={"absolute bg-blue-dark w-1 h-1"}
               style={{
-                width: `${pixelSize}px`,
-                height: `${pixelSize}px`,
-                top: `${Math.floor(index / 3) * (pixelSize + gap)}px`,
-                left: `${(index % 3) * (pixelSize + gap)}px`,
+                top: `${Math.floor(index / 3) * (4 + 2)}px`,
+                left: `${(index % 3) * (4 + 2)}px`,
                 animation: `pixel-animation 1.2s ${(index * 0.2).toFixed(1)}s infinite ease-in-out`,
               }}
             />
@@ -46,9 +34,6 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
 };
 
 PixelArtLoader.propTypes = {
-  size: PropTypes.number,
-  pixelSize: PropTypes.number,
-  gap: PropTypes.number,
   text: PropTypes.string.isRequired,
   textSize: PropTypes.oneOf([
     "sm",
