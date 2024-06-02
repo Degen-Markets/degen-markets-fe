@@ -1,12 +1,11 @@
 "use client";
 
 import { ButtonPrimary } from "@/app/components/Button";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { Currency, Tx } from "@/app/lib/utils/bets/types";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import {
-  Address,
   erc20Abi,
   maxUint256,
   parseEther,
@@ -14,14 +13,12 @@ import {
   zeroAddress,
 } from "viem";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
-import { useAccount } from "wagmi";
+import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
 import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
-import { writeContract, waitForTransactionReceipt } from "wagmi/actions";
-import { config } from "@/app/providers";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 
 const ActionButton: React.FC<{}> = () => {
@@ -40,24 +37,52 @@ const ActionButton: React.FC<{}> = () => {
   const durationValue = isProMode
     ? BigInt(customDuration.value)
     : BigInt(duration.value);
+
   const { address } = useAccount();
-  const [approvalHash, setApprovalHash] = useState<string | null>(null);
-  const [createBetHash, setCreateBetHash] = useState<string | null>(null);
-  const [txState, setTxState] = useState<Tx>(Tx.Idle);
-  const [betId, setBetId] = useState<string | null>(null);
+
   const { showToast } = useToast();
 
-  const isStateIdle = txState === Tx.Idle;
+  const {
+    writeContractAsync: sendApprovalTx,
+    data: approvalHash,
+    isSuccess: isApprovalProcessing,
+    isPending: isApprovalButtonPending,
+    isIdle: isApproveBetButtonIdle,
+    reset: resetApproval,
+  } = useWriteContract();
 
+  const {
+    writeContractAsync: sendCreateBetTx,
+    data: createBetHash,
+    variables: createBetVariables,
+    isSuccess: isCreateBetProcessing,
+    isIdle: isCreationBetButtonIdle,
+    isPending: isCreateBetButtonPending,
+    reset: resetCreateBet,
+  } = useWriteContract();
+
+  const { isSuccess: isCreateBetTxSuccess, error: betCreationError } =
+    useTransactionReceipt({
+      hash: createBetHash,
+      chainId: base.id,
+    });
+
+  const { isSuccess: isApprovalSuccess, error: approvalError } =
+    useTransactionReceipt({
+      hash: approvalHash,
+      chainId: base.id,
+    });
   const { userAllowances } = useAllowances(
-    !!approvalHash || !!createBetHash,
+    isApprovalSuccess || isCreateBetTxSuccess,
     address || zeroAddress,
   );
 
-  const { userBalances } = useBalances(!!createBetHash, address);
+  const { userBalances } = useBalances(isCreateBetTxSuccess, address);
 
   const isEth = currency.label === Currency.ETH;
   const valueInWei = isEth ? parseEther(value) : parseUnits(value, 6);
+
+  const id = createBetVariables?.args && createBetVariables.args[0];
 
   const isAllowanceEnough =
     userAllowances[currency.label as Currency] >= valueInWei;
@@ -67,36 +92,23 @@ const ActionButton: React.FC<{}> = () => {
 
   const approve = async () => {
     try {
-      setTxState(Tx.Pending);
-      const hash = await writeContract(config, {
+      await sendApprovalTx({
         abi: erc20Abi,
         address: currency.value,
         functionName: "approve",
         args: [DEGEN_BETS_ADDRESS, maxUint256],
       });
-      setTxState(Tx.Processing);
-      const { status } = await waitForTransactionReceipt(config, { hash });
-
-      if (status === "success") {
-        setApprovalHash(hash);
-      } else if (status === "reverted") {
-        setApprovalHash("");
-      }
     } catch (error: any) {
-      console.error("Error during approval:", error);
-      setTxState(Tx.Idle);
-      showToast(error.shortMessage ?? error, "error");
-    } finally {
-      setTxState(Tx.Idle);
+      resetApproval();
+      console.error("Approvel Error: ", error);
+      showToast(error.shortMessage, "error");
     }
   };
 
   const createBet = async () => {
     try {
       const randomId = uuid();
-      setBetId(randomId);
-      setTxState(Tx.Pending);
-      const hash = await writeContract(config, {
+      await sendCreateBetTx({
         abi: DEGEN_BETS_ABI,
         address: DEGEN_BETS_ADDRESS,
         functionName: "createBet",
@@ -114,20 +126,10 @@ const ActionButton: React.FC<{}> = () => {
         value: isEth ? valueInWei : undefined,
         chainId: base.id,
       });
-      setTxState(Tx.Processing);
-      const { status } = await waitForTransactionReceipt(config, { hash });
-
-      if (status === "success") {
-        setCreateBetHash(hash);
-      } else if (status === "reverted") {
-        setCreateBetHash("");
-      }
     } catch (error: any) {
-      console.error("Error creating Bet", { error });
-      setTxState(Tx.Idle);
-      showToast(error.shortMessage ?? error, "error");
-    } finally {
-      setTxState(Tx.Idle);
+      resetCreateBet();
+      showToast(error.shortMessage, "error");
+      console.error(error);
     }
   };
 
@@ -152,27 +154,53 @@ const ActionButton: React.FC<{}> = () => {
     return "Create Bet";
   };
 
-  useEffect(() => {
-    if (createBetHash) {
-      const checkTransactionReceipt = async () => {
-        const receipt = await waitForTransactionReceipt(config, {
-          hash: createBetHash as Address,
-        });
-        if (receipt.status === "success") {
-          router.push(`/create-bet/success?id=${betId}`);
-        }
-      };
-      checkTransactionReceipt();
+  const getTxState = (): Tx => {
+    if (isCreateBetButtonPending || isApprovalButtonPending) {
+      return Tx.Pending;
     }
-  }, [createBetHash]);
+    if (isCreateBetProcessing || isApprovalProcessing) {
+      return Tx.Processing;
+    }
+    return Tx.Idle;
+  };
+
+  useEffect(() => {
+    if (!!betCreationError) {
+      console.error(betCreationError.message);
+      showToast(betCreationError.message, "error");
+    }
+    if (!!approvalError) {
+      console.error(approvalError.message);
+      showToast(approvalError.message, "error");
+    }
+  }, [approvalError, betCreationError]);
+
+  useEffect(() => {
+    if (isApprovalSuccess) {
+      resetApproval();
+    }
+    if (isCreateBetTxSuccess) {
+      resetCreateBet();
+    }
+  }, [isApprovalSuccess, isCreateBetTxSuccess]);
+
+  useEffect(() => {
+    if (isCreateBetTxSuccess) {
+      router.push(`/create-bet/success?id=${id}`);
+    }
+  }, [isCreateBetTxSuccess]);
 
   return (
     <div className="flex justify-center">
       <ButtonPrimary
         loader={true}
-        txState={txState}
+        txState={getTxState()}
         size={"regular"}
-        disabled={isActionDisabled || !isStateIdle}
+        disabled={
+          isActionDisabled ||
+          !isCreationBetButtonIdle ||
+          !isApproveBetButtonIdle
+        }
         onClick={handleActionButtonClick}
       >
         {getActionButtonText()}

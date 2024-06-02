@@ -9,7 +9,6 @@ import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { ButtonGradient } from "@/app/components/Button";
 import { base } from "wagmi/chains";
 import { Address, BetResponse, Tx } from "@/app/lib/utils/bets/types";
-import { waitForTransactionReceipt, writeContract } from "wagmi/actions";
 import { config } from "../providers";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
@@ -22,17 +21,19 @@ interface AcceptBetButtonProps {
 const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   const {
     data: approvalHash,
-    writeContract: sendApprovalTx,
+    writeContractAsync: sendApprovalTx,
     isIdle: isApprovalButtonIdle,
     isPending: isApprovalButtonPending,
     isSuccess: isApprovalProcessing,
+    reset: resetApproval,
   } = useWriteContract();
   const {
     data: betAcceptHash,
-    writeContract: sendAcceptBetTx,
+    writeContractAsync: sendAcceptBetTx,
     isIdle: isAcceptButtonIdle,
     isPending: isAcceptButtonPending,
     isSuccess: isAcceptanceProcessing,
+    reset: resetAcceptBet,
   } = useWriteContract();
   const { isSuccess: isBetAcceptedSuccess, error: betAcceptanceError } =
     useTransactionReceipt({
@@ -62,22 +63,34 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
 
   const acceptBet = async () => {
-    sendAcceptBetTx({
-      abi: DEGEN_BETS_ABI,
-      address: DEGEN_BETS_ADDRESS,
-      functionName: "acceptBet",
-      args: [id, ""],
-      value: isEth ? valueInWei : undefined,
-    });
+    try {
+      await sendAcceptBetTx({
+        abi: DEGEN_BETS_ABI,
+        address: DEGEN_BETS_ADDRESS,
+        functionName: "acceptBet",
+        args: [id, ""],
+        value: isEth ? valueInWei : undefined,
+      });
+    } catch (error: any) {
+      console.error(error);
+      showToast(error.shortMessage ?? error, "error");
+      resetAcceptBet();
+    }
   };
 
   const approve = async () => {
-    sendApprovalTx({
-      abi: erc20Abi,
-      address: currency,
-      functionName: "approve",
-      args: [DEGEN_BETS_ADDRESS, maxUint256],
-    });
+    try {
+      await sendApprovalTx({
+        abi: erc20Abi,
+        address: currency,
+        functionName: "approve",
+        args: [DEGEN_BETS_ADDRESS, maxUint256],
+      });
+    } catch (error: any) {
+      console.error({ error });
+      showToast(error.shortMessage ?? error, "error");
+      resetApproval();
+    }
   };
 
   const handleAccept = () => {
@@ -102,6 +115,15 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       router.push(`/bets/${id}/success`);
     }
   }, [isBetAcceptedSuccess, id, router]);
+
+  useEffect(() => {
+    if (isApprovalSuccess) {
+      resetApproval();
+    }
+    if (isBetAcceptedSuccess) {
+      resetAcceptBet();
+    }
+  }, [isApprovalSuccess, isBetAcceptedSuccess]);
 
   const getActionButtonText = (): string => {
     if (!address) {
