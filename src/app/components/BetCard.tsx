@@ -58,13 +58,13 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
       ? "bg-vivid-dark"
       : hours < 24
         ? "bg-koromiko-dark"
-        : "bg-mantis-dark";
+        : "bg-green-main";
   const bgClassForMetric =
     hours < 5
       ? "bg-vivid-light"
       : hours < 24
         ? "bg-koromiko-light"
-        : "bg-mantis-light";
+        : "bg-green-light";
 
   const createdByCurrentUser = creator.toLowerCase() === address?.toLowerCase();
   const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
@@ -173,7 +173,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         {winner && (
           <div className="flex flex-col items-center">
             <UserAvatarWithDisplayName address={winner} />
-            <h3 className="uppercase text-3xl text-mantis-dark">Winner</h3>
+            <h3 className="uppercase text-3xl text-green-dark">Winner</h3>
           </div>
         )}
         <div className="text-2xl md:text-[64px]">VS</div>

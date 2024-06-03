@@ -3,7 +3,7 @@ import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import BetCoundown from "@/app/components/BetCoundown";
-import Metric from "@/app/bets/[id]/_components/Metric";
+import MetricAndWager from "@/app/bets/[id]/_components/MetricAndWager";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { useAccount } from "wagmi";
 
@@ -30,7 +30,7 @@ const AcceptedBet = ({ bet }: Props) => {
                 />
                 <span>{getDisplayNameForAddress(creator)}</span>
               </div>
-              <div className="text-2xl md:text-[175px]">VS</div>
+              <div className="text-2xl md:text-[165px]">VS</div>
               {acceptor && (
                 <div className="flex flex-col gap-1 items-center">
                   <UserAvatar
@@ -47,15 +47,16 @@ const AcceptedBet = ({ bet }: Props) => {
         </Headline>
         <SubHeadline
           isTop={true}
-          className="bg-white border-purple-medium text-neutral-950"
+          className="!bg-green-main text-prussian-dark border-white border-2 lg:px-6"
         >
           <BetCoundown
             expirationTimestampInS={Number(expirationTimestamp)}
             message="Bet ends in"
+            countDownClassName="text-white"
           />
         </SubHeadline>
       </Heading>
-      <Metric bet={bet} />
+      <MetricAndWager bet={bet} />
       <div className="flex justify-center mt-4 md:mt-12">
         <ReplicateBetAction bet={bet} />
       </div>

@@ -33,7 +33,7 @@ const ReplicateBetAction = ({ bet, className }: Props) => {
   return (
     <ButtonGradient
       size="small"
-      className={`w-auto !px-6 !text-white ${className}`}
+      className={`w-auto !px-6 ${className}`}
       onClick={replicateBet}
     >
       Replicate this bet!

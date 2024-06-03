@@ -25,7 +25,7 @@ export const Button: FC<ButtonProps> = ({
 
   return (
     <button
-      className={`text-white py-2 px-2 md:px-4 shadow-button flex items-center justify-center active:shadow-button-pressed my-auto ${className} ${buttonSize}`}
+      className={`text-prussian-dark py-2 px-2 md:px-4 shadow-button flex items-center justify-center active:shadow-button-pressed my-auto ${className} ${buttonSize}`}
       {...props}
     >
       {isIdle && children}

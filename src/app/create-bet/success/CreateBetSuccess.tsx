@@ -8,6 +8,7 @@ import shareContent from "@/app/lib/utils/shareContent";
 import { useEffect, useState } from "react";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { getBetById } from "@/app/lib/utils/api/getBetById";
+import { ButtonGradient } from "@/app/components/Button";
 
 const CreateBetSuccess = () => {
   const searchParams = useSearchParams();
@@ -48,8 +49,8 @@ const CreateBetSuccess = () => {
   };
 
   return (
-    <main className="text-center">
-      <Heading className="mb-8">
+    <div className="text-center">
+      <Heading>
         <Headline>Bet Created!</Headline>
         <SubHeadline isTop={false}>
           <BetCountdown
@@ -59,34 +60,22 @@ const CreateBetSuccess = () => {
           />
         </SubHeadline>
       </Heading>
-
-      <br />
-      <br />
-      <br />
-      <div className="text-blue-dark">
-        Your bet on {ticker}&apos;s {metric} going {direction} was successfully
-        created!
-        <br />
-        Challenge your frens by giving them a link to this bet. They have 4
-        hours to accept!
+      <div className="flex flex-col items-center gap-6">
+        <div className="text-prussian-dark text-center">
+          Your bet on {ticker}&apos;s {metric} going {direction} was
+          successfully created! Challenge your frens by giving them a link to
+          this bet. They have 4 hours to accept!
+        </div>
+        <div className="flex gap-6">
+          <ButtonGradient size="regular" onClick={handleCopy}>
+            Copy bet link!
+          </ButtonGradient>
+          <ButtonGradient size="regular" onClick={handleShare}>
+            Share
+          </ButtonGradient>
+        </div>
       </div>
-      <br />
-      <br />
-      <div className="flex justify-center gap-[60px]">
-        <button
-          className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
-          onClick={handleShare}
-        >
-          Share
-        </button>
-        <button
-          className="text-blue-dark bg-pink-light px-3 py-1 border-2 border-blue-dark"
-          onClick={handleCopy}
-        >
-          Copy
-        </button>
-      </div>
-    </main>
+    </div>
   );
 };
 export default CreateBetSuccess;

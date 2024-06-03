@@ -146,10 +146,10 @@ input[type="number"] {
 /* Large Dark Pixel Art Border */
 .pixel-art-border-lg-dark {
   box-shadow:
-    20px 0 #222b37,
-    -20px 0 #222b37,
-    0 -20px #222b37,
-    0 20px #222b37;
+    20px 0 #003a55,
+    -20px 0 #003a55,
+    0 -20px #003a55,
+    0 20px #003a55;
   margin: 20px auto;
 }
 
@@ -166,10 +166,10 @@ input[type="number"] {
 /* Small Dark Pixel Art Border */
 .pixel-art-border-sm-dark {
   box-shadow:
-    8px 0 #222b37,
-    -8px 0 #222b37,
-    0 -8px #222b37,
-    0 8px #222b37;
+    8px 0 #003a55,
+    -8px 0 #003a55,
+    0 -8px #003a55,
+    0 8px #003a55;
   margin: 8px auto;
 }
 
