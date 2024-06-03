@@ -14,25 +14,25 @@ const BetComponent = () => {
         <div className="flex mt-6 mb-10 justify-center">
           <Button
             size="regular"
-            className={
-              !isProMode
-                ? "bg-purple-medium text-white"
-                : "bg-blue-dark text-white"
-            }
-            onClick={() => setIsProMode(false)}
-          >
-            Lite
-          </Button>
-          <Button
-            size="regular"
-            className={
+            className={`min-w-[140px] ${
               isProMode
                 ? "bg-purple-medium !hover:bg-purple-light text-white"
                 : "bg-blue-dark text-white"
-            }
+            }`}
             onClick={() => setIsProMode(true)}
           >
             Pro
+          </Button>
+          <Button
+            size="regular"
+            className={`min-w-[140px] ${
+              !isProMode
+                ? "bg-purple-medium !hover:bg-purple-light text-white"
+                : "bg-blue-dark text-white"
+            }`}
+            onClick={() => setIsProMode(false)}
+          >
+            Feelin&apos; lucky?
           </Button>
         </div>
 
