@@ -66,7 +66,7 @@ export const useBetContext = (): BetContextProps => useContext(BetContext);
 
 export const BetProvider = ({ children }: { children: ReactNode }) => {
   const searchParams = useSearchParams();
-  const [isProMode, setIsProMode] = useState<boolean>(false);
+  const [isProMode, setIsProMode] = useState<boolean>(true);
 
   const defaultTicker = searchParams.get("ticker");
   const defaultMetric = searchParams.get("metric");
