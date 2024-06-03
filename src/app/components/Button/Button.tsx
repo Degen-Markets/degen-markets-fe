@@ -1,4 +1,3 @@
-import { Tx } from "@/app/lib/utils/bets/types";
 import { ButtonHTMLAttributes, FC } from "react";
 import PixelArtLoader from "../PixelArtLoading";
 
@@ -6,7 +5,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   customStyle?: string;
   size: "regular" | "small";
   loader?: boolean;
-  txState?: Tx;
+  isPending?: boolean;
+  isProcessing?: boolean;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -15,13 +15,12 @@ export const Button: FC<ButtonProps> = ({
   size,
   customStyle = "",
   loader = false,
-  txState = Tx.Idle,
+  isPending,
+  isProcessing,
   ...props
 }) => {
   const buttonSize = size === "regular" ? "h-10 md:h-12" : "h-8 md:h-10";
-  const isIdle = txState === Tx.Idle;
-  const isPending = txState === Tx.Pending;
-  const isClaimProcessing = txState === Tx.Processing;
+  const isIdle = !isProcessing && !isPending;
 
   return (
     <button
@@ -32,7 +31,7 @@ export const Button: FC<ButtonProps> = ({
       {isPending && loader && (
         <PixelArtLoader text="Pending..." textSize="2xl" />
       )}
-      {isClaimProcessing && loader && (
+      {isProcessing && loader && (
         <PixelArtLoader text="Processing..." textSize="2xl" />
       )}
     </button>

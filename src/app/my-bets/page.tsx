@@ -2,7 +2,7 @@
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
 import { useEffect, useState } from "react";
-import { BetsResponse, Tx } from "@/app/lib/utils/bets/types";
+import { BetsResponse } from "@/app/lib/utils/bets/types";
 import { getBetsForAddress } from "@/app/lib/utils/api/getBetsForAddress";
 import BetsTab from "@/app/components/BetsTab";
 import Wrapper from "@/app/components/Wrapper";
@@ -22,16 +22,17 @@ const MyBets = () => {
     writeContractAsync: claimBetTx,
     isIdle: isClaimButtonIdle,
     isPending: isClaimButtonPending,
-    isSuccess: isClaimButtonProcessing,
-    reset: resetClaim,
     data: claimedBetHash,
   } = useWriteContract();
 
-  const { isSuccess: isClaimedSuccess, error: claimingError } =
-    useTransactionReceipt({
-      hash: claimedBetHash,
-      chainId: base.id,
-    });
+  const {
+    isSuccess: isClaimedSuccess,
+    error: claimingError,
+    isLoading: isClaimButtonProcessing,
+  } = useTransactionReceipt({
+    hash: claimedBetHash,
+    chainId: base.id,
+  });
 
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
@@ -59,15 +60,13 @@ const MyBets = () => {
   useEffect(() => {
     if (claimingError) {
       showToast(claimingError.message, "error");
-      resetClaim();
     }
   }, [claimingError]);
 
   useEffect(() => {
     if (isClaimedSuccess) {
-      resetClaim();
       showToast(
-        `${unclaimedBets.length} ${unclaimedBets.length === 1 ? "bet" : "bets"} claimed successfully`,
+        `${unclaimedBets.length} ${unclaimedBets.length === 1 ? "bet" : "bets"} Claimed Successfully`,
         "success",
       );
       fetchBetsByAddress(address as Address);
@@ -93,20 +92,9 @@ const MyBets = () => {
         chainId: base.id,
       });
     } catch (error: any) {
-      resetClaim();
-      console.error("Error processing withdrawal:", error);
+      console.error("Error processing claims:", error);
       showToast(error.shortMessage ?? error, "error");
     }
-  };
-
-  const getTxState = (): Tx => {
-    if (isClaimButtonPending) {
-      return Tx.Pending;
-    }
-    if (isClaimButtonProcessing) {
-      return Tx.Processing;
-    }
-    return Tx.Idle;
   };
 
   return (
@@ -117,7 +105,8 @@ const MyBets = () => {
             <div className="flex flex-col items-end">
               <ButtonGradient
                 loader={true}
-                txState={getTxState()}
+                isPending={isClaimButtonPending}
+                isProcessing={isClaimButtonProcessing}
                 size="regular"
                 onClick={handleGetPaid}
                 disabled={unclaimedBets.length === 0 || !isClaimButtonIdle}

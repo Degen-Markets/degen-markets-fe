@@ -1,10 +1,10 @@
 "use client";
-import { useCallback, FC, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import { BetResponse, Tx } from "@/app/lib/utils/bets/types";
+import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonPrimary } from "@/app/components/Button";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import UserAvatar from "@/app/components/UserAvatar";
@@ -31,7 +31,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
     data: withdrawBetHash,
     writeContractAsync: sendWithdrawBetTx,
     isIdle: isWithdrawBetButtonIdle,
-    isPending: isWithdrawBetButtonPending,
+    isPending: isWithdrawPending,
   } = useWriteContract();
 
   const {
@@ -84,16 +84,6 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
     }
   }, [id, sendWithdrawBetTx]);
 
-  const getTxState = (): Tx => {
-    if (isWithdrawBetButtonPending) {
-      return Tx.Pending;
-    }
-    if (isWithdrawBetProcessing) {
-      return Tx.Processing;
-    }
-    return Tx.Idle;
-  };
-
   const getActionButtonText = (): string => {
     if (!address) {
       return "Wallet not connected";
@@ -123,8 +113,9 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
       return (
         <ButtonPrimary
           loader={true}
-          txState={getTxState()}
           disabled={!isWithdrawBetButtonIdle || isWithdrawn}
+          isProcessing={isWithdrawBetProcessing}
+          isPending={isWithdrawPending}
           size="regular"
           onClick={onWithdrawClick}
         >

@@ -85,13 +85,6 @@ export type BetResponse = {
 
 export type BetsResponse = BetResponse[];
 
-//
-export enum Tx {
-  Idle,
-  Pending,
-  Processing,
-}
-
 export type TextSize =
   | "sm"
   | "md"

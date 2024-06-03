@@ -3,7 +3,7 @@
 import { ButtonGradient } from "@/app/components/Button";
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { Currency, Tx } from "@/app/lib/utils/bets/types";
+import { Currency } from "@/app/lib/utils/bets/types";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import {
   erc20Abi,
@@ -152,16 +152,6 @@ const ActionButton: React.FC<{}> = () => {
     return "Create Bet";
   };
 
-  const getTxState = (): Tx => {
-    if (isCreateBetButtonPending || isApprovalButtonPending) {
-      return Tx.Pending;
-    }
-    if (isCreateBetProcessing || isApprovalProcessing) {
-      return Tx.Processing;
-    }
-    return Tx.Idle;
-  };
-
   useEffect(() => {
     if (!!betCreationError) {
       console.error(betCreationError.message);
@@ -192,7 +182,8 @@ const ActionButton: React.FC<{}> = () => {
     <div className="flex justify-center">
       <ButtonGradient
         loader={true}
-        txState={getTxState()}
+        isPending={isCreateBetButtonPending || isApprovalButtonPending}
+        isProcessing={isCreateBetProcessing || isApprovalProcessing}
         size={"regular"}
         disabled={
           isActionDisabled ||

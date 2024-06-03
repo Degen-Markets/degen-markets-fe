@@ -8,7 +8,7 @@ import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { ButtonGradient } from "@/app/components/Button";
 import { base } from "wagmi/chains";
-import { Address, BetResponse, Tx } from "@/app/lib/utils/bets/types";
+import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 
@@ -128,21 +128,12 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     return "Approve and Bet";
   };
 
-  const getTxState = (): Tx => {
-    if (isAcceptButtonPending || isApprovalButtonPending) {
-      return Tx.Pending;
-    }
-    if (isAcceptanceProcessing || isApprovalProcessing) {
-      return Tx.Processing;
-    }
-    return Tx.Idle;
-  };
-
   return (
     <ButtonGradient
       loader={true}
       disabled={!isApprovalButtonIdle || !isAcceptButtonIdle}
-      txState={getTxState()}
+      isPending={isAcceptButtonPending || isApprovalButtonPending}
+      isProcessing={isAcceptanceProcessing || isApprovalProcessing}
       size={"regular"}
       onClick={handleAccept}
     >
