@@ -46,6 +46,9 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     hash: approvalHash,
     chainId: base.id,
   });
+  const isPending = isApprovalButtonPending || isAcceptButtonPending;
+  const isProcessing = isAcceptanceProcessing || isApprovalProcessing;
+
   const { showToast } = useToast();
   const { id, value, currency } = bet;
   const isEth = currency === zeroAddress;
@@ -62,6 +65,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
 
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
+  const isDisabled = isPending || isProcessing || !isBalanceEnough;
 
   const acceptBet = async () => {
     try {
@@ -131,9 +135,9 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
   return (
     <ButtonGradient
       loader={true}
-      disabled={!isApprovalButtonIdle || !isAcceptButtonIdle}
-      isPending={isAcceptButtonPending || isApprovalButtonPending}
-      isProcessing={isAcceptanceProcessing || isApprovalProcessing}
+      disabled={isDisabled}
+      isPending={isPending}
+      isProcessing={isProcessing}
       size={"regular"}
       onClick={handleAccept}
     >

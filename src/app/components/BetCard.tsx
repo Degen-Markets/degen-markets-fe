@@ -30,7 +30,6 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const {
     data: withdrawBetHash,
     writeContractAsync: sendWithdrawBetTx,
-    isIdle: isWithdrawBetButtonIdle,
     isPending: isWithdrawPending,
   } = useWriteContract();
 
@@ -43,8 +42,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
     chainId: base.id,
   });
 
-  const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
-    bet;
+  const { creator, acceptor, winner, id, isPaid, expirationTimestamp } = bet;
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
 
   const endTime = Number(expirationTimestamp) * 1000;
@@ -67,7 +65,8 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         : "bg-green-light";
 
   const createdByCurrentUser = creator.toLowerCase() === address?.toLowerCase();
-  const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
+  const showWithdrawButton = createdByCurrentUser && !isPaid && !acceptor;
+  const isDisabled = isWithdrawPending || isWithdrawBetProcessing;
 
   const onWithdrawClick = useCallback(async () => {
     try {
@@ -113,7 +112,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
       return (
         <ButtonPrimary
           loader={true}
-          disabled={!isWithdrawBetButtonIdle || isWithdrawn}
+          disabled={isDisabled}
           isProcessing={isWithdrawBetProcessing}
           isPending={isWithdrawPending}
           size="regular"

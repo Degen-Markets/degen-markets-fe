@@ -88,7 +88,15 @@ const ActionButton: React.FC<{}> = () => {
     userAllowances[currency.label as Currency] >= valueInWei;
   const isBalanceEnough =
     userBalances[currency.label as Currency] >= valueInWei;
-  const isActionDisabled = !isBalanceEnough || !address || Number(value) <= 0;
+  const isPending = isCreateBetButtonPending || isApprovalButtonPending;
+  const isProcessing = isCreateBetProcessing || isApprovalProcessing;
+
+  const isActionDisabled =
+    !isBalanceEnough ||
+    !address ||
+    Number(value) <= 0 ||
+    isPending ||
+    isProcessing;
 
   const approve = async () => {
     try {
@@ -182,16 +190,10 @@ const ActionButton: React.FC<{}> = () => {
     <div className="flex justify-center">
       <ButtonGradient
         loader={true}
-        isPending={isCreateBetButtonPending || isApprovalButtonPending}
-        isProcessing={isCreateBetProcessing || isApprovalProcessing}
+        isPending={isPending}
+        isProcessing={isProcessing}
         size={"regular"}
-        disabled={
-          isActionDisabled ||
-          isCreateBetButtonPending ||
-          isCreateBetProcessing ||
-          isApprovalProcessing ||
-          isApprovalButtonPending
-        }
+        disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
         {getActionButtonText()}

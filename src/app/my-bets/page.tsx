@@ -20,7 +20,6 @@ const MyBets = () => {
   const { showToast } = useToast();
   const {
     writeContractAsync: claimBetTx,
-    isIdle: isClaimButtonIdle,
     isPending: isClaimButtonPending,
     data: claimedBetHash,
   } = useWriteContract();
@@ -33,6 +32,11 @@ const MyBets = () => {
     hash: claimedBetHash,
     chainId: base.id,
   });
+
+  const buttonDisabled =
+    unclaimedBets.length === 0 ||
+    isClaimButtonPending ||
+    isClaimButtonProcessing;
 
   const fetchBetsByAddress = async (address: `0x${string}`) => {
     try {
@@ -109,7 +113,7 @@ const MyBets = () => {
                 isProcessing={isClaimButtonProcessing}
                 size="regular"
                 onClick={handleGetPaid}
-                disabled={unclaimedBets.length === 0 || !isClaimButtonIdle}
+                disabled={buttonDisabled}
                 className="flex justify-center items-center space-x-2"
               >
                 Rake In Profits

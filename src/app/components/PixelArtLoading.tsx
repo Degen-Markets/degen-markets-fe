@@ -18,7 +18,7 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
           {pixels.map((_, index) => (
             <div
               key={index}
-              className={"absolute bg-blue-dark w-1 h-1"}
+              className={"absolute bg-prussian-dark w-1 h-1"}
               style={{
                 top: `${Math.floor(index / 3) * (4 + 2)}px`,
                 left: `${(index % 3) * (4 + 2)}px`,
@@ -27,7 +27,7 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
             />
           ))}
         </div>
-        <span className={`text-black ${textSizeClass}`}>{text}</span>
+        <span className={`text-prussian-dark ${textSizeClass}`}>{text}</span>
       </div>
     </>
   );
