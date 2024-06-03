@@ -29,7 +29,7 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const { acceptor, winner } = bet;
 
   return (
-    <BetLayout className="lg:max-w-screen-md min-h-[calc(100vh-300px)]">
+    <BetLayout>
       {winner && <WonBet bet={bet} />}
       {!winner && acceptor && <AcceptedBet bet={bet} />}
       {!winner && !acceptor && <InProgressBet bet={bet} address={address} />}

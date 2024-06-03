@@ -12,7 +12,7 @@ export const ButtonPrimary: FC<ButtonProps> = ({
     <Button
       size={size}
       {...props}
-      className={`bg-purple-medium hover:bg-purple-600 active:bg-purple-600 disabled:bg-opacity-50 disabled:text-opacity-50 ${className}`}
+      className={`bg-purple-medium text-white hover:bg-purple-600 active:bg-purple-600 disabled:bg-opacity-50 disabled:text-opacity-50 ${className}`}
     >
       {children}
     </Button>
