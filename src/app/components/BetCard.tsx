@@ -1,7 +1,7 @@
 "use client";
-import { useCallback, FC, useState } from "react";
+import { useCallback, FC, useEffect } from "react";
 import Link from "next/link";
-import { useAccount } from "wagmi";
+import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { BetResponse, Tx } from "@/app/lib/utils/bets/types";
@@ -15,8 +15,6 @@ import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import { Hash } from "viem";
 import BetMetric from "@/app/components/BetMetric";
-import { waitForTransactionReceipt, writeContract } from "wagmi/actions";
-import { config } from "../providers";
 import { base } from "wagmi/chains";
 
 interface Props {
@@ -28,9 +26,21 @@ interface Props {
 const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const [txState, setTxState] = useState<Tx>(Tx.Idle);
 
-  const isStateIdle = txState === Tx.Idle;
+  const {
+    data: withdrawBetHash,
+    writeContractAsync: sendWithdrawBetTx,
+    isIdle: isWithdrawBetButtonIdle,
+    isPending: isWithdrawBetButtonPending,
+    isSuccess: isWithdrawBetProcessing,
+    reset: resetWithdrawBet,
+  } = useWriteContract();
+
+  const { isSuccess: isWithdrawBetSuccess, error: withDrawalError } =
+    useTransactionReceipt({
+      hash: withdrawBetHash,
+      chainId: base.id,
+    });
 
   const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
     bet;
@@ -60,47 +70,67 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
 
   const onWithdrawClick = useCallback(async () => {
     try {
-      setTxState(Tx.Pending);
-      const hash = await writeContract(config, {
+      await sendWithdrawBetTx({
         abi: DEGEN_BETS_ABI,
         address: DEGEN_BETS_ADDRESS,
         functionName: "withdrawBets",
         args: [[id]],
         chainId: base.id,
       });
-      setTxState(Tx.Processing);
-      const { status } = await waitForTransactionReceipt(config, { hash });
-      if (status === "success") {
-        showToast(
-          "Your withdrawal request has been successfully processed!",
-          "success",
-        );
-        onWithdraw?.();
-      }
-      if (status === "reverted") {
-        showToast("Withdrawal failed. Please try again later.", "error");
-        onWithdraw?.();
-      }
     } catch (error: any) {
-      console.error("Error creating Bet", error);
-      setTxState(Tx.Idle);
+      resetWithdrawBet();
+      console.error("Error Withdrawing Bet", error);
       showToast(error.shortMessage ?? error, "error");
-    } finally {
-      setTxState(Tx.Idle);
     }
-  }, [id, onWithdraw, showToast]);
+  }, [id, sendWithdrawBetTx]);
+
+  const getTxState = (): Tx => {
+    if (isWithdrawBetButtonPending) {
+      return Tx.Pending;
+    }
+    if (isWithdrawBetProcessing) {
+      return Tx.Processing;
+    }
+    return Tx.Idle;
+  };
+
+  const getActionButtonText = (): string => {
+    if (!address) {
+      return "Wallet not connected";
+    }
+    return "Withdraw";
+  };
+
+  useEffect(() => {
+    if (isWithdrawBetSuccess) {
+      showToast(
+        "Your withdrawal request has been successfully processed!",
+        "success",
+      );
+      onWithdraw?.();
+      resetWithdrawBet();
+    }
+  }, [isWithdrawBetSuccess]);
+
+  useEffect(() => {
+    if (!!withDrawalError) {
+      showToast("Withdrawal failed. Please try again later.", "error");
+      onWithdraw?.();
+      resetWithdrawBet();
+    }
+  }, [withDrawalError, showToast, onWithdraw]);
 
   const CTAButton = () => {
     if (showWithdrawButton) {
       return (
         <ButtonPrimary
           loader={true}
-          txState={txState}
-          disabled={!isStateIdle}
+          txState={getTxState()}
+          disabled={!isWithdrawBetButtonIdle || isWithdrawn}
           size="regular"
           onClick={onWithdrawClick}
         >
-          Withdraw
+          {getActionButtonText()}
         </ButtonPrimary>
       );
     }

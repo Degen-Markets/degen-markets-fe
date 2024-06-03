@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { erc20Abi, maxUint256, zeroAddress } from "viem";
 import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
@@ -9,7 +9,6 @@ import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { ButtonGradient } from "@/app/components/Button";
 import { base } from "wagmi/chains";
 import { Address, BetResponse, Tx } from "@/app/lib/utils/bets/types";
-import { config } from "../providers";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 

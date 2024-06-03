@@ -100,7 +100,7 @@ const ActionButton: React.FC<{}> = () => {
       });
     } catch (error: any) {
       resetApproval();
-      console.error("Approvel Error: ", error);
+      console.error("Approval Error: ", error);
       showToast(error.shortMessage, "error");
     }
   };
