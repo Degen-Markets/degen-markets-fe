@@ -58,7 +58,6 @@ const ActionButton: React.FC<{}> = () => {
     isIdle: isCreationBetButtonIdle,
     isPending: isCreateBetButtonPending,
   } = useWriteContract();
-
   const { isSuccess: isCreateBetTxSuccess, error: betCreationError } =
     useTransactionReceipt({
       hash: createBetHash,
