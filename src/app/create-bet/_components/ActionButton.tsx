@@ -194,7 +194,8 @@ const ActionButton: React.FC<{}> = () => {
         size={"regular"}
         disabled={
           isActionDisabled ||
-          !isCreationBetButtonIdle ||
+          isCreateBetButtonPending ||
+          isCreateBetProcessing ||
           isApprovalProcessing ||
           isApprovalButtonPending
         }
