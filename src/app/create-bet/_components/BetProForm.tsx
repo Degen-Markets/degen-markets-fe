@@ -23,8 +23,6 @@ const BetProForm: React.FC = () => {
     setMetric,
     setDirection,
     setCurrency,
-    value,
-    setValue,
   } = useBetContext();
 
   const commonStyle =

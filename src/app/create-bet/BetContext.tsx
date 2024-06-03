@@ -88,7 +88,10 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
     getDefaultOption(metricOptions, defaultMetric as Metric),
   );
   const [direction, setDirection] = useState<ReelOption<boolean>>(
-    getDefaultOption(directionOptions, defaultDirection === "true"),
+    getDefaultOption(
+      directionOptions,
+      defaultDirection ? defaultDuration === "true" : true,
+    ),
   );
   const [duration, setDuration] = useState<ReelOption<number>>(
     getDefaultOption(durationOptions, Number(defaultDuration)),
