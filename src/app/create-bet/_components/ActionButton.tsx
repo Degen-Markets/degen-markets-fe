@@ -47,7 +47,6 @@ const ActionButton: React.FC<{}> = () => {
     data: approvalHash,
     isSuccess: isApprovalProcessing,
     isPending: isApprovalButtonPending,
-    isIdle: isApproveBetButtonIdle,
     reset: resetApproval,
   } = useWriteContract();
 
@@ -58,7 +57,6 @@ const ActionButton: React.FC<{}> = () => {
     isSuccess: isCreateBetProcessing,
     isIdle: isCreationBetButtonIdle,
     isPending: isCreateBetButtonPending,
-    reset: resetCreateBet,
   } = useWriteContract();
 
   const { isSuccess: isCreateBetTxSuccess, error: betCreationError } =
@@ -99,7 +97,6 @@ const ActionButton: React.FC<{}> = () => {
         args: [DEGEN_BETS_ADDRESS, maxUint256],
       });
     } catch (error: any) {
-      resetApproval();
       console.error("Approval Error: ", error);
       showToast(error.shortMessage, "error");
     }
@@ -127,7 +124,6 @@ const ActionButton: React.FC<{}> = () => {
         chainId: base.id,
       });
     } catch (error: any) {
-      resetCreateBet();
       showToast(error.shortMessage, "error");
       console.error(error);
     }
@@ -177,10 +173,11 @@ const ActionButton: React.FC<{}> = () => {
 
   useEffect(() => {
     if (isApprovalSuccess) {
+      showToast("Approvel Successfully", "success");
       resetApproval();
     }
     if (isCreateBetTxSuccess) {
-      resetCreateBet();
+      showToast("Bet Created Successfully", "success");
     }
   }, [isApprovalSuccess, isCreateBetTxSuccess]);
 
@@ -199,7 +196,8 @@ const ActionButton: React.FC<{}> = () => {
         disabled={
           isActionDisabled ||
           !isCreationBetButtonIdle ||
-          !isApproveBetButtonIdle
+          isApprovalProcessing ||
+          isApprovalButtonPending
         }
         onClick={handleActionButtonClick}
       >
