@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+
+type ToastType = "success" | "error" | "warning" | "info";
 
 interface Props {
   id: string;
@@ -7,36 +9,39 @@ interface Props {
   onClose?: () => void;
 }
 
-const Toast = ({ id, message, type, onClose }: Props) => {
+const Toast: React.FC<Props> = ({ id, message, type, onClose }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      if (onClose) onClose();
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [onClose]);
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false);
     if (onClose) onClose();
-  };
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!isHovered) {
+      const timer = setTimeout(handleClose, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isHovered, handleClose]);
 
   return (
     <div
       id={id}
-      className={`fixed top-0 left-0 right-0 mx-auto max-w-sm p-4 mt-16 text-gray-500 bg-white rounded-lg shadow ${
+      className={`fixed top-0 left-0 right-0 mx-auto max-w-sm p-4 mt-16 text-gray-500 bg-white z-50 shadow ${
         isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity duration-500 ${
         isVisible ? "pointer-events-auto" : "pointer-events-none"
       }`}
       role="alert"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
     >
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <div
-          className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg ${
+          className={`inline-flex items-center justify-center flex-shrink-0 w-8 h-8 ${
             type === "success"
               ? "text-green-500 bg-green-100 dark:bg-green-800 dark:text-green-200"
               : type === "error"
@@ -86,11 +91,11 @@ const Toast = ({ id, message, type, onClose }: Props) => {
             icon
           </span>
         </div>
-        <div className="ms-3 text-sm font-normal">{message}</div>
+        <div className="ms-3 text-sm font-normal grow">{message}</div>
         <button
           type="button"
           onClick={handleClose}
-          className="self-end -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+          className="self-end -mx-1.5 bg-white text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
           aria-label="Close"
         >
           <span className="sr-only">Close</span>

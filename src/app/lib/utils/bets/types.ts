@@ -80,6 +80,30 @@ export type BetResponse = {
   isWithdrawn: boolean;
   withdrawalTimestamp: string;
   lastActivityTimestamp: string;
+  isPaid: boolean;
 };
 
 export type BetsResponse = BetResponse[];
+
+export type TextSize =
+  | "sm"
+  | "md"
+  | "base"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl"
+  | "4xl"
+  | "5xl"
+  | "6xl"
+  | "7xl"
+  | "8xl"
+  | "9xl";
+
+export interface PixelArtLoaderProps {
+  size?: number;
+  pixelSize?: number;
+  gap?: number;
+  text: string;
+  textSize: TextSize;
+}

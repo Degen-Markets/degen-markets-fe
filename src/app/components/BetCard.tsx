@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useCallback, FC } from "react";
+import { FC, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
@@ -15,6 +15,7 @@ import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import { Hash } from "viem";
 import BetMetric from "@/app/components/BetMetric";
+import { base } from "wagmi/chains";
 
 interface Props {
   bet: BetResponse;
@@ -25,8 +26,23 @@ interface Props {
 const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
-  const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
-    bet;
+
+  const {
+    data: withdrawBetHash,
+    writeContractAsync: sendWithdrawBetTx,
+    isPending: isWithdrawPending,
+  } = useWriteContract();
+
+  const {
+    isSuccess: isWithdrawBetSuccess,
+    error: withDrawalError,
+    isLoading: isWithdrawBetProcessing,
+  } = useTransactionReceipt({
+    hash: withdrawBetHash,
+    chainId: base.id,
+  });
+
+  const { creator, acceptor, winner, id, isPaid, expirationTimestamp } = bet;
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
 
   const endTime = Number(expirationTimestamp) * 1000;
@@ -49,14 +65,30 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         : "bg-green-light";
 
   const createdByCurrentUser = creator.toLowerCase() === address?.toLowerCase();
-  const showWithdrawButton = createdByCurrentUser && !isWithdrawn && !acceptor;
+  const showWithdrawButton = createdByCurrentUser && !isPaid && !acceptor;
+  const isDisabled = isWithdrawPending || isWithdrawBetProcessing;
 
-  const { writeContract: sendWithdrawBetsTx, data: withdrawBetsHash } =
-    useWriteContract();
-  const { isSuccess: isWithdrawBetSuccess, isError: isWithdrawBetError } =
-    useTransactionReceipt({
-      hash: withdrawBetsHash,
-    });
+  const onWithdrawClick = useCallback(async () => {
+    try {
+      await sendWithdrawBetTx({
+        abi: DEGEN_BETS_ABI,
+        address: DEGEN_BETS_ADDRESS,
+        functionName: "withdrawBets",
+        args: [[id]],
+        chainId: base.id,
+      });
+    } catch (error: any) {
+      console.error("Error Withdrawing Bet", error);
+      showToast(error.shortMessage ?? error, "error");
+    }
+  }, [id, sendWithdrawBetTx]);
+
+  const getActionButtonText = (): string => {
+    if (!address) {
+      return "Wallet not connected";
+    }
+    return "Withdraw";
+  };
 
   useEffect(() => {
     if (isWithdrawBetSuccess) {
@@ -66,29 +98,27 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
       );
       onWithdraw?.();
     }
-  }, [isWithdrawBetSuccess, showToast, onWithdraw]);
+  }, [isWithdrawBetSuccess]);
 
   useEffect(() => {
-    if (isWithdrawBetError) {
+    if (!!withDrawalError) {
       showToast("Withdrawal failed. Please try again later.", "error");
       onWithdraw?.();
     }
-  }, [isWithdrawBetError, showToast, onWithdraw]);
-
-  const onWithdrawClick = useCallback(() => {
-    sendWithdrawBetsTx({
-      abi: DEGEN_BETS_ABI,
-      address: DEGEN_BETS_ADDRESS,
-      functionName: "withdrawBets",
-      args: [[id]],
-    });
-  }, [sendWithdrawBetsTx, id]);
+  }, [withDrawalError, showToast, onWithdraw]);
 
   const CTAButton = () => {
     if (showWithdrawButton) {
       return (
-        <ButtonPrimary size="regular" onClick={onWithdrawClick}>
-          Withdraw
+        <ButtonPrimary
+          loader={true}
+          disabled={isDisabled}
+          isProcessing={isWithdrawBetProcessing}
+          isPending={isWithdrawPending}
+          size="regular"
+          onClick={onWithdrawClick}
+        >
+          {getActionButtonText()}
         </ButtonPrimary>
       );
     }
