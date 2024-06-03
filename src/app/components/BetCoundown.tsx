@@ -40,7 +40,7 @@ const BetCountdown: React.FC<{
   }, [expirationTimestampInS]);
 
   return (
-    <div className={`flex items-center text-sm lg:text-2xl ${classNames}`}>
+    <div className={`flex items-center text-sm lg:text-xl ${classNames}`}>
       {message}:&nbsp;
       <span className={`tracking-wider ${countDownClassName}`}>
         {countdown}

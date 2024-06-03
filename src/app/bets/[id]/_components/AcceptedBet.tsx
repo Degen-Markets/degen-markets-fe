@@ -3,7 +3,7 @@ import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import BetCoundown from "@/app/components/BetCoundown";
-import Metric from "@/app/bets/[id]/_components/Metric";
+import MetricAndWager from "@/app/bets/[id]/_components/MetricAndWager";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { useAccount } from "wagmi";
 
@@ -56,7 +56,7 @@ const AcceptedBet = ({ bet }: Props) => {
           />
         </SubHeadline>
       </Heading>
-      <Metric bet={bet} />
+      <MetricAndWager bet={bet} />
       <div className="flex justify-center mt-4 md:mt-12">
         <ReplicateBetAction bet={bet} />
       </div>

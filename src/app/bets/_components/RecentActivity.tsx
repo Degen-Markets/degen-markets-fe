@@ -1,14 +1,10 @@
 "use client";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import {
-  betDuration,
-  checkLastActivity,
-  shortenHash,
-} from "@/app/lib/utils/bets/helpers";
-import { ArrowDown, ArrowUp } from "@/app/components/Icons";
+import { checkLastActivity, shortenHash } from "@/app/lib/utils/bets/helpers";
 import { Metric } from "@/app/lib/utils/bets/types";
 import { useAccount } from "wagmi";
+import MetricDisplay from "@/app/components/Metric";
 
 // TODO: add check for bets expiring limitation when new api provides it
 
@@ -62,16 +58,12 @@ const RecentActivity: React.FC<{}> = ({}) => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
                   {bet.ticker}
-                  <span
-                    className={`${bet.isBetOnUp ? "text-green-500" : "text-red-500"} flex items-center`}
-                  >
-                    {bet.metric === Metric.MARKET_CAP_DOMINANCE
-                      ? "Mrkt Cap Dom"
-                      : bet.metric}
-                    {/*{bet.metric.replaceAll("_", " ")}*/}
-                    {bet.isBetOnUp ? <ArrowUp /> : <ArrowDown />}
-                    <span className="text-neutral-800 pl-1">{`${betDuration(bet.creationTimestamp, bet.expirationTimestamp)}`}</span>
-                  </span>
+                  <MetricDisplay
+                    metric={bet.metric}
+                    creationTimestamp={bet.creationTimestamp}
+                    expirationTimestamp={bet.expirationTimestamp}
+                    isBetOnUp={bet.isBetOnUp}
+                  />
                 </div>
                 <div>
                   {bet.isWithdrawn

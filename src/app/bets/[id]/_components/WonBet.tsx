@@ -2,7 +2,7 @@ import { BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import Metric from "@/app/bets/[id]/_components/Metric";
+import MetricAndWager from "@/app/bets/[id]/_components/MetricAndWager";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { ButtonGradient } from "@/app/components/Button";
 import shareContent from "@/app/lib/utils/shareContent";
@@ -39,7 +39,7 @@ const WonBet = ({ bet }: Props) => {
           </div>
         </SubHeadline>
       </Heading>
-      <Metric bet={bet} hideStartingMetric={true} />
+      <MetricAndWager bet={bet} hideStartingMetric={true} />
       <Heading className="justify-center flex mt-4 md:-mt-8 -z-10">
         <Headline className="md:w-2/5 " size="compact">
           <div className="flex  text-xl justify-center items-center gap-4 ">
