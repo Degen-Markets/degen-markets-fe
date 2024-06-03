@@ -32,15 +32,16 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
     writeContractAsync: sendWithdrawBetTx,
     isIdle: isWithdrawBetButtonIdle,
     isPending: isWithdrawBetButtonPending,
-    isSuccess: isWithdrawBetProcessing,
-    reset: resetWithdrawBet,
   } = useWriteContract();
 
-  const { isSuccess: isWithdrawBetSuccess, error: withDrawalError } =
-    useTransactionReceipt({
-      hash: withdrawBetHash,
-      chainId: base.id,
-    });
+  const {
+    isSuccess: isWithdrawBetSuccess,
+    error: withDrawalError,
+    isLoading: isWithdrawBetProcessing,
+  } = useTransactionReceipt({
+    hash: withdrawBetHash,
+    chainId: base.id,
+  });
 
   const { creator, acceptor, winner, id, isWithdrawn, expirationTimestamp } =
     bet;
@@ -78,7 +79,6 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         chainId: base.id,
       });
     } catch (error: any) {
-      resetWithdrawBet();
       console.error("Error Withdrawing Bet", error);
       showToast(error.shortMessage ?? error, "error");
     }
@@ -108,7 +108,6 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         "success",
       );
       onWithdraw?.();
-      resetWithdrawBet();
     }
   }, [isWithdrawBetSuccess]);
 
@@ -116,7 +115,6 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
     if (!!withDrawalError) {
       showToast("Withdrawal failed. Please try again later.", "error");
       onWithdraw?.();
-      resetWithdrawBet();
     }
   }, [withDrawalError, showToast, onWithdraw]);
 

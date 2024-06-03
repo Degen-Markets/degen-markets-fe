@@ -23,27 +23,29 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     writeContractAsync: sendApprovalTx,
     isIdle: isApprovalButtonIdle,
     isPending: isApprovalButtonPending,
-    isSuccess: isApprovalProcessing,
-    reset: resetApproval,
   } = useWriteContract();
   const {
     data: betAcceptHash,
     writeContractAsync: sendAcceptBetTx,
     isIdle: isAcceptButtonIdle,
     isPending: isAcceptButtonPending,
-    isSuccess: isAcceptanceProcessing,
-    reset: resetAcceptBet,
   } = useWriteContract();
-  const { isSuccess: isBetAcceptedSuccess, error: betAcceptanceError } =
-    useTransactionReceipt({
-      hash: betAcceptHash,
-      chainId: base.id,
-    });
-  const { isSuccess: isApprovalSuccess, error: approvalError } =
-    useTransactionReceipt({
-      hash: approvalHash,
-      chainId: base.id,
-    });
+  const {
+    isSuccess: isBetAcceptedSuccess,
+    error: betAcceptanceError,
+    isLoading: isApprovalProcessing,
+  } = useTransactionReceipt({
+    hash: betAcceptHash,
+    chainId: base.id,
+  });
+  const {
+    isSuccess: isApprovalSuccess,
+    error: approvalError,
+    isLoading: isAcceptanceProcessing,
+  } = useTransactionReceipt({
+    hash: approvalHash,
+    chainId: base.id,
+  });
   const { showToast } = useToast();
   const { id, value, currency } = bet;
   const isEth = currency === zeroAddress;
@@ -73,7 +75,6 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     } catch (error: any) {
       console.error(error);
       showToast(error.shortMessage ?? error, "error");
-      resetAcceptBet();
     }
   };
 
@@ -88,7 +89,6 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     } catch (error: any) {
       console.error({ error });
       showToast(error.shortMessage ?? error, "error");
-      resetApproval();
     }
   };
 
@@ -114,15 +114,6 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       router.push(`/bets/${id}/success`);
     }
   }, [isBetAcceptedSuccess, id, router]);
-
-  useEffect(() => {
-    if (isApprovalSuccess) {
-      resetApproval();
-    }
-    if (isBetAcceptedSuccess) {
-      resetAcceptBet();
-    }
-  }, [isApprovalSuccess, isBetAcceptedSuccess]);
 
   const getActionButtonText = (): string => {
     if (!address) {

@@ -45,30 +45,33 @@ const ActionButton: React.FC<{}> = () => {
   const {
     writeContractAsync: sendApprovalTx,
     data: approvalHash,
-    isSuccess: isApprovalProcessing,
     isPending: isApprovalButtonPending,
-    reset: resetApproval,
   } = useWriteContract();
 
   const {
     writeContractAsync: sendCreateBetTx,
     data: createBetHash,
     variables: createBetVariables,
-    isSuccess: isCreateBetProcessing,
-    isIdle: isCreationBetButtonIdle,
     isPending: isCreateBetButtonPending,
   } = useWriteContract();
-  const { isSuccess: isCreateBetTxSuccess, error: betCreationError } =
-    useTransactionReceipt({
-      hash: createBetHash,
-      chainId: base.id,
-    });
+  const {
+    isSuccess: isCreateBetTxSuccess,
+    error: betCreationError,
+    isLoading: isCreateBetProcessing,
+  } = useTransactionReceipt({
+    hash: createBetHash,
+    chainId: base.id,
+  });
 
-  const { isSuccess: isApprovalSuccess, error: approvalError } =
-    useTransactionReceipt({
-      hash: approvalHash,
-      chainId: base.id,
-    });
+  const {
+    isSuccess: isApprovalSuccess,
+    error: approvalError,
+    isLoading: isApprovalProcessing,
+  } = useTransactionReceipt({
+    hash: approvalHash,
+    chainId: base.id,
+  });
+
   const { userAllowances } = useAllowances(
     isApprovalSuccess || isCreateBetTxSuccess,
     address || zeroAddress,
@@ -172,8 +175,7 @@ const ActionButton: React.FC<{}> = () => {
 
   useEffect(() => {
     if (isApprovalSuccess) {
-      showToast("Approvel Successfully", "success");
-      resetApproval();
+      showToast("Approval Successful", "success");
     }
     if (isCreateBetTxSuccess) {
       showToast("Bet Created Successfully", "success");
