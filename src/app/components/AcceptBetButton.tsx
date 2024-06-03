@@ -89,7 +89,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
     if (!isAllowanceEnough) {
       return `Approve ${currencySymbol}`;
     }
-    return "Accept Bet";
+    return "Approve and Bet";
   };
 
   return (

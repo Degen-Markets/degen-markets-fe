@@ -6,7 +6,7 @@ import { BetResponse } from "@/app/lib/utils/bets/types";
 import WonBet from "@/app/bets/[id]/_components/WonBet";
 import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
 import InProgressBet from "@/app/bets/[id]/_components/InProgressBet";
-import Wrapper from "@/app/components/Wrapper";
+import BetLayout from "@/app/layouts/BetLayout";
 
 const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [bet, setBet] = useState<BetResponse | null>(null);
@@ -29,11 +29,11 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const { acceptor, winner } = bet;
 
   return (
-    <Wrapper className="lg:max-w-screen-md">
+    <BetLayout>
       {winner && <WonBet bet={bet} />}
       {!winner && acceptor && <AcceptedBet bet={bet} />}
       {!winner && !acceptor && <InProgressBet bet={bet} address={address} />}
-    </Wrapper>
+    </BetLayout>
   );
 };
 

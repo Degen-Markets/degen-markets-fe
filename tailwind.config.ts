@@ -44,16 +44,19 @@ const config: Config = {
           light: "#FFDCA7",
           dark: "#FCBF63",
         },
-        mantis: {
+        green: {
           light: "#5EC269",
-          dark: "#5EC269",
+          main: "#5EC269",
+        },
+        red: {
+          main: "#F21212",
         },
       },
       boxShadow: {
         black:
           "4px 0px 0px 0px rgba(0,0,255,1), 0px 4px 0px 0px rgba(0,0,255,1), -4px 0px 0px 0px rgba(0,0,255,1), 0px -4px 0px 0px rgba(0,0,255,1), inset -8px -8px rgba(0,0,0,0.01)",
         button:
-          "4px 0px 0px 0px rgba(0,0,0,1), 0px 4px 0px 0px rgba(0,0,0,1), -4px 0px 0px 0px rgba(0,0,0,1), 0px -4px 0px 0px rgba(0,0,0,1), inset -8px -8px rgba(0,0,0,0.1)",
+          "4px 0px 0px 0px #003A55, 0px 4px 0px 0px #003A55, -4px 0px 0px 0px #003A55, 0px -4px 0px 0px #003A55, inset -8px -8px rgba(0,0,0,0.1)",
         "button-pressed":
           "4px 0px 0px 0px rgba(0,0,0,1), 0px 4px 0px 0px rgba(0,0,0,1), -4px 0px 0px 0px rgba(0,0,0,1), 0px -4px 0px 0px rgba(0,0,0,1), inset 8px 8px rgba(0,0,0,0.1)",
         "button-secondary":

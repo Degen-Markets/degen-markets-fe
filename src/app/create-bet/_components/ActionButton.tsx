@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonPrimary } from "@/app/components/Button";
+import { ButtonGradient } from "@/app/components/Button";
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { Currency } from "@/app/lib/utils/bets/types";
@@ -132,13 +132,13 @@ const ActionButton: React.FC<{}> = () => {
 
   return (
     <div className="flex justify-center">
-      <ButtonPrimary
+      <ButtonGradient
         size={"regular"}
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
         {getActionButtonText()}
-      </ButtonPrimary>
+      </ButtonGradient>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { BetResponse } from "@/app/lib/utils/bets/types";
 import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import Metric from "@/app/bets/[id]/_components/Metric";
+import MetricAndWager from "@/app/bets/[id]/_components/MetricAndWager";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import { ButtonGradient } from "@/app/components/Button";
 import shareContent from "@/app/lib/utils/shareContent";
@@ -23,8 +23,13 @@ const WonBet = ({ bet }: Props) => {
   return (
     <>
       <Heading>
-        <Headline>Winner</Headline>
-        <SubHeadline isTop={true} className="bg-transparent border-transparent">
+        <Headline className="uppercase text-mantis-dark lg:text-9xl">
+          Winner
+        </Headline>
+        <SubHeadline
+          isTop={true}
+          className="bg-transparent border-transparent lg:px-6"
+        >
           <div className="flex flex-col text-xl items-center ">
             <UserAvatar
               address={winner}
@@ -34,17 +39,16 @@ const WonBet = ({ bet }: Props) => {
           </div>
         </SubHeadline>
       </Heading>
-      <Metric bet={bet} hideStartingMetric={true} />
-      <Heading className="justify-center flex mt-4 md:mt-0">
-        <Headline className="md:w-2/5 " variant="light" size="compact">
+      <MetricAndWager bet={bet} hideStartingMetric={true} />
+      <Heading className="justify-center flex mt-4 md:-mt-8 -z-10">
+        <Headline className="md:w-2/5 " size="compact">
           <div className="flex  text-xl justify-center items-center gap-4 ">
             <UserAvatar address={loser} className="w-8 h-8" />
             <div className="text-lg">{getDisplayNameForAddress(loser)}</div>
-            <div className="uppercase text-2xl">Loser</div>
+            <div className="uppercase text-3xl text-red-main">Loser</div>
           </div>
         </Headline>
       </Heading>
-
       <div className="flex justify-center mt-8 gap-4">
         <ReplicateBetAction bet={bet} />
         <ButtonGradient size="small" className="w-2/5" onClick={handleShare}>

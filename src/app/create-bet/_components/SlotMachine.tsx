@@ -10,6 +10,7 @@ import {
 } from "@/app/lib/utils/bets/constants";
 import React from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
+import Image from "next/image";
 
 const SlotMachine: React.FC<{}> = ({}) => {
   const {
@@ -27,10 +28,8 @@ const SlotMachine: React.FC<{}> = ({}) => {
   } = useBetContext();
 
   return (
-    <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5 flex">
-      <div
-        className="flex mt-[-30px] md:mt-[-40px]" /* move reels out of bg on top */
-      >
+    <div className="pixel-art-border-sm-dark lg:pixel-art-border-lg-dark bg-prussian-dark px-1 lg:pl-3  lg:pr-0 py-1 lg:py-3  flex lg:w-4/5 ">
+      <div className="w-full grid grid-cols-5 lg:grid-cols-6 lg:gap-0.5">
         <Reel<Ticker>
           selectedOption={ticker}
           setSelectedOption={setTicker}
@@ -61,14 +60,16 @@ const SlotMachine: React.FC<{}> = ({}) => {
           reelOptions={currencyOptions}
           title="&nbsp;&nbsp;Bet in:&nbsp;&nbsp;"
         />
-      </div>
-      <div className="ml-[30px] w-[140px] mt-auto mb-auto lg:block hidden">
-        <img
-          onClick={randomizeAllOptions}
-          className="cursor-pointer"
-          src="../randomize-create-bet-button.svg"
-          alt="Randomize options button"
-        />
+        <div className="hidden lg:flex items-center justify-center p-2 ">
+          <Image
+            width={184}
+            height={181}
+            onClick={randomizeAllOptions}
+            className="cursor-pointer"
+            src="/randomize-create-bet-button.svg"
+            alt="Randomize options button"
+          />
+        </div>
       </div>
     </div>
   );

@@ -34,25 +34,30 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
   };
 
   return (
-    <div>
+    <>
       {isProMode ? null : (
         <div className="flex justify-center mt-[20px]">
           <div className="border-purple-medium border-2 w-max flex justify-center">
-            <div className="border-purple-medium border pr-5 pl-5 bg-blue-dark">
+            <div className="border-purple-medium border pr-5 pl-5 bg-prussian-dark">
               AMOUNT
             </div>
-            <input
-              className="text-blue-dark text-center"
-              type="number"
-              lang="en-US"
-              step=".000001"
-              value={value}
-              onChange={handleValueInput}
-            />
+            <div className="relative">
+              <input
+                className="text-blue-dark text-center"
+                type="number"
+                lang="en-US"
+                step=".000001"
+                value={value}
+                onChange={handleValueInput}
+              />
+              <span className="text-prussian-dark absolute top-0 right-2">
+                {currency.label}
+              </span>
+            </div>
           </div>
         </div>
       )}
-      <div className="text-blue-dark mb-4">
+      <div className="text-prussian-dark mb-4 text-xl">
         Bet&nbsp;
         {Number(value) > 0 && (!isEth || (isEth && ethPrice)) ? (
           <span className="text-yellow-light">{`$${calculatedValue} `}</span>
@@ -61,7 +66,7 @@ const BetValue: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
         {ticker.label}&apos;s {metric.label} goes&nbsp;
         {direction.label.toLowerCase()} in {durationLabel}.
       </div>
-    </div>
+    </>
   );
 };
 
