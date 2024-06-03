@@ -70,10 +70,10 @@ const MyBets = () => {
   useEffect(() => {
     if (isClaimedSuccess) {
       showToast(
-        `${unclaimedBets.length} ${unclaimedBets.length === 1 ? "bet" : "bets"} Claimed Successfully`,
+        `${unclaimedBets.length} ${unclaimedBets.length === 1 ? "Bet" : "Bets"} Claimed Successfully`,
         "success",
       );
-      fetchBetsByAddress(address as Address);
+      setTimeout(() => fetchBetsByAddress(address as Address), 500);
     }
   }, [isClaimedSuccess]);
 
@@ -102,35 +102,33 @@ const MyBets = () => {
   };
 
   return (
-    <>
-      <Wrapper>
-        {unclaimedBets.length > 0 && (
-          <div className="flex justify-end">
-            <div className="flex flex-col items-end">
-              <ButtonGradient
-                loader={true}
-                isPending={isClaimButtonPending}
-                isProcessing={isClaimButtonProcessing}
-                size="regular"
-                onClick={handleGetPaid}
-                disabled={buttonDisabled}
-                className="flex justify-center items-center space-x-2"
-              >
-                Rake In Profits
-              </ButtonGradient>
-              <p className="text-yellow-main drop-shadow-sm mt-1">
-                You have {unclaimedBets.length} unclaimed bet win(s)
-              </p>
-            </div>
+    <Wrapper>
+      {unclaimedBets.length >= 0 && (
+        <div className="flex justify-end">
+          <div className="flex flex-col items-end">
+            <ButtonGradient
+              loader={true}
+              isPending={isClaimButtonPending}
+              isProcessing={isClaimButtonProcessing}
+              size="regular"
+              onClick={handleGetPaid}
+              disabled={buttonDisabled}
+              className="flex justify-center items-center space-x-2"
+            >
+              Rake In Profits
+            </ButtonGradient>
+            <p className="text-yellow-main drop-shadow-sm mt-1">
+              You have {unclaimedBets.length} unclaimed bet win(s)
+            </p>
           </div>
-        )}
+        </div>
+      )}
 
-        {isLoading && (
-          <div className="text-center text-xl md:text-2xl">Loading...</div>
-        )}
-        <BetsTab bets={bets} />
-      </Wrapper>
-    </>
+      {isLoading && (
+        <div className="text-center text-xl md:text-2xl">Loading...</div>
+      )}
+      <BetsTab bets={bets} />
+    </Wrapper>
   );
 };
 
