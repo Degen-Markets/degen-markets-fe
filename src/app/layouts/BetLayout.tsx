@@ -21,7 +21,7 @@ const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
         <Image src={"/bear.svg"} width={217} height={486} alt="Bear" />
       </div>
       <Wrapper
-        className={`lg:max-w-screen-md min-h-[calc(100vh-300px)] ${className}`}
+        className={`lg:max-w-screen-md min-h-[calc(100vh-424px)] ${className}`}
       >
         {children}
       </Wrapper>

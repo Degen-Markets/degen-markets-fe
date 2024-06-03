@@ -20,7 +20,7 @@ const InProgressBet = ({ bet, address }: Props) => {
         <Headline>Bets that</Headline>
         <SubHeadline
           isTop={true}
-          className="flex gap-2  items-center justify-center bg-gradient-to-r from-pink-light to bg-yellow-light border-2 text-white border-blue-dark w-[92%]"
+          className="flex gap-2  items-center justify-center bg-gradient-to-r from-pink-light to bg-yellow-light border-2 text-white border-blue-dark w-[92%] lg:px-6"
         >
           <UserAvatar
             width={16}

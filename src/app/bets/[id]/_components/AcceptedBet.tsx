@@ -30,7 +30,7 @@ const AcceptedBet = ({ bet }: Props) => {
                 />
                 <span>{getDisplayNameForAddress(creator)}</span>
               </div>
-              <div className="text-2xl md:text-[175px]">VS</div>
+              <div className="text-2xl md:text-[165px]">VS</div>
               {acceptor && (
                 <div className="flex flex-col gap-1 items-center">
                   <UserAvatar
@@ -47,11 +47,12 @@ const AcceptedBet = ({ bet }: Props) => {
         </Headline>
         <SubHeadline
           isTop={true}
-          className="bg-mantis-dark border-white border-2 text-prussian-dark"
+          className="!bg-green-main text-prussian-dark border-white border-2 lg:px-6"
         >
           <BetCoundown
             expirationTimestampInS={Number(expirationTimestamp)}
             message="Bet ends in"
+            countDownClassName="text-white"
           />
         </SubHeadline>
       </Heading>

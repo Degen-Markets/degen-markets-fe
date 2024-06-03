@@ -26,7 +26,10 @@ const WonBet = ({ bet }: Props) => {
         <Headline className="uppercase text-mantis-dark lg:text-9xl">
           Winner
         </Headline>
-        <SubHeadline isTop={true} className="bg-transparent border-transparent">
+        <SubHeadline
+          isTop={true}
+          className="bg-transparent border-transparent lg:px-6"
+        >
           <div className="flex flex-col text-xl items-center ">
             <UserAvatar
               address={winner}

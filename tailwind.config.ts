@@ -44,9 +44,9 @@ const config: Config = {
           light: "#FFDCA7",
           dark: "#FCBF63",
         },
-        mantis: {
+        green: {
           light: "#5EC269",
-          dark: "#5EC269",
+          main: "#5EC269",
         },
         red: {
           main: "#F21212",

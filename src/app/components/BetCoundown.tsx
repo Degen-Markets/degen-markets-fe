@@ -4,10 +4,12 @@ const BetCountdown: React.FC<{
   expirationTimestampInS: number;
   classNames?: string;
   message?: string;
+  countDownClassName?: string;
 }> = ({
   expirationTimestampInS,
   classNames = "",
   message = "Countdown to accept bet",
+  countDownClassName,
 }) => {
   const [countdown, setCountdown] = useState("");
 
@@ -38,9 +40,11 @@ const BetCountdown: React.FC<{
   }, [expirationTimestampInS]);
 
   return (
-    <div className={`flex items-center text-sm md:text-lg ${classNames}`}>
+    <div className={`flex items-center text-sm lg:text-2xl ${classNames}`}>
       {message}:&nbsp;
-      <span className="tracking-wider">{countdown}</span>
+      <span className={`tracking-wider ${countDownClassName}`}>
+        {countdown}
+      </span>
     </div>
   );
 };
