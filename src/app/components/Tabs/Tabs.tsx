@@ -35,7 +35,7 @@ export const Tabs: FC<TabsProps> = ({ children, defaultActiveIndex = 0 }) => {
 
   return (
     <TabsContext.Provider value={contextValue}>
-      <div className="flex flex-col">{children}</div>
+      <div className="flex flex-col h-full">{children}</div>
     </TabsContext.Provider>
   );
 };
@@ -72,7 +72,7 @@ export const TabPanels: FC<{ children: ReactNode; className: string }> = ({
   children,
   className,
 }) => {
-  return <div className={`mt-2 md:mt-4 ${className}`}>{children}</div>;
+  return <div className={`mt-2 md:mt-4 h-full ${className}`}>{children}</div>;
 };
 
 export const TabPanel: FC<{
@@ -89,6 +89,6 @@ export const TabPanel: FC<{
   const isActive = activeIndex === index;
 
   return isActive ? (
-    <div className={`mt-2 md:mt-4 ${className}`}>{children}</div>
+    <div className={`mt-2 md:mt-4 h-full ${className}`}>{children}</div>
   ) : null;
 };

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Tab,
@@ -13,11 +14,14 @@ import {
 } from "@/app/lib/utils/bets/helpers";
 import BetCard from "@/app/components/BetCard";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
+import { Button, ButtonPrimary } from "./Button";
+import { useRouter } from "next/navigation";
 
 interface Props {
   bets: BetsResponse;
 }
 const BetsTab = ({ bets }: Props) => {
+  const router = useRouter();
   const categorizedBets = {
     open: bets.filter(isBetOpen),
     running: bets.filter(isBetRunning),
@@ -58,17 +62,35 @@ const BetsTab = ({ bets }: Props) => {
         ))}
       </TabList>
       <TabPanels className="">
-        {betCategories.map((category, index) => (
-          <TabPanel
-            key={index}
-            index={index}
-            className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-8"
-          >
-            {category.bets.map((bet) => (
-              <BetCard key={bet.id} bet={bet} />
-            ))}
-          </TabPanel>
-        ))}
+        {betCategories.map((category, index) => {
+          const hasBetsInCategory = category.bets.length > 0;
+          return (
+            <TabPanel
+              key={index}
+              index={index}
+              className={`grid grid-cols-1 ${hasBetsInCategory ? "md:grid-cols-2" : ""} gap-x-4 gap-y-8`}
+            >
+              {hasBetsInCategory ? (
+                category.bets.map((bet) => <BetCard key={bet.id} bet={bet} />)
+              ) : (
+                <div className="text-center flex">
+                  <div className="flex flex-col justify-center items-center w-full space-y-2">
+                    <p className="text-lg md:text-2xl text-prussian-dark">
+                      There are no {category.label.toLowerCase()} right now. Go
+                      make one!
+                    </p>
+                    <ButtonPrimary
+                      size="small"
+                      onClick={() => router.push("/create-bet")}
+                    >
+                      Create bet
+                    </ButtonPrimary>
+                  </div>
+                </div>
+              )}
+            </TabPanel>
+          );
+        })}
       </TabPanels>
     </Tabs>
   );
