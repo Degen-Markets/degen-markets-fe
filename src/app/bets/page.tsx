@@ -7,7 +7,7 @@ const Bets = async () => {
   const { data: fetchedBets } = await getBets();
   return (
     <Wrapper className="flex">
-      <div className="flex flex-col w-full lg:w-3/4 md:pr-4">
+      <div className="flex flex-col w-full lg:w-3/4 md:pr-4 h-auto">
         <BetsTab bets={fetchedBets} />
       </div>
       <div className="hidden lg:flex lg:w-1/4">

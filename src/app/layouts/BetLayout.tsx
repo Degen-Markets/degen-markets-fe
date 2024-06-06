@@ -7,14 +7,14 @@ const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
   className,
 }) => {
   return (
-    <main className="relative w-full">
-      <div className="absolute -top-16 right-0 -z-[1] hidden sm:block">
+    <main className="w-full">
+      <div className="absolute top-16 right-0 -z-[1] hidden sm:block">
         <Image src={"/bull.svg"} width={243} height={377} alt="Bull" />
       </div>
-      <div className="absolute -top-20 left-0 -z-[1] hidden sm:block">
+      <div className="absolute top-20 left-0 -z-[1] hidden sm:block">
         <Image src={"/left-cloud.png"} width={574} height={208} alt="Bull" />
       </div>
-      <div className="absolute bottom-10 right-0 -z-[1] hidden sm:block">
+      <div className="absolute -bottom-10 right-0 -z-[1] hidden sm:block">
         <Image src={"/right-cloud.png"} width={346} height={198} alt="Bull" />
       </div>
       <div className="absolute bottom-0 left-0 -z-[1] hidden sm:block">
