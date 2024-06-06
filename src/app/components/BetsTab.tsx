@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import {
   Tab,
   TabList,
@@ -14,7 +13,7 @@ import {
 } from "@/app/lib/utils/bets/helpers";
 import BetCard from "@/app/components/BetCard";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
-import { Button, ButtonPrimary } from "./Button";
+import { ButtonPrimary } from "./Button";
 import { useRouter } from "next/navigation";
 
 interface Props {
