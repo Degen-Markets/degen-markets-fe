@@ -15,9 +15,9 @@ const TopTokenList = ({ tickers }: { tickers: TopToken[] }) => {
             <div className=" col-span-2">Tokens</div>
             <div className="col-span-1 whitespace-nowrap text-right">Bets</div>
           </div>
-          {tickers.map(({ ticker, betCount }, index) => {
+          {tickers.map(({ ticker, betCount }) => {
             return (
-              <div className="grid grid-cols-3" key={`${ticker}-${index}`}>
+              <div className="grid grid-cols-3" key={`${ticker}`}>
                 <div className="col-span-2 flex space-x-2 items-center">
                   <div className="w-10 h-10 rounded-full flex justify-center items-center">
                     <Image
