@@ -112,25 +112,3 @@ export type TopToken = {
   ticker: string;
   betCount: string;
 };
-// BTC
-// DOGE
-// ETH
-// SOL
-// UNI
-// AAVE
-// FLOKI
-// ARB
-// RON // 2 token found
-// APE
-// BANANA // not found
-// LINK
-// BONK
-// BLUR
-// PEPE
-// dYdX // not found
-// MEME // not found
-// WIF
-// JUP
-// BODEN // not found
-// MFER // not found
-// PAC // not found
