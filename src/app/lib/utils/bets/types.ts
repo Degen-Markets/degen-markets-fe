@@ -107,3 +107,8 @@ export interface PixelArtLoaderProps {
   text: string;
   textSize: TextSize;
 }
+
+export type TopToken = {
+  ticker: string;
+  betCount: string;
+};
