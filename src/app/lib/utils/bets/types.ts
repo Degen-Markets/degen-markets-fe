@@ -112,3 +112,31 @@ export type TopToken = {
   ticker: string;
   betCount: string;
 };
+
+export interface IWalletMenuItem {
+  title: string;
+  link: string;
+  fn: () => void;
+}
+
+export interface WalletAccount {
+  address: string;
+  balanceDecimals?: number | undefined;
+  balanceFormatted?: string | undefined;
+  balanceSymbol?: string | undefined;
+  displayBalance?: string | undefined;
+  displayName: string;
+  ensAvatar?: string | undefined;
+  ensName?: string | undefined;
+  hasPendingTransactions: boolean;
+}
+
+export interface DropdownProps {
+  heading: React.ReactNode;
+  menu: IWalletMenuItem[];
+  accountModal: () => void;
+  account: WalletAccount;
+  setNav: React.Dispatch<React.SetStateAction<boolean>>;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}

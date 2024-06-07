@@ -1,1 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run the build command
+npm run build
+
+# Run lint-staged to format and lint files
 npx lint-staged

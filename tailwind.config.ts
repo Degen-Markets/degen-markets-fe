@@ -52,6 +52,12 @@ const config: Config = {
         red: {
           main: "#F21212",
         },
+        cadet: {
+          blue: {
+            light: "#a9b8ca",
+            dark: "#4475af",
+          },
+        },
       },
       boxShadow: {
         black:
