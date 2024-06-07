@@ -1,10 +1,10 @@
 import React from "react";
-import Image from "next/image";
 import cx from "classnames";
 import { IoIosArrowDown } from "react-icons/io";
 import { WalletButton } from "../Button/ButtonWallet";
-import { useAccount, useEnsAvatar, useEnsName } from "wagmi";
-
+import { useAccount } from "wagmi";
+import { Address } from "viem";
+import UserAvatar from "../UserAvatar";
 interface WalletButtonWithAvatarProps {
   className?: string;
   displayName: string;
@@ -17,20 +17,13 @@ const WalletButtonWithAvatar: React.FC<WalletButtonWithAvatarProps> = ({
   isOpen,
 }) => {
   const { address } = useAccount();
-  const { data: ensName } = useEnsName({ address });
-  const { data: ensAvatar } = useEnsAvatar({ name: ensName! });
   return (
     <WalletButton
       size="small"
       className={cx(className, "flex items-center space-x-2")}
     >
       <div className="w-8 h-8 rounded-full overflow-hidden flex justify-around items-center">
-        <Image
-          src={ensAvatar || "/user-avatars/avatar.png"}
-          width={32}
-          height={32}
-          alt={"user"}
-        />
+        <UserAvatar width={100} height={100} address={address as Address} />
       </div>
       <p>{displayName}</p>
       <IoIosArrowDown
