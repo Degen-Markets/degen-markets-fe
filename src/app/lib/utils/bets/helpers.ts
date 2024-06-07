@@ -48,22 +48,46 @@ export const betDuration = (
   return `${differenceInDays} ${differenceInDays === 1 ? "day" : "days"}`;
 };
 
-export const checkLastActivity = (
-  lastActivityTimestamp: string,
-  creationTimestamp: string,
-  acceptanceTimestamp: string,
-  acceptor: string | null,
-) => {
-  if (lastActivityTimestamp === creationTimestamp) {
-    return "created";
-  } else if (
-    lastActivityTimestamp === acceptanceTimestamp &&
-    acceptor !== null
-  ) {
-    return "accepted";
-  } else {
-    return "";
+export const getLastActivity = (
+  bet: BetResponse,
+): { activity: string; actor: string } => {
+  if (bet.lastActivityTimestamp === bet.creationTimestamp) {
+    return {
+      activity: "created",
+      actor: bet.creator,
+    };
   }
+  if (
+    bet.lastActivityTimestamp === bet.acceptanceTimestamp &&
+    bet.acceptor !== null
+  ) {
+    return {
+      activity: "accepted",
+      actor: bet.acceptor,
+    };
+  }
+  if (bet.lastActivityTimestamp === bet.winTimestamp && bet.winner !== null) {
+    return {
+      activity: "won",
+      actor: bet.winner,
+    };
+  }
+  if (bet.lastActivityTimestamp === bet.withdrawalTimestamp) {
+    return {
+      activity: "withdrew",
+      actor: bet.creator,
+    };
+  }
+  if (bet.lastActivityTimestamp === bet.expirationTimestamp) {
+    return {
+      activity: "expired",
+      actor: bet.creator,
+    };
+  }
+  return {
+    activity: "",
+    actor: "",
+  };
 };
 
 export const getBetDeadline = (bet: BetResponse): number =>
