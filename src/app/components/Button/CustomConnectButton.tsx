@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { ButtonGradient } from "@/app/components/Button/index";
 import WalletMenu from "../WalletMenu";
 import { WalletButton } from "./ButtonWallet";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useChains, useConnect, useDisconnect } from "wagmi";
 import WalletButtonWithAvatar from "../WalletMenu/WalletButtonWithAvatar";
+import { watchAccount, watchChainId } from "wagmi/actions";
+import { config } from "@/app/providers";
 
 interface Props {
   className?: string;
@@ -16,6 +18,12 @@ export const CustomConnectButton: React.FC<Props> = ({ className, setNav }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { disconnect } = useDisconnect();
   const { isConnecting } = useAccount();
+  const unwatch = watchChainId(config, {
+    onChange(chainId) {
+      console.log("Chain ID changed!", chainId);
+    },
+  });
+  unwatch();
   return (
     <ConnectButton.Custom>
       {({
@@ -27,7 +35,7 @@ export const CustomConnectButton: React.FC<Props> = ({ className, setNav }) => {
         mounted,
       }) => {
         const walletMenuItems = [
-          { title: "Profile", link: "", fn: () => null },
+          // { title: "Profile", link: "", fn: () => null },
           { title: "My Bets", link: "/my-bets", fn: () => null },
           { title: "Switch Network", link: "", fn: openChainModal },
           { title: "Disconnect", link: "", fn: disconnect },
@@ -65,14 +73,14 @@ export const CustomConnectButton: React.FC<Props> = ({ className, setNav }) => {
 
               if (chain.unsupported) {
                 return (
-                  <ButtonGradient
+                  <WalletButton
                     size="small"
                     onClick={openChainModal}
                     type="button"
                     className={className}
                   >
                     Wrong network
-                  </ButtonGradient>
+                  </WalletButton>
                 );
               }
 
