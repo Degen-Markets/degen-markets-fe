@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 const Navbar: React.FC = ({}) => {
   const [nav, setNav] = useState<boolean>(false);
   const router = useRouter();
+
   return (
     <>
       <ul className="hidden lg:flex gap-x-4">
@@ -16,10 +17,7 @@ const Navbar: React.FC = ({}) => {
         <Link href="/create-bet">
           <ButtonSecondary size="small">Create bet</ButtonSecondary>
         </Link>
-        <Link href="/my-bets">
-          <ButtonSecondary size="small">My bets</ButtonSecondary>
-        </Link>
-        <CustomConnectButton />
+        <CustomConnectButton setNav={setNav} />
       </ul>
       <div
         onClick={() => setNav(!nav)}
@@ -42,7 +40,7 @@ const Navbar: React.FC = ({}) => {
             onClick={() => setNav(!nav)}
             className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900  h-[100dvh] bg-opacity-80"
           ></div>
-          <ul className="flex flex-col absolute top-0 right-0 w-[80%] h-[100dvh] bg-neutral-100 text-neutral-800">
+          <ul className="flex flex-col absolute top-0 right-0 w-3/4 md:w-[40%] h-[100dvh] bg-neutral-100 text-neutral-800">
             <li className="pt-20 flex-1">
               <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base ">
                 <ButtonSecondary
@@ -54,18 +52,6 @@ const Navbar: React.FC = ({}) => {
                   }}
                 >
                   Home
-                </ButtonSecondary>
-              </div>
-              <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-                <ButtonSecondary
-                  className="px-8"
-                  onClick={() => {
-                    router.push("/bets");
-                    setNav(!nav);
-                  }}
-                  size="small"
-                >
-                  Existing bets
                 </ButtonSecondary>
               </div>
               <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
@@ -84,16 +70,17 @@ const Navbar: React.FC = ({}) => {
                 <ButtonSecondary
                   className="px-8"
                   onClick={() => {
-                    router.push("/my-bets");
+                    router.push("/bets");
                     setNav(!nav);
                   }}
                   size="small"
                 >
-                  My bets
+                  Existing bets
                 </ButtonSecondary>
               </div>
+
               <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-                <CustomConnectButton className="px-8" />
+                <CustomConnectButton setNav={setNav} className="px-8" />
               </div>
             </li>
             <li className="flex-end bg-blue-dark text-white">

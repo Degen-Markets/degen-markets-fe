@@ -10,7 +10,7 @@ const TopTokenList = ({ tickers }: { tickers: TopToken[] }) => {
         <div className="text-5xl uppercase pb-4 lg:whitespace-nowrap">
           TOP Traded Tokens
         </div>
-        <div className="flex flex-col gap-y-2 bg-white text-prussian-dark p-2 space-y-2">
+        <div className="flex flex-col gap-y-2 bg-white text-prussian-dark p-2 space-y-2 mt-3">
           <div className="grid grid-cols-3 pr-2">
             <div className=" col-span-2">Tokens</div>
             <div className="col-span-1 whitespace-nowrap text-right">Bets</div>

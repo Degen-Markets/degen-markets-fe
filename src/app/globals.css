@@ -172,6 +172,23 @@ input[type="number"] {
     0 8px #003a55;
   margin: 8px auto;
 }
+/* Extra Small Dark Pixel Art Border */
+.pixel-art-border-xs-dark {
+  box-shadow:
+    3px 0 #003a55,
+    -3px 0 #003a55,
+    0 -3px #003a55,
+    0 3px #003a55;
+  margin: 3px auto;
+}
+.pixel-art-border-xs-dark-light {
+  box-shadow:
+    5px 0 #ffffff,
+    -5px 0 #003a55,
+    0 -5px #003a55,
+    0 5px #ffffff;
+  margin: 5px auto;
+}
 
 .text-stroke-3 {
   text-shadow:

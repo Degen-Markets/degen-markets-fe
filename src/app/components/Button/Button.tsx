@@ -7,6 +7,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loader?: boolean;
   isPending?: boolean;
   isProcessing?: boolean;
+  pendingText?: string;
+  processingText?: string;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -17,6 +19,8 @@ export const Button: FC<ButtonProps> = ({
   loader = false,
   isPending,
   isProcessing,
+  pendingText = "Pending...",
+  processingText = "Processing...",
   ...props
 }) => {
   const buttonSize = size === "regular" ? "h-10 md:h-12" : "h-8 md:h-10";
@@ -29,10 +33,10 @@ export const Button: FC<ButtonProps> = ({
     >
       {isIdle && children}
       {isPending && loader && (
-        <PixelArtLoader text="Pending..." textSize="2xl" />
+        <PixelArtLoader text={pendingText} textSize="2xl" />
       )}
       {isProcessing && loader && (
-        <PixelArtLoader text="Processing..." textSize="2xl" />
+        <PixelArtLoader text={processingText} textSize="2xl" />
       )}
     </button>
   );
