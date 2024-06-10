@@ -242,3 +242,22 @@ input[type="number"] {
     opacity: 0;
   }
 }
+
+/* Hide scrollbar arrows and customize the scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  /* Width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border: 4px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

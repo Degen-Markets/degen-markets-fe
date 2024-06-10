@@ -1,13 +1,10 @@
 "use client";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React, { useState } from "react";
-import { ButtonGradient } from "@/app/components/Button/index";
 import WalletMenu from "../WalletMenu";
 import { WalletButton } from "./ButtonWallet";
-import { useAccount, useChains, useConnect, useDisconnect } from "wagmi";
+import { useDisconnect } from "wagmi";
 import WalletButtonWithAvatar from "../WalletMenu/WalletButtonWithAvatar";
-import { watchAccount, watchChainId } from "wagmi/actions";
-import { config } from "@/app/providers";
 
 interface Props {
   className?: string;
