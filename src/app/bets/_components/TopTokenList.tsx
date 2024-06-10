@@ -5,7 +5,7 @@ import React from "react";
 
 const TopTokenList = ({ tickers }: { tickers: TopToken[] }) => {
   return (
-    <div className="flex flex-col w-full items-start p-3 pr-10">
+    <div className="flex flex-col w-full items-start p-3 pt-0 pr-2">
       <div className="w-full h-full">
         <div className="text-5xl uppercase pb-4 lg:whitespace-nowrap">
           TOP Traded Tokens

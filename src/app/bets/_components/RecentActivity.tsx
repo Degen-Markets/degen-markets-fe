@@ -15,7 +15,7 @@ const RecentActivity: React.FC<{}> = ({}) => {
   });
 
   return (
-    <div className="flex flex-col w-full items-start p-3 pr-10">
+    <div className="flex flex-col w-full items-start p-3 pb-0 pr-2">
       <div className="w-full h-full">
         <div className="text-5xl uppercase pb-4">Recent activity</div>
         <div className="flex flex-col gap-y-2 bg-white">
