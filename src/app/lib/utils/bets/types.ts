@@ -68,10 +68,10 @@ export type BetResponse = {
   creator: Address;
   creationTimestamp: string;
   acceptor: Address | null;
+  acceptanceTimestamp: string | null;
   ticker: Ticker;
   metric: Metric;
   isBetOnUp: boolean;
-  expirationTimestamp: string;
   value: string;
   currency: Address;
   startingMetricValue: number | null;
@@ -79,7 +79,9 @@ export type BetResponse = {
   winner: Address | null;
   isWithdrawn: boolean;
   withdrawalTimestamp: string;
+  winTimestamp: string | null;
   lastActivityTimestamp: string;
+  expirationTimestamp: string;
   isPaid: boolean;
 };
 

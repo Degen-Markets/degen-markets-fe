@@ -40,30 +40,71 @@ export const betDuration = (
   }
 
   const differenceInMillis = expirationDate.getTime() - creationDate.getTime();
+  const differenceInSeconds = Math.ceil(differenceInMillis / 1000);
+  const differenceInMinutes = Math.round(differenceInSeconds / 60);
+  const differenceInHours = Math.round(differenceInMinutes / 60);
 
-  const differenceInDays = Math.floor(
-    differenceInMillis / (1000 * 60 * 60 * 24),
-  );
+  if (differenceInSeconds < 1) {
+    return "< 1 second";
+  }
+
+  if (differenceInMinutes < 1) {
+    return `${differenceInSeconds} ${differenceInSeconds === 1 ? "second" : "seconds"}`;
+  }
+
+  if (differenceInHours < 1) {
+    return `${differenceInMinutes} ${differenceInMinutes === 1 ? "minute" : "minutes"}`;
+  }
+
+  const differenceInDays = Math.round(differenceInHours / 24);
+
+  if (differenceInDays < 1) {
+    return `${differenceInHours} ${differenceInHours === 1 ? "hour" : "hours"}`;
+  }
 
   return `${differenceInDays} ${differenceInDays === 1 ? "day" : "days"}`;
 };
 
-export const checkLastActivity = (
-  lastActivityTimestamp: string,
-  creationTimestamp: string,
-  acceptanceTimestamp: string,
-  acceptor: string | null,
-) => {
-  if (lastActivityTimestamp === creationTimestamp) {
-    return "created";
-  } else if (
-    lastActivityTimestamp === acceptanceTimestamp &&
-    acceptor !== null
-  ) {
-    return "accepted";
-  } else {
-    return "";
+export const getLastActivity = (
+  bet: BetResponse,
+): { activity: string; actor: string } => {
+  if (bet.lastActivityTimestamp === bet.creationTimestamp) {
+    return {
+      activity: "created",
+      actor: bet.creator,
+    };
   }
+  if (
+    bet.lastActivityTimestamp === bet.acceptanceTimestamp &&
+    bet.acceptor !== null
+  ) {
+    return {
+      activity: "accepted",
+      actor: bet.acceptor,
+    };
+  }
+  if (bet.lastActivityTimestamp === bet.winTimestamp && bet.winner !== null) {
+    return {
+      activity: "won",
+      actor: bet.winner,
+    };
+  }
+  if (bet.lastActivityTimestamp === bet.withdrawalTimestamp) {
+    return {
+      activity: "withdrew",
+      actor: bet.creator,
+    };
+  }
+  if (bet.lastActivityTimestamp === bet.expirationTimestamp) {
+    return {
+      activity: "expired",
+      actor: bet.creator,
+    };
+  }
+  return {
+    activity: "",
+    actor: "",
+  };
 };
 
 export const getBetDeadline = (bet: BetResponse): number =>
