@@ -72,7 +72,9 @@ export const TabPanels: FC<{ children: ReactNode; className: string }> = ({
   children,
   className,
 }) => {
-  return <div className={`mt-2 md:mt-4 h-full ${className}`}>{children}</div>;
+  return (
+    <div className={`mt-2 md:mt-4 h-full pb-4 ${className}`}>{children}</div>
+  );
 };
 
 export const TabPanel: FC<{
@@ -89,6 +91,6 @@ export const TabPanel: FC<{
   const isActive = activeIndex === index;
 
   return isActive ? (
-    <div className={`mt-2 md:mt-4 h-full ${className}`}>{children}</div>
+    <div className={`mt-2 md:mt-4 h-full pb-4 ${className}`}>{children}</div>
   ) : null;
 };

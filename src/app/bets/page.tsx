@@ -13,7 +13,7 @@ const Bets = async () => {
       <div className="flex flex-col w-full lg:w-3/4 h-auto">
         <BetsTab bets={fetchedBets} />
       </div>
-      <div className="hidden lg:flex lg:w-2/6 flex-col">
+      <div className="hidden lg:flex lg:w-2/6 flex-col h-[95vh] overflow-y-auto sticky top-5 ">
         <TopTokenList tickers={fetchedTopTokens} />
         <RecentActivity />
       </div>
