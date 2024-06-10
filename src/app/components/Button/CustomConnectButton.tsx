@@ -17,13 +17,6 @@ interface Props {
 export const CustomConnectButton: React.FC<Props> = ({ className, setNav }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { disconnect } = useDisconnect();
-  const { isConnecting } = useAccount();
-  const unwatch = watchChainId(config, {
-    onChange(chainId) {
-      console.log("Chain ID changed!", chainId);
-    },
-  });
-  unwatch();
   return (
     <ConnectButton.Custom>
       {({
@@ -60,9 +53,6 @@ export const CustomConnectButton: React.FC<Props> = ({ className, setNav }) => {
                       size="small"
                       onClick={openConnectModal}
                       type="button"
-                      loader={true}
-                      pendingText="Connecting..."
-                      isPending={isConnecting}
                       className={className}
                     >
                       Connect wallet
