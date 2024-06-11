@@ -8,17 +8,17 @@ const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
 }) => {
   return (
     <main className="w-full">
-      <div className="absolute top-16 right-0 -z-[1] hidden sm:block">
-        <Image src={"/bull.svg"} width={243} height={377} alt="Bull" />
+      <div className="absolute top-24 right-0 -z-[1] hidden sm:block">
+        <Image src="/bull.png" width={300} height={300} alt="Bull" />
       </div>
       <div className="absolute top-20 left-0 -z-[1] hidden sm:block">
-        <Image src={"/left-cloud.png"} width={574} height={208} alt="Bull" />
+        <Image src="/left-cloud.png" width={574} height={208} alt="Bull" />
       </div>
       <div className="absolute -bottom-10 right-0 -z-[1] hidden sm:block">
-        <Image src={"/right-cloud.png"} width={346} height={198} alt="Bull" />
+        <Image src="/right-cloud.png" width={346} height={198} alt="Bull" />
       </div>
       <div className="absolute bottom-0 left-0 -z-[1] hidden sm:block">
-        <Image src={"/bear.svg"} width={217} height={486} alt="Bear" />
+        <Image src="/bear.png" width={300} height={300} alt="Bear" />
       </div>
       <Wrapper
         className={`lg:max-w-screen-md min-h-[calc(100vh-424px)] ${className}`}
