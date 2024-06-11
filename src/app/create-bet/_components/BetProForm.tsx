@@ -29,7 +29,7 @@ const BetProForm: React.FC = () => {
     "flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5";
 
   return (
-    <div className="eight-bit-border-20 bg-blue-dark px-5 md:px-10 pb-5">
+    <div className="pixel-art-border-lg-dark bg-prussian-dark px-5 md:px-10 pb-5">
       <div>
         <h3 className="text-4xl">PRO</h3>
         <div className="">
