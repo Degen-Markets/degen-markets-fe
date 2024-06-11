@@ -9,7 +9,7 @@ const games = [
     link: "/create-bet",
   },
   {
-    id: "game_2",
+    id: "price_is_right",
     label: "Coming soon",
   },
   {
