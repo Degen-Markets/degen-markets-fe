@@ -17,7 +17,7 @@ const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
       <div className="absolute -bottom-10 right-0 -z-[1] hidden sm:block">
         <Image src="/right-cloud.png" width={346} height={198} alt="Bull" />
       </div>
-      <div className="absolute bottom-0 left-0 -z-[1] hidden sm:block">
+      <div className="absolute -bottom-40 left-0 -z-[1] hidden sm:block">
         <Image src="/bear.png" width={300} height={300} alt="Bear" />
       </div>
       <Wrapper
