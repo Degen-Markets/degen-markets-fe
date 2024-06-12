@@ -73,7 +73,7 @@ const BetsTab = ({ bets }: Props) => {
                 category.bets.map((bet) => <BetCard key={bet.id} bet={bet} />)
               ) : (
                 <div className="text-center flex">
-                  <div className="flex flex-col justify-center items-center w-full space-y-2 h-[90vh]">
+                  <div className="flex flex-col items-center w-full space-y-2 p-8 ">
                     <p className="text-lg md:text-2xl text-prussian-dark">
                       There are no {category.label.toLowerCase()} right now. Go
                       make one!
