@@ -21,7 +21,7 @@ const WonBet = ({ bet }: Props) => {
     shareContent("I just won a bet", "Check out my winning bet:", url);
   };
   return (
-    <div className="lg:max-w-screen-md">
+    <>
       <Heading>
         <Headline className="uppercase text-mantis-dark lg:text-9xl">
           Winner
@@ -55,7 +55,7 @@ const WonBet = ({ bet }: Props) => {
           Share
         </ButtonGradient>
       </div>
-    </div>
+    </>
   );
 };
 
