@@ -9,13 +9,9 @@ import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import getCurrencyByAddress from "@/app/lib/getCurrencyByAddress";
 import { formatUnits } from "viem";
 import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
+import formatDateTime from "@/app/lib/utils/formatDateTime";
 
-interface Props {
-  bet: BetResponse;
-  address?: Address;
-}
-
-const PriceIsRightBetForm: FC<{
+interface PriceIsRightBetFormProps {
   type: "creator" | "acceptor";
   address?: Address;
   strikePriceAcceptor: string;
@@ -25,7 +21,16 @@ const PriceIsRightBetForm: FC<{
   ) => void;
   inputRef: React.RefObject<HTMLInputElement>;
   bet: BetResponse;
-}> = ({ type, address, strikePriceAcceptor, onChange, inputRef, bet }) => {
+}
+
+const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
+  type,
+  address,
+  strikePriceAcceptor,
+  onChange,
+  inputRef,
+  bet,
+}) => {
   const displayName = address
     ? getDisplayNameForAddress(address)
     : "Mystery Opponent";
@@ -37,6 +42,7 @@ const PriceIsRightBetForm: FC<{
     BigInt(bet.value),
     isEth ? 18 : STABLECOIN_DECIMALS,
   );
+  const endAt = formatDateTime(new Date(Number(bet.creationTimestamp) * 1000));
   return (
     <div>
       <AvatarWithLabel
@@ -51,7 +57,7 @@ const PriceIsRightBetForm: FC<{
       >
         <div className="grid grid-cols-2 gap-6">
           <FormInput label="Bet on:" value={bet.ticker} disabled />
-          <FormInput label="Duration:" value={bet.creationTimestamp} disabled />
+          <FormInput label="End at:" value={endAt} disabled />
         </div>
         <div className="grid grid-cols-2 gap-6">
           <FormInput label="Metric:" value="Price" disabled />
@@ -80,6 +86,11 @@ const PriceIsRightBetForm: FC<{
     </div>
   );
 };
+
+interface Props {
+  bet: BetResponse;
+  address?: Address;
+}
 
 const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
   const isCreatedByCurrentUser =

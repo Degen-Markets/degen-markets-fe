@@ -12,7 +12,8 @@ interface Props {
 const ReplicateBetAction = ({ bet, className }: Props) => {
   const router = useRouter();
   const replicateBet = async () => {
-    const { ticker, metric, isBetOnUp, value, currency } = bet;
+    const { ticker, metric, isBetOnUp, value, currency, strikePriceCreator } =
+      bet;
     const durationInSeconds = Math.round(
       ((Number(bet.expirationTimestamp) - Number(bet.creationTimestamp)) /
         (24 * 60 * 60)) *
@@ -27,7 +28,7 @@ const ReplicateBetAction = ({ bet, className }: Props) => {
     );
     if (bet.type === "closest-guess-wins") {
       router.push(
-        `/games/price-is-right/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}`,
+        `/games/price-is-right/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}&strikePriceCreator=${strikePriceCreator}`,
       );
     } else {
       router.push(

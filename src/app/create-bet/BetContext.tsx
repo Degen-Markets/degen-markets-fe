@@ -97,6 +97,7 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
   const defaultCurrency = searchParams.get("currency");
   const defaultValue = searchParams.get("value");
   const defaultBetType = searchParams.get("betType");
+  const defaultStrikePriceCreator = searchParams.get("strikePriceCreator");
 
   const [ticker, setTicker] = useState<ReelOption<Ticker>>(
     getDefaultOption(tickerOptions, defaultTicker as Ticker),
@@ -125,7 +126,9 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
     value: 0,
   });
 
-  const [strikePriceCreator, setStrikePriceCreator] = useState<string>("");
+  const [strikePriceCreator, setStrikePriceCreator] = useState<string>(
+    defaultStrikePriceCreator || "",
+  );
   const [strikePriceAcceptor, setStrikePriceAcceptor] = useState<string>("");
 
   const randomizeAllOptions = () => {

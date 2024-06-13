@@ -42,7 +42,7 @@ const BetProForm: React.FC = () => {
               title="&nbsp;Bet on:&nbsp;&nbsp;"
               isSearchable={true}
             />
-            <TimePicker<number> title="Duration:" placeHolder="Search Token" />
+            <TimePicker<number> title="End at:" placeHolder="End at" />
           </div>
 
           <div className={commonStyle}>

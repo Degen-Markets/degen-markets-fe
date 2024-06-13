@@ -29,8 +29,6 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     setStrikePriceAcceptor,
   } = useBetContext();
 
-  let defaultCurrency;
-
   const displayName = address
     ? getDisplayNameForAddress(address)
     : "Mystery Opponent.";
@@ -53,15 +51,15 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
           <Dropdown<Ticker>
             selectedOption={ticker}
             setSelectedOption={setTicker}
-            placeHolder="Search Token"
+            placeHolder="End at"
             searchOption={tickerOptions}
             title="&nbsp;Bet on:&nbsp;&nbsp;"
             isSearchable={true}
             disabled={disabled}
           />
           <TimePicker<number>
-            title="Duration:"
-            placeHolder="Search Token"
+            title="End at:"
+            placeHolder="End at"
             disabled={disabled}
           />
         </div>
@@ -96,7 +94,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
         </div>
         <div className={formGroupClasses}>
           <Dropdown<Address>
-            selectedOption={defaultCurrency || currency}
+            selectedOption={currency}
             setSelectedOption={setCurrency}
             placeHolder="Select Currency"
             searchOption={currencyOptions}
