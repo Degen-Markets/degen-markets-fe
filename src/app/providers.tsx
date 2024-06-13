@@ -1,47 +1,21 @@
 "use client";
 
-import "@rainbow-me/rainbowkit/styles.css";
 import * as React from "react";
-import {
-  RainbowKitProvider,
-  getDefaultWallets,
-  getDefaultConfig,
-} from "@rainbow-me/rainbowkit";
-import {
-  argentWallet,
-  trustWallet,
-  ledgerWallet,
-} from "@rainbow-me/rainbowkit/wallets";
-import { base } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { ToastProvider } from "@/app/components/Toast/ToastProvider";
-
-const { wallets } = getDefaultWallets();
-
-export const config = getDefaultConfig({
-  appName: "DM hub app",
-  projectId: process.env.NEXT_PUBLIC_RAINBOW_KIT_ID ?? "API_KEY",
-  wallets: [
-    ...wallets,
-    {
-      groupName: "Other",
-      wallets: [argentWallet, trustWallet, ledgerWallet],
-    },
-  ],
-  chains: [base],
-  ssr: true,
-});
+import { wagmiConfig } from "./lib/utils/wagmiConfig";
+import { DialogProvider } from "./components/Dialog/dialog";
 
 const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
-          <ToastProvider>{children}</ToastProvider>
-        </RainbowKitProvider>
+        <ToastProvider>
+          <DialogProvider>{children}</DialogProvider>
+        </ToastProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

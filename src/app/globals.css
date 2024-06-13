@@ -242,7 +242,9 @@ input[type="number"] {
     opacity: 0;
   }
 }
-
+.dropDown-hidden {
+  display: none;
+}
 /* Hide scrollbar arrows and customize the scrollbar */
 ::-webkit-scrollbar {
   width: 12px;

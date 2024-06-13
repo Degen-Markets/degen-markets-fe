@@ -87,27 +87,16 @@ export type BetResponse = {
 
 export type BetsResponse = BetResponse[];
 
-export type TextSize =
-  | "sm"
-  | "md"
-  | "base"
-  | "lg"
-  | "xl"
-  | "2xl"
-  | "3xl"
-  | "4xl"
-  | "5xl"
-  | "6xl"
-  | "7xl"
-  | "8xl"
-  | "9xl";
-
 export interface PixelArtLoaderProps {
   size?: number;
   pixelSize?: number;
   gap?: number;
+
+  loaderColor?: string;
+
+  textColor?: string;
   text: string;
-  textSize: TextSize;
+  textSize?: string;
 }
 
 export type TopToken = {
@@ -121,24 +110,9 @@ export interface IWalletMenuItem {
   fn: () => void;
 }
 
-export interface WalletAccount {
-  address: string;
-  balanceDecimals?: number | undefined;
-  balanceFormatted?: string | undefined;
-  balanceSymbol?: string | undefined;
-  displayBalance?: string | undefined;
-  displayName: string;
-  ensAvatar?: string | undefined;
-  ensName?: string | undefined;
-  hasPendingTransactions: boolean;
-}
-
 export interface DropdownProps {
   heading: React.ReactNode;
   menu: IWalletMenuItem[];
-  accountModal: () => void;
-  account: WalletAccount;
+  account: string;
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
