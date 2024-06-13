@@ -31,7 +31,6 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   if (!bet) return null;
 
   const { acceptor, winner } = bet;
-  console.log("BetPage re-render");
 
   return (
     <BetLayout

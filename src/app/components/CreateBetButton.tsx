@@ -41,8 +41,6 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   } = useBetContext();
 
   setBetType(betType);
-  // eslint-disable-next-line no-console
-  console.log("betType :", betType);
 
   const durationValue = isProMode
     ? BigInt(customDuration.value)
