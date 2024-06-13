@@ -19,6 +19,7 @@ const BetMetric = ({ bet, className }: Props) => {
     currency,
     isBetOnUp,
     creationTimestamp,
+    type,
   } = bet;
 
   const isEth = currency === zeroAddress;
@@ -39,7 +40,7 @@ const BetMetric = ({ bet, className }: Props) => {
         className={`flex gap-x-1 ${isBetOnUp ? "text-green-700" : "text-red-700"}`}
       >
         {metric}
-        {bet.isBetOnUp ? <ArrowUp /> : <ArrowDown />}
+        {type === "binary" && (bet.isBetOnUp ? <ArrowUp /> : <ArrowDown />)}
       </div>
       <div>{expirationDays} day(s)</div>
       <div>
