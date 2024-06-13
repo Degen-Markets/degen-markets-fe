@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useCallback } from "react";
+import React, { FC, useState, useCallback } from "react";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import AvatarWithLabel from "@/app/components/AvatarWithLabel";
 import PixelArtBorder from "@/app/components/PixelArtBorder";

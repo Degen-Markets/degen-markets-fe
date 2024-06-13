@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, Ref, memo } from "react";
+import { ChangeEvent, FC, memo } from "react";
 
 interface FormInputProps {
   label: string;
