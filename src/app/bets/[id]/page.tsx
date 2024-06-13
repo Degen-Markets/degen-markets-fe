@@ -5,7 +5,7 @@ import { getBetById } from "@/app/lib/utils/api/getBetById";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import WonBet from "@/app/bets/[id]/_components/WonBet";
 import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
-import InProgressBet from "@/app/bets/[id]/_components/InProgressBet";
+import InProgressBet from "@/app/bets/[id]/_components/InprogressBet/InProgressBet";
 import BetLayout from "@/app/layouts/BetLayout";
 
 const BetPage = ({ params: { id } }: { params: { id: string } }) => {

@@ -3,7 +3,7 @@
 import { ButtonGradient } from "@/app/components/Button";
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { Currency } from "@/app/lib/utils/bets/types";
+import { BetType, Currency } from "@/app/lib/utils/bets/types";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import {
   erc20Abi,
@@ -20,8 +20,12 @@ import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
+import { twMerge } from "tailwind-merge";
 
-const ActionButton: React.FC<{}> = () => {
+const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
+  betType,
+  className,
+}) => {
   const router = useRouter();
   const {
     value,
@@ -32,7 +36,13 @@ const ActionButton: React.FC<{}> = () => {
     direction,
     isProMode,
     customDuration,
+    setBetType,
+    strikePriceCreator,
   } = useBetContext();
+
+  setBetType(betType);
+  // eslint-disable-next-line no-console
+  console.log("betType :", betType);
 
   const durationValue = isProMode
     ? BigInt(customDuration.value)
@@ -121,11 +131,11 @@ const ActionButton: React.FC<{}> = () => {
         functionName: "createBet",
         args: [
           randomId,
-          "binary",
+          betType,
           durationValue,
           ticker.value,
           metric.value,
-          "",
+          strikePriceCreator,
           direction.value,
           valueInWei,
           currency.value,
@@ -187,7 +197,7 @@ const ActionButton: React.FC<{}> = () => {
   }, [isCreateBetTxSuccess]);
 
   return (
-    <div className="flex justify-center">
+    <div className={twMerge("flex justify-center", className)}>
       <ButtonGradient
         loader={true}
         isPending={isPending}
@@ -202,4 +212,4 @@ const ActionButton: React.FC<{}> = () => {
   );
 };
 
-export default ActionButton;
+export default CreateBetButton;

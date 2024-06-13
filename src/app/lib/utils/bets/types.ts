@@ -83,6 +83,7 @@ export type BetResponse = {
   lastActivityTimestamp: string;
   expirationTimestamp: string;
   isPaid: boolean;
+  type: BetType;
 };
 
 export type BetsResponse = BetResponse[];
@@ -142,3 +143,5 @@ export interface DropdownProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export type BetType = "binary" | "closest-guess-wins";
