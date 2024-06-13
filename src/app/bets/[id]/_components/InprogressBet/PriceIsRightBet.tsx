@@ -19,7 +19,6 @@ interface PriceIsRightBetFormProps {
     e: React.ChangeEvent<HTMLInputElement>,
     type: "creator" | "acceptor",
   ) => void;
-  inputRef: React.RefObject<HTMLInputElement>;
   bet: BetResponse;
 }
 
@@ -28,7 +27,6 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
   address,
   strikePriceAcceptor,
   onChange,
-  inputRef,
   bet,
 }) => {
   const displayName = address
@@ -71,7 +69,6 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
             disabled={type === "creator"}
             onChange={(e) => onChange(e, type)}
             placeholder="Price"
-            ref={inputRef}
           />
         </div>
         <div className="grid grid-cols-2 gap-6">
@@ -97,14 +94,12 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
     bet.creator.toLowerCase() === (address?.toLowerCase() || "");
 
   const [localStrikePriceAcceptor, setLocalStrikePriceAcceptor] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const handlePriceChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, type: "creator" | "acceptor") => {
       const value = e.target.value;
       if (/^\d*$/.test(value) && type === "acceptor") {
         setLocalStrikePriceAcceptor(value);
-        inputRef.current?.blur();
       }
     },
     [],
@@ -119,7 +114,6 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
           address={bet.creator}
           strikePriceAcceptor={localStrikePriceAcceptor}
           onChange={handlePriceChange}
-          inputRef={inputRef}
         />
       </div>
       <div className="flex items-center text-8xl">
@@ -132,7 +126,6 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
           address={address}
           strikePriceAcceptor={localStrikePriceAcceptor}
           onChange={handlePriceChange}
-          inputRef={inputRef}
         />
         {!isCreatedByCurrentUser && (
           <AcceptBetButton

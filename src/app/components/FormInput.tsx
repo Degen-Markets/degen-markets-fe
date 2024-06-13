@@ -6,11 +6,10 @@ interface FormInputProps {
   disabled?: boolean;
   placeholder?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  ref?: Ref<HTMLInputElement>;
 }
 
 const FormInput: FC<FormInputProps> = memo(
-  ({ label, value, disabled = false, placeholder = "", onChange, ref }) => (
+  ({ label, value, disabled = false, placeholder = "", onChange }) => (
     <div className="relative">
       <h4 className="pt-3 text-left whitespace-nowrap">{label}</h4>
       <input
@@ -19,7 +18,6 @@ const FormInput: FC<FormInputProps> = memo(
         onChange={onChange}
         className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase"
         placeholder={placeholder}
-        ref={ref}
       />
     </div>
   ),
