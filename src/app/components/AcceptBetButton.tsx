@@ -11,13 +11,15 @@ import { base } from "wagmi/chains";
 import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
+import { twMerge } from "tailwind-merge";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
   address: Address | undefined;
+  className?: string;
 }
 
-const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
+const AcceptBetButton = ({ bet, address, className }: AcceptBetButtonProps) => {
   const {
     data: approvalHash,
     writeContractAsync: sendApprovalTx,
@@ -140,6 +142,7 @@ const AcceptBetButton = ({ bet, address }: AcceptBetButtonProps) => {
       isProcessing={isProcessing}
       size={"regular"}
       onClick={handleAccept}
+      className={twMerge(className)}
     >
       {getActionButtonText()}
     </ButtonGradient>

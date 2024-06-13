@@ -25,9 +25,15 @@ const ReplicateBetAction = ({ bet, className }: Props) => {
       BigInt(value),
       isEth ? 18 : STABLECOIN_DECIMALS,
     );
-    router.push(
-      `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}`,
-    );
+    if (bet.type === "closest-guess-wins") {
+      router.push(
+        `/games/price-is-right/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}`,
+      );
+    } else {
+      router.push(
+        `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}`,
+      );
+    }
   };
 
   return (
