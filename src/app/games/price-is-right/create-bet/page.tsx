@@ -4,8 +4,8 @@ import BetForm from "@/app/games/price-is-right/create-bet/BetForm";
 import { useAccount } from "wagmi";
 import CreateBetButton from "@/app/components/CreateBetButton";
 import { BetProvider } from "@/app/create-bet/BetContext";
-import Wrapper from "@/app/components/Wrapper";
 import { Suspense } from "react";
+import BetLayout from "@/app/layouts/BetLayout";
 
 const styles = {
   headline: "text-4xl lg:text-8xl text-white text-center",
@@ -19,7 +19,11 @@ const CreateBetPage = () => {
   return (
     <Suspense>
       <BetProvider>
-        <Wrapper>
+        <BetLayout
+          className="lg:max-w-screen-xl"
+          leftImage="/price_is_right_creator.png"
+          rightImage="/price_is_right_acceptor.png"
+        >
           <h2 className={styles.headline}>Price is Right</h2>
           <div className={styles.formWrapper}>
             <div className={styles.betFormContainer}>
@@ -33,7 +37,7 @@ const CreateBetPage = () => {
               <BetForm disabled formType="acceptor" />
             </div>
           </div>
-        </Wrapper>
+        </BetLayout>
       </BetProvider>
     </Suspense>
   );
