@@ -5,13 +5,14 @@ import { getBetById } from "@/app/lib/utils/api/getBetById";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import WonBet from "@/app/bets/[id]/_components/WonBet";
 import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
-import InProgressBet from "@/app/bets/[id]/_components/InprogressBet/InProgressBet";
 import BetLayout from "@/app/layouts/BetLayout";
 import { twMerge } from "tailwind-merge";
+import InProgressBet from "@/app/bets/[id]/_components/InprogressBet/InProgressBet";
 
 const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [bet, setBet] = useState<BetResponse | null>(null);
   const { address } = useAccount();
+
   useEffect(() => {
     const fetchBet = async () => {
       try {
@@ -21,7 +22,10 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
         console.error("Error fetching bet:", error);
       }
     };
-    fetchBet();
+
+    if (id) {
+      fetchBet();
+    }
   }, [id]);
 
   if (!bet) return null;

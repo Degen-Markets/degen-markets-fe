@@ -1,136 +1,128 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useRef, useCallback } from "react";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
-import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import AvatarWithLabel from "@/app/components/AvatarWithLabel";
-import { colors } from "../../../../../../tailwind.config";
 import PixelArtBorder from "@/app/components/PixelArtBorder";
+import FormInput from "@/app/components/FormInput";
+import { colors } from "../../../../../../tailwind.config";
+import { BetResponse, Address, Currency } from "@/app/lib/utils/bets/types";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import { twMerge } from "tailwind-merge";
+import getCurrencyByAddress from "@/app/lib/getCurrencyByAddress";
+import { formatUnits } from "viem";
+import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 
 interface Props {
   bet: BetResponse;
   address?: Address;
 }
 
-const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
-  const isCreatedByCurrentUser =
-    bet.creator.toLowerCase() === address?.toLowerCase();
-
-  const styles = {
-    headline: "text-4xl lg:text-8xl text-white text-center",
-    betFormContainer: "flex flex-col items-center",
-    vsText: "flex items-center text-8xl",
-    formWrapper: "flex gap-8",
-  };
-
-  const [localStrikePriceAcceptor, setLocalStrikePriceAcceptor] = useState("");
-
-  const handlePriceChange = (
+const PriceIsRightBetForm: FC<{
+  type: "creator" | "acceptor";
+  address?: Address;
+  strikePriceAcceptor: string;
+  onChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     type: "creator" | "acceptor",
-  ) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value)) {
-      if (type === "acceptor") {
+  ) => void;
+  inputRef: React.RefObject<HTMLInputElement>;
+  bet: BetResponse;
+}> = ({ type, address, strikePriceAcceptor, onChange, inputRef, bet }) => {
+  const displayName = address
+    ? getDisplayNameForAddress(address)
+    : "Mystery Opponent";
+  const betCardClasses = "p-4 pt-16 z-1";
+  const currency = getCurrencyByAddress(bet.currency) || "";
+  const isEth = currency === Currency.ETH;
+
+  const formattedValueToDisplay = formatUnits(
+    BigInt(bet.value),
+    isEth ? 18 : STABLECOIN_DECIMALS,
+  );
+  return (
+    <div>
+      <AvatarWithLabel
+        address={address}
+        label={displayName}
+        className="translate-y-1/2 z-50"
+      />
+      <PixelArtBorder
+        color={colors.prussian.dark}
+        width={20}
+        className={betCardClasses}
+      >
+        <div className="grid grid-cols-2 gap-6">
+          <FormInput label="Bet on:" value={bet.ticker} disabled />
+          <FormInput label="Duration:" value={bet.creationTimestamp} disabled />
+        </div>
+        <div className="grid grid-cols-2 gap-6">
+          <FormInput label="Metric:" value="Price" disabled />
+          <FormInput
+            label="Price guess:"
+            value={
+              type === "creator"
+                ? bet.strikePriceCreator || ""
+                : strikePriceAcceptor
+            }
+            disabled={type === "creator"}
+            onChange={(e) => onChange(e, type)}
+            placeholder="Price"
+            ref={inputRef}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-6">
+          <FormInput label="Currency:" value={currency} disabled />
+          <FormInput
+            label="Amount:"
+            value={formattedValueToDisplay.toString()}
+            disabled
+          />
+        </div>
+      </PixelArtBorder>
+    </div>
+  );
+};
+
+const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
+  const isCreatedByCurrentUser =
+    bet.creator.toLowerCase() === (address?.toLowerCase() || "");
+
+  const [localStrikePriceAcceptor, setLocalStrikePriceAcceptor] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handlePriceChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>, type: "creator" | "acceptor") => {
+      const value = e.target.value;
+      if (/^\d*$/.test(value) && type === "acceptor") {
         setLocalStrikePriceAcceptor(value);
+        inputRef.current?.blur();
       }
-    }
-  };
-
-  const PriceIsRightBetForm = ({
-    type,
-    address,
-  }: {
-    type: "creator" | "acceptor";
-    address?: Address;
-    isDisabled?: boolean;
-  }) => {
-    const displayName = address
-      ? getDisplayNameForAddress(address)
-      : "Mystery Opponent";
-    const formGroupClasses = "grid grid-cols-2 gap-6";
-    const betCardClasses = twMerge("p-4 pt-16 z-1");
-
-    return (
-      <div>
-        <AvatarWithLabel
-          address={address}
-          label={displayName}
-          className="translate-y-1/2 z-50"
-        />
-        <PixelArtBorder
-          color={colors.prussian.dark}
-          width={20}
-          className={betCardClasses}
-        >
-          <div className={formGroupClasses}>
-            <FormInput label="Bet on:" value={bet.ticker} disabled />
-            <FormInput
-              label="Duration:"
-              value={bet.creationTimestamp}
-              disabled
-            />
-          </div>
-          <div className={formGroupClasses}>
-            <FormInput label="Metric:" value="Price" disabled />
-            <FormInput
-              label="Price guess:"
-              value={
-                type === "creator"
-                  ? bet.strikePriceCreator || ""
-                  : localStrikePriceAcceptor
-              }
-              disabled={type === "creator"}
-              onChange={(e) => handlePriceChange(e, type)}
-              placeholder="Price"
-            />
-          </div>
-          <div className={formGroupClasses}>
-            <FormInput label="Currency:" value={bet.currency} disabled />
-            <FormInput label="Amount:" value={bet.value} disabled />
-          </div>
-        </PixelArtBorder>
-      </div>
-    );
-  };
-
-  const FormInput = ({
-    label,
-    value,
-    disabled,
-    onChange,
-    placeholder,
-  }: {
-    label: string;
-    value: string;
-    disabled?: boolean;
-    placeholder?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  }) => {
-    return (
-      <div className="relative">
-        <h4 className="pt-3 text-left whitespace-nowrap">{label}</h4>
-        <input
-          disabled={disabled}
-          value={value}
-          onChange={onChange}
-          className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase"
-          placeholder={placeholder}
-        />
-      </div>
-    );
-  };
+    },
+    [],
+  );
 
   return (
-    <div className={styles.formWrapper}>
-      <div className={styles.betFormContainer}>
-        <PriceIsRightBetForm type="creator" isDisabled address={bet.creator} />
+    <div className="flex gap-8">
+      <div className="flex flex-col items-center">
+        <PriceIsRightBetForm
+          bet={bet}
+          type="creator"
+          address={bet.creator}
+          strikePriceAcceptor={localStrikePriceAcceptor}
+          onChange={handlePriceChange}
+          inputRef={inputRef}
+        />
       </div>
-      <div className={styles.vsText}>
+      <div className="flex items-center text-8xl">
         <span className="translate-y-1/2">VS</span>
       </div>
-      <div className={styles.betFormContainer}>
-        <PriceIsRightBetForm type="acceptor" address={address} />
+      <div className="flex flex-col items-center">
+        <PriceIsRightBetForm
+          bet={bet}
+          type="acceptor"
+          address={address}
+          strikePriceAcceptor={localStrikePriceAcceptor}
+          onChange={handlePriceChange}
+          inputRef={inputRef}
+        />
         {!isCreatedByCurrentUser && (
           <AcceptBetButton
             bet={bet}
