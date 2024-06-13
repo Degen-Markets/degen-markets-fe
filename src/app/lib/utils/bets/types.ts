@@ -84,6 +84,8 @@ export type BetResponse = {
   expirationTimestamp: string;
   isPaid: boolean;
   type: BetType;
+  strikePriceCreator: string | null;
+  strikePriceAcceptor: string | null;
 };
 
 export type BetsResponse = BetResponse[];

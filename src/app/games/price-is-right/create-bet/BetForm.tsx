@@ -15,26 +15,28 @@ import { colors } from "../../../../../tailwind.config";
 interface Props {
   disabled?: boolean;
   address?: Address;
+  formType: "creator" | "acceptor";
 }
 
-const BetForm: FC<Props> = ({ disabled, address }) => {
+const BetForm: FC<Props> = ({ disabled, address, formType }) => {
   const {
     ticker,
-    metric,
     currency,
+    strikePriceCreator,
     setTicker,
     setCurrency,
-    strikePriceCreator,
     setStrikePriceCreator,
+    setStrikePriceAcceptor,
   } = useBetContext();
+
+  let defaultCurrency;
 
   const displayName = address
     ? getDisplayNameForAddress(address)
     : "Mystery Opponent.";
 
   const formGroupClasses = "grid grid-cols-2 gap-6";
-  const betCardClasses = twMerge("p-4 pt-16 z-1", disabled && "opacity-80");
-
+  const betCardClasses = twMerge("p-4 pt-16 z-1");
   return (
     <div>
       <AvatarWithLabel
@@ -74,23 +76,27 @@ const BetForm: FC<Props> = ({ disabled, address }) => {
             />
           </div>
           <div className="relative">
-            <h4 className="pt-3 text-left whitespace-nowrap">
-              {metric.label}:
-            </h4>
+            <h4 className="pt-3 text-left whitespace-nowrap"> Price guess:</h4>
             <input
-              disabled={disabled}
-              value={disabled ? "XXXX" : strikePriceCreator}
+              disabled={formType === "acceptor"}
+              value={formType === "creator" ? strikePriceCreator : "XXXXX"}
               onChange={(e) => {
-                if (!disabled) setStrikePriceCreator(e.target.value.trim());
+                const value = e.target.value.trim();
+                if (formType === "creator") {
+                  setStrikePriceCreator(value);
+                } else {
+                  setStrikePriceAcceptor(value);
+                }
               }}
               className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase"
-              placeholder={metric.label}
+              placeholder="Price guess"
+              type="number"
             />
           </div>
         </div>
         <div className={formGroupClasses}>
           <Dropdown<Address>
-            selectedOption={currency}
+            selectedOption={defaultCurrency || currency}
             setSelectedOption={setCurrency}
             placeHolder="Select Currency"
             searchOption={currencyOptions}

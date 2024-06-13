@@ -122,10 +122,15 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         </ButtonPrimary>
       );
     }
-    if (!createdByCurrentUser && winner == null && acceptor == null) {
+    if (
+      !createdByCurrentUser &&
+      winner == null &&
+      acceptor == null &&
+      bet.type === "binary"
+    ) {
       return <AcceptBetButton bet={bet} address={address} />;
     }
-    if (!acceptor) {
+    if (!acceptor && bet.type === "binary") {
       return <ReplicateBetAction bet={bet} />;
     }
     return (

@@ -23,14 +23,14 @@ const CreateBetPage = () => {
           <h2 className={styles.headline}>Price is Right</h2>
           <div className={styles.formWrapper}>
             <div className={styles.betFormContainer}>
-              <BetForm address={address} />
+              <BetForm address={address} formType="creator" />
               <CreateBetButton betType="closest-guess-wins" className="mt-8" />
             </div>
             <div className={styles.vsText}>
               <span className="translate-y-1/2">VS</span>
             </div>
             <div className={styles.betFormContainer}>
-              <BetForm disabled />
+              <BetForm disabled formType="acceptor" />
             </div>
           </div>
         </Wrapper>

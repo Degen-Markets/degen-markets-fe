@@ -15,7 +15,7 @@ const BinaryBet: FC<Props> = ({ bet, address }) => {
   const isCreatedByCurrentUser =
     creator.toLowerCase() === address?.toLowerCase();
   return (
-    <>
+    <div className="lg:max-w-screen-md">
       <div className="flex justify-center">
         <BetCoundown
           classNames="bg-prussian-dark  p-2 border-4 border-purple-medium mb-8"
@@ -48,7 +48,7 @@ const BinaryBet: FC<Props> = ({ bet, address }) => {
           </>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

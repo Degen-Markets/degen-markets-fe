@@ -36,6 +36,7 @@ interface BetContextProps {
   isProMode: boolean;
   betType: BetType;
   strikePriceCreator: string;
+  strikePriceAcceptor: string;
   setTicker: Dispatch<SetStateAction<ReelOption<Ticker>>>;
   setMetric: Dispatch<SetStateAction<ReelOption<Metric>>>;
   setDirection: Dispatch<SetStateAction<ReelOption<boolean>>>;
@@ -47,6 +48,7 @@ interface BetContextProps {
   setCustomDuration: Dispatch<SetStateAction<ReelOption<number>>>;
   setIsProMode: Dispatch<SetStateAction<boolean>>;
   setStrikePriceCreator: Dispatch<SetStateAction<string>>;
+  setStrikePriceAcceptor: Dispatch<SetStateAction<string>>;
 }
 
 const defaultValues: BetContextProps = {
@@ -60,6 +62,7 @@ const defaultValues: BetContextProps = {
   isProMode: false,
   betType: "binary",
   strikePriceCreator: "",
+  strikePriceAcceptor: "",
   setTicker: () => {},
   setMetric: () => {},
   setDirection: () => {},
@@ -71,11 +74,17 @@ const defaultValues: BetContextProps = {
   setCustomDuration: () => {},
   setIsProMode: () => {},
   setStrikePriceCreator: () => {},
+  setStrikePriceAcceptor: () => {},
 };
 
 const BetContext = createContext<BetContextProps>(defaultValues);
 
 export const useBetContext = (): BetContextProps => useContext(BetContext);
+export const getDefaultOption = <T,>(
+  options: ReelOption<T>[],
+  value: T | null,
+): ReelOption<T> =>
+  options.find((option) => option.value === value) || options[0];
 
 export const BetProvider = ({ children }: { children: ReactNode }) => {
   const searchParams = useSearchParams();
@@ -88,12 +97,6 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
   const defaultCurrency = searchParams.get("currency");
   const defaultValue = searchParams.get("value");
   const defaultBetType = searchParams.get("betType");
-
-  const getDefaultOption = <T,>(
-    options: ReelOption<T>[],
-    value: T | null,
-  ): ReelOption<T> =>
-    options.find((option) => option.value === value) || options[0];
 
   const [ticker, setTicker] = useState<ReelOption<Ticker>>(
     getDefaultOption(tickerOptions, defaultTicker as Ticker),
@@ -123,7 +126,7 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [strikePriceCreator, setStrikePriceCreator] = useState<string>("");
-  ``;
+  const [strikePriceAcceptor, setStrikePriceAcceptor] = useState<string>("");
 
   const randomizeAllOptions = () => {
     setTicker(getRandomOption<Ticker>(tickerOptions));
@@ -146,6 +149,7 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
         isProMode,
         betType,
         strikePriceCreator,
+        strikePriceAcceptor,
         setTicker,
         setMetric,
         setDirection,
@@ -157,6 +161,7 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
         setCustomDuration,
         setIsProMode,
         setStrikePriceCreator,
+        setStrikePriceAcceptor,
       }}
     >
       {children}

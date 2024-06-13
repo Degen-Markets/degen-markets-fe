@@ -16,7 +16,7 @@ const AcceptedBet = ({ bet }: Props) => {
   const { address } = useAccount();
   const acceptor = bet.acceptor || address; // use connected wallet if acceptor is null
   return (
-    <>
+    <div className="lg:max-w-screen-md">
       <Heading>
         <Headline>
           <div className="flex justify-center">
@@ -60,7 +60,7 @@ const AcceptedBet = ({ bet }: Props) => {
       <div className="flex justify-center mt-4 md:mt-12">
         <ReplicateBetAction bet={bet} />
       </div>
-    </>
+    </div>
   );
 };
 
