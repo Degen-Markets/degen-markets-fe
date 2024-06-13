@@ -8,8 +8,6 @@ interface Props {
 }
 
 const InProgressBet = ({ bet, address }: Props) => {
-  console.log("InProgressBet re-render");
-
   return (
     <div className="w-full">
       {bet.type === "closest-guess-wins" ? (
