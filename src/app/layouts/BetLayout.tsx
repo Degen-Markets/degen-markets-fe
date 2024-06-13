@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from "react";
 import Image from "next/image";
 import Wrapper from "@/app/components/Wrapper";
+import { twMerge } from "tailwind-merge";
 
 const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
   children,
@@ -20,9 +21,7 @@ const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
       <div className="absolute bottom-0 left-0 -z-[1] hidden sm:block">
         <Image src="/bear.png" width={300} height={300} alt="Bear" />
       </div>
-      <Wrapper
-        className={`lg:max-w-screen-md min-h-[calc(100vh-424px)] ${className}`}
-      >
+      <Wrapper className={twMerge("min-h-[calc(100vh-424px)]", className)}>
         {children}
       </Wrapper>
     </main>

@@ -8,13 +8,15 @@ interface Props {
 }
 
 const InProgressBet = ({ bet, address }: Props) => {
-  // eslint-disable-next-line no-console
-  console.log("bet  :", bet);
-
-  if (bet.type === "closest-guess-wins") {
-    return <PriceIsRightBet bet={bet} address={address} />;
-  }
-  return <BinaryBet bet={bet} address={address} />;
+  return (
+    <div className="w-full">
+      {bet.type === "closest-guess-wins" ? (
+        <PriceIsRightBet bet={bet} address={address} />
+      ) : (
+        <BinaryBet bet={bet} address={address} />
+      )}
+    </div>
+  );
 };
 
 export default InProgressBet;

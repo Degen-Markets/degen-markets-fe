@@ -1,15 +1,25 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Address } from "@/app/lib/utils/bets/types";
 import UserAvatar from "@/app/components/UserAvatar";
+import { twMerge } from "tailwind-merge";
 
-const AvatarWithLabel: FC<{ address?: Address; label: string }> = ({
+interface AvatarWithLabelProps {
+  address?: Address;
+  label: string;
+  className?: string;
+}
+
+const AvatarWithLabel: FC<AvatarWithLabelProps> = ({
   address,
   label,
-}) => (
-  <div className="flex items-center flex-col translate-y-1/2 z-10">
-    <UserAvatar address={address} />
-    <div>{label}</div>
-  </div>
-);
+  className,
+}) => {
+  return (
+    <div className={twMerge("flex items-center flex-col", className)}>
+      <UserAvatar address={address} />
+      <div>{label}</div>
+    </div>
+  );
+};
 
 export default AvatarWithLabel;
