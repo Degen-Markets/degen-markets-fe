@@ -69,6 +69,7 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
             disabled={type === "creator"}
             onChange={(e) => onChange(e, type)}
             placeholder="Price"
+            type="number"
           />
         </div>
         <div className="grid grid-cols-2 gap-6">
