@@ -98,7 +98,7 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
   const handlePriceChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, type: "creator" | "acceptor") => {
       const value = e.target.value;
-      if (/^\d*$/.test(value) && type === "acceptor") {
+      if (type === "acceptor") {
         setLocalStrikePriceAcceptor(value);
       }
     },
