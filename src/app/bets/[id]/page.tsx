@@ -5,8 +5,9 @@ import { getBetById } from "@/app/lib/utils/api/getBetById";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import WonBet from "@/app/bets/[id]/_components/WonBet";
 import AcceptedBet from "@/app/bets/[id]/_components/AcceptedBet";
-import InProgressBet from "@/app/bets/[id]/_components/InProgressBet";
 import BetLayout from "@/app/layouts/BetLayout";
+import { twMerge } from "tailwind-merge";
+import InProgressBet from "@/app/bets/[id]/_components/InprogressBet/InProgressBet";
 
 const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const [bet, setBet] = useState<BetResponse | null>(null);
@@ -21,7 +22,10 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
         console.error("Error fetching bet:", error);
       }
     };
-    fetchBet();
+
+    if (id) {
+      fetchBet();
+    }
   }, [id]);
 
   if (!bet) return null;
@@ -29,7 +33,21 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
   const { acceptor, winner } = bet;
 
   return (
-    <BetLayout>
+    <BetLayout
+      className={twMerge(
+        bet.type === "closest-guess-wins" && "lg:max-w-screen-xl ",
+      )}
+      leftImage={
+        bet.type === "closest-guess-wins"
+          ? "/price_is_right_creator.png"
+          : "/bear.png"
+      }
+      rightImage={
+        bet.type === "closest-guess-wins"
+          ? "/price_is_right_acceptor.png"
+          : "/bull.png"
+      }
+    >
       {winner && <WonBet bet={bet} />}
       {!winner && acceptor && <AcceptedBet bet={bet} />}
       {!winner && !acceptor && <InProgressBet bet={bet} address={address} />}

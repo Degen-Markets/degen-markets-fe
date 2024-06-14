@@ -1,22 +1,21 @@
-import { Address, BetResponse } from "@/app/lib/utils/bets/types";
-import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
-import MetricAndWager from "@/app/bets/[id]/_components/MetricAndWager";
-import UserAvatar from "@/app/components/UserAvatar";
-import AcceptBetButton from "@/app/components/AcceptBetButton";
 import BetCoundown from "@/app/components/BetCoundown";
+import { Heading, Headline, SubHeadline } from "@/app/components/Heading";
+import UserAvatar from "@/app/components/UserAvatar";
+import MetricAndWager from "@/app/bets/[id]/_components/MetricAndWager";
+import AcceptBetButton from "@/app/components/AcceptBetButton";
+import { FC } from "react";
+import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 
 interface Props {
   bet: BetResponse;
   address: Address | undefined;
 }
-
-const InProgressBet = ({ bet, address }: Props) => {
+const BinaryBet: FC<Props> = ({ bet, address }) => {
   const { creator, expirationTimestamp } = bet;
   const isCreatedByCurrentUser =
     creator.toLowerCase() === address?.toLowerCase();
-
   return (
-    <div>
+    <>
       <div className="flex justify-center">
         <BetCoundown
           classNames="bg-prussian-dark  p-2 border-4 border-purple-medium mb-8"
@@ -49,8 +48,8 @@ const InProgressBet = ({ bet, address }: Props) => {
           </>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
-export default InProgressBet;
+export default BinaryBet;

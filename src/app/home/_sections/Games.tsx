@@ -10,7 +10,8 @@ const games = [
   },
   {
     id: "price_is_right",
-    label: "Coming soon",
+    label: "Price is Right",
+    link: "/games/price-is-right/create-bet",
   },
   {
     id: "game_3",

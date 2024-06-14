@@ -10,6 +10,7 @@ interface DropdownProps<T> {
   title: string;
   placeHolder: string;
   isSearchable?: boolean;
+  disabled?: boolean;
 }
 
 export default function Dropdown<T>({
@@ -19,6 +20,7 @@ export default function Dropdown<T>({
   title,
   placeHolder,
   isSearchable = false,
+  disabled,
 }: DropdownProps<T>) {
   const [filteredTokens, setFilteredTokens] = useState(searchOption);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -85,6 +87,7 @@ export default function Dropdown<T>({
         onFocus={() => setShowDropdown(true)}
         className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase w-full sm:w-fit"
         placeholder={`${placeHolder}...`}
+        disabled={disabled}
       />
       {showDropdown && (
         <ul
