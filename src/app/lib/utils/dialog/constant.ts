@@ -8,6 +8,7 @@ export const Icons: Record<string, string> = {
   WalletConnectLegacy: "/chainWalletIcon/WalletConnect.svg",
   "Coinbase Wallet": "/chainWalletIcon/CoinbaseWallet.svg",
   "Brave Wallet": "/chainWalletIcon/Brave.svg",
+  Phantom: "/chainWalletIcon/Phantom.svg",
 };
 
 export const dialogVariants = cva(
