@@ -24,7 +24,7 @@ const CreateBetPage = () => {
           leftImage="/price_is_right_creator.png"
           rightImage="/price_is_right_acceptor.png"
         >
-          <h2 className={styles.headline}>Price is Right</h2>
+          <h2 className={styles.headline}>The Price is Right</h2>
           <div className={styles.formWrapper}>
             <div className={styles.betFormContainer}>
               <BetForm address={address} formType="creator" />
