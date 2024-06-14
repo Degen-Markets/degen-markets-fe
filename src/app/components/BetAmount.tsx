@@ -1,15 +1,17 @@
 import { ChangeEvent } from "react";
-import { useBetContext } from "../BetContext";
+import { useBetContext } from "../create-bet/BetContext";
 
-interface ProBetAmountProps<T> {
+interface BetAmountProps<T> {
   title: string;
   placeHolder: string;
+  disabled?: boolean;
 }
 
-export default function ProBetAmount<T>({
+export default function BetAmount<T>({
   title,
   placeHolder,
-}: ProBetAmountProps<T>) {
+  disabled,
+}: BetAmountProps<T>) {
   const { value, setValue } = useBetContext();
 
   const handleValueInput = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +33,7 @@ export default function ProBetAmount<T>({
         step=".000001"
         className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase w-full sm:w-fit"
         placeholder={placeHolder}
+        disabled={disabled}
       />
     </div>
   );

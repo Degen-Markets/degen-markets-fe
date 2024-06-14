@@ -17,7 +17,7 @@ const BetComponent = () => {
             className={`min-w-[140px] ${
               isProMode
                 ? "bg-purple-medium !hover:bg-purple-light text-white"
-                : "bg-blue-dark text-white"
+                : "bg-prussian-dark text-white"
             }`}
             onClick={() => setIsProMode(true)}
           >
@@ -28,7 +28,7 @@ const BetComponent = () => {
             className={`min-w-[140px] ${
               !isProMode
                 ? "bg-purple-medium !hover:bg-purple-light text-white"
-                : "bg-blue-dark text-white"
+                : "bg-prussian-dark text-white"
             }`}
             onClick={() => setIsProMode(false)}
           >

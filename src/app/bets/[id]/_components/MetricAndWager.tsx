@@ -33,10 +33,11 @@ const MetricAndWager = ({ bet, hideStartingMetric }: Props) => {
           <div className="flex gap-2">
             <span>{ticker}</span>{" "}
             <MetricDisplay
+              betType={bet.type}
               metric={bet.metric}
-              isBetOnUp={bet.isBetOnUp}
-              creationTimestamp={bet.creationTimestamp}
-              expirationTimestamp={bet.expirationTimestamp}
+              isBetOnUp={isBetOnUp}
+              creationTimestamp={creationTimestamp}
+              expirationTimestamp={expirationTimestamp}
               className="text-white"
             />
           </div>

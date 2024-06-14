@@ -1,5 +1,5 @@
 import EthPrice from "@/app/create-bet/_components/EthPrice";
-import ActionButton from "@/app/create-bet/_components/ActionButton";
+import CreateBetButton from "@/app/components/CreateBetButton";
 import BetComponent from "./_components/BetComponent";
 import BetLayout from "@/app/layouts/BetLayout";
 
@@ -11,7 +11,7 @@ const CreateBetPage = () => {
       </h2>
       <BetComponent />
       <EthPrice />
-      <ActionButton />
+      <CreateBetButton betType="binary" />
     </BetLayout>
   );
 };

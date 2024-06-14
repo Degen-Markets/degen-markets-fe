@@ -23,6 +23,7 @@ const ActivityRow = ({ bet }: ActivityRowProps) => {
         <div className="flex items-center gap-1">
           {bet.ticker}
           <MetricDisplay
+            betType={bet.type}
             metric={bet.metric}
             creationTimestamp={bet.creationTimestamp}
             expirationTimestamp={bet.expirationTimestamp}

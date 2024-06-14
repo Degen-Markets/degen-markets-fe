@@ -1,27 +1,39 @@
 import { FC, PropsWithChildren } from "react";
 import Image from "next/image";
 import Wrapper from "@/app/components/Wrapper";
+import { twMerge } from "tailwind-merge";
 
-const BetLayout: FC<{ className?: string } & PropsWithChildren> = ({
+const BetLayout: FC<
+  {
+    className?: string;
+    leftImage?: string;
+    rightImage?: string;
+  } & PropsWithChildren
+> = ({
   children,
   className,
+  leftImage = "/bear.png",
+  rightImage = "/bull.png",
 }) => {
   return (
     <main className="w-full">
-      <div className="absolute top-16 right-0 -z-[1] hidden sm:block">
-        <Image src={"/bull.svg"} width={243} height={377} alt="Bull" />
+      <div className="absolute top-[200px] right-0 -z-[1] hidden sm:block">
+        <Image src={rightImage} width={300} height={300} alt="Bull" />
       </div>
-      <div className="absolute top-20 left-0 -z-[1] hidden sm:block">
-        <Image src={"/left-cloud.png"} width={574} height={208} alt="Bull" />
+      <div className="absolute top-[200px] left-0 -z-[1] hidden sm:block">
+        <Image src="/left-cloud.png" width={574} height={208} alt="Bull" />
       </div>
-      <div className="absolute -bottom-10 right-0 -z-[1] hidden sm:block">
-        <Image src={"/right-cloud.png"} width={346} height={198} alt="Bull" />
+      <div className="absolute top-[700px] right-0 -z-[1] hidden sm:block">
+        <Image src="/right-cloud.png" width={346} height={198} alt="Bull" />
       </div>
-      <div className="absolute bottom-0 left-0 -z-[1] hidden sm:block">
-        <Image src={"/bear.svg"} width={217} height={486} alt="Bear" />
+      <div className="absolute top-[700px] left-0 -z-[1] hidden sm:block">
+        <Image src={leftImage} width={300} height={300} alt="Bear" />
       </div>
       <Wrapper
-        className={`lg:max-w-screen-md min-h-[calc(100vh-424px)] ${className}`}
+        className={twMerge(
+          "lg:max-w-screen-md min-h-[calc(100vh-424px)]",
+          className,
+        )}
       >
         {children}
       </Wrapper>

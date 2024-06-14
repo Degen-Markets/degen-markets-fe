@@ -9,8 +9,9 @@ const games = [
     link: "/create-bet",
   },
   {
-    id: "game_2",
-    label: "Coming soon",
+    id: "price_is_right",
+    label: "Price is Right",
+    link: "/games/price-is-right/create-bet",
   },
   {
     id: "game_3",
