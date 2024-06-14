@@ -1,50 +1,16 @@
-import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogType,
-  useDialog,
-} from "./dialog";
-import { Button, ButtonPrimary } from "../Button";
-import { useAccount, useDisconnect, useBalance } from "wagmi";
 import {
   abbreviateETHBalance,
   getDisplayNameForAddress,
 } from "@/app/lib/utils/bets/helpers";
-import UserAvatar from "../UserAvatar";
-import { CgCopy } from "react-icons/cg";
-import { BiCheckDouble } from "react-icons/bi";
 import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
-import { CgExternal } from "react-icons/cg";
 import { ProfileDetailsProps } from "@/app/types/dialog";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import UserAvatar from "../../UserAvatar";
+import { CgCopy, CgExternal } from "react-icons/cg";
+import { Button, ButtonPrimary } from "../../Button";
+import { BiCheckDouble } from "react-icons/bi";
 
-const AccountDetailDialog = ({ children }: { children: ReactNode }) => {
-  const { open, setOpen } = useDialog(DialogType.AccountDetail);
-  const { address } = useAccount();
-  const { disconnect } = useDisconnect();
-  const { data: balance } = useBalance({ address });
-
-  if (!address) {
-    return null;
-  }
-
-  return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
-        <ProfileDetails
-          address={address}
-          balance={balance}
-          onDisconnect={disconnect}
-        />
-      </DialogContent>
-    </Dialog>
-  );
-};
-export default AccountDetailDialog;
-
-function ProfileDetails({
+export default function ProfileDetails({
   address,
   balance,
   onDisconnect,

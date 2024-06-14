@@ -8,27 +8,26 @@ import {
   DialogType,
   useDialog,
 } from "./dialog";
-import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
-import { Button } from "../Button";
+import { useAccount, useSwitchChain } from "wagmi";
 import Image from "next/image";
 import PixelArtLoader from "../PixelArtLoading";
 import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
 import { useToast } from "../Toast/ToastProvider";
+type ChainType = 8453;
 
 const SwitchChainDialog = () => {
   const { open, setOpen } = useDialog(DialogType.SwitchChain);
-  const { disconnect } = useDisconnect();
   const { chains, isPending, switchChainAsync } = useSwitchChain();
   const { chainId } = useAccount();
   const [pendingChainId, setPendingChainId] = useState<number>();
   const { isCurrentChainSupported } = useIsChainSupported();
   const { showToast } = useToast();
 
-  const handleSwitchChain = async (chainIdToSwitch: number) => {
+  const handleSwitchChain = async (chainIdToSwitch: ChainType) => {
     try {
       if (chainId !== chainIdToSwitch) {
         setPendingChainId(chainIdToSwitch);
-        await switchChainAsync({ chainId: chainIdToSwitch as any });
+        await switchChainAsync({ chainId: chainIdToSwitch });
       }
     } catch (error: any) {
       console.error(error);
@@ -45,7 +44,7 @@ const SwitchChainDialog = () => {
           <DialogTitle className="!text-4xl">Switch Networks</DialogTitle>
           {!isCurrentChainSupported && (
             <DialogDescription className="!text-2xl">
-              Wrong network detected, switch or disconnect to continue.
+              Wrong network detected, switch to continue.
             </DialogDescription>
           )}
         </DialogHeader>
@@ -53,7 +52,7 @@ const SwitchChainDialog = () => {
           {chains.map((chain) => (
             <div
               key={chain.id}
-              onClick={() => handleSwitchChain(chain.id)}
+              onClick={() => handleSwitchChain(chain.id as ChainType)}
               className="flex justify-between items-center cursor-pointer border my-2 p-2"
             >
               <div className="flex space-x-2 items-center">
@@ -79,16 +78,6 @@ const SwitchChainDialog = () => {
             </div>
           ))}
         </div>
-        <Button
-          size="small"
-          className="text-white"
-          onClick={() => {
-            disconnect();
-            setOpen(false);
-          }}
-        >
-          Disconnect
-        </Button>
       </DialogContent>
     </Dialog>
   );

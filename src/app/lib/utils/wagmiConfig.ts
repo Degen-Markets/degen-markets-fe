@@ -2,10 +2,10 @@ import { QueryClient } from "@tanstack/react-query";
 import { createClient } from "viem";
 import { createConfig, http } from "wagmi";
 import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
-import { base } from "wagmi/chains";
+import { base, sepolia } from "wagmi/chains";
 import { createConnector } from "wagmi";
 import { HiChevronDoubleDown } from "react-icons/hi";
-import { MetamaskIcon } from "@/app/components/Dialog/Icons/MetamaskIcon";
+import MetaMaskIcon from "../../../../public/chainWalletIcon/MetaMask.svg";
 
 const WALLET_CONNECT_PROJECT_ID = process.env
   .NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string;
@@ -25,10 +25,10 @@ function injectedWithFallback() {
       get icon() {
         if (typeof window !== "undefined") {
           return !window.ethereum || window.ethereum?.isMetaMask
-            ? (MetamaskIcon as any)
-            : (HiChevronDoubleDown as any);
+            ? MetaMaskIcon
+            : HiChevronDoubleDown;
         }
-        return HiChevronDoubleDown as any; // Fallback icon for SSR
+        return HiChevronDoubleDown; // Fallback icon for SSR
       },
       get name() {
         if (typeof window !== "undefined") {
