@@ -12,6 +12,7 @@ import Dropdown from "./Dropdown";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
+import { cx } from "class-variance-authority";
 
 const BetProForm: React.FC = () => {
   const {
@@ -29,11 +30,11 @@ const BetProForm: React.FC = () => {
     "flex items-start sm:items-center flex-col sm:flex-row space-x-0 sm:space-x-5";
 
   return (
-    <div className="pixel-art-border-lg-dark bg-prussian-dark px-5 md:px-10 pb-5">
+    <div className="pixel-art-border-lg-dark bg-prussian-dark px-5 md:px-10 pb-5 w-full max-w-md md:w-auto md:max-w-fit ">
       <div>
         <h3 className="text-4xl">PRO</h3>
         <div className="">
-          <div className={commonStyle}>
+          <div className={cx(commonStyle, "space-x-0 md:space-x-5 ")}>
             <Dropdown<Ticker>
               selectedOption={ticker}
               setSelectedOption={setTicker}
