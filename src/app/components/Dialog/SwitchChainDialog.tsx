@@ -17,17 +17,17 @@ type ChainType = 8453;
 
 const SwitchChainDialog = () => {
   const { open, setOpen } = useDialog(DialogType.SwitchChain);
-  const { chains, isPending, switchChainAsync } = useSwitchChain();
+  const { chains, isPending, switchChain } = useSwitchChain();
   const { chainId } = useAccount();
   const [pendingChainId, setPendingChainId] = useState<number>();
   const { isCurrentChainSupported } = useIsChainSupported();
   const { showToast } = useToast();
 
-  const handleSwitchChain = async (chainIdToSwitch: ChainType) => {
+  const handleSwitchChain = (chainIdToSwitch: ChainType) => {
     try {
       if (chainId !== chainIdToSwitch) {
         setPendingChainId(chainIdToSwitch);
-        await switchChainAsync({ chainId: chainIdToSwitch });
+        switchChain({ chainId: chainIdToSwitch });
       }
     } catch (error: any) {
       console.error(error);
