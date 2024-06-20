@@ -1,64 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { PixelArtLoaderProps, TextSize } from "../lib/utils/bets/types";
-import cx from "classnames";
+import { PixelArtLoaderProps } from "../lib/utils/bets/types";
 
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
   text = "Loading",
-  textSize = "2xl",
+  textSize = "text-2xl",
+  loaderColor = "bg-prussian-dark",
+  textColor = "text-prussian-dark",
 }) => {
   const numPixels = 9;
   const pixels = [...Array(numPixels)];
-  const textSizeClass = `text-${textSize}`;
 
   return (
-    <>
-      <div className="flex items-center space-x-2">
-        <div className={`relative w-5 h-5`}>
-          {pixels.map((_, index) => (
-            <div
-              key={index}
-              className={"absolute bg-prussian-dark w-1 h-1"}
-              style={{
-                top: `${Math.floor(index / 3) * (4 + 2)}px`,
-                left: `${(index % 3) * (4 + 2)}px`,
-                animation: `pixel-animation 1.2s ${(index * 0.2).toFixed(1)}s infinite ease-in-out`,
-              }}
-            />
-          ))}
-        </div>
-        <span className={`text-prussian-dark ${textSizeClass}`}>{text}</span>
+    <div className="flex items-center space-x-2">
+      <div className="relative w-5 h-5">
+        {pixels.map((_, index) => (
+          <div
+            key={index}
+            className={`absolute ${loaderColor} w-1 h-1`}
+            style={{
+              top: `${Math.floor(index / 3) * (4 + 2)}px`,
+              left: `${(index % 3) * (4 + 2)}px`,
+              animation: `pixel-animation 1.2s ${(index * 0.2).toFixed(1)}s infinite ease-in-out`,
+            }}
+          />
+        ))}
       </div>
-    </>
+      {text && <span className={`${textColor} ${textSize}`}>{text}</span>}
+    </div>
   );
 };
 
 PixelArtLoader.propTypes = {
   text: PropTypes.string.isRequired,
-  textSize: PropTypes.oneOf([
-    "sm",
-    "md",
-    "base",
-    "lg",
-    "xl",
-    "2xl",
-    "3xl",
-    "4xl",
-    "5xl",
-    "6xl",
-    "7xl",
-    "8xl",
-    "9xl",
-    "xl",
-    "2xl",
-    "3xl",
-    "4xl",
-    "5xl",
-    "6xl",
-    "7xl",
-    "8xl",
-    "9xl",
-  ]) as PropTypes.Validator<TextSize>,
+  textSize: PropTypes.string,
+  loaderColor: PropTypes.string,
+  textColor: PropTypes.string,
+};
+
+PixelArtLoader.defaultProps = {
+  text: "Loading",
+  textSize: "text-2xl",
+  loaderColor: "bg-prussian-dark",
+  textColor: "text-prussian-dark",
 };
 
 export default PixelArtLoader;

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { ButtonSecondary, CustomConnectButton } from "@/app/components/Button";
+import { ButtonSecondary } from "@/app/components/Button";
 import { CrossIcon, HamburgerIcon } from "@/app/components/Icons";
 import { useRouter } from "next/navigation";
+import { Web3Status } from "./Dialog/Web3Status";
 
 const Navbar: React.FC = ({}) => {
   const [nav, setNav] = useState<boolean>(false);
@@ -17,7 +18,7 @@ const Navbar: React.FC = ({}) => {
         <Link href="/create-bet">
           <ButtonSecondary size="small">Create bet</ButtonSecondary>
         </Link>
-        <CustomConnectButton setNav={setNav} />
+        <Web3Status setNav={setNav} />
       </ul>
       <div
         onClick={() => setNav(!nav)}
@@ -80,7 +81,7 @@ const Navbar: React.FC = ({}) => {
               </div>
 
               <div className="px-6 cursor-pointer uppercase py-4 tracking-wider text-base">
-                <CustomConnectButton setNav={setNav} className="px-8" />
+                <Web3Status setNav={setNav} />
               </div>
             </li>
             <li className="flex-end bg-blue-dark text-white">

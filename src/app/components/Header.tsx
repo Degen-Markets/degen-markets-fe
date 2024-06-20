@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import Navbar from "@/app/components/Navbar";
 import { FC } from "react";
+import SwitchChainDialog from "./Dialog/SwitchChainDialog";
+import ConnectorDialog from "./Dialog/ConnectorDialog";
 
 const Header: FC = () => {
   return (
@@ -11,6 +13,8 @@ const Header: FC = () => {
         <Link href="/" className="uppercase text-2xl md:text-8xl">
           Degen Markets
         </Link>
+        <SwitchChainDialog />
+        <ConnectorDialog />
         <Navbar />
       </div>
     </header>

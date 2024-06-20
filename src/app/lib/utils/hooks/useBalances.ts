@@ -1,11 +1,11 @@
 import { getBalance, readContract } from "@wagmi/core";
-import { config } from "@/app/providers";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { useEffect, useState } from "react";
 import { useTransactionReceipt } from "wagmi";
 import { erc20Abi } from "viem";
 import { SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
+import { wagmiConfig } from "../wagmiConfig";
 
 const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   const [userBalances, setUserBalances] = useState({
@@ -15,7 +15,7 @@ const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   });
   const getERC20Balances = async () => {
     if (address) {
-      const usdcBalance = (await readContract(config, {
+      const usdcBalance = (await readContract(wagmiConfig, {
         abi: erc20Abi,
         address: SETTLE_CURRENCY.USDC,
         functionName: "balanceOf",
@@ -23,7 +23,7 @@ const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
         chainId: base.id,
       })) as bigint;
 
-      const USDbCBalance = (await readContract(config, {
+      const USDbCBalance = (await readContract(wagmiConfig, {
         abi: erc20Abi,
         address: SETTLE_CURRENCY.USDbC,
         functionName: "balanceOf",
@@ -31,7 +31,7 @@ const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
         chainId: base.id,
       })) as bigint;
 
-      const ethBalance = await getBalance(config, {
+      const ethBalance = await getBalance(wagmiConfig, {
         address,
       });
 

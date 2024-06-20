@@ -8,13 +8,11 @@ import UserAvatar from "../UserAvatar";
 interface WalletButtonWithAvatarProps {
   className?: string;
   displayName: string;
-  isOpen: boolean;
 }
 
 const WalletButtonWithAvatar: React.FC<WalletButtonWithAvatarProps> = ({
   className,
   displayName,
-  isOpen,
 }) => {
   const { address } = useAccount();
   return (
@@ -26,9 +24,7 @@ const WalletButtonWithAvatar: React.FC<WalletButtonWithAvatarProps> = ({
         <UserAvatar width={100} height={100} address={address as Address} />
       </div>
       <p>{displayName}</p>
-      <IoIosArrowDown
-        className={`transform transition-transform ${isOpen ? "rotate-180" : ""}`}
-      />
+      <IoIosArrowDown />
     </WalletButton>
   );
 };
