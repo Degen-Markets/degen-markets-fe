@@ -247,8 +247,7 @@ input[type="number"] {
 }
 /* Hide scrollbar arrows and customize the scrollbar */
 ::-webkit-scrollbar {
-  /*width: 12px;*/
-  /* Width of the entire scrollbar */
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
