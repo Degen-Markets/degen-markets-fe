@@ -4,7 +4,9 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
+  useCallback,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -32,7 +34,7 @@ interface BetContextProps {
   duration: ReelOption<number>;
   currency: ReelOption<Address>;
   value: string;
-  customDuration: ReelOption<number>;
+  customDuration: ReelOption<bigint>;
   isProMode: boolean;
   betType: BetType;
   strikePriceCreator: string;
@@ -45,10 +47,14 @@ interface BetContextProps {
   setValue: Dispatch<SetStateAction<string>>;
   setBetType: Dispatch<SetStateAction<BetType>>;
   randomizeAllOptions: () => void;
-  setCustomDuration: Dispatch<SetStateAction<ReelOption<number>>>;
+  setCustomDuration: Dispatch<SetStateAction<ReelOption<bigint>>>;
   setIsProMode: Dispatch<SetStateAction<boolean>>;
   setStrikePriceCreator: Dispatch<SetStateAction<string>>;
   setStrikePriceAcceptor: Dispatch<SetStateAction<string>>;
+  error: string;
+  setError: Dispatch<SetStateAction<string>>;
+
+  validateFields: () => void;
 }
 
 const defaultValues: BetContextProps = {
@@ -58,8 +64,8 @@ const defaultValues: BetContextProps = {
   duration: durationOptions[0],
   currency: currencyOptions[0],
   value: "10",
-  customDuration: { label: "", value: 0 },
-  isProMode: false,
+  customDuration: { label: "", value: 0n },
+  isProMode: true,
   betType: "binary",
   strikePriceCreator: "",
   strikePriceAcceptor: "",
@@ -75,6 +81,9 @@ const defaultValues: BetContextProps = {
   setIsProMode: () => {},
   setStrikePriceCreator: () => {},
   setStrikePriceAcceptor: () => {},
+  error: "",
+  setError: () => {},
+  validateFields: () => {},
 };
 
 const BetContext = createContext<BetContextProps>(defaultValues);
@@ -89,6 +98,7 @@ export const getDefaultOption = <T,>(
 export const BetProvider = ({ children }: { children: ReactNode }) => {
   const searchParams = useSearchParams();
   const [isProMode, setIsProMode] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   const defaultTicker = searchParams.get("ticker");
   const defaultMetric = searchParams.get("metric");
@@ -121,15 +131,34 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
   const [betType, setBetType] = useState<BetType>(
     (defaultBetType || "binary") as BetType,
   );
-  const [customDuration, setCustomDuration] = useState<ReelOption<number>>({
+  const [customDuration, setCustomDuration] = useState<ReelOption<bigint>>({
     label: "",
-    value: 0,
+    value: 0n,
   });
 
   const [strikePriceCreator, setStrikePriceCreator] = useState<string>(
     defaultStrikePriceCreator || "",
   );
   const [strikePriceAcceptor, setStrikePriceAcceptor] = useState<string>("");
+
+  const validateFields = useCallback(() => {
+    if (isProMode && (!customDuration.value || customDuration.value <= 0n)) {
+      setError("Please enter a valid time.");
+      return false;
+    }
+
+    if (!strikePriceCreator) {
+      setError("Please enter a valid price guess.");
+      return false;
+    }
+
+    setError("");
+    return true;
+  }, [customDuration.value, isProMode, strikePriceCreator]);
+
+  useEffect(() => {
+    validateFields();
+  }, [customDuration.value, strikePriceCreator, isProMode, validateFields]);
 
   const randomizeAllOptions = () => {
     setTicker(getRandomOption<Ticker>(tickerOptions));
@@ -165,6 +194,9 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
         setIsProMode,
         setStrikePriceCreator,
         setStrikePriceAcceptor,
+        error,
+        setError,
+        validateFields,
       }}
     >
       {children}
