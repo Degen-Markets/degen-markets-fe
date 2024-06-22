@@ -211,11 +211,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
-        {error ? (
-          <p className="text-red-700">{error}</p>
-        ) : (
-          getActionButtonText()
-        )}
+        {error ? error : getActionButtonText()}
       </ButtonGradient>
     </div>
   );

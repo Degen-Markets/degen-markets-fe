@@ -41,7 +41,6 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value.trim();
     const numericValue = Number(inputValue);
-
     setError(
       numericValue <= 0 || isNaN(numericValue)
         ? "Please enter a price guess!"

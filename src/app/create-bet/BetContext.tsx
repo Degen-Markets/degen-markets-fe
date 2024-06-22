@@ -7,6 +7,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 
@@ -22,9 +23,10 @@ import {
   directionOptions,
   durationOptions,
   metricOptions,
+  PRICE_IS_RIGHT,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Address } from "viem";
 
 interface BetContextProps {
@@ -100,6 +102,10 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
   const [isProMode, setIsProMode] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
+  const pathname = usePathname();
+
+  const isGameRoute = useMemo(() => pathname === PRICE_IS_RIGHT, [pathname]);
+
   const defaultTicker = searchParams.get("ticker");
   const defaultMetric = searchParams.get("metric");
   const defaultDirection = searchParams.get("direction");
@@ -147,18 +153,22 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
       return false;
     }
 
-    if (!strikePriceCreator) {
+    if (isGameRoute && !strikePriceCreator) {
       setError("Please enter a valid price guess.");
       return false;
     }
-
     setError("");
     return true;
-  }, [customDuration.value, isProMode, strikePriceCreator]);
+  }, [isProMode, customDuration.value, isGameRoute, strikePriceCreator]);
 
   useEffect(() => {
     validateFields();
-  }, [customDuration.value, strikePriceCreator, isProMode, validateFields]);
+  }, [
+    customDuration.value,
+    strikePriceCreator,
+    strikePriceAcceptor,
+    validateFields,
+  ]);
 
   const randomizeAllOptions = () => {
     setTicker(getRandomOption<Ticker>(tickerOptions));

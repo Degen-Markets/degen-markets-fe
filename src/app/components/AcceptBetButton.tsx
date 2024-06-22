@@ -12,6 +12,7 @@ import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { twMerge } from "tailwind-merge";
+import { useBetContext } from "../create-bet/BetContext";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
@@ -54,6 +55,7 @@ const AcceptBetButton = ({
     hash: approvalHash,
     chainId: base.id,
   });
+  const { error: AcceptanceContextError } = useBetContext();
   const isPending = isApprovalButtonPending || isAcceptButtonPending;
   const isProcessing = isAcceptanceProcessing || isApprovalProcessing;
 
@@ -73,7 +75,8 @@ const AcceptBetButton = ({
 
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
-  const isDisabled = isPending || isProcessing || !isBalanceEnough;
+  const isDisabled =
+    isPending || isProcessing || !isBalanceEnough || !!AcceptanceContextError;
 
   const acceptBet = async () => {
     try {
@@ -150,7 +153,7 @@ const AcceptBetButton = ({
       onClick={handleAccept}
       className={twMerge(className)}
     >
-      {getActionButtonText()}
+      {AcceptanceContextError ? AcceptanceContextError : getActionButtonText()}
     </ButtonGradient>
   );
 };
