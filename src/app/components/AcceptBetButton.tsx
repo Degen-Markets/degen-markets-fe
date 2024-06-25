@@ -19,6 +19,7 @@ interface AcceptBetButtonProps {
   address: Address | undefined;
   className?: string;
   strikePriceAcceptor?: string;
+  error?: string;
 }
 
 const AcceptBetButton = ({
@@ -26,6 +27,7 @@ const AcceptBetButton = ({
   address,
   className,
   strikePriceAcceptor = "",
+  error,
 }: AcceptBetButtonProps) => {
   const {
     data: approvalHash,
@@ -76,7 +78,11 @@ const AcceptBetButton = ({
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
   const isDisabled =
-    isPending || isProcessing || !isBalanceEnough || !!AcceptanceContextError;
+    !!error ||
+    isPending ||
+    isProcessing ||
+    !isBalanceEnough ||
+    !!AcceptanceContextError;
 
   const acceptBet = async () => {
     try {
@@ -131,6 +137,9 @@ const AcceptBetButton = ({
   }, [isBetAcceptedSuccess, id, router]);
 
   const getActionButtonText = (): string => {
+    if (error) {
+      return error;
+    }
     if (!address) {
       return "Wallet not connected";
     }
