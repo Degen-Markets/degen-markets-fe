@@ -1,12 +1,15 @@
 import { ReelOption } from "@/app/lib/utils/bets/types";
+import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { MdArrowBackIos } from "react-icons/md";
+import { useBetContext } from "../create-bet/BetContext";
 
 type ReelProps<T> = {
   reelOptions: ReelOption<T>[];
   title: string;
   selectedOption: ReelOption<T>;
   setSelectedOption: Dispatch<SetStateAction<ReelOption<T>>>;
+  isMetric?: boolean;
 };
 
 const Reel = <T,>({
@@ -14,10 +17,12 @@ const Reel = <T,>({
   title,
   selectedOption,
   setSelectedOption,
+  isMetric = false,
 }: ReelProps<T>) => {
   const optionIndex = reelOptions.findIndex(
     (option) => option.label === selectedOption.label,
   );
+  const { isProMode } = useBetContext();
   const isStartOption = optionIndex === 0;
   const isEndOption = optionIndex === reelOptions.length - 1;
 
@@ -59,7 +64,7 @@ const Reel = <T,>({
         {title}
       </div>
       <div
-        className="border border-prussian-dark py-2 text-sm md:text-lg text-center bg-white text-blue-dark "
+        className="border border-prussian-dark py-2 text-sm md:text-lg text-center h-full flex flex-col justify-between items-center bg-white text-blue-dark "
         style={{
           background:
             "linear-gradient(to bottom, #999 0%, #e8e8e8 15%, #ffffff 50%, #e8e8e8 85%, #999 100%)",
@@ -71,15 +76,43 @@ const Reel = <T,>({
         >
           <MdArrowBackIos className="rotate-90 text-lg lg:text-4xl" />
         </div>
-        {optionsToDisplay.map((option, index) => (
+        {optionsToDisplay.map((option, index) => {
+          const hasImage = !!option.image;
+          const isSelected = index !== 1;
           // key for small options (Up/Down) has to be the index to avoid key conflict
-          <div
-            key={reelOptions.length >= 3 ? option.label : index}
-            className={`text-sm lg:text-2xl ${index !== 1 && "text-slate-400"}`}
-          >
-            {option.label}
-          </div>
-        ))}
+          return (
+            <div
+              key={reelOptions.length >= 3 ? option.label : index}
+              className="flex justify-center items-center"
+            >
+              <div
+                className={`text-sm lg:text-2xl  ${hasImage && !isMetric && "flex justify-center lg:grid lg:grid-cols-2 lg:items-center lg:justify-start lg:justify-items-center lg:gap-2 w-20"}  ${isSelected && "text-slate-400"}`}
+                title={option.label}
+              >
+                {hasImage && !isMetric && (
+                  <div className="w-6 h-6 rounded-full p-1 lg:p-0 ">
+                    <Image
+                      src={option.image as string}
+                      alt={option.label}
+                      width={24}
+                      height={24}
+                      className={`${isSelected ? "filter grayscale" : "filter-none"} rounded-full`}
+                      sizes="(max-width: 640px) 18px, (max-width: 768px) 32px, 40px"
+                    />
+                  </div>
+                )}
+
+                <p
+                  className={`${
+                    hasImage && !isMetric && "lg:block hidden"
+                  } whitespace-nowrap`}
+                >
+                  {option.label}
+                </p>
+              </div>
+            </div>
+          );
+        })}
         <div
           className="cursor-pointer flex justify-center "
           onClick={handleOptionForward}

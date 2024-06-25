@@ -41,6 +41,7 @@ const SlotMachine: React.FC<{}> = ({}) => {
           setSelectedOption={setMetric}
           reelOptions={metricOptions}
           title="&nbsp;Metric:&nbsp;&nbsp;"
+          isMetric={true}
         />
         <Reel<boolean>
           selectedOption={direction}
