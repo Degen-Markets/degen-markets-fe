@@ -28,7 +28,7 @@ const CreateBetSuccess = () => {
     };
     fetchBet();
   }, [id]);
-  const creationTimestamp = bet?.creationTimestamp || "0";
+  const creationTimestamp = bet?.creationTimestamp;
   const ticker = bet?.ticker || "";
   const metric = bet?.metric || "";
   const direction = bet?.isBetOnUp === true ? "up" : "down";
@@ -52,13 +52,15 @@ const CreateBetSuccess = () => {
     <div className="text-center">
       <Heading>
         <Headline>Bet Created!</Headline>
-        <SubHeadline isTop={false}>
-          <BetCountdown
-            expirationTimestampInS={
-              Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
-            }
-          />
-        </SubHeadline>
+        {creationTimestamp && (
+          <SubHeadline isTop={false}>
+            <BetCountdown
+              expirationTimestampInS={
+                Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
+              }
+            />
+          </SubHeadline>
+        )}
       </Heading>
       <div className="flex flex-col items-center gap-6">
         <div className="text-prussian-dark text-center">
