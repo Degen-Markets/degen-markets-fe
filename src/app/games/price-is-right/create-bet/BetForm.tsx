@@ -34,9 +34,8 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     : "Mystery Opponent.";
 
   const formGroupClasses = "grid grid-cols-2 gap-6";
-  const betCardClasses = twMerge("p-4 pt-16 z-1");
   return (
-    <div>
+    <div className={"-mt-12 lg:-mt-8"}>
       <AvatarWithLabel
         address={address}
         label={displayName}
@@ -45,7 +44,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
       <PixelArtBorder
         color={colors.prussian.dark}
         width={20}
-        className={betCardClasses}
+        className={twMerge("p-4 pt-16 z-1")}
       >
         <div className={formGroupClasses}>
           <Dropdown<Ticker>
@@ -64,16 +63,16 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
           />
         </div>
         <div className={formGroupClasses}>
-          <div className="relative">
+          <div className="relative w-full sm:w-fit">
             <h4 className="pt-3 text-left whitespace-nowrap">Metric:</h4>
             <input
               disabled={true}
               value="Price"
-              className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase"
+              className="px-2 sm:px-4 py-2 sring-purple-medium text-black uppercase w-full sm:w-fit"
               placeholder="Price"
             />
           </div>
-          <div className="relative">
+          <div className="relative w-full sm:w-fit">
             <h4 className="pt-3 text-left whitespace-nowrap"> Price guess:</h4>
             <input
               disabled={formType === "acceptor"}
@@ -86,7 +85,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
                   setStrikePriceAcceptor(value);
                 }
               }}
-              className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase"
+              className="px-2 sm:px-4 py-2 sring-purple-medium text-black] uppercase w-full sm:w-fit"
               placeholder="Price guess"
               type="number"
             />
