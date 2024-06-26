@@ -90,30 +90,32 @@ export default function Dropdown<T>({
         disabled={disabled}
       />
       {showDropdown && (
-        <ul
-          ref={dropdownRef}
-          className="absolute bg-white border mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
-        >
-          {filteredTokens.length > 0 ? (
-            filteredTokens.map((token) => (
-              <li
-                key={token.label}
-                onClick={() => handleTokenSelect(token)}
-                className={`p-2 cursor-pointer outline-0 border-none ${
-                  selectedOption.label === token.label
-                    ? "text-[#fff] bg-blue-dark"
-                    : "text-[#000] hover:bg-gray-200"
-                }`}
-              >
-                {token.label}
+        <div className="relative w-full">
+          <ul
+            ref={dropdownRef}
+            className="absolute w-full bg-white border mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
+          >
+            {filteredTokens.length > 0 ? (
+              filteredTokens.map((token) => (
+                <li
+                  key={token.label}
+                  onClick={() => handleTokenSelect(token)}
+                  className={`p-2 cursor-pointer outline-0 border-none ${
+                    selectedOption.label === token.label
+                      ? "text-[#fff] bg-blue-dark"
+                      : "text-[#000] hover:bg-gray-200"
+                  }`}
+                >
+                  {token.label}
+                </li>
+              ))
+            ) : (
+              <li className="px-4 py-2 cursor-not-allowed text-[#000]">
+                Not Found
               </li>
-            ))
-          ) : (
-            <li className="px-4 py-2 cursor-not-allowed text-[#000]">
-              Not Found
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        </div>
       )}
     </div>
   );

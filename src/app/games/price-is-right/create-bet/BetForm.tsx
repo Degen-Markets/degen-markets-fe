@@ -85,7 +85,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
                   setStrikePriceAcceptor(value);
                 }
               }}
-              className="p-2 sring-purple-medium text-black] uppercase "
+              className="p-2 sring-purple-medium text-black uppercase "
               placeholder="Price guess"
               type="number"
             />
