@@ -29,7 +29,7 @@ const TimePicker = <T,>({
     const unixTime = getTimeDifferenceInSeconds(inputTime);
     setCustomDuration({
       label: inputTime,
-      value: unixTime,
+      value: BigInt(unixTime),
     });
   };
 
