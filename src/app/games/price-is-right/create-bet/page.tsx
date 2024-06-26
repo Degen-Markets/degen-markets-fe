@@ -6,11 +6,12 @@ import CreateBetButton from "@/app/components/CreateBetButton";
 import { BetProvider } from "@/app/create-bet/BetContext";
 import { Suspense } from "react";
 import BetLayout from "@/app/layouts/BetLayout";
+import { twMerge } from "tailwind-merge";
 
 const styles = {
   headline: "text-4xl lg:text-8xl text-white text-center",
-  betFormContainer: "flex flex-col items-center",
-  vsText: "flex items-center text-8xl ",
+  betFormContainer: "flex flex-col items-center px-2 lg:px-0",
+  vsText: "items-center text-8xl hidden lg:flex",
   formWrapper: "flex gap-8",
 };
 
@@ -20,7 +21,7 @@ const CreateBetPage = () => {
     <Suspense>
       <BetProvider>
         <BetLayout
-          className="lg:max-w-screen-xl"
+          className="lg:max-w-screen-xl flex flex-col items-center"
           leftImage="/price_is_right_creator.png"
           rightImage="/price_is_right_acceptor.png"
         >
@@ -33,7 +34,7 @@ const CreateBetPage = () => {
             <div className={styles.vsText}>
               <span className="translate-y-1/2">VS</span>
             </div>
-            <div className={styles.betFormContainer}>
+            <div className={twMerge(styles.betFormContainer, "hidden lg:flex")}>
               <BetForm disabled formType="acceptor" />
             </div>
           </div>

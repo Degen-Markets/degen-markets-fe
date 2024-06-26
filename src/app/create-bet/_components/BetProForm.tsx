@@ -12,7 +12,9 @@ import Dropdown from "./Dropdown";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
-import { cx } from "class-variance-authority";
+import PixelArtBorder from "@/app/components/PixelArtBorder";
+import { colors } from "../../../../tailwind.config";
+import { twMerge } from "tailwind-merge";
 
 const BetProForm: React.FC = () => {
   const {
