@@ -33,7 +33,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     ? getDisplayNameForAddress(address)
     : "Mystery Opponent.";
 
-  const formGroupClasses = "grid grid-cols-2 gap-6";
+  const formGroupClasses = "grid grid-cols-2 gap-2 lg:gap-4";
   return (
     <div className={"-mt-12 lg:-mt-8"}>
       <AvatarWithLabel
@@ -63,16 +63,16 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
           />
         </div>
         <div className={formGroupClasses}>
-          <div className="relative w-full sm:w-fit">
+          <div className="flex flex-col">
             <h4 className="pt-3 text-left whitespace-nowrap">Metric:</h4>
             <input
               disabled={true}
               value="Price"
-              className="px-2 sm:px-4 py-2 sring-purple-medium text-black uppercase w-full sm:w-fit"
+              className="p-2 sring-purple-medium text-black uppercase "
               placeholder="Price"
             />
           </div>
-          <div className="relative w-full sm:w-fit">
+          <div className="flex flex-col">
             <h4 className="pt-3 text-left whitespace-nowrap"> Price guess:</h4>
             <input
               disabled={formType === "acceptor"}
@@ -85,7 +85,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
                   setStrikePriceAcceptor(value);
                 }
               }}
-              className="px-2 sm:px-4 py-2 sring-purple-medium text-black] uppercase w-full sm:w-fit"
+              className="p-2 sring-purple-medium text-black] uppercase "
               placeholder="Price guess"
               type="number"
             />

@@ -34,22 +34,19 @@ const TimePicker = <T,>({
   };
 
   return (
-    <div className="relative w-full">
-      <div>
-        <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
-
-        <input
-          type="datetime-local"
-          id="appt"
-          name="appt"
-          value={time}
-          onChange={handleTimeChange}
-          min={getCurrentDateTime()} // disabling the past Date
-          className={`styled-time-input w-full  p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"}  text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
-          placeholder={placeHolder}
-          disabled={disabled}
-        />
-      </div>
+    <div className="flex flex-col">
+      <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
+      <input
+        type="datetime-local"
+        id="appt"
+        name="appt"
+        value={time}
+        onChange={handleTimeChange}
+        min={getCurrentDateTime()} // disabling the past Date
+        className={`styled-time-input p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"}  text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
+        placeholder={placeHolder}
+        disabled={disabled}
+      />
     </div>
   );
 };

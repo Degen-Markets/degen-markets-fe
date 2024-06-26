@@ -23,7 +23,7 @@ export default function BetAmount<T>({
   };
 
   return (
-    <div className="relative w-full sm:w-fit">
+    <div className="flex flex-col">
       <h4 className="pt-3 text-left whitespace-nowrap">{title}:</h4>
       <input
         value={value}
@@ -31,7 +31,7 @@ export default function BetAmount<T>({
         type="number"
         lang="en-US"
         step=".000001"
-        className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase w-full sm:w-fit"
+        className="p-2 sring-purple-medium text-black uppercase"
         placeholder={placeHolder}
         disabled={disabled}
       />

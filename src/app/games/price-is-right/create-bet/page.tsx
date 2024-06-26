@@ -21,7 +21,7 @@ const CreateBetPage = () => {
     <Suspense>
       <BetProvider>
         <BetLayout
-          className="lg:max-w-screen-xl"
+          className="lg:max-w-screen-xl flex flex-col items-center"
           leftImage="/price_is_right_creator.png"
           rightImage="/price_is_right_acceptor.png"
         >

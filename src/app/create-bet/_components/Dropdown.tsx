@@ -76,7 +76,7 @@ export default function Dropdown<T>({
   }, [selectedOption]);
 
   return (
-    <div className="relative w-full sm:w-fit">
+    <div className="flex flex-col">
       <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
       <input
         ref={inputRef}
@@ -85,21 +85,21 @@ export default function Dropdown<T>({
         defaultValue={selectedOption.label}
         onChange={isSearchable ? debouncedHandleInputChange : undefined}
         onFocus={() => setShowDropdown(true)}
-        className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase w-full sm:w-fit"
+        className="p-2 ring-purple-medium text-[#000] uppercase"
         placeholder={`${placeHolder}...`}
         disabled={disabled}
       />
       {showDropdown && (
         <ul
           ref={dropdownRef}
-          className="absolute w-full bg-white border mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
+          className="absolute bg-white border mt-1 max-h-60 overflow-y-auto z-10 custom-scrollbar"
         >
           {filteredTokens.length > 0 ? (
             filteredTokens.map((token) => (
               <li
                 key={token.label}
                 onClick={() => handleTokenSelect(token)}
-                className={`px-4 py-2 cursor-pointer outlne-none  outline-0 border-none ${
+                className={`p-2 cursor-pointer outline-0 border-none ${
                   selectedOption.label === token.label
                     ? "text-[#fff] bg-blue-dark"
                     : "text-[#000] hover:bg-gray-200"
