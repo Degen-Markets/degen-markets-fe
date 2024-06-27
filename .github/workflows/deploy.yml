@@ -68,5 +68,6 @@ jobs:
 
           # Extract deployment URL
           DEPLOYMENT_URL=$(grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app' deployment.log)
-
-          echo "Deployment successful! Access your application at: $DEPLOYMENT_URL"
+          echo 
+          echo "-------------------Deployment successful!--------------------"
+          echo "Access your application at: $DEPLOYMENT_URL"
