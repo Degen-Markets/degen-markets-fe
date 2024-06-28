@@ -14,7 +14,6 @@ import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
 import PixelArtBorder from "@/app/components/PixelArtBorder";
 import { colors } from "../../../../tailwind.config";
-import { twMerge } from "tailwind-merge";
 const BetProForm: React.FC = () => {
   const {
     ticker,
