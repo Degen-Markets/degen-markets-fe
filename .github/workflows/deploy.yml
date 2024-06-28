@@ -1,0 +1,73 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Linting with ESLint
+        run: npm run lint
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Remove .vercel directory
+        run: rm -rf .vercel
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npm install -g vercel
+
+          # Determine deployment type (production or preview)
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            # Production deployment
+            vercel --prod --token $VERCEL_TOKEN | tee deployment.log
+          else
+            # Preview deployment
+            vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID | tee deployment.log
+          fi
+
+          # Extract deployment URL
+          DEPLOYMENT_URL=$(grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app' deployment.log)
+          echo 
+          echo "-------------------Deployment successful!--------------------"
+          echo "Access your application at: $DEPLOYMENT_URL"
