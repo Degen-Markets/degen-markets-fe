@@ -63,10 +63,11 @@ jobs:
             vercel --prod --token $VERCEL_TOKEN | tee deployment.log
           else
             # Preview deployment
-            vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --project $VERCEL_PROJECT_ID | tee deployment.log
+            vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID | tee deployment.log
           fi
 
           # Extract deployment URL
           DEPLOYMENT_URL=$(grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app' deployment.log)
-
-          echo "Deployment successful! Access your application at: $DEPLOYMENT_URL"
+          echo 
+          echo "-------------------Deployment successful!--------------------"
+          echo "Access your application at: $DEPLOYMENT_URL"

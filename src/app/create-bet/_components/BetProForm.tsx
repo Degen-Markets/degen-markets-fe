@@ -14,8 +14,6 @@ import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
 import PixelArtBorder from "@/app/components/PixelArtBorder";
 import { colors } from "../../../../tailwind.config";
-import { twMerge } from "tailwind-merge";
-
 const BetProForm: React.FC = () => {
   const {
     ticker,
@@ -34,7 +32,7 @@ const BetProForm: React.FC = () => {
     <PixelArtBorder
       color={colors.prussian.dark}
       width={20}
-      className={twMerge("px-5 md:px-10 pb-5 max-w-md md:w-auto md:max-w-fit")}
+      className={"px-5 md:px-10 pb-5 max-w-md md:w-auto md:max-w-fit"}
     >
       <h3 className="text-4xl">PRO</h3>
       <div className={commonStyle}>
