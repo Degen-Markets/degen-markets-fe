@@ -2,7 +2,6 @@ import { ReelOption } from "@/app/lib/utils/bets/types";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { MdArrowBackIos } from "react-icons/md";
-import { useBetContext } from "../create-bet/BetContext";
 
 type ReelProps<T> = {
   reelOptions: ReelOption<T>[];
@@ -22,7 +21,6 @@ const Reel = <T,>({
   const optionIndex = reelOptions.findIndex(
     (option) => option.label === selectedOption.label,
   );
-  const { isProMode } = useBetContext();
   const isStartOption = optionIndex === 0;
   const isEndOption = optionIndex === reelOptions.length - 1;
 
