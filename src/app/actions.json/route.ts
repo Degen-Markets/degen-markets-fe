@@ -5,7 +5,7 @@ export const GET = async () => {
     rules: [
       {
         pathPattern: "/pools/*",
-        apiPath: "https://actions.dialect.to/api/jupiter/swap/USDC-SOL",
+        apiPath: "https://actions.dialect.to/api/jupiter/swap/*",
       },
     ],
   };
