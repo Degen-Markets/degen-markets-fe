@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
   Tab,
   TabList,
@@ -7,204 +7,58 @@ import {
   Tabs,
   TabPanels,
 } from "@/app/components/Tabs/Tabs";
-import { ButtonPrimary } from "@/app/components/Button";
+import { ButtonGradient, ButtonPrimary } from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import {
+  calculateProfits,
   getCurrencySymbolByAddress,
   getDisplayNameForAddress,
   isBetConcluded,
   isBetOpen,
   isBetRunning,
 } from "@/app/lib/utils/bets/helpers";
-import { BetResponse, Ticker, Metric } from "@/app/lib/utils/bets/types";
-import { SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
-import { Address, zeroAddress } from "viem";
-import { useAccount } from "wagmi";
+import { BetResponse } from "@/app/lib/utils/bets/types";
+import {
+  DEGEN_BETS_ADDRESS,
+  SETTLE_CURRENCY,
+  STABLECOIN_DECIMALS,
+} from "@/app/lib/utils/bets/constants";
+import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
+import { Address } from "viem";
+import { useAccount, useTransactionReceipt } from "wagmi";
 import UserAvatar from "@/app/components/UserAvatar"; // Assuming you have a UserAvatar component
 import BetCard from "../BetCard";
+import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
+import BetTable from "./BetTable";
+import { DialogType, useDialog } from "../Dialog/dialog";
+import { useWriteContract } from "wagmi";
+import { base } from "viem/chains";
+import { useToast } from "../Toast/ToastProvider";
 
 const MyHistory = () => {
   const { address } = useAccount();
   const router = useRouter();
-  const [bets, setBets] = useState<BetResponse[]>([]);
   const [profits, setProfits] = useState({ usdc: 0, eth: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const { bets, isLoading, unclaimedBets, fetchBetsByAddress } =
+    useGetBetForAddress(address as Address);
+  const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
+  const { showToast } = useToast();
 
-  const fetchBets = useCallback(async () => {
-    const fetchedBets: BetResponse[] = [
-      {
-        id: "1",
-        creator: "0x5c6532...d087a",
-        creationTimestamp: "2023-06-25T12:34:56Z",
-        acceptor: "0x123456...789abc",
-        acceptanceTimestamp: "2023-06-26T14:34:56Z",
-        ticker: Ticker.BLUR,
-        metric: Metric.MARKET_CAP_DOMINANCE,
-        isBetOnUp: true,
-        value: "100",
-        currency: zeroAddress,
-        startingMetricValue: 150,
-        endingMetricValue: 160,
-        winner: "0x5c6532...d087a",
-        isWithdrawn: false,
-        withdrawalTimestamp: "",
-        winTimestamp: "2023-06-27T15:34:56Z",
-        lastActivityTimestamp: "2023-06-27T15:34:56Z",
-        expirationTimestamp: "2023-07-01T12:34:56Z",
-        isPaid: true,
-        type: "binary",
-        strikePriceCreator: "150",
-        strikePriceAcceptor: "160",
-      },
-      {
-        id: "2",
-        creator: "0x5c6532...d087a",
-        creationTimestamp: "2023-06-25T12:34:56Z",
-        acceptor: "0x123456...789abc",
-        acceptanceTimestamp: "2023-06-26T14:34:56Z",
-        ticker: Ticker.ETH,
-        metric: Metric.PRICE,
-        isBetOnUp: false,
-        value: "50",
-        currency: SETTLE_CURRENCY.USDC,
-        startingMetricValue: 700,
-        endingMetricValue: 650,
-        winner: "0x123456...789abc",
-        isWithdrawn: false,
-        withdrawalTimestamp: "",
-        winTimestamp: "2023-06-27T15:34:56Z",
-        lastActivityTimestamp: "2023-06-27T15:34:56Z",
-        expirationTimestamp: "2023-07-01T12:34:56Z",
-        isPaid: true,
-        type: "closest-guess-wins",
-        strikePriceCreator: "700",
-        strikePriceAcceptor: "650",
-      },
-      {
-        id: "3",
-        creator: "0x5c6532...d087a",
-        creationTimestamp: "2023-06-25T12:34:56Z",
-        acceptor: null,
-        acceptanceTimestamp: null,
-        ticker: Ticker.BTC,
-        metric: Metric.VOLUME,
-        isBetOnUp: true,
-        value: "200",
-        currency: SETTLE_CURRENCY.USDbC,
-        startingMetricValue: 30000,
-        endingMetricValue: null,
-        winner: null,
-        isWithdrawn: false,
-        withdrawalTimestamp: "",
-        winTimestamp: null,
-        lastActivityTimestamp: "2023-06-27T15:34:56Z",
-        expirationTimestamp: "2023-07-01T12:34:56Z",
-        isPaid: false,
-        type: "binary",
-        strikePriceCreator: "30000",
-        strikePriceAcceptor: null,
-      },
-      {
-        id: "4",
-        creator: "0x5c6532...d087a",
-        creationTimestamp: "2023-06-25T12:34:56Z",
-        acceptor: "0x123456...789abc",
-        acceptanceTimestamp: "2023-06-26T14:34:56Z",
-        ticker: Ticker.BLUR,
-        metric: Metric.MARKET_CAP_DOMINANCE,
-        isBetOnUp: true,
-        value: "100",
-        currency: zeroAddress,
-        startingMetricValue: 150,
-        endingMetricValue: 160,
-        winner: "0x5c6532...d087a",
-        isWithdrawn: false,
-        withdrawalTimestamp: "",
-        winTimestamp: "2023-06-27T15:34:56Z",
-        lastActivityTimestamp: "2023-06-27T15:34:56Z",
-        expirationTimestamp: "2023-07-01T12:34:56Z",
-        isPaid: true,
-        type: "binary",
-        strikePriceCreator: "150",
-        strikePriceAcceptor: "160",
-      },
-      {
-        id: "5",
-        creator: "0x5c6532...d087a",
-        creationTimestamp: "2023-06-25T12:34:56Z",
-        acceptor: "0x123456...789abc",
-        acceptanceTimestamp: "2023-06-26T14:34:56Z",
-        ticker: Ticker.ETH,
-        metric: Metric.PRICE,
-        isBetOnUp: false,
-        value: "50",
-        currency: SETTLE_CURRENCY.USDC,
-        startingMetricValue: 700,
-        endingMetricValue: 650,
-        winner: "0x123456...789abc",
-        isWithdrawn: false,
-        withdrawalTimestamp: "",
-        winTimestamp: "2023-06-27T15:34:56Z",
-        lastActivityTimestamp: "2023-06-27T15:34:56Z",
-        expirationTimestamp: "2023-07-01T12:34:56Z",
-        isPaid: true,
-        type: "closest-guess-wins",
-        strikePriceCreator: "700",
-        strikePriceAcceptor: "650",
-      },
-      {
-        id: "6",
-        creator: "0x5c6532...d087a",
-        creationTimestamp: "2023-06-25T12:34:56Z",
-        acceptor: null,
-        acceptanceTimestamp: null,
-        ticker: Ticker.BTC,
-        metric: Metric.VOLUME,
-        isBetOnUp: true,
-        value: "200",
-        currency: SETTLE_CURRENCY.USDbC,
-        startingMetricValue: 30000,
-        endingMetricValue: null,
-        winner: null,
-        isWithdrawn: false,
-        withdrawalTimestamp: "",
-        winTimestamp: null,
-        lastActivityTimestamp: "2023-06-27T15:34:56Z",
-        expirationTimestamp: "2023-07-01T12:34:56Z",
-        isPaid: false,
-        type: "binary",
-        strikePriceCreator: "30000",
-        strikePriceAcceptor: null,
-      },
-    ];
-    setBets(fetchedBets);
+  const {
+    writeContractAsync: claimBetTx,
+    isPending: isClaimButtonPending,
+    data: claimedBetHash,
+  } = useWriteContract();
 
-    const wonBets = fetchedBets.filter((bet) => bet.winner === address);
-    const usdcProfits = wonBets
-      .filter((bet) => bet.currency === SETTLE_CURRENCY.USDC)
-      .reduce((acc, bet) => acc + parseFloat(bet.value) * 2, 0);
-    const ethProfits = wonBets
-      .filter((bet) => bet.currency === SETTLE_CURRENCY.ETH)
-      .reduce((acc, bet) => acc + parseFloat(bet.value) * 2, 0);
-    setProfits({ usdc: usdcProfits, eth: ethProfits });
-  }, [address]);
-
-  useEffect(() => {
-    if (address) {
-      fetchBets();
-    }
-  }, [address, fetchBets]);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const rakeInProfits = async () => {
-    console.log("Raking in profits...");
-  };
+  const {
+    isSuccess: isClaimedSuccess,
+    error: claimingError,
+    isLoading: isClaimButtonProcessing,
+  } = useTransactionReceipt({
+    hash: claimedBetHash,
+    chainId: base.id,
+  });
 
   const categorizedBets = {
     open: bets.filter(isBetOpen),
@@ -216,18 +70,13 @@ const MyHistory = () => {
     {
       label: "Existing Bets",
       className: "bg-indigo-medium md:text-2xl",
-      bets: categorizedBets.open,
+      bets: categorizedBets.running,
     },
     {
       label: "History",
       className: "bg-purple-medium md:text-2xl",
-      bets: categorizedBets.concluded, // Changed to concluded for History
+      bets: categorizedBets.concluded,
     },
-    // {
-    //   label: "Running Bets",
-    //   className: "bg-white text-prussian-dark md:text-2xl",
-    //   bets: categorizedBets.running, // Added Running Bets category
-    // },
   ];
 
   const defaultActiveIndex = categorizedBets.open.length
@@ -235,6 +84,71 @@ const MyHistory = () => {
     : categorizedBets.running.length
       ? 2
       : 1;
+
+  const profitButtonDisabled =
+    unclaimedBets.length === 0 ||
+    isClaimButtonPending ||
+    isClaimButtonProcessing;
+
+  const handleGetPaid = async () => {
+    const unclaimedBetsId = unclaimedBets.map((bet) => bet.id);
+    try {
+      await claimBetTx({
+        abi: DEGEN_BETS_ABI,
+        address: DEGEN_BETS_ADDRESS,
+        functionName: "getPaid",
+        args: [unclaimedBetsId],
+        chainId: base.id,
+      });
+    } catch (error: any) {
+      console.error("Error processing claims:", error);
+      showToast(error.shortMessage ?? error, "error");
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const usdcProfits = calculateProfits(
+      unclaimedBets,
+      SETTLE_CURRENCY.USDC,
+      STABLECOIN_DECIMALS,
+    );
+    const ethProfits = calculateProfits(unclaimedBets, SETTLE_CURRENCY.ETH, 18);
+    setProfits({ usdc: usdcProfits, eth: ethProfits });
+  }, [unclaimedBets]);
+
+  useEffect(() => {
+    if (claimingError) {
+      showToast(claimingError.message, "error");
+    }
+  }, [claimingError]);
+
+  useEffect(() => {
+    if (isClaimedSuccess) {
+      showToast(
+        `${unclaimedBets.length} ${unclaimedBets.length === 1 ? "Bet" : "Bets"} Claimed Successfully`,
+        "success",
+      );
+      setTimeout(() => fetchBetsByAddress(address as Address), 500);
+    }
+  }, [isClaimedSuccess]);
+
+  if (!address) {
+    return (
+      <div className="flex justify-center flex-col items-center h-[50vh] space-y-2">
+        <h4 className="text-4xl">Please Connect Your Wallet</h4>
+        <ButtonGradient size="regular" onClick={() => setOpenConnector(true)}>
+          Wallet not connected
+        </ButtonGradient>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-4 text-center">
@@ -244,14 +158,23 @@ const MyHistory = () => {
           className="w-40 h-40 mx-auto rounded-full"
         />
         <h2 className="text-3xl font-semibold mt-4">@DEGEN</h2>
-        <p className="text-prussian-dark">0x5c6532...d087a</p>
+        <p className="text-prussian-dark">
+          {getDisplayNameForAddress(address as Address)}
+        </p>
       </div>
       <div>
         <div className="flex justify-center items-end flex-col">
-          <ButtonPrimary size="regular" onClick={rakeInProfits}>
+          <ButtonGradient
+            size="regular"
+            loader={true}
+            onClick={handleGetPaid}
+            isPending={isClaimButtonPending}
+            isProcessing={isClaimButtonProcessing}
+            disabled={profitButtonDisabled}
+          >
             Rake in Profits
-          </ButtonPrimary>
-          <p className="mb-4">
+          </ButtonGradient>
+          <p className="text-yellow-main drop-shadow-sm mt-1">
             You have won {profits.usdc} USDC and {profits.eth} ETH.
           </p>
         </div>
@@ -261,7 +184,7 @@ const MyHistory = () => {
               <Tab
                 key={index}
                 index={index}
-                className={`${category.className} px-4 py-2`}
+                className={`${category.className}`}
               >
                 {category.label}
               </Tab>
@@ -270,10 +193,11 @@ const MyHistory = () => {
           <TabPanels className="">
             {betCategories.map((category, index) => {
               const hasBetsInCategory = category.bets.length > 0;
-
               return (
                 <TabPanel key={index} index={index} className="">
-                  {hasBetsInCategory ? (
+                  {isLoading ? (
+                    <div>Loading...</div>
+                  ) : hasBetsInCategory ? (
                     isMobile ? (
                       <div className="flex flex-col space-y-4">
                         {category.bets.map((bet) => (
@@ -310,89 +234,6 @@ const MyHistory = () => {
 };
 
 export default MyHistory;
-
-const BetTableRow = ({
-  bet,
-  isEven,
-}: {
-  bet: BetResponse;
-  isEven: boolean;
-}) => {
-  const router = useRouter();
-  const getBetTypeText = (type: BetType) => {
-    switch (type) {
-      case "binary":
-        return "Bull and Bear";
-      case "closest-guess-wins":
-        return "Price is Right";
-      default:
-        return "";
-    }
-  };
-  return (
-    <tr
-      className={`${isEven ? "bg-gray-700" : "bg-gray-900"} hover:bg-purple-600 transition duration-300 cursor-pointer border`}
-      onClick={() => router.push(`bets/${bet.id}`)}
-    >
-      <td className="p-4 border col-span-2 text-center">
-        <div className="flex items-center space-x-2 justify-center">
-          <UserAvatar address={bet.creator} className="w-8 h-8" />
-          <p>{getDisplayNameForAddress(bet.creator)}</p>
-        </div>
-      </td>
-      <td className="p-4 border text-center">
-        {bet.value} {getCurrencySymbolByAddress(bet.currency)}
-      </td>
-      <td className="p-4 border text-red-main text-center">Price Moons</td>
-      <td className="p-4 border text-center ">
-        <div className="flex flex-col justify-center items-center">
-          <span>VS</span>
-          <div className="text-sm">{getBetTypeText(bet.type)}</div>
-        </div>
-      </td>
-      <td className="p-4 border text-green-main text-center">Price Rugs</td>
-      <td className="p-4 border text-center">
-        {bet.value} {getCurrencySymbolByAddress(bet.currency)}
-      </td>
-      <td className="p-4 border col-span-2 text-center">
-        <div className="flex items-center space-x-2 justify-center">
-          <span>{bet.acceptor}</span>
-          <UserAvatar address={bet.acceptor as Address} className="w-8 h-8" />
-        </div>
-      </td>
-    </tr>
-  );
-};
-
-const BetTable = ({ bets, label }: { bets: BetResponse[]; label: string }) => {
-  return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-prussian-dark text-white">
-        <thead>
-          <tr>
-            <th className="p-4 col-span-2 border text-center">Creator</th>
-            <th className="p-4 border text-center">Stake</th>
-            <th className="p-4 border text-center">Prediction</th>
-            <th className="p-4 border text-center">
-              <div className="flex flex-col justify-center items-center">
-                <span>VS</span>
-                <div className="text-sm">Bet</div>
-              </div>
-            </th>
-            <th className="p-4 border text-center">Outcome</th>
-            <th className="p-4 border text-center">Reward</th>
-            <th className="p-4 border col-span-2 text-center">Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bets.map((bet, index) => (
-            <BetTableRow key={bet.id} bet={bet} isEven={index % 2 === 0} />
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-};
 
 // Mobile View
 const MobileBetTableRow = ({ bet }: { bet: BetResponse }) => {

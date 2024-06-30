@@ -2,9 +2,15 @@ import {
   BET_ACCEPTANCE_TIME_LIMIT,
   metricOptions,
   SETTLE_CURRENCY,
+  STABLECOIN_DECIMALS,
 } from "@/app/lib/utils/bets/constants";
-import { BetResponse, Currency, Metric } from "@/app/lib/utils/bets/types";
-import { Address, Hash } from "viem";
+import {
+  BetResponse,
+  BetType,
+  Currency,
+  Metric,
+} from "@/app/lib/utils/bets/types";
+import { Address, formatUnits, Hash, zeroAddress } from "viem";
 
 export const betDurationInDays = (expirationTimestamp: number): string => {
   const days = Math.round(
@@ -233,3 +239,36 @@ export function abbreviateETHBalance(number: number): string {
 
   return result;
 }
+
+export const getBetTypeText = (type: BetType): string => {
+  switch (type) {
+    case "binary":
+      return "Bull and Bear";
+    case "closest-guess-wins":
+      return "Price is Right";
+    default:
+      return "";
+  }
+};
+
+export const getBetSideText = (isBetOnUp: boolean) => {
+  return isBetOnUp
+    ? { leftText: "Price Moons", rightText: "Price Rugs" }
+    : { leftText: "Price Rugs", rightText: "Price Moons" };
+};
+
+export const getFormattedValue = (value: string, currency: Address) => {
+  const isEth = currency === zeroAddress;
+  return formatUnits(BigInt(value), isEth ? 18 : STABLECOIN_DECIMALS);
+};
+
+export const calculateProfits = (
+  bets: BetResponse[],
+  currency: string,
+  decimals: number,
+) => {
+  const profits = bets
+    .filter((bet) => bet.currency.toLowerCase() === currency.toLowerCase())
+    .reduce((acc, bet) => acc + parseFloat(bet.value) * 2, 0); // multiplying with 2 as user will receive wagered funds as well as the loser's funds
+  return +formatUnits(BigInt(profits), decimals);
+};
