@@ -11,7 +11,7 @@ interface FormInputProps {
 
 const FormInput: FC<FormInputProps> = memo(
   ({ label, value, disabled = false, placeholder = "", onChange, type }) => (
-    <div className="relative">
+    <div className="flex flex-col">
       <h4 className="pt-3 text-left whitespace-nowrap">{label}</h4>
       <input
         disabled={disabled}

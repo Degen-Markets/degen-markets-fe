@@ -128,7 +128,7 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
           strikePriceAcceptor={localStrikePriceAcceptor}
         />
       </div>
-      <div className="flex items-center text-8xl">
+      <div className="hidden md:flex items-center text-8xl">
         <span className="translate-y-1/2">VS</span>
       </div>
       <div className="flex flex-col items-center">
