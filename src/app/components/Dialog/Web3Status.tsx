@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import DialogConnector from "./ConnectorDialog";
 import { WalletButton } from "../Button/ButtonWallet";
 import { useAccount, useDisconnect } from "wagmi";
 import WalletMenu from "../WalletMenu";

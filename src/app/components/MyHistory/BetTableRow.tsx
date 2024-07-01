@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   getBetSideText,
   getBetTypeText,
@@ -15,14 +15,20 @@ interface BetTableRowProps {
   bet: BetResponse;
   isEven: boolean;
   isAllExpanded: boolean;
+  isMobile: boolean;
 }
 
 const formatDate = (timestamp: string) => {
-  const date = new Date(Number(timestamp) * 1000); // Convert Unix timestamp to milliseconds
+  const date = new Date(Number(timestamp) * 1000);
   return date.toLocaleString(); // Convert date to a readable format
 };
 
-const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
+const BetTableRow = ({
+  bet,
+  isEven,
+  isAllExpanded,
+  isMobile,
+}: BetTableRowProps) => {
   const { currency, creator, acceptor, type, value, isBetOnUp, winner } = bet;
   const [isExpanded, setIsExpanded] = useState(false);
   const loser = winner ? (winner === creator ? acceptor : creator) : null;
@@ -37,7 +43,7 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
     setIsExpanded(!isExpanded);
   };
 
-  return (
+  const desktopView = (
     <>
       <tr
         className={`${isEven ? "bg-gray-700" : "bg-gray-900"} hover:bg-purple-medium transition duration-300 cursor-pointer border`}
@@ -97,19 +103,18 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
                 <p className="text-3xl">Bet Details</p>
                 <div className="flex justify-center items-center border-4 border-b-0">
                   <p className="border-r-4 px-2">
-                    <strong>Creation Timestamp:</strong>{" "}
+                    <strong>Created at:</strong>{" "}
                     {formatDate(bet.creationTimestamp)}
                   </p>
                   <p className="border-r-4 px-2">
-                    <strong>Acceptance Timestamp:</strong>{" "}
+                    <strong>Accepted at:</strong>{" "}
                     {formatDate(bet.acceptanceTimestamp as string)}
                   </p>
                   <p className="px-2">
-                    <strong>Expiration Timestamp:</strong>{" "}
+                    <strong>Ended at:</strong>{" "}
                     {formatDate(bet.expirationTimestamp)}
                   </p>
                 </div>
-                {/*  Add more bet details as needed */}
                 <BetCard bet={bet} />
               </div>
             )}
@@ -118,6 +123,79 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
       </tr>
     </>
   );
+
+  const mobileView = (
+    <div
+      className="bg-gray-700 mb-2  shadow-md transition duration-300 cursor-pointer"
+      onClick={toggleExpand}
+    >
+      <div className="p-2">
+        <TableUserInfo
+          address={creator as Address}
+          role={
+            winner === creator ? "winner" : loser === creator ? "loser" : ""
+          }
+          layout="default"
+        />
+        <div className="mt-2">
+          <strong>Stake: </strong>
+          {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
+        </div>
+        <div
+          className={`mt-2 ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
+        >
+          <strong>Prediction: </strong>
+          {leftText}
+        </div>
+        <div className="mt-2 flex flex-col">
+          <div className="text-sm px-1 inline-block">
+            {getBetTypeText(type)}
+          </div>
+          <strong className=" bg-purple-medium">VS </strong>
+          <div className="flex justify-center items-center">
+            <BetStatus bet={bet} />
+          </div>
+        </div>
+        <div
+          className={`mt-2 ${!isBetOnUp ? "text-green-main" : "text-red-main"}`}
+        >
+          <strong>Outcome: </strong>
+          {rightText}
+        </div>
+        <div className="mt-2">
+          <strong>Profit/Loss: </strong>
+          {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
+        </div>
+        <TableUserInfo
+          address={acceptor as Address}
+          role={
+            winner === acceptor ? "winner" : loser === acceptor ? "loser" : ""
+          }
+          layout="reverse"
+        />
+      </div>
+      {isExpanded && (
+        <div className="bg-gray-800 pb-4 -mx-1 text-white">
+          <p className="text-3xl">Bet Details</p>
+          <div className="flex flex-col">
+            <p className="py-2">
+              <strong>Created at:</strong> {formatDate(bet.creationTimestamp)}
+            </p>
+            <p className="py-2">
+              <strong>Accepted at:</strong>{" "}
+              {formatDate(bet.acceptanceTimestamp as string)}
+            </p>
+            <p className="py-2">
+              <strong>Ended at:</strong> {formatDate(bet.expirationTimestamp)}
+            </p>
+          </div>
+          <BetCard bet={bet} />
+        </div>
+      )}
+    </div>
+  );
+
+  return isMobile ? mobileView : desktopView;
 };
 
 export default BetTableRow;

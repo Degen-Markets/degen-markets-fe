@@ -33,10 +33,10 @@ const colors = {
   },
   green: {
     light: "#5EC269",
-    main: "#5EC269",
+    main: "#22c55e", // text-green-500
   },
   red: {
-    main: "#F21212",
+    main: "#ef4444", // text-red-500
   },
   cadet: {
     blue: {

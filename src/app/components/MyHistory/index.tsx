@@ -79,11 +79,7 @@ const MyHistory = () => {
     },
   ];
 
-  const defaultActiveIndex = categorizedBets.open.length
-    ? 0
-    : categorizedBets.running.length
-      ? 2
-      : 1;
+  const defaultActiveIndex = categorizedBets.running.length ? 0 : 1;
 
   const profitButtonDisabled =
     unclaimedBets.length === 0 ||
@@ -198,15 +194,7 @@ const MyHistory = () => {
                   {isLoading ? (
                     <div>Loading...</div>
                   ) : hasBetsInCategory ? (
-                    isMobile ? (
-                      <div className="flex flex-col space-y-4">
-                        {category.bets.map((bet) => (
-                          <BetCard key={bet.id} bet={bet} />
-                        ))}
-                      </div>
-                    ) : (
-                      <BetTable bets={category.bets} label={category.label} />
-                    )
+                    <BetTable bets={category.bets} label={category.label} />
                   ) : (
                     <div className="text-center flex">
                       <div className="flex flex-col items-center w-full space-y-2 p-8 ">
@@ -234,48 +222,3 @@ const MyHistory = () => {
 };
 
 export default MyHistory;
-
-// Mobile View
-const MobileBetTableRow = ({ bet }: { bet: BetResponse }) => {
-  return (
-    <div className="bg-gray-700 p-4 mb-2 rounded-lg shadow-md">
-      <div className="flex items-center space-x-2 mb-2">
-        <UserAvatar address={bet.creator} className="w-8 h-8" />
-        <p className="font-bold">{getDisplayNameForAddress(bet.creator)}</p>
-      </div>
-      <p>
-        <strong>Stake:</strong> {bet.value}{" "}
-        {getCurrencySymbolByAddress(bet.currency)}
-      </p>
-      <p>
-        <strong>Prediction:</strong> Price Moons
-      </p>
-      <p>
-        <strong>VS:</strong> VS
-      </p>
-      <p>
-        <strong>Outcome:</strong> Price Rugs
-      </p>
-      <p>
-        <strong>Reward:</strong> {bet.value}{" "}
-        {getCurrencySymbolByAddress(bet.currency)}
-      </p>
-      <div className="flex items-center space-x-2">
-        <span>
-          <strong>Address:</strong> {bet.acceptor}
-        </span>
-        <UserAvatar address={bet.acceptor as Address} className="w-8 h-8" />
-      </div>
-    </div>
-  );
-};
-
-const MobileBetTable = ({ bets }: { bets: BetResponse[] }) => {
-  return (
-    <div>
-      {bets.map((bet) => (
-        <MobileBetTableRow key={bet.id} bet={bet} />
-      ))}
-    </div>
-  );
-};
