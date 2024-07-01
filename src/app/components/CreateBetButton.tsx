@@ -38,7 +38,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     customDuration,
     setBetType,
     strikePriceCreator,
-    error,
+    error: createBetError,
   } = useBetContext();
 
   setBetType(betType);
@@ -106,7 +106,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     Number(value) <= 0 ||
     isPending ||
     isProcessing ||
-    !!error;
+    !!createBetError;
 
   const approve = async () => {
     try {
@@ -167,6 +167,9 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     if (!isAllowanceEnough) {
       return `Approve ${currency.label}`;
     }
+    if (!!createBetError) {
+      return createBetError;
+    }
     return "Create Bet";
   };
 
@@ -211,7 +214,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
       >
-        {error ? error : getActionButtonText()}
+        {getActionButtonText()}
       </ButtonGradient>
     </div>
   );

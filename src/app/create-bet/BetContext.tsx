@@ -23,7 +23,7 @@ import {
   directionOptions,
   durationOptions,
   metricOptions,
-  PRICE_IS_RIGHT,
+  PRICE_IS_RIGHT_ROUTE,
   tickerOptions,
 } from "@/app/lib/utils/bets/constants";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -104,7 +104,10 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
 
   const pathname = usePathname();
 
-  const isGameRoute = useMemo(() => pathname === PRICE_IS_RIGHT, [pathname]);
+  const isPriceIsRightRoute = useMemo(
+    () => pathname === PRICE_IS_RIGHT_ROUTE,
+    [pathname],
+  );
 
   const defaultTicker = searchParams.get("ticker");
   const defaultMetric = searchParams.get("metric");
@@ -153,13 +156,18 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
       return false;
     }
 
-    if (isGameRoute && !strikePriceCreator) {
+    if (isPriceIsRightRoute && !strikePriceCreator) {
       setError("Please enter a valid price guess.");
       return false;
     }
     setError("");
     return true;
-  }, [isProMode, customDuration.value, isGameRoute, strikePriceCreator]);
+  }, [
+    isProMode,
+    customDuration.value,
+    isPriceIsRightRoute,
+    strikePriceCreator,
+  ]);
 
   useEffect(() => {
     validateFields();

@@ -149,6 +149,9 @@ const AcceptBetButton = ({
     if (!isAllowanceEnough) {
       return `Approve ${currencySymbol}`;
     }
+    if (!!AcceptanceContextError) {
+      return AcceptanceContextError;
+    }
     return "Approve and Bet";
   };
 
@@ -162,7 +165,7 @@ const AcceptBetButton = ({
       onClick={handleAccept}
       className={twMerge(className)}
     >
-      {AcceptanceContextError ? AcceptanceContextError : getActionButtonText()}
+      {getActionButtonText()}
     </ButtonGradient>
   );
 };

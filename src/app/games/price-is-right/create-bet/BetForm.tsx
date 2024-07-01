@@ -42,7 +42,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     const numericValue = Number(inputValue);
     setError(
       numericValue <= 0 || isNaN(numericValue)
-        ? "Please enter a price guess!"
+        ? "Please enter a guess price!"
         : "",
     );
 

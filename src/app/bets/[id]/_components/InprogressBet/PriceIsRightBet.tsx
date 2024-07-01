@@ -104,7 +104,7 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
 
       setError(
         numericValue <= 0 || isNaN(numericValue)
-          ? "Please enter a price guess!"
+          ? "Please enter a guess price!"
           : "",
       );
       setLocalStrikePriceAcceptor(stringValue);

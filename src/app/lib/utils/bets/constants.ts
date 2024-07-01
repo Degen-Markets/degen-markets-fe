@@ -72,4 +72,4 @@ export const STABLECOIN_DECIMALS = 6;
 
 export const MINIMUM_BET_DURATION = 60 * 60 * 6;
 
-export const PRICE_IS_RIGHT = "/games/price-is-right/create-bet";
+export const PRICE_IS_RIGHT_ROUTE = "/games/price-is-right/create-bet";
