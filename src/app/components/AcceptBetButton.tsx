@@ -57,7 +57,6 @@ const AcceptBetButton = ({
     hash: approvalHash,
     chainId: base.id,
   });
-  const { error: AcceptanceContextError } = useBetContext();
   const isPending = isApprovalButtonPending || isAcceptButtonPending;
   const isProcessing = isAcceptanceProcessing || isApprovalProcessing;
 
@@ -77,12 +76,7 @@ const AcceptBetButton = ({
 
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
-  const isDisabled =
-    !!error ||
-    isPending ||
-    isProcessing ||
-    !isBalanceEnough ||
-    !!AcceptanceContextError;
+  const isDisabled = !!error || isPending || isProcessing || !isBalanceEnough;
 
   const acceptBet = async () => {
     try {
@@ -149,9 +143,7 @@ const AcceptBetButton = ({
     if (!isAllowanceEnough) {
       return `Approve ${currencySymbol}`;
     }
-    if (!!AcceptanceContextError) {
-      return AcceptanceContextError;
-    }
+
     return "Approve and Bet";
   };
 

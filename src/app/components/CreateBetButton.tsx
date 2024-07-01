@@ -158,6 +158,9 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   };
 
   const getActionButtonText = (): string => {
+    if (!!createBetError) {
+      return createBetError;
+    }
     if (!address) {
       return "Wallet not connected";
     }
@@ -167,9 +170,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     if (!isAllowanceEnough) {
       return `Approve ${currency.label}`;
     }
-    if (!!createBetError) {
-      return createBetError;
-    }
+
     return "Create Bet";
   };
 
