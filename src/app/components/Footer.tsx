@@ -43,7 +43,7 @@ const Footer = () => {
         </a>
       </div>
       <h3>© degensmarkets 2024</h3>
-      <img src="/footer-image.png" alt="" className="w-screen" />
+      <img src="/footer-image.png" alt="footer-image" className="w-full" />
     </footer>
   );
 };

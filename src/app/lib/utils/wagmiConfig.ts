@@ -74,7 +74,7 @@ export const wagmiConfig = createConfig({
     return createClient({
       chain,
       pollingInterval: 12_000,
-      transport: http(),
+      transport: http(), // Use HTTP transport for RPC requests; we can add our custom RPC endpoints (e.g., Infura or Alchemy) to handle huge RPC request to EVM from our application.
     });
   },
   ssr: true,

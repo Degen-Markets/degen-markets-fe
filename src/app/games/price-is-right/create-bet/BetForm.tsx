@@ -27,6 +27,8 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     setCurrency,
     setStrikePriceCreator,
     setStrikePriceAcceptor,
+    setError,
+    validateFields,
   } = useBetContext();
 
   const displayName = address
@@ -34,6 +36,27 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     : "Mystery Opponent.";
 
   const formGroupClasses = "grid grid-cols-2 gap-2 lg:gap-4";
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value.trim();
+    const numericValue = Number(inputValue);
+    setError(
+      numericValue <= 0 || isNaN(numericValue)
+        ? "Please enter a guess price!"
+        : "",
+    );
+
+    const stringValue =
+      numericValue <= 0 || isNaN(numericValue) ? "" : String(numericValue);
+
+    if (formType === "creator") {
+      setStrikePriceCreator(stringValue);
+    } else {
+      setStrikePriceAcceptor(stringValue);
+    }
+    validateFields();
+  };
+
   return (
     <div className={"-mt-12 lg:-mt-8"}>
       <AvatarWithLabel
@@ -77,15 +100,8 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
             <input
               disabled={formType === "acceptor"}
               value={formType === "creator" ? strikePriceCreator : "XXXXX"}
-              onChange={(e) => {
-                const value = e.target.value.trim();
-                if (formType === "creator") {
-                  setStrikePriceCreator(value);
-                } else {
-                  setStrikePriceAcceptor(value);
-                }
-              }}
-              className="p-2 sring-purple-medium text-black uppercase "
+              onChange={handleInputChange}
+              className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase"
               placeholder="Price guess"
               type="number"
             />

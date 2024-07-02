@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { PixelArtLoaderProps } from "../lib/utils/bets/types";
 
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
@@ -29,20 +28,6 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
       {text && <span className={`${textColor} ${textSize}`}>{text}</span>}
     </div>
   );
-};
-
-PixelArtLoader.propTypes = {
-  text: PropTypes.string.isRequired,
-  textSize: PropTypes.string,
-  loaderColor: PropTypes.string,
-  textColor: PropTypes.string,
-};
-
-PixelArtLoader.defaultProps = {
-  text: "Loading",
-  textSize: "text-2xl",
-  loaderColor: "bg-prussian-dark",
-  textColor: "text-prussian-dark",
 };
 
 export default PixelArtLoader;

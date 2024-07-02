@@ -12,12 +12,14 @@ import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { twMerge } from "tailwind-merge";
+import { useBetContext } from "../create-bet/BetContext";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
   address: Address | undefined;
   className?: string;
   strikePriceAcceptor?: string;
+  error?: string;
 }
 
 const AcceptBetButton = ({
@@ -25,6 +27,7 @@ const AcceptBetButton = ({
   address,
   className,
   strikePriceAcceptor = "",
+  error,
 }: AcceptBetButtonProps) => {
   const {
     data: approvalHash,
@@ -73,7 +76,7 @@ const AcceptBetButton = ({
 
   const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
   const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
-  const isDisabled = isPending || isProcessing || !isBalanceEnough;
+  const isDisabled = !!error || isPending || isProcessing || !isBalanceEnough;
 
   const acceptBet = async () => {
     try {
@@ -128,6 +131,9 @@ const AcceptBetButton = ({
   }, [isBetAcceptedSuccess, id, router]);
 
   const getActionButtonText = (): string => {
+    if (error) {
+      return error;
+    }
     if (!address) {
       return "Wallet not connected";
     }
@@ -137,6 +143,7 @@ const AcceptBetButton = ({
     if (!isAllowanceEnough) {
       return `Approve ${currencySymbol}`;
     }
+
     return "Approve and Bet";
   };
 

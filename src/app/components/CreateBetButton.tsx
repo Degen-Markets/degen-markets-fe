@@ -38,12 +38,13 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     customDuration,
     setBetType,
     strikePriceCreator,
+    error: createBetError,
   } = useBetContext();
 
   setBetType(betType);
 
   const durationValue = isProMode
-    ? BigInt(customDuration.value)
+    ? customDuration.value
     : BigInt(duration.value);
 
   const { address } = useAccount();
@@ -104,7 +105,8 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     !address ||
     Number(value) <= 0 ||
     isPending ||
-    isProcessing;
+    isProcessing ||
+    !!createBetError;
 
   const approve = async () => {
     try {
@@ -156,6 +158,9 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   };
 
   const getActionButtonText = (): string => {
+    if (!!createBetError) {
+      return createBetError;
+    }
     if (!address) {
       return "Wallet not connected";
     }
@@ -165,6 +170,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     if (!isAllowanceEnough) {
       return `Approve ${currency.label}`;
     }
+
     return "Create Bet";
   };
 
@@ -195,7 +201,12 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   }, [isCreateBetTxSuccess]);
 
   return (
-    <div className={twMerge("flex justify-center", className)}>
+    <div
+      className={twMerge(
+        "flex justify-center flex-col items-center w-full ",
+        className,
+      )}
+    >
       <ButtonGradient
         loader={true}
         isPending={isPending}

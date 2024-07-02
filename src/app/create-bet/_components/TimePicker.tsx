@@ -16,7 +16,8 @@ const TimePicker = <T,>({
   placeHolder,
   disabled,
 }: TokenSearchProps<T>) => {
-  const { customDuration, setCustomDuration } = useBetContext();
+  const { customDuration, setCustomDuration, error, setError, validateFields } =
+    useBetContext();
   const [time, setTime] = useState<string>("");
 
   React.useEffect(() => {
@@ -25,28 +26,36 @@ const TimePicker = <T,>({
 
   const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputTime = event.target.value.trim();
-    setTime(inputTime);
-    const unixTime = getTimeDifferenceInSeconds(inputTime);
-    setCustomDuration({
-      label: inputTime,
-      value: unixTime,
-    });
+    if (inputTime === "" || inputTime === getCurrentDateTime()) {
+      setError("Invalid time: Cannot be empty or now.");
+    } else {
+      setTime(inputTime);
+      const unixTime = getTimeDifferenceInSeconds(inputTime);
+      setCustomDuration({
+        label: inputTime,
+        value: BigInt(unixTime),
+      });
+      setError(""); // Clear any previous error
+      validateFields();
+    }
   };
 
   return (
-    <div className="flex flex-col">
-      <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
-      <input
-        type="datetime-local"
-        id="appt"
-        name="appt"
-        value={time}
-        onChange={handleTimeChange}
-        min={getCurrentDateTime()} // disabling the past Date
-        className={`styled-time-input p-[0.4rem]  ${time === "" ? "text-gray-500" : "text-[#000]"}  text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
-        placeholder={placeHolder}
-        disabled={disabled}
-      />
+    <div className="relative w-full">
+      <div>
+        <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
+        <input
+          type="datetime-local"
+          id="appt"
+          name="appt"
+          value={time}
+          onChange={handleTimeChange}
+          min={getCurrentDateTime()} // disabling the past Date
+          className={`styled-time-input w-full p-[0.4rem] ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
+          placeholder={placeHolder}
+          disabled={disabled}
+        />
+      </div>
     </div>
   );
 };
