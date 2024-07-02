@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react";
+import React, { FC, useState, useCallback, useEffect } from "react";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import AvatarWithLabel from "@/app/components/AvatarWithLabel";
 import PixelArtBorder from "@/app/components/PixelArtBorder";
@@ -15,10 +15,7 @@ interface PriceIsRightBetFormProps {
   type: "creator" | "acceptor";
   address?: Address;
   strikePriceAcceptor: string;
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: "creator" | "acceptor",
-  ) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   bet: BetResponse;
 }
 
@@ -32,7 +29,6 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
   const displayName = address
     ? getDisplayNameForAddress(address)
     : "Mystery Opponent";
-  const betCardClasses = "p-4 pt-16 z-1";
   const currency = getCurrencyByAddress(bet.currency) || "";
   const isEth = currency === Currency.ETH;
 
@@ -41,6 +37,7 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
     isEth ? 18 : STABLECOIN_DECIMALS,
   );
   const endAt = formatDateTime(new Date(Number(bet.creationTimestamp) * 1000));
+
   return (
     <div>
       <AvatarWithLabel
@@ -51,7 +48,7 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
       <PixelArtBorder
         color={colors.prussian.dark}
         width={20}
-        className={betCardClasses}
+        className="p-4 pt-16 z-1"
       >
         <div className="grid grid-cols-2 gap-6">
           <FormInput label="Bet on:" value={bet.ticker} disabled />
@@ -67,7 +64,9 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
                 : strikePriceAcceptor
             }
             disabled={type === "creator"}
-            onChange={(e) => onChange(e, type)}
+            onChange={(e) => {
+              onChange && onChange(e);
+            }}
             placeholder="Price"
             type="number"
           />
@@ -93,18 +92,31 @@ interface Props {
 const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
   const isCreatedByCurrentUser =
     bet.creator.toLowerCase() === (address?.toLowerCase() || "");
-
+  const [error, setError] = useState("");
   const [localStrikePriceAcceptor, setLocalStrikePriceAcceptor] = useState("");
 
   const handlePriceChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>, type: "creator" | "acceptor") => {
-      const value = e.target.value;
-      if (type === "acceptor") {
-        setLocalStrikePriceAcceptor(value);
-      }
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const inputValue = e.target.value.trim();
+      const numericValue = Number(inputValue);
+      const stringValue =
+        numericValue <= 0 || isNaN(numericValue) ? "" : String(numericValue);
+
+      setError(
+        numericValue <= 0 || isNaN(numericValue)
+          ? "Please enter a guess price!"
+          : "",
+      );
+      setLocalStrikePriceAcceptor(stringValue);
     },
     [],
   );
+
+  useEffect(() => {
+    if (!localStrikePriceAcceptor) {
+      setError("Please enter a valid price guess!");
+    }
+  }, [localStrikePriceAcceptor]);
 
   return (
     <div className="flex gap-8">
@@ -114,7 +126,6 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
           type="creator"
           address={bet.creator}
           strikePriceAcceptor={localStrikePriceAcceptor}
-          onChange={handlePriceChange}
         />
       </div>
       <div className="hidden md:flex items-center text-8xl">
@@ -134,6 +145,7 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
             address={address}
             className="mt-8"
             strikePriceAcceptor={localStrikePriceAcceptor}
+            error={error}
           />
         )}
       </div>

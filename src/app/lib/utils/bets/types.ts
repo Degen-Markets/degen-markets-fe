@@ -40,6 +40,7 @@ export enum Metric {
 export type MetricOption = {
   label: string;
   value: Metric;
+  image?: string;
 };
 
 export type MetricOptions = MetricOption[];
@@ -47,6 +48,7 @@ export type MetricOptions = MetricOption[];
 export type ReelOption<T> = {
   label: string;
   value: T;
+  image?: string;
 };
 
 export type Address = Hash;

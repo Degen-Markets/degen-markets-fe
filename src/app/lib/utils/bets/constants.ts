@@ -11,20 +11,24 @@ export const metricOptions: MetricOptions = [
   {
     label: "Price",
     value: Metric.PRICE,
+    image: "/pixelated/money-bag.png",
   },
   {
     label: "Mkt Cap Dom",
     value: Metric.MARKET_CAP_DOMINANCE,
+    image: "/MarketCap.svg",
   },
   {
     label: "24h Volume",
     value: Metric.VOLUME,
+    image: "/Volume.svg",
   },
 ];
 
 export const tickerOptions = Object.keys(Ticker).map((ticker) => ({
   label: ticker,
   value: ticker as Ticker,
+  image: `/tokens/${ticker}.svg`,
 }));
 
 export const SETTLE_CURRENCY: { [key in Currency]: `0x${string}` } = {
@@ -38,6 +42,7 @@ export const currencyOptions: ReelOption<`0x${string}`>[] = Object.entries(
 ).map(([key, value]) => ({
   label: Currency[key as keyof typeof Currency],
   value,
+  image: `/tokens/${Currency[key as keyof typeof Currency]}.svg`,
 }));
 
 const dayInSeconds = 60 * 60 * 24;
@@ -57,10 +62,12 @@ export const directionOptions = [
   {
     label: "Up",
     value: true,
+    image: "/ArrowUp.svg",
   },
   {
     label: "Down",
     value: false,
+    image: "/ArrowDown.svg",
   },
 ];
 
@@ -71,3 +78,5 @@ export const BET_ACCEPTANCE_TIME_LIMIT = 60 * 60 * 4;
 export const STABLECOIN_DECIMALS = 6;
 
 export const MINIMUM_BET_DURATION = 60 * 60 * 6;
+
+export const PRICE_IS_RIGHT_ROUTE = "/games/price-is-right/create-bet";

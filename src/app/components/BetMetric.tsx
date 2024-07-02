@@ -2,8 +2,8 @@ import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { formatUnits, zeroAddress } from "viem";
 import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
-import { ArrowDown, ArrowUp } from "@/app/components/Icons";
 import React from "react";
+import Image from "next/image";
 
 interface Props {
   bet: BetResponse;
@@ -40,7 +40,17 @@ const BetMetric = ({ bet, className }: Props) => {
         className={`flex gap-x-1 ${isBetOnUp ? "text-green-700" : "text-red-700"}`}
       >
         {metric}
-        {type === "binary" && (bet.isBetOnUp ? <ArrowUp /> : <ArrowDown />)}
+        {type === "binary" &&
+          (bet.isBetOnUp ? (
+            <Image src="/ArrowUp.svg" width={24} height={24} alt="arrow-up" />
+          ) : (
+            <Image
+              src="/ArrowDown.svg"
+              width={24}
+              height={24}
+              alt="arrow-down"
+            />
+          ))}
       </div>
       <div>{expirationDays} day(s)</div>
       <div>
