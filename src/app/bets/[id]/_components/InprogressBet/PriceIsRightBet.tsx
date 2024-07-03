@@ -114,7 +114,7 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
 
   useEffect(() => {
     if (!localStrikePriceAcceptor) {
-      setError("Please enter a valid price guess!");
+      setError("Please enter a valid guess price!");
     }
   }, [localStrikePriceAcceptor]);
 
