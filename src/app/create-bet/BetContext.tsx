@@ -157,7 +157,7 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (isPriceIsRightRoute && !strikePriceCreator) {
-      setError("Please enter a valid guess price!");
+      setError("Please enter a valid guess price.");
       return false;
     }
     setError("");
