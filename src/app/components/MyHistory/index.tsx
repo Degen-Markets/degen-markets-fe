@@ -14,6 +14,7 @@ import {
   getCurrencySymbolByAddress,
   getDisplayNameForAddress,
   isBetConcluded,
+  isBetExpired,
   isBetOpen,
   isBetRunning,
 } from "@/app/lib/utils/bets/helpers";
@@ -61,9 +62,9 @@ const MyHistory = () => {
   });
 
   const categorizedBets = {
-    open: bets.filter(isBetOpen),
     running: bets.filter(isBetRunning),
     concluded: bets.filter(isBetConcluded),
+    expired: bets.filter(isBetExpired),
   };
 
   const betCategories = [
@@ -76,6 +77,11 @@ const MyHistory = () => {
       label: "History",
       className: "bg-purple-medium md:text-2xl",
       bets: categorizedBets.concluded,
+    },
+    {
+      label: "Expired Bets",
+      className: "bg-red-main md:text-2xl",
+      bets: categorizedBets.expired,
     },
   ];
 
@@ -101,13 +107,6 @@ const MyHistory = () => {
       showToast(error.shortMessage ?? error, "error");
     }
   };
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const usdcProfits = calculateProfits(
@@ -154,9 +153,7 @@ const MyHistory = () => {
           className="w-40 h-40 mx-auto rounded-full"
         />
         <h2 className="text-3xl font-semibold mt-4">@DEGEN</h2>
-        <p className="text-prussian-dark">
-          {getDisplayNameForAddress(address as Address)}
-        </p>
+        <p className="text-prussian-dark">You</p>
       </div>
       <div>
         <div className="flex justify-center items-end flex-col">

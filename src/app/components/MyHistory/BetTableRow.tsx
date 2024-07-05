@@ -43,6 +43,12 @@ const BetTableRow = ({
     setIsExpanded(!isExpanded);
   };
 
+  const isBetExpired = !winner && !acceptor;
+
+  const profitLoss = isBetExpired
+    ? "xxxx xxxxx"
+    : `${formattedValueToDisplay} ${getCurrencySymbolByAddress(currency)}`;
+
   const desktopView = (
     <>
       <tr
@@ -76,18 +82,22 @@ const BetTableRow = ({
           </div>
         </td>
         <td
-          className={`p-4 border text-center whitespace-nowrap ${!isBetOnUp ? "text-green-main" : "text-red-main"}`}
+          className={`p-4 border text-center whitespace-nowrap ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
         >
-          {rightText}
+          {isBetExpired ? "xxxx xxxxx" : rightText}
         </td>
-        <td className="p-4 border text-center">
-          {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
-        </td>
+        <td className="p-4 border text-center">{profitLoss}</td>
         <td className="p-4 border col-span-2 text-center">
           <TableUserInfo
             address={acceptor as Address}
             role={
-              winner === acceptor ? "winner" : loser === acceptor ? "loser" : ""
+              !winner
+                ? ""
+                : winner === acceptor
+                  ? "winner"
+                  : loser === acceptor
+                    ? "loser"
+                    : ""
             }
             layout="reverse"
           />
@@ -101,20 +111,29 @@ const BetTableRow = ({
             {isExpanded && (
               <div className="bg-gray-800 p-4 text-white">
                 <p className="text-3xl">Bet Details</p>
-                <div className="flex justify-center items-center border-4 border-b-0">
-                  <p className="border-r-4 px-2">
-                    <strong>Created at:</strong>{" "}
-                    {formatDate(bet.creationTimestamp)}
-                  </p>
-                  <p className="border-r-4 px-2">
-                    <strong>Accepted at:</strong>{" "}
-                    {formatDate(bet.acceptanceTimestamp as string)}
-                  </p>
-                  <p className="px-2">
-                    <strong>Ended at:</strong>{" "}
-                    {formatDate(bet.expirationTimestamp)}
-                  </p>
-                </div>
+                {isBetExpired ? (
+                  <div className="flex justify-center items-center border-4 border-b-0">
+                    <p className="px-2">
+                      <strong>Created at:</strong>{" "}
+                      {formatDate(bet.creationTimestamp)}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="flex justify-center items-center border-4 border-b-0">
+                    <p className="border-r-4 px-2">
+                      <strong>Created at:</strong>{" "}
+                      {formatDate(bet.creationTimestamp)}
+                    </p>
+                    <p className="border-r-4 px-2">
+                      <strong>Accepted at:</strong>{" "}
+                      {formatDate(bet.acceptanceTimestamp as string)}
+                    </p>
+                    <p className="px-2">
+                      <strong>Ended at:</strong>{" "}
+                      {formatDate(bet.expirationTimestamp)}
+                    </p>
+                  </div>
+                )}
                 <BetCard bet={bet} />
               </div>
             )}
@@ -160,11 +179,11 @@ const BetTableRow = ({
           className={`mt-2 ${!isBetOnUp ? "text-green-main" : "text-red-main"}`}
         >
           <strong>Outcome: </strong>
-          {rightText}
+          {isBetExpired ? "xxxx xxxxx" : rightText}
         </div>
         <div className="mt-2">
           <strong>Profit/Loss: </strong>
-          {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
+          {profitLoss}
         </div>
         <TableUserInfo
           address={acceptor as Address}
@@ -177,18 +196,26 @@ const BetTableRow = ({
       {isExpanded && (
         <div className="bg-gray-800 pb-4 -mx-1 text-white">
           <p className="text-3xl">Bet Details</p>
-          <div className="flex flex-col">
-            <p className="py-2">
-              <strong>Created at:</strong> {formatDate(bet.creationTimestamp)}
-            </p>
-            <p className="py-2">
-              <strong>Accepted at:</strong>{" "}
-              {formatDate(bet.acceptanceTimestamp as string)}
-            </p>
-            <p className="py-2">
-              <strong>Ended at:</strong> {formatDate(bet.expirationTimestamp)}
-            </p>
-          </div>
+          {isBetExpired ? (
+            <div className="flex justify-center items-center border-4 border-b-0">
+              <p className="px-2">
+                <strong>Created at:</strong> {formatDate(bet.creationTimestamp)}
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <p className="py-2">
+                <strong>Created at:</strong> {formatDate(bet.creationTimestamp)}
+              </p>
+              <p className="py-2">
+                <strong>Accepted at:</strong>{" "}
+                {formatDate(bet.acceptanceTimestamp as string)}
+              </p>
+              <p className="py-2">
+                <strong>Ended at:</strong> {formatDate(bet.expirationTimestamp)}
+              </p>
+            </div>
+          )}
           <BetCard bet={bet} />
         </div>
       )}

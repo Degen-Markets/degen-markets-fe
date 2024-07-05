@@ -11,12 +11,15 @@ interface BetTableProps {
 
 const BetTable = ({ bets, label }: BetTableProps) => {
   const [isAllExpanded, setIsAllExpanded] = useState(false);
-  const [filteredBets, setFilteredBets] = useState<BetResponse[]>(bets);
+  // const [filteredBets, setFilteredBets] = useState<BetResponse[]>(bets);
   const [filterType, setFilterType] = useState<BetType | "all">("all");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  console.log({
+    Allbets: bets,
+  });
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 640);
     handleResize();
@@ -28,11 +31,10 @@ const BetTable = ({ bets, label }: BetTableProps) => {
 
   const filterBets = (type: BetType | "all") => {
     setFilterType(type);
-    setFilteredBets(
-      type === "all" ? bets : bets.filter((bet) => bet.type === type),
-    );
     setIsDropdownOpen(false);
   };
+  const filteredBets =
+    filterType === "all" ? bets : bets.filter((bet) => bet.type === filterType);
 
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     if (!dropdownRef.current?.contains(event.relatedTarget as Node)) {

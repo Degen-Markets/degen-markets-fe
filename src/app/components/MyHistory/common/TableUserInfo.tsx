@@ -8,20 +8,27 @@ interface TableUserInfoProps {
   layout: "default" | "reverse";
 }
 
-const TableUserInfo = ({ address, role, layout }: TableUserInfoProps) => (
-  <div
-    className={`flex items-center justify-center flex-col lg:flex-row ${layout === "reverse" ? "lg:flex-row-reverse" : ""}`}
-  >
-    <UserAvatar address={address} className="w-10 h-10 lg:w-12  lg:h-12 " />
+const TableUserInfo = ({ address, role, layout }: TableUserInfoProps) => {
+  const isReverseLayout = layout === "reverse";
+  return (
     <div
-      className={`flex flex-col justify-center items-center ${layout === "reverse" ? "lg:justify-end lg:items-end mr-1" : "lg:justify-start lg:items-start ml-1"} -space-y-2`}
+      className={`flex items-center justify-center flex-col lg:flex-row ${isReverseLayout ? "lg:flex-row-reverse" : ""}`}
     >
-      <span className={role === "winner" ? "text-green-main" : "text-red-main"}>
-        {role.toUpperCase()}
-      </span>
-      <span>{getDisplayNameForAddress(address)}</span>
+      <UserAvatar address={address} className="w-10 h-10 lg:w-12  lg:h-12 " />
+      <div
+        className={`flex flex-col justify-center items-center ${isReverseLayout ? "lg:justify-end lg:items-end mr-1" : "lg:justify-start lg:items-start ml-1"} -space-y-2`}
+      >
+        <span
+          className={role === "winner" ? "text-green-main" : "text-red-main"}
+        >
+          {role.toUpperCase()}
+        </span>
+        <span>
+          {address ? getDisplayNameForAddress(address) : "0X00...00000"}
+        </span>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default TableUserInfo;

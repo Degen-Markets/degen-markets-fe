@@ -130,7 +130,14 @@ export const isBetRunning = (bet: BetResponse): boolean =>
 
 export const isBetConcluded = (bet: BetResponse): boolean =>
   bet.winner !== null;
-
+export const isBetExpired = (bet: BetResponse): boolean => {
+  const currentTime = Math.floor(Date.now() / 1000);
+  return (
+    bet.acceptor === null &&
+    currentTime > Number(bet.creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT &&
+    bet.winner === null
+  );
+};
 export const getRandomOption = <T>(
   options: { label: string; value: T }[],
 ): {
@@ -257,6 +264,21 @@ export const getBetSideText = (isBetOnUp: boolean) => {
     : { leftText: "Price Rugs", rightText: "Price Moons" };
 };
 
+export const getBetStatus = (bet: BetResponse) => {
+  const currentTime = Math.floor(Date.now() / 1000);
+  const isExpired =
+    !bet.acceptor &&
+    currentTime > Number(bet.creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT;
+  const isEnded = !!bet.winner;
+
+  if (isEnded) {
+    return { status: "Ended", className: "bg-gray-500" };
+  } else if (isExpired) {
+    return { status: "Expired", className: "bg-red-main" };
+  } else {
+    return { status: "Running", className: "bg-green-main" };
+  }
+};
 export const getFormattedValue = (value: string, currency: Address) => {
   const isEth = currency === zeroAddress;
   return formatUnits(BigInt(value), isEth ? 18 : STABLECOIN_DECIMALS);
