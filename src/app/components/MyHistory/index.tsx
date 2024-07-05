@@ -61,7 +61,11 @@ const MyHistory = () => {
     chainId: base.id,
   });
 
-  const categorizedBets = {
+  const categorizedBets = useMemo(() => ({
+    open: bets.filter(isBetOpen),
+    running: bets.filter(isBetRunning),
+    concluded: bets.filter(isBetConcluded),
+  }), [bets]);
     running: bets.filter(isBetRunning),
     concluded: bets.filter(isBetConcluded),
     expired: bets.filter(isBetExpired),
