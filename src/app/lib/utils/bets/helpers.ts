@@ -294,3 +294,17 @@ export const calculateProfits = (
     .reduce((acc, bet) => acc + parseFloat(bet.value) * 2, 0); // multiplying with 2 as user will receive wagered funds as well as the loser's funds
   return +formatUnits(BigInt(profits), decimals);
 };
+
+export const getUserRole = (
+  user: Address,
+  winner: Address | null,
+  creator: Address,
+  acceptor: Address | null,
+) => {
+  if (!winner) return "";
+  return winner === user
+    ? "winner"
+    : user === (winner === creator ? acceptor : creator)
+      ? "loser"
+      : "";
+};

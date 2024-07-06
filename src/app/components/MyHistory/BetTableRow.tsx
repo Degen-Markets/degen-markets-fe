@@ -4,6 +4,7 @@ import {
   getBetTypeText,
   getCurrencySymbolByAddress,
   getFormattedValue,
+  getUserRole,
 } from "@/app/lib/utils/bets/helpers";
 import { Address } from "viem";
 import { BetResponse } from "@/app/lib/utils/bets/types";
@@ -58,9 +59,7 @@ const BetTableRow = ({
         <td className="p-4 border col-span-2 text-center">
           <TableUserInfo
             address={creator as Address}
-            role={
-              winner === creator ? "winner" : loser === creator ? "loser" : ""
-            }
+            role={getUserRole(creator, winner, creator, acceptor as Address)}
             layout="default"
           />
         </td>
@@ -90,15 +89,12 @@ const BetTableRow = ({
         <td className="p-4 border col-span-2 text-center">
           <TableUserInfo
             address={acceptor as Address}
-            role={
-              !winner
-                ? ""
-                : winner === acceptor
-                  ? "winner"
-                  : loser === acceptor
-                    ? "loser"
-                    : ""
-            }
+            role={getUserRole(
+              acceptor as Address,
+              winner,
+              creator,
+              acceptor as Address,
+            )}
             layout="reverse"
           />
         </td>
@@ -151,9 +147,7 @@ const BetTableRow = ({
       <div className="p-2">
         <TableUserInfo
           address={creator as Address}
-          role={
-            winner === creator ? "winner" : loser === creator ? "loser" : ""
-          }
+          role={getUserRole(creator, winner, creator, acceptor as Address)}
           layout="default"
         />
         <div className="mt-2">
@@ -187,9 +181,12 @@ const BetTableRow = ({
         </div>
         <TableUserInfo
           address={acceptor as Address}
-          role={
-            winner === acceptor ? "winner" : loser === acceptor ? "loser" : ""
-          }
+          role={getUserRole(
+            acceptor as Address,
+            winner,
+            creator,
+            acceptor as Address,
+          )}
           layout="reverse"
         />
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   Tab,
   TabList,
@@ -11,14 +11,10 @@ import { ButtonGradient, ButtonPrimary } from "@/app/components/Button";
 import { useRouter } from "next/navigation";
 import {
   calculateProfits,
-  getCurrencySymbolByAddress,
-  getDisplayNameForAddress,
   isBetConcluded,
   isBetExpired,
-  isBetOpen,
   isBetRunning,
 } from "@/app/lib/utils/bets/helpers";
-import { BetResponse } from "@/app/lib/utils/bets/types";
 import {
   DEGEN_BETS_ADDRESS,
   SETTLE_CURRENCY,
@@ -27,8 +23,7 @@ import {
 import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { Address } from "viem";
 import { useAccount, useTransactionReceipt } from "wagmi";
-import UserAvatar from "@/app/components/UserAvatar"; // Assuming you have a UserAvatar component
-import BetCard from "../BetCard";
+import UserAvatar from "@/app/components/UserAvatar";
 import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
 import BetTable from "./BetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
@@ -40,7 +35,6 @@ const MyHistory = () => {
   const { address } = useAccount();
   const router = useRouter();
   const [profits, setProfits] = useState({ usdc: 0, eth: 0 });
-  const [isMobile, setIsMobile] = useState(false);
   const { bets, isLoading, unclaimedBets, fetchBetsByAddress } =
     useGetBetForAddress(address as Address);
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
@@ -61,15 +55,14 @@ const MyHistory = () => {
     chainId: base.id,
   });
 
-  const categorizedBets = useMemo(() => ({
-    open: bets.filter(isBetOpen),
-    running: bets.filter(isBetRunning),
-    concluded: bets.filter(isBetConcluded),
-  }), [bets]);
-    running: bets.filter(isBetRunning),
-    concluded: bets.filter(isBetConcluded),
-    expired: bets.filter(isBetExpired),
-  };
+  const categorizedBets = useMemo(
+    () => ({
+      running: bets.filter(isBetRunning),
+      concluded: bets.filter(isBetConcluded),
+      expired: bets.filter(isBetExpired),
+    }),
+    [bets],
+  );
 
   const betCategories = [
     {

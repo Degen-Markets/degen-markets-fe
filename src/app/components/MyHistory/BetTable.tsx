@@ -11,7 +11,6 @@ interface BetTableProps {
 
 const BetTable = ({ bets, label }: BetTableProps) => {
   const [isAllExpanded, setIsAllExpanded] = useState(false);
-  // const [filteredBets, setFilteredBets] = useState<BetResponse[]>(bets);
   const [filterType, setFilterType] = useState<BetType | "all">("all");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
