@@ -34,6 +34,7 @@ import { useToast } from "../Toast/ToastProvider";
 const MyHistory = () => {
   const { address } = useAccount();
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
   const [profits, setProfits] = useState({ usdc: 0, eth: 0 });
   const { bets, isLoading, unclaimedBets, fetchBetsByAddress } =
     useGetBetForAddress(address as Address);
@@ -54,6 +55,13 @@ const MyHistory = () => {
     hash: claimedBetHash,
     chainId: base.id,
   });
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 640);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const categorizedBets = useMemo(
     () => ({
@@ -188,7 +196,11 @@ const MyHistory = () => {
                   {isLoading ? (
                     <div>Loading...</div>
                   ) : hasBetsInCategory ? (
-                    <BetTable bets={category.bets} label={category.label} />
+                    <BetTable
+                      bets={category.bets}
+                      label={category.label}
+                      isMobile={isMobile}
+                    />
                   ) : (
                     <div className="text-center flex">
                       <div className="flex flex-col items-center w-full space-y-2 p-8 ">

@@ -11,6 +11,7 @@ import { BetResponse } from "@/app/lib/utils/bets/types";
 import TableUserInfo from "./common/TableUserInfo";
 import BetStatus from "./common/BetStatus";
 import BetCard from "../BetCard";
+import Image from "next/image";
 
 interface BetTableRowProps {
   bet: BetResponse;
@@ -32,7 +33,6 @@ const BetTableRow = ({
 }: BetTableRowProps) => {
   const { currency, creator, acceptor, type, value, isBetOnUp, winner } = bet;
   const [isExpanded, setIsExpanded] = useState(false);
-  const loser = winner ? (winner === creator ? acceptor : creator) : null;
   const { leftText, rightText } = getBetSideText(isBetOnUp);
   const formattedValueToDisplay = getFormattedValue(value, currency);
 
@@ -50,43 +50,93 @@ const BetTableRow = ({
     ? "xxxx xxxxx"
     : `${formattedValueToDisplay} ${getCurrencySymbolByAddress(currency)}`;
 
-  const desktopView = (
-    <>
-      <tr
-        className={`${isEven ? "bg-gray-700" : "bg-gray-900"} hover:bg-purple-medium transition duration-300 cursor-pointer border`}
+  return (
+    <div>
+      <div
+        className={`grid grid-cols-5 sm:grid-cols-9 ${isEven ? "bg-gray-700" : "bg-gray-900"} hover:bg-purple-medium transition duration-300 cursor-pointer border`}
         onClick={toggleExpand}
       >
-        <td className="p-4 border col-span-2 text-center">
+        <div className="center-all p-4 border sm:col-span-2">
           <TableUserInfo
             address={creator as Address}
             role={getUserRole(creator, winner, creator, acceptor as Address)}
             layout="default"
           />
-        </td>
-        <td className="p-4 border text-center">
-          {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
-        </td>
-        <td
-          className={`p-4 border text-center whitespace-nowrap ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
-        >
-          {leftText}
-        </td>
-        <td className="p-4 border text-center">
+        </div>
+        <div className="center-all p-4 border">
+          <div className="center-all flex-col ">
+            {isMobile ? (
+              isBetOnUp ? (
+                <Image
+                  src="/ArrowUp.svg"
+                  width={24}
+                  height={24}
+                  alt="arrow-up"
+                />
+              ) : (
+                <Image
+                  src="/ArrowDown.svg"
+                  width={24}
+                  height={24}
+                  alt="arrow-down"
+                />
+              )
+            ) : (
+              ""
+            )}
+            {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
+          </div>
+        </div>
+        {!isMobile && (
+          <div
+            className={`center-all p-4 border ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
+          >
+            {leftText}
+          </div>
+        )}
+        <div className="center-all p-4 border">
           <div className="flex flex-col justify-center items-center">
             <span>VS</span>
-            <div className="text-sm px-1 bg-purple-medium whitespace-nowrap">
+            <div className="text-sm px-1 bg-purple-medium leading-3 py-1 ">
               {getBetTypeText(type)}
             </div>
             <BetStatus bet={bet} />
           </div>
-        </td>
-        <td
-          className={`p-4 border text-center whitespace-nowrap ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
-        >
-          {isBetExpired ? "xxxx xxxxx" : rightText}
-        </td>
-        <td className="p-4 border text-center">{profitLoss}</td>
-        <td className="p-4 border col-span-2 text-center">
+        </div>
+        {!isMobile && (
+          <div
+            className={`center-all p-4 border ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
+          >
+            {isBetExpired ? "xxxx xxxxx" : rightText}
+          </div>
+        )}
+        <div className="center-all p-4 border">
+          <div className="center-all flex-col">
+            {isMobile ? (
+              isBetExpired ? (
+                "xxxx"
+              ) : isBetOnUp ? (
+                <Image
+                  src="/ArrowDown.svg"
+                  width={24}
+                  height={24}
+                  alt="arrow-down"
+                />
+              ) : (
+                <Image
+                  src="/ArrowUp.svg"
+                  width={24}
+                  height={24}
+                  alt="arrow-up"
+                />
+              )
+            ) : (
+              ""
+            )}
+            {profitLoss}
+          </div>
+        </div>
+        <div className="center-all p-4 border sm:col-span-2">
           <TableUserInfo
             address={acceptor as Address}
             role={getUserRole(
@@ -97,12 +147,12 @@ const BetTableRow = ({
             )}
             layout="reverse"
           />
-        </td>
-      </tr>
-      <tr>
-        <td colSpan={7} className="p-0 border-0">
+        </div>
+      </div>
+      <div>
+        <div className="grid grid-cols-9 p-0 border-0">
           <div
-            className={`transition-all duration-300 overflow-hidden ${isExpanded ? "max-h-screen p-4" : "max-h-0"}`}
+            className={`transition-all duration-300 col-span-9 overflow-hidden ${isExpanded ? "max-h-screen" : "max-h-0"}`}
           >
             {isExpanded && (
               <div className="bg-gray-800 p-4 text-white">
@@ -134,92 +184,10 @@ const BetTableRow = ({
               </div>
             )}
           </div>
-        </td>
-      </tr>
-    </>
-  );
-
-  const mobileView = (
-    <div
-      className="bg-gray-700 mb-2  shadow-md transition duration-300 cursor-pointer"
-      onClick={toggleExpand}
-    >
-      <div className="p-2">
-        <TableUserInfo
-          address={creator as Address}
-          role={getUserRole(creator, winner, creator, acceptor as Address)}
-          layout="default"
-        />
-        <div className="mt-2">
-          <strong>Stake: </strong>
-          {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
         </div>
-        <div
-          className={`mt-2 ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
-        >
-          <strong>Prediction: </strong>
-          {leftText}
-        </div>
-        <div className="mt-2 flex flex-col">
-          <div className="text-sm px-1 inline-block">
-            {getBetTypeText(type)}
-          </div>
-          <strong className=" bg-purple-medium">VS </strong>
-          <div className="flex justify-center items-center">
-            <BetStatus bet={bet} />
-          </div>
-        </div>
-        <div
-          className={`mt-2 ${!isBetOnUp ? "text-green-main" : "text-red-main"}`}
-        >
-          <strong>Outcome: </strong>
-          {isBetExpired ? "xxxx xxxxx" : rightText}
-        </div>
-        <div className="mt-2">
-          <strong>Profit/Loss: </strong>
-          {profitLoss}
-        </div>
-        <TableUserInfo
-          address={acceptor as Address}
-          role={getUserRole(
-            acceptor as Address,
-            winner,
-            creator,
-            acceptor as Address,
-          )}
-          layout="reverse"
-        />
       </div>
-      {isExpanded && (
-        <div className="bg-gray-800 pb-4 -mx-1 text-white">
-          <p className="text-3xl">Bet Details</p>
-          {isBetExpired ? (
-            <div className="flex justify-center items-center border-4 border-b-0">
-              <p className="px-2">
-                <strong>Created at:</strong> {formatDate(bet.creationTimestamp)}
-              </p>
-            </div>
-          ) : (
-            <div className="flex flex-col">
-              <p className="py-2">
-                <strong>Created at:</strong> {formatDate(bet.creationTimestamp)}
-              </p>
-              <p className="py-2">
-                <strong>Accepted at:</strong>{" "}
-                {formatDate(bet.acceptanceTimestamp as string)}
-              </p>
-              <p className="py-2">
-                <strong>Ended at:</strong> {formatDate(bet.expirationTimestamp)}
-              </p>
-            </div>
-          )}
-          <BetCard bet={bet} />
-        </div>
-      )}
     </div>
   );
-
-  return isMobile ? mobileView : desktopView;
 };
 
 export default BetTableRow;

@@ -12,7 +12,7 @@ const TableUserInfo = ({ address, role, layout }: TableUserInfoProps) => {
   const isReverseLayout = layout === "reverse";
   return (
     <div
-      className={`flex items-center justify-center flex-col lg:flex-row ${isReverseLayout ? "lg:flex-row-reverse" : ""}`}
+      className={`flex items-center justify-center space-y-1 lg:space-y-0 flex-col lg:flex-row ${isReverseLayout ? "lg:flex-row-reverse" : ""}`}
     >
       <UserAvatar address={address} className="w-10 h-10 lg:w-12  lg:h-12 " />
       <div

@@ -7,24 +7,14 @@ import { IoIosArrowDown } from "react-icons/io";
 interface BetTableProps {
   bets: BetResponse[];
   label: string;
+  isMobile: boolean;
 }
 
-const BetTable = ({ bets, label }: BetTableProps) => {
+const BetTable = ({ bets, label, isMobile }: BetTableProps) => {
   const [isAllExpanded, setIsAllExpanded] = useState(false);
   const [filterType, setFilterType] = useState<BetType | "all">("all");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  console.log({
-    Allbets: bets,
-  });
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 640);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const toggleAllRows = () => setIsAllExpanded((prev) => !prev);
 
@@ -89,27 +79,34 @@ const BetTable = ({ bets, label }: BetTableProps) => {
           {isAllExpanded ? "Collapse All" : "Expand All"}
         </WalletButton>
       </div>
-      <table className="min-w-full bg-prussian-dark text-white">
-        {!isMobile && (
-          <thead>
-            <tr>
-              <th className="p-4 col-span-2 border text-center">Creator</th>
-              <th className="p-4 border text-center">Stake</th>
-              <th className="p-4 border text-center">Prediction</th>
-              <th className="p-4 border text-center">
-                <div className="flex flex-col justify-center items-center">
-                  <span>VS</span>
-                  <div className="text-sm">Bet</div>
-                  <div className="text-sm">Status</div>
-                </div>
-              </th>
-              <th className="p-4 border text-center">Outcome</th>
-              <th className="p-4 border text-center">Profit/Loss</th>
-              <th className="p-4 border col-span-2 text-center">Acceptor</th>
-            </tr>
-          </thead>
-        )}
-        <tbody>
+      <div className="min-w-full bg-prussian-dark text-white">
+        <div className="grid grid-cols-5 sm:grid-cols-9 ">
+          <div className="p-4 sm:col-span-2 border text-center center-all">
+            Creator
+          </div>
+          <div className="p-4 border text-center center-all">Stake</div>
+          {!isMobile && (
+            <div className="p-4 border text-center center-all whitespace-pre-wrap">
+              Prediction
+            </div>
+          )}
+          <div className="p-4 border text-center flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center">
+              <span>VS</span>
+              <div className="text-sm">Bet</div>
+              <div className="text-sm">Status</div>
+            </div>
+          </div>
+          {!isMobile && (
+            <div className="p-4 border text-center center-all">Outcome</div>
+          )}
+          <div className="p-4 border text-center center-all">Profit/Loss</div>
+          <div className="p-4 border sm:col-span-2 text-center center-all">
+            Acceptor
+          </div>
+        </div>
+
+        <div>
           {filteredBets
             .slice()
             .reverse()
@@ -122,8 +119,8 @@ const BetTable = ({ bets, label }: BetTableProps) => {
                 isMobile={isMobile}
               />
             ))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
   );
 };

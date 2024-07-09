@@ -6,9 +6,7 @@ import cx from "classnames";
 const BetStatus = ({ bet }: { bet: BetResponse }) => {
   const { status, className } = getBetStatus(bet);
   return (
-    <div className={cx("text-sm px-1 mt-1 w-fit whitespace-nowrap", className)}>
-      {status}
-    </div>
+    <div className={cx("text-sm px-1 mt-1 w-fit ", className)}>{status}</div>
   );
 };
 
