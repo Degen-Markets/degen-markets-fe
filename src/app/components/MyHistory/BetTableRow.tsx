@@ -17,7 +17,6 @@ interface BetTableRowProps {
   bet: BetResponse;
   isEven: boolean;
   isAllExpanded: boolean;
-  isMobile: boolean;
 }
 
 const formatDate = (timestamp: string) => {
@@ -25,12 +24,7 @@ const formatDate = (timestamp: string) => {
   return date.toLocaleString(); // Convert date to a readable format
 };
 
-const BetTableRow = ({
-  bet,
-  isEven,
-  isAllExpanded,
-  isMobile,
-}: BetTableRowProps) => {
+const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
   const { currency, creator, acceptor, type, value, isBetOnUp, winner } = bet;
   const [isExpanded, setIsExpanded] = useState(false);
   const { leftText, rightText } = getBetSideText(isBetOnUp);
@@ -65,8 +59,8 @@ const BetTableRow = ({
         </div>
         <div className="center-all p-4 border">
           <div className="center-all flex-col ">
-            {isMobile ? (
-              isBetOnUp ? (
+            <div className="block sm:hidden">
+              {isBetOnUp ? (
                 <Image
                   src="/ArrowUp.svg"
                   width={24}
@@ -80,20 +74,16 @@ const BetTableRow = ({
                   height={24}
                   alt="arrow-down"
                 />
-              )
-            ) : (
-              ""
-            )}
+              )}
+            </div>
             {formattedValueToDisplay} {getCurrencySymbolByAddress(currency)}
           </div>
         </div>
-        {!isMobile && (
-          <div
-            className={`center-all p-4 border ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
-          >
-            {leftText}
-          </div>
-        )}
+        <div
+          className={`center-all p-4 border !hidden sm:!flex  ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
+        >
+          {leftText}
+        </div>
         <div className="center-all p-4 border">
           <div className="flex flex-col justify-center items-center">
             <span>VS</span>
@@ -103,17 +93,15 @@ const BetTableRow = ({
             <BetStatus bet={bet} />
           </div>
         </div>
-        {!isMobile && (
-          <div
-            className={`center-all p-4 border ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
-          >
-            {isBetExpired ? "xxxx xxxxx" : rightText}
-          </div>
-        )}
+        <div
+          className={`center-all p-4 border  !hidden sm:!flex   ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
+        >
+          {isBetExpired ? "xxxx xxxxx" : rightText}
+        </div>
         <div className="center-all p-4 border">
           <div className="center-all flex-col">
-            {isMobile ? (
-              isBetExpired ? (
+            <div className="block sm:hidden">
+              {isBetExpired ? (
                 "xxxx"
               ) : isBetOnUp ? (
                 <Image
@@ -129,10 +117,8 @@ const BetTableRow = ({
                   height={24}
                   alt="arrow-up"
                 />
-              )
-            ) : (
-              ""
-            )}
+              )}
+            </div>
             {profitLoss}
           </div>
         </div>

@@ -6,11 +6,9 @@ import { IoIosArrowDown } from "react-icons/io";
 
 interface BetTableProps {
   bets: BetResponse[];
-  label: string;
-  isMobile: boolean;
 }
 
-const BetTable = ({ bets, label, isMobile }: BetTableProps) => {
+const BetTable = ({ bets }: BetTableProps) => {
   const [isAllExpanded, setIsAllExpanded] = useState(false);
   const [filterType, setFilterType] = useState<BetType | "all">("all");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -85,11 +83,9 @@ const BetTable = ({ bets, label, isMobile }: BetTableProps) => {
             Creator
           </div>
           <div className="p-4 border text-center center-all">Stake</div>
-          {!isMobile && (
-            <div className="p-4 border text-center center-all whitespace-pre-wrap">
-              Prediction
-            </div>
-          )}
+          <div className="p-4 border text-center center-all whitespace-pre-wrap !hidden sm:!flex">
+            Prediction
+          </div>
           <div className="p-4 border text-center flex-col justify-center items-center">
             <div className="flex flex-col justify-center items-center">
               <span>VS</span>
@@ -97,9 +93,9 @@ const BetTable = ({ bets, label, isMobile }: BetTableProps) => {
               <div className="text-sm">Status</div>
             </div>
           </div>
-          {!isMobile && (
-            <div className="p-4 border text-center center-all">Outcome</div>
-          )}
+          <div className="p-4 border text-center center-all !hidden sm:!flex">
+            Outcome
+          </div>
           <div className="p-4 border text-center center-all">Profit/Loss</div>
           <div className="p-4 border sm:col-span-2 text-center center-all">
             Acceptor
@@ -116,7 +112,6 @@ const BetTable = ({ bets, label, isMobile }: BetTableProps) => {
                 bet={bet}
                 isEven={index % 2 === 0}
                 isAllExpanded={isAllExpanded}
-                isMobile={isMobile}
               />
             ))}
         </div>
