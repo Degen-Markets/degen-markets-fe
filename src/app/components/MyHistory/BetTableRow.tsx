@@ -12,6 +12,7 @@ import TableUserInfo from "./common/TableUserInfo";
 import BetStatus from "./common/BetStatus";
 import BetCard from "../BetCard";
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
 
 interface BetTableRowProps {
   bet: BetResponse;
@@ -80,7 +81,10 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
           </div>
         </div>
         <div
-          className={`center-all p-4 border !hidden sm:!flex  ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
+          className={twMerge(
+            "hidden sm:flex justify-center items-center text-center p-4 border",
+            isBetOnUp ? "text-green-main" : "text-red-main",
+          )}
         >
           {leftText}
         </div>
@@ -94,7 +98,10 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
           </div>
         </div>
         <div
-          className={`center-all p-4 border  !hidden sm:!flex   ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
+          className={twMerge(
+            "hidden sm:flex justify-center items-center  p-4 border text-center",
+            !isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main",
+          )}
         >
           {isBetExpired ? "xxxx xxxxx" : rightText}
         </div>

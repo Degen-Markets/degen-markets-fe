@@ -3,6 +3,7 @@ import { BetResponse, BetType } from "@/app/lib/utils/bets/types";
 import BetTableRow from "./BetTableRow";
 import { WalletButton } from "../Button/ButtonWallet";
 import { IoIosArrowDown } from "react-icons/io";
+import { twMerge } from "tailwind-merge";
 
 interface BetTableProps {
   bets: BetResponse[];
@@ -83,7 +84,11 @@ const BetTable = ({ bets }: BetTableProps) => {
             Creator
           </div>
           <div className="p-4 border text-center center-all">Stake</div>
-          <div className="p-4 border text-center center-all whitespace-pre-wrap !hidden sm:!flex">
+          <div
+            className={
+              "p-4 border text-center hidden sm:flex justify-center items-center"
+            }
+          >
             Prediction
           </div>
           <div className="p-4 border text-center flex-col justify-center items-center">
@@ -93,7 +98,11 @@ const BetTable = ({ bets }: BetTableProps) => {
               <div className="text-sm">Status</div>
             </div>
           </div>
-          <div className="p-4 border text-center center-all !hidden sm:!flex">
+          <div
+            className={
+              "p-4 border text-center hidden sm:flex justify-center items-center"
+            }
+          >
             Outcome
           </div>
           <div className="p-4 border text-center center-all">Profit/Loss</div>
