@@ -40,7 +40,7 @@ const BetTable = ({ bets }: BetTableProps) => {
     <div>
       <div className="flex justify-end p-2 mb-4">
         <div
-          className="relative inline-block text-left w-fit z-20"
+          className="relative inline-block text-left w-fit z-20" // z-20 to keep the filter menu at the top of the table.
           onBlur={handleBlur}
           tabIndex={0}
           ref={dropdownRef}
@@ -80,6 +80,8 @@ const BetTable = ({ bets }: BetTableProps) => {
       </div>
       <div className="min-w-full bg-prussian-dark text-white">
         <div className="grid grid-cols-5 sm:grid-cols-9 sticky bg-prussian-dark top-0 shadow-md shadow-purple-medium z-10">
+          {" "}
+          {/* z-10 to avoid the TableRow's icon overlap the Header of the table */}
           <div className="p-4 sm:col-span-2 border text-center center-all">
             Creator
           </div>
