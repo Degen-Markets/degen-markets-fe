@@ -272,11 +272,11 @@ export const getBetStatus = (bet: BetResponse) => {
   const isEnded = !!bet.winner;
 
   if (isEnded) {
-    return { status: "Ended", className: "bg-gray-500" };
+    return { status: "Ended", statusClass: "bg-gray-500" };
   } else if (isExpired) {
-    return { status: "Expired", className: "bg-red-main" };
+    return { status: "Expired", statusClass: "bg-red-main" };
   } else {
-    return { status: "Running", className: "bg-green-main" };
+    return { status: "Running", statusClass: "bg-green-main" };
   }
 };
 export const getFormattedValue = (value: string, currency: Address) => {

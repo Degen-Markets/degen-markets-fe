@@ -30,7 +30,6 @@ import { DialogType, useDialog } from "../Dialog/dialog";
 import { useWriteContract } from "wagmi";
 import { base } from "viem/chains";
 import { useToast } from "../Toast/ToastProvider";
-
 const MyHistory = () => {
   const { address } = useAccount();
   const router = useRouter();

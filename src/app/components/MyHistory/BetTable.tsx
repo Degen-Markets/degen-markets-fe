@@ -37,10 +37,10 @@ const BetTable = ({ bets }: BetTableProps) => {
   ];
 
   return (
-    <div className="overflow-x-auto">
+    <div>
       <div className="flex justify-end p-2 mb-4">
         <div
-          className="relative inline-block text-left w-fit"
+          className="relative inline-block text-left w-fit z-20"
           onBlur={handleBlur}
           tabIndex={0}
           ref={dropdownRef}
@@ -79,7 +79,7 @@ const BetTable = ({ bets }: BetTableProps) => {
         </WalletButton>
       </div>
       <div className="min-w-full bg-prussian-dark text-white">
-        <div className="grid grid-cols-5 sm:grid-cols-9 ">
+        <div className="grid grid-cols-5 sm:grid-cols-9 sticky bg-prussian-dark top-0 shadow-md shadow-purple-medium z-10">
           <div className="p-4 sm:col-span-2 border text-center center-all">
             Creator
           </div>
