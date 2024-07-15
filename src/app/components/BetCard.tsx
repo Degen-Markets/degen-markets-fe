@@ -188,7 +188,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         <div className="flex items-center justify-center gap-16 md:gap-8 xl:gap-16">
           <Avatars />
         </div>
-        <div className="flex flex-col items-center -space-y-2 w-full max-w-lg mx-auto">
+        <div className="flex flex-col items-center -space-y-2 w-full max-w-3xl mx-auto">
           <BetMetric bet={bet} className={bgClassForMetric} />
           <BetCountdown
             classNames={`p-1 border-2 border-white text-prussian-dark text-lg justify-center w-4/5 ${bgClassForCountDown}`}
