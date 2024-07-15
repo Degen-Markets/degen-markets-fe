@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { erc20Abi, maxUint256, zeroAddress } from "viem";
-import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import useAllowances from "@/app/lib/utils/hooks/useAllowances";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
@@ -12,7 +11,7 @@ import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { twMerge } from "tailwind-merge";
-import { useBetContext } from "../create-bet/BetContext";
+import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
@@ -79,13 +78,14 @@ const AcceptBetButton = ({
   const isDisabled = !!error || isPending || isProcessing || !isBalanceEnough;
 
   const acceptBet = async () => {
+    const value = isEth ? valueInWei : (undefined as any);
     try {
       await sendAcceptBetTx({
-        abi: DEGEN_BETS_ABI,
+        abi: DegenBetsAbi,
         address: DEGEN_BETS_ADDRESS,
         functionName: "acceptBet",
         args: [id, strikePriceAcceptor],
-        value: isEth ? valueInWei : undefined,
+        value,
       });
     } catch (error: any) {
       console.error(error);

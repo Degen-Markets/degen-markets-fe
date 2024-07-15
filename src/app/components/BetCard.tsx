@@ -9,13 +9,13 @@ import { ButtonPrimary } from "@/app/components/Button";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import UserAvatar from "@/app/components/UserAvatar";
 import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
-import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import cx from "classnames";
 import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import { Hash } from "viem";
 import BetMetric from "@/app/components/BetMetric";
 import { base } from "wagmi/chains";
+import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
 
 interface Props {
   bet: BetResponse;
@@ -71,7 +71,7 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const onWithdrawClick = useCallback(async () => {
     try {
       await sendWithdrawBetTx({
-        abi: DEGEN_BETS_ABI,
+        abi: DegenBetsAbi,
         address: DEGEN_BETS_ADDRESS,
         functionName: "withdrawBets",
         args: [[id]],

@@ -10,6 +10,7 @@ import { DEGEN_BETS_ADDRESS } from "../lib/utils/bets/constants";
 import { useToast } from "../components/Toast/ToastProvider";
 import { Address } from "viem";
 import useGetBetForAddress from "../lib/utils/hooks/useGetBetForAddress";
+import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
@@ -64,7 +65,7 @@ const MyBets = () => {
     const unclaimedBetsId = unclaimedBets.map((bet) => bet.id);
     try {
       await claimBetTx({
-        abi: DEGEN_BETS_ABI,
+        abi: DegenBetsAbi,
         address: DEGEN_BETS_ADDRESS,
         functionName: "getPaid",
         args: [unclaimedBetsId],
