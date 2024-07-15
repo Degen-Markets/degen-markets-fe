@@ -13,8 +13,7 @@ import BetStatus from "./common/BetStatus";
 import BetCard from "../BetCard";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import { IoIosArrowDown } from "react-icons/io";
-import { TbLayoutNavbarExpandFilled } from "react-icons/tb";
+import { HiChevronDoubleDown } from "react-icons/hi2";
 
 interface BetTableRowProps {
   bet: BetResponse;
@@ -97,7 +96,7 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
               {getBetTypeText(type)}
             </div>
             <BetStatus bet={bet} className="group-hover:hidden" />
-            <TbLayoutNavbarExpandFilled
+            <HiChevronDoubleDown
               size={30}
               className="hidden transition-all ease-in duration-150 group-hover:block animate-bounce h-full py-3 md:py-[7px] z-0"
             />
