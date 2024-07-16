@@ -168,7 +168,7 @@ const MyHistory = () => {
           </p>
         </div>
         <Tabs defaultActiveIndex={defaultActiveIndex}>
-          <TabList className="border-b border-gray-300 flex">
+          <TabList className="border-b border-gray-300 flex justify-start items-end">
             {betCategories.map((category, index) => (
               <Tab
                 key={index}
