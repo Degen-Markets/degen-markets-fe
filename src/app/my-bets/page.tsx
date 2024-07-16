@@ -1,9 +1,7 @@
 "use client";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
-import { useEffect, useState } from "react";
-import { BetsResponse } from "@/app/lib/utils/bets/types";
-import { getBetsForAddress } from "@/app/lib/utils/api/getBetsForAddress";
+import { useEffect } from "react";
 import BetsTab from "@/app/components/BetsTab";
 import Wrapper from "@/app/components/Wrapper";
 import { ButtonGradient } from "../components/Button";
@@ -11,12 +9,12 @@ import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "../lib/utils/bets/constants";
 import { useToast } from "../components/Toast/ToastProvider";
 import { Address } from "viem";
+import useGetBetForAddress from "../lib/utils/hooks/useGetBetForAddress";
 
 const MyBets = () => {
   const { address, isConnected } = useAccount();
-  const [bets, setBets] = useState<BetsResponse>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [unclaimedBets, setUnclaimedBets] = useState<BetsResponse>([]);
+  const { bets, isLoading, unclaimedBets, fetchBetsByAddress } =
+    useGetBetForAddress(address as Address);
   const { showToast } = useToast();
   const {
     writeContractAsync: claimBetTx,
@@ -37,29 +35,6 @@ const MyBets = () => {
     unclaimedBets.length === 0 ||
     isClaimButtonPending ||
     isClaimButtonProcessing;
-
-  const fetchBetsByAddress = async (address: `0x${string}`) => {
-    try {
-      setIsLoading(true);
-      const { data: bets } = await getBetsForAddress(address);
-      const unclaimed = bets.filter(
-        (bet) =>
-          !bet.isPaid && bet.winner?.toLowerCase() === address.toLowerCase(),
-      );
-      setUnclaimedBets(unclaimed);
-      setBets(bets);
-    } catch (error) {
-      console.error("Error fetching bets:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (address) {
-      fetchBetsByAddress(address);
-    }
-  }, [address]);
 
   useEffect(() => {
     if (claimingError) {

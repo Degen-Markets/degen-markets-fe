@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import DialogConnector from "./ConnectorDialog";
 import { WalletButton } from "../Button/ButtonWallet";
 import { useAccount, useDisconnect } from "wagmi";
 import WalletMenu from "../WalletMenu";
@@ -21,6 +20,7 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
 
   const walletMenuItems = [
     { title: "My Bets", link: "/my-bets", fn: () => null },
+    { title: "My History", link: "/my-history", fn: () => null },
     { title: "Switch Network", link: "", fn: () => setOpenSwitchChain(true) },
     { title: "Disconnect", link: "", fn: disconnect },
   ];
