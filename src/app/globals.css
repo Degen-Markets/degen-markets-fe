@@ -26,7 +26,7 @@
 body {
   font-family: "Jersey 10", sans-serif;
   color: white;
-  background: linear-gradient(to right, rgb(169, 184, 202), rgb(68, 117, 175));
+  background: #202b38;
 }
 
 @layer utilities {
