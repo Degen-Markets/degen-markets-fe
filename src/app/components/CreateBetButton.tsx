@@ -15,12 +15,12 @@ import {
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
-import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { twMerge } from "tailwind-merge";
+import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
 
 const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   betType,
@@ -123,10 +123,11 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   };
 
   const createBet = async () => {
+    const value = isEth ? valueInWei : (undefined as any);
     try {
       const randomId = uuid();
       await sendCreateBetTx({
-        abi: DEGEN_BETS_ABI,
+        abi: DegenBetsAbi,
         address: DEGEN_BETS_ADDRESS,
         functionName: "createBet",
         args: [
@@ -140,7 +141,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
           valueInWei,
           currency.value,
         ],
-        value: isEth ? valueInWei : undefined,
+        value,
         chainId: base.id,
       });
     } catch (error: any) {

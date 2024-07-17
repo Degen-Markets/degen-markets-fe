@@ -20,7 +20,6 @@ import {
   SETTLE_CURRENCY,
   STABLECOIN_DECIMALS,
 } from "@/app/lib/utils/bets/constants";
-import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { Address } from "viem";
 import { useAccount, useTransactionReceipt } from "wagmi";
 import UserAvatar from "@/app/components/UserAvatar";
@@ -30,6 +29,8 @@ import { DialogType, useDialog } from "../Dialog/dialog";
 import { useWriteContract } from "wagmi";
 import { base } from "viem/chains";
 import { useToast } from "../Toast/ToastProvider";
+import { DegenBetsAbi } from "@/app/lib/utils/bets/DegenBetsAbi";
+
 const MyHistory = () => {
   const { address } = useAccount();
   const router = useRouter();
@@ -92,7 +93,7 @@ const MyHistory = () => {
     const unclaimedBetsId = unclaimedBets.map((bet) => bet.id);
     try {
       await claimBetTx({
-        abi: DEGEN_BETS_ABI,
+        abi: DegenBetsAbi,
         address: DEGEN_BETS_ADDRESS,
         functionName: "getPaid",
         args: [unclaimedBetsId],
