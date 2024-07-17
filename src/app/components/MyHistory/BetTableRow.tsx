@@ -12,6 +12,8 @@ import TableUserInfo from "./common/TableUserInfo";
 import BetStatus from "./common/BetStatus";
 import BetCard from "../BetCard";
 import Image from "next/image";
+import { twMerge } from "tailwind-merge";
+import { HiChevronDoubleDown } from "react-icons/hi2";
 
 interface BetTableRowProps {
   bet: BetResponse;
@@ -45,19 +47,19 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
     : `${formattedValueToDisplay} ${getCurrencySymbolByAddress(currency)}`;
 
   return (
-    <div>
+    <div className="group">
       <div
         className={`grid grid-cols-5 sm:grid-cols-9 ${isEven ? "bg-gray-700" : "bg-gray-900"} hover:bg-purple-medium transition duration-300 cursor-pointer border`}
         onClick={toggleExpand}
       >
-        <div className="center-all p-4 border sm:col-span-2">
+        <div className="center-all p-4 border border-y-0 sm:col-span-2">
           <TableUserInfo
             address={creator as Address}
             role={getUserRole(creator, winner, creator, acceptor as Address)}
             layout="default"
           />
         </div>
-        <div className="center-all p-4 border">
+        <div className="center-all p-4 border border-y-0">
           <div className="center-all flex-col ">
             <div className="block sm:hidden">
               {isBetOnUp ? (
@@ -80,25 +82,35 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
           </div>
         </div>
         <div
-          className={`center-all p-4 border !hidden sm:!flex  ${isBetOnUp ? "text-green-main" : "text-red-main"}`}
+          className={twMerge(
+            "hidden sm:flex justify-center items-center text-center p-4 border border-y-0",
+            isBetOnUp ? "text-green-main" : "text-red-main",
+          )}
         >
           {leftText}
         </div>
-        <div className="center-all p-4 border">
-          <div className="flex flex-col justify-center items-center">
-            <span>VS</span>
-            <div className="text-sm px-1 bg-purple-medium leading-3 py-1 ">
+        <div className="center-all p-4 border border-y-0">
+          <div className="flex flex-col justify-center items-center ">
+            <span className="">VS</span>
+            <div className="text-sm px-1 bg-purple-medium leading-3 py-1 group-hover:hidden">
               {getBetTypeText(type)}
             </div>
-            <BetStatus bet={bet} />
+            <BetStatus bet={bet} className="group-hover:hidden" />
+            <HiChevronDoubleDown
+              size={30}
+              className="hidden transition-all ease-in duration-150 group-hover:block animate-bounce h-full py-3 md:py-[7px] z-0"
+            />
           </div>
         </div>
         <div
-          className={`center-all p-4 border  !hidden sm:!flex   ${!isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main"}`}
+          className={twMerge(
+            "hidden sm:flex justify-center items-center  p-4 border border-y-0 text-center",
+            !isBetOnUp && !isBetExpired ? "text-green-main" : "text-red-main",
+          )}
         >
           {isBetExpired ? "xxxx xxxxx" : rightText}
         </div>
-        <div className="center-all p-4 border">
+        <div className="center-all p-4 border border-y-0">
           <div className="center-all flex-col">
             <div className="block sm:hidden">
               {isBetExpired ? (
@@ -122,7 +134,7 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
             {profitLoss}
           </div>
         </div>
-        <div className="center-all p-4 border sm:col-span-2">
+        <div className="center-all p-4 border border-y-0 sm:col-span-2">
           <TableUserInfo
             address={acceptor as Address}
             role={getUserRole(

@@ -3,6 +3,7 @@ import { BetResponse, BetType } from "@/app/lib/utils/bets/types";
 import BetTableRow from "./BetTableRow";
 import { WalletButton } from "../Button/ButtonWallet";
 import { IoIosArrowDown } from "react-icons/io";
+import { twMerge } from "tailwind-merge";
 
 interface BetTableProps {
   bets: BetResponse[];
@@ -36,10 +37,10 @@ const BetTable = ({ bets }: BetTableProps) => {
   ];
 
   return (
-    <div className="overflow-x-auto">
+    <div>
       <div className="flex justify-end p-2 mb-4">
         <div
-          className="relative inline-block text-left w-fit"
+          className="relative inline-block text-left w-fit z-20" // z-20 to keep the filter menu at the top of the table.
           onBlur={handleBlur}
           tabIndex={0}
           ref={dropdownRef}
@@ -78,12 +79,18 @@ const BetTable = ({ bets }: BetTableProps) => {
         </WalletButton>
       </div>
       <div className="min-w-full bg-prussian-dark text-white">
-        <div className="grid grid-cols-5 sm:grid-cols-9 ">
+        <div className="grid grid-cols-5 sm:grid-cols-9 sticky bg-prussian-dark top-0 shadow-sm shadow-black z-10">
+          {" "}
+          {/* z-10 to avoid the TableRow's icon overlap the Header of the table */}
           <div className="p-4 sm:col-span-2 border text-center center-all">
             Creator
           </div>
           <div className="p-4 border text-center center-all">Stake</div>
-          <div className="p-4 border text-center center-all whitespace-pre-wrap !hidden sm:!flex">
+          <div
+            className={
+              "p-4 border text-center hidden sm:flex justify-center items-center"
+            }
+          >
             Prediction
           </div>
           <div className="p-4 border text-center flex-col justify-center items-center">
@@ -93,7 +100,11 @@ const BetTable = ({ bets }: BetTableProps) => {
               <div className="text-sm">Status</div>
             </div>
           </div>
-          <div className="p-4 border text-center center-all !hidden sm:!flex">
+          <div
+            className={
+              "p-4 border text-center hidden sm:flex justify-center items-center"
+            }
+          >
             Outcome
           </div>
           <div className="p-4 border text-center center-all">Profit/Loss</div>
@@ -102,7 +113,7 @@ const BetTable = ({ bets }: BetTableProps) => {
           </div>
         </div>
 
-        <div>
+        <div className=" shadow-inner shadow-black">
           {filteredBets
             .slice()
             .reverse()
