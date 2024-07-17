@@ -13,8 +13,8 @@ const ActivityRow = ({ bet }: ActivityRowProps) => {
   const { activity, actor } = getLastActivity(bet);
 
   return (
-    <div className="flex flex-col justify-between leading-none border-b border-neutral-200 text-neutral-800 py-2 px-3  uppercase text-lg tracking-wide">
-      <div className="text-neutral-400 text-sm leading-none">
+    <div className="flex flex-col justify-between bg-blue-light bg-opacity-20 leading-none py-2 px-3 uppercase text-lg tracking-wide">
+      <div className="text-sm leading-none">
         {actor.toLowerCase() === address?.toLowerCase()
           ? "YOU"
           : shortenHash(actor, 8)}
@@ -23,6 +23,7 @@ const ActivityRow = ({ bet }: ActivityRowProps) => {
         <div className="flex items-center gap-1">
           {bet.ticker}
           <MetricDisplay
+            className="text-white"
             betType={bet.type}
             metric={bet.metric}
             creationTimestamp={bet.creationTimestamp}

@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 const colors = {
   blue: {
+    light: "#5A799E",
     medium: "#2387B6",
     dark: "rgb(34, 43, 55)",
   },
