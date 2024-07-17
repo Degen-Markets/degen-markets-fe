@@ -4,12 +4,11 @@ import AvatarWithLabel from "@/app/components/AvatarWithLabel";
 import PixelArtBorder from "@/app/components/PixelArtBorder";
 import FormInput from "@/app/components/FormInput";
 import { colors } from "../../../../../../tailwind.config";
-import { BetResponse, Address, Currency } from "@/app/lib/utils/bets/types";
+import { BetResponse, Address } from "@/app/lib/utils/bets/types";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import getCurrencyByAddress from "@/app/lib/getCurrencyByAddress";
-import { formatUnits } from "viem";
-import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 import formatDateTime from "@/app/lib/utils/formatDateTime";
+import formattedValueToDisplay from "@/app/lib/utils/formattedValueToDisplay";
 
 interface PriceIsRightBetFormProps {
   type: "creator" | "acceptor";
@@ -30,12 +29,8 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
     ? getDisplayNameForAddress(address)
     : "Mystery Opponent";
   const currency = getCurrencyByAddress(bet.currency) || "";
-  const isEth = currency === Currency.ETH;
 
-  const formattedValueToDisplay = formatUnits(
-    BigInt(bet.value),
-    isEth ? 18 : STABLECOIN_DECIMALS,
-  );
+  const valueToDisplay = formattedValueToDisplay(bet.value, bet.currency);
   const endAt = formatDateTime(new Date(Number(bet.creationTimestamp) * 1000));
 
   return (
@@ -75,7 +70,7 @@ const PriceIsRightBetForm: FC<PriceIsRightBetFormProps> = ({
           <FormInput label="Currency:" value={currency} disabled />
           <FormInput
             label="Amount:"
-            value={formattedValueToDisplay.toString()}
+            value={valueToDisplay.toString()}
             disabled
           />
         </div>

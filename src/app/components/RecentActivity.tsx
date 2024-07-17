@@ -16,10 +16,10 @@ const RecentActivity: FC<{}> = ({}) => {
   });
 
   return (
-    <div className="flex flex-col items-start p-3 pb-0 pr-2 bg-blue-light bg-opacity-20">
-      <div className="flex gap-x-2 text-5xl uppercase font-bold pb-4">
+    <div className="flex flex-col items-start bg-blue-light bg-opacity-20 py-6 px-8">
+      <div className="flex gap-x-2 text-5xl font-bold pb-4">
         <IoStatsChart />
-        <span>Recent activity</span>
+        <span>Recent Activity</span>
       </div>
       <div className="flex flex-col gap-y-2 w-full">
         {bets?.map((bet) => <ActivityRow bet={bet} key={bet.id} />)}

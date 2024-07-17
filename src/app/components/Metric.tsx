@@ -1,10 +1,10 @@
+import React from "react";
+import Image from "next/image";
 import {
   betDuration,
   getHumanFriendlyMetric,
 } from "@/app/lib/utils/bets/helpers";
-import React from "react";
 import { BetType, Metric } from "@/app/lib/utils/bets/types";
-import Image from "next/image";
 
 interface Props {
   metric: Metric;
@@ -15,28 +15,34 @@ interface Props {
   betType: BetType;
 }
 
-const MetricDisplay = ({
+const MetricDisplay: React.FC<Props> = ({
   metric,
   isBetOnUp,
   creationTimestamp,
   expirationTimestamp,
   betType,
-  className,
-}: Props) => {
+  className = "",
+}) => {
+  const getArrowImage = () => {
+    const src = isBetOnUp ? "/ArrowUp.svg" : "/ArrowDown.svg";
+    const alt = isBetOnUp ? "arrow-up" : "arrow-down";
+    return <Image src={src} width={24} height={24} alt={alt} />;
+  };
+
   return (
     <span
       className={`${isBetOnUp ? "text-green-500" : "text-red-500"} flex items-center`}
     >
       {getHumanFriendlyMetric(metric)}
-      {betType === "binary" &&
-        (isBetOnUp ? (
-          <Image src="/ArrowUp.svg" width={24} height={24} alt="arrow-up" />
-        ) : (
-          <Image src="/ArrowDown.svg" width={24} height={24} alt="arrow-down" />
-        ))}
-      <span
-        className={`text-neutral-800 pl-1 ${className}`}
-      >{`${betDuration(creationTimestamp, expirationTimestamp)}`}</span>
+      {betType === "binary" && (
+        <>
+          &nbsp;to go {isBetOnUp ? "up" : "down"}
+          {getArrowImage()}
+        </>
+      )}
+      <span className={`text-neutral-800 pl-1 ${className}`}>
+        in&nbsp;{betDuration(creationTimestamp, expirationTimestamp)}
+      </span>
     </span>
   );
 };
