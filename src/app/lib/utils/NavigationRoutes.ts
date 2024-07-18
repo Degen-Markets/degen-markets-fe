@@ -1,31 +1,76 @@
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
+
+export interface RouteItem {
+  routeName: string;
+  link: string;
+  gameComingSoon?: boolean;
+}
+
+interface NavItem {
+  name: string;
+  icon: string;
+  route: RouteItem[] | { [key: string]: string } | string;
+  comingSoon: boolean;
+  isExpandible: boolean;
+}
+
+interface NavigationProps {
+  header: {
+    root: string;
+    navbar: NavItem[];
+  };
+  [key: string]: any;
+}
+
+const NavigationRoutes: NavigationProps = {
   header: {
     root: "/",
     navbar: [
       {
         name: "Games",
         icon: "/navIcons/game.svg",
-        route: "/games",
+        route: [
+          {
+            routeName: "bull or bear",
+            link: "/create-bet",
+          },
+          {
+            routeName: "the price is right",
+            link: "/games/price-is-right/create-bet",
+          },
+          {
+            routeName: "moon or rug",
+            link: "/",
+            gameComingSoon: true,
+          },
+        ],
         comingSoon: false,
+        isExpandible: true,
       },
       {
         name: "Pools",
         icon: "/navIcons/pools.svg",
         route: "/pools",
         comingSoon: true,
+        isExpandible: false,
       },
       {
         name: "Community",
         icon: "/navIcons/community.svg",
-        route: "/community",
+        route: {
+          twitter: "/",
+          discord: "/",
+          telegram: "/",
+        },
         comingSoon: true,
+        isExpandible: true,
       },
       {
         name: "LeaderBoard",
         icon: "/navIcons/leaderBoard.svg",
         route: "/leaderboard",
         comingSoon: true,
+        isExpandible: false,
       },
     ],
   },
@@ -44,3 +89,5 @@ export default {
     myHistory: "/my-history",
   },
 };
+
+export default NavigationRoutes;
