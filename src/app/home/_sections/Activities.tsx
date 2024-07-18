@@ -1,4 +1,4 @@
-import RecentActivity from "@/app/components/RecentActivity";
+import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
 
 const Activities = () => {
   return (

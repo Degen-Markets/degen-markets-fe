@@ -1,8 +1,7 @@
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonGradient } from "@/app/components/Button";
+import useReplicateBet from "@/app/lib/utils/hooks/useReplicateBet";
 import { useRouter } from "next/navigation";
-import { formatUnits, zeroAddress } from "viem";
-import { STABLECOIN_DECIMALS } from "@/app/lib/utils/bets/constants";
 
 interface Props {
   bet: BetResponse;
@@ -11,37 +10,17 @@ interface Props {
 
 const ReplicateBetAction = ({ bet, className }: Props) => {
   const router = useRouter();
-  const replicateBet = async () => {
-    const { ticker, metric, isBetOnUp, value, currency, strikePriceCreator } =
-      bet;
-    const durationInSeconds = Math.round(
-      ((Number(bet.expirationTimestamp) - Number(bet.creationTimestamp)) /
-        (24 * 60 * 60)) *
-        86400,
-    );
-    const direction = isBetOnUp ? "up" : "down";
-    const isEth = currency === zeroAddress;
+  const replicateBet = useReplicateBet(router);
 
-    const formattedValueToDisplay = formatUnits(
-      BigInt(value),
-      isEth ? 18 : STABLECOIN_DECIMALS,
-    );
-    if (bet.type === "closest-guess-wins") {
-      router.push(
-        `/games/price-is-right/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}&strikePriceCreator=${strikePriceCreator}`,
-      );
-    } else {
-      router.push(
-        `/create-bet?ticker=${ticker}&metric=${metric}&direction=${direction}&duration=${durationInSeconds}&currency=${currency}&value=${formattedValueToDisplay}`,
-      );
-    }
+  const handleReplicateBet = () => {
+    replicateBet(bet);
   };
 
   return (
     <ButtonGradient
       size="small"
       className={`w-auto !px-6 ${className}`}
-      onClick={replicateBet}
+      onClick={handleReplicateBet}
     >
       Replicate this bet!
     </ButtonGradient>

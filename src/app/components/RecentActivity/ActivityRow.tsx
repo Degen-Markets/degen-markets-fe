@@ -11,23 +11,63 @@ import {
 } from "@/app/lib/utils/bets/helpers";
 import formattedValueToDisplay from "@/app/lib/utils/formattedValueToDisplay";
 import { BetResponse } from "@/app/lib/utils/bets/types";
-import { ButtonPrimary } from "@/app/components/Button";
+import { Button } from "@/app/components/Button";
+import { ButtonSuccess } from "@/app/components/Button/ButtonSuccess";
+import { ButtonDanger } from "@/app/components/Button/ButtonDanger";
+import useReplicateBet from "@/app/lib/utils/hooks/useReplicateBet";
+import { useRouter } from "next/navigation";
 
 type ActivityRowProps = {
   bet: BetResponse;
 };
 
 const ActivityRow: React.FC<ActivityRowProps> = ({ bet }) => {
+  const router = useRouter();
   const { address } = useAccount();
+  const replicateBet = useReplicateBet(router);
+
   const { actor } = getLastActivity(bet);
   const betImageId = bet.type === "binary" ? "bull_or_bear" : "price_is_right";
   const isUserActor = actor.toLowerCase() === address?.toLowerCase();
   const displayActor = isUserActor ? "YOU" : shortenHash(actor, 4);
 
+  const handleReplicateBet = () => {
+    const newBet: BetResponse =
+      bet.type === "binary" ? { ...bet, isBetOnUp: !bet.isBetOnUp } : bet;
+    replicateBet(newBet);
+  };
+
+  const renderBetButton = () => {
+    if (bet.type === "closest-guess-wins") {
+      return (
+        <Button size="small" className="uppercase" onClick={handleReplicateBet}>
+          PREDICT NOW
+        </Button>
+      );
+    }
+    return bet.isBetOnUp ? (
+      <ButtonDanger
+        size="small"
+        className="uppercase"
+        onClick={handleReplicateBet}
+      >
+        Bet down
+      </ButtonDanger>
+    ) : (
+      <ButtonSuccess
+        size="small"
+        className="uppercase"
+        onClick={handleReplicateBet}
+      >
+        Bet up
+      </ButtonSuccess>
+    );
+  };
+
   return (
     <div className="flex gap-x-4 items-center bg-blue-light bg-opacity-20 p-3 text-sm tracking-wide leading-none">
       <Image
-        className="w-16 border border-white rounded-md"
+        className="w-16 h-16 border border-white rounded-md object-cover"
         src={`/games/${betImageId}.jpg`}
         alt={bet.metric}
         width={128}
@@ -55,15 +95,7 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ bet }) => {
           {getCurrencySymbolByAddress(bet.currency)}
         </div>
       </div>
-      <div className="flex-shrink-0">
-        <ButtonPrimary size="small" className="uppercase">
-          {bet.type === "closest-guess-wins"
-            ? "PREDICT NOW"
-            : bet.isBetOnUp
-              ? "Bet down"
-              : "Bet up"}
-        </ButtonPrimary>
-      </div>
+      <div className="flex-shrink-0">{renderBetButton()}</div>
     </div>
   );
 };
