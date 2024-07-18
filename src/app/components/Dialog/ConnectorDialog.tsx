@@ -13,6 +13,7 @@ import {
 } from "./dialog";
 import { useToast } from "../Toast/ToastProvider";
 import { Icons } from "@/app/lib/utils/dialog/constant";
+import GradientText from "../WalletMenu/GradientText";
 
 const ConnectorDialog: FC = () => {
   const { connectors, isPending, connectAsync } = useConnect();
@@ -54,7 +55,9 @@ const ConnectorDialog: FC = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="!text-4xl">Connect Your Wallet</DialogTitle>
+          <DialogTitle className="!text-4xl">
+            <GradientText>Connect Your Wallet</GradientText>
+          </DialogTitle>
           <DialogDescription className="!text-2xl">
             Please select a wallet to connect.
           </DialogDescription>
@@ -71,7 +74,7 @@ const ConnectorDialog: FC = () => {
                   setPendingConnectorId(connector.id);
                 }}
                 key={connector.id}
-                className="flex justify-between items-center border my-2 cursor-pointer p-2"
+                className="flex justify-between items-center border rounded-xl my-2 cursor-pointer p-2"
               >
                 <h4 className="text-3xl">{connector.name}</h4>
                 {isPending && connector.id === pendingConnectorId ? (

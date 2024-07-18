@@ -6,6 +6,7 @@ import WalletButtonWithAvatar from "../WalletMenu/WalletButtonWithAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { DialogType, useDialog } from "./dialog";
 import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
+import Image from "next/image";
 interface Props {
   className?: string;
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,9 +29,21 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
   return (
     <div>
       {!isConnected && (
-        <WalletButton size="small" onClick={() => setOpenConnector(true)}>
-          Connect Wallet
-        </WalletButton>
+        <>
+          <WalletButton
+            size="regular"
+            onClick={() => setOpenConnector(true)}
+            className="space-x-1"
+          >
+            <Image
+              src="/navIcons/Wallet.svg"
+              alt="wallet"
+              width={25}
+              height={25}
+            />
+            <p className=" whitespace-nowrap">Connect Wallet</p>
+          </WalletButton>
+        </>
       )}
       {isConnected && address && (
         <>

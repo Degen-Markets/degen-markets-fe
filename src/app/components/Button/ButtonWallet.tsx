@@ -12,7 +12,7 @@ export const WalletButton: FC<ButtonProps> = ({
     <Button
       size={size}
       {...props}
-      className={`lg:w-56 w-full text-white bg-gradient-to-r  from-cadet-blue-light to-cadet-blue-dark hover:from-cadet-blue-dark hover:to-cadet-blue-light  disabled:bg-neutral-500 disabled:text-prussian-dark ${className}`}
+      className={`lg:w-56 w-full font-semibold rounded-full text-white bg-gradient-to-r border from-[#ED71BF] via-[#F1A495] to-[#F9DB72] ${className}`}
     >
       {children}
     </Button>
