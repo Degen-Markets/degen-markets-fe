@@ -56,7 +56,7 @@ const BetTable = ({ bets }: BetTableProps) => {
             </WalletButton>
           </div>
           {isDropdownOpen && (
-            <div className="absolute pixel-art-border-xs-dark text-center  text-black bg-gradient-to-r from-cadet-blue-light to-cadet-blue-dark flex flex-col justify-center items-center shadow-lg w-full">
+            <div className="absolute pixel-art-border-xs-dark text-center  text-black-medium bg-gradient-to-r from-cadet-blue-light to-cadet-blue-dark flex flex-col justify-center items-center shadow-lg w-full">
               {dropdownMenuItems.map(({ label, type }) => (
                 <div
                   key={type}
