@@ -113,7 +113,7 @@ const BetTable = ({ bets }: BetTableProps) => {
           </div>
         </div>
 
-        <div className=" shadow-inner shadow-black">
+        <div className="shadow-inner shadow-black">
           {filteredBets
             .slice()
             .reverse()

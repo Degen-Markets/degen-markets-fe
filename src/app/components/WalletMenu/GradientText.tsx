@@ -10,7 +10,7 @@ const GradientText = ({
 }) => {
   return (
     <div
-      className={` bg-clip-text text-transparent bg-gradient-to-r from-[#ED71BF] via-[#F1A495] to-[#F9DB72] ${className} `}
+      className={`bg-clip-text text-transparent bg-gradient-to-r from-pink-light via-vivid-medium to-yellow-light ${className}`}
       {...props}
     >
       {children}

@@ -23,6 +23,7 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
     { title: "My Bets", link: "/my-bets", fn: () => null },
     { title: "My History", link: "/my-history", fn: () => null },
     { title: "Switch Network", link: "", fn: () => setOpenSwitchChain(true) },
+    { title: "Switch Wallet", link: "", fn: () => setOpenConnector(true) },
     { title: "Disconnect", link: "", fn: disconnect },
   ];
 
@@ -41,7 +42,7 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
               width={25}
               height={25}
             />
-            <p className=" whitespace-nowrap">Connect Wallet</p>
+            <p className="whitespace-nowrap">Connect Wallet</p>
           </WalletButton>
         </>
       )}

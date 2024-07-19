@@ -28,11 +28,9 @@ const Header: FC = () => {
           </div>
           <Navbar nav={nav} setNav={setNav} />
         </div>
-        {
-          <div className="hidden lg:block">
-            <Web3Status setNav={setNav} />
-          </div>
-        }
+        <div className="hidden lg:block">
+          <Web3Status setNav={setNav} />
+        </div>
       </div>
       <SwitchChainDialog />
       <ConnectorDialog />

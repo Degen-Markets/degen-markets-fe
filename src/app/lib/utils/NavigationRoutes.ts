@@ -3,14 +3,14 @@
 export interface RouteItem {
   routeName: string;
   link: string;
-  gameComingSoon?: boolean;
+  comingSoon?: boolean;
 }
 
-interface NavItem {
+export interface NavItem {
   name: string;
   icon: string;
   route: RouteItem[] | { [key: string]: string } | string;
-  comingSoon: boolean;
+  comingSoon?: boolean;
   isExpandible: boolean;
 }
 
@@ -41,7 +41,7 @@ const NavigationRoutes: NavigationProps = {
           {
             routeName: "moon or rug",
             link: "/",
-            gameComingSoon: true,
+            comingSoon: true,
           },
         ],
         comingSoon: false,

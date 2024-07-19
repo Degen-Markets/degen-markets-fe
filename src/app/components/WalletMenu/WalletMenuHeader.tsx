@@ -17,9 +17,9 @@ const WalletMenuHeader: React.FC<WalletMenuHeaderProps> = ({ displayName }) => {
       </div>
       <div className="text-lg leading-4 space-y-1 cursor-pointer">
         <AccountDetailDialog>
-          <div className="text-sm ">
+          <div className="text-sm">
             <p className="text-white">@degen</p>
-            <p className="">{displayName}</p>
+            <p>{displayName}</p>
           </div>
         </AccountDetailDialog>
       </div>
