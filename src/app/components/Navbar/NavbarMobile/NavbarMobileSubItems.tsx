@@ -2,12 +2,15 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import { useRouter } from "next/navigation";
 
 const NavbarMobileSubItems: React.FC<{
   link: string;
   routeName: string;
   comingSoon?: boolean;
-}> = ({ link, routeName, comingSoon }) => {
+  setNav: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ link, routeName, comingSoon, setNav }) => {
+  const router = useRouter();
   return comingSoon ? (
     <li
       className={twMerge(
@@ -33,7 +36,13 @@ const NavbarMobileSubItems: React.FC<{
         "hover:bg-gray-200 hover:text-black-medium rounded-md w-full text-center",
       )}
     >
-      <Link href={link} className="flex items-center justify-center">
+      <div
+        onClick={() => {
+          router.push(link);
+          setNav(false);
+        }}
+        className="flex items-center justify-center"
+      >
         <div className="block px-4 py-2 uppercase">{routeName}</div>
         {comingSoon && (
           <Image
@@ -43,7 +52,7 @@ const NavbarMobileSubItems: React.FC<{
             height={20}
           />
         )}
-      </Link>
+      </div>
     </li>
   );
 };

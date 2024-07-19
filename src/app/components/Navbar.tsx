@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CrossIcon, HamburgerIcon } from "@/app/components/Icons";
 import { NavbarDesktop } from "./Navbar/NavbarDesktop";
 import { NavbarMobile } from "./Navbar/NavbarMobile";
@@ -7,6 +7,18 @@ const Navbar: React.FC<{
   nav: boolean;
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ nav, setNav }) => {
+  useEffect(() => {
+    if (nav) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+    // Clean up the effect when the component unmounts
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [nav]);
+
   return (
     <>
       <NavbarDesktop />

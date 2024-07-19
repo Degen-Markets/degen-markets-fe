@@ -7,7 +7,10 @@ import NavbarMobileSubItems from "./NavbarMobileSubItems";
 import { twMerge } from "tailwind-merge";
 import Badge from "../../Badge";
 
-const NavbarMobileItem: React.FC<{ route: NavItem }> = ({ route }) => {
+const NavbarMobileItem: React.FC<{
+  route: NavItem;
+  setNav: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ route, setNav }) => {
   return (
     <li className="w-full rounded-lg bg-[#202b38] cursor-not-allowed relative">
       {route.comingSoon ? (
@@ -23,7 +26,7 @@ const NavbarMobileItem: React.FC<{ route: NavItem }> = ({ route }) => {
               {route.name}
             </p>
           </div>
-          <Badge>Coming soon</Badge>
+          <Badge>soon</Badge>
         </div>
       ) : typeof route.route === "string" ? (
         <Link href={route.route}>
@@ -59,6 +62,7 @@ const NavbarMobileItem: React.FC<{ route: NavItem }> = ({ route }) => {
                             link={link}
                             routeName={routeName}
                             comingSoon={comingSoon}
+                            setNav={setNav}
                           />
                         ))
                       : Object.entries(route.route).map(([key, value]) => (

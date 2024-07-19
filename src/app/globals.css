@@ -44,6 +44,9 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
 .border-gradient {
   border: double 10px transparent;
   border-radius: 90px;

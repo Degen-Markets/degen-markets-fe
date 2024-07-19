@@ -61,6 +61,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      rotate: {
+        "27": "27deg",
+      },
       fontFamily: {
         "chakra-petch": ['"Chakra Petch"', "cursive"],
       },
