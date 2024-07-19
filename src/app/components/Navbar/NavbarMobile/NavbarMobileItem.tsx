@@ -64,7 +64,7 @@ const NavbarMobileItem: React.FC<{ route: NavItem }> = ({ route }) => {
                       : Object.entries(route.route).map(([key, value]) => (
                           <li
                             key={key}
-                            className="hover:bg-gray-200 hover:text-black rounded-md w-full text-center"
+                            className="hover:bg-gray-200 hover:text-black-medium rounded-md w-full text-center"
                           >
                             <Link href={value}>
                               <div className="block px-4 py-2 uppercase">

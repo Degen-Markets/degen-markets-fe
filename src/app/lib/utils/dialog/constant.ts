@@ -31,7 +31,7 @@ export const dialogOverlayVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-black/10 backdrop-blur-lg",
+        default: "bg-black-main/10 backdrop-blur-lg",
       },
     },
     defaultVariants: {

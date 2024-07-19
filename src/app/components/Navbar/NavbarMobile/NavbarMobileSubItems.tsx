@@ -11,7 +11,7 @@ const NavbarMobileSubItems: React.FC<{
   return comingSoon ? (
     <li
       className={twMerge(
-        "hover:bg-gray-200 hover:text-black rounded-md w-full text-center",
+        "hover:bg-gray-200 hover:text-black-medium rounded-md w-full text-center",
         comingSoon && "opacity-35 cursor-not-allowed",
       )}
     >
@@ -30,7 +30,7 @@ const NavbarMobileSubItems: React.FC<{
   ) : (
     <li
       className={twMerge(
-        "hover:bg-gray-200 hover:text-black rounded-md w-full text-center",
+        "hover:bg-gray-200 hover:text-black-medium rounded-md w-full text-center",
       )}
     >
       <Link href={link} className="flex items-center justify-center">

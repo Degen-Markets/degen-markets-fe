@@ -15,7 +15,7 @@ const Navbar: React.FC<{
         className="cursor-pointer z-50 md:hidden ml-auto"
       >
         {nav ? (
-          <div className="text-black">
+          <div className="text-black-medium">
             <CrossIcon />
           </div>
         ) : (

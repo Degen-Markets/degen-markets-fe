@@ -79,7 +79,7 @@ const ConnectorDialog: FC = () => {
                   }
                 }}
                 key={connector.id}
-                className="flex items-center rounded-xl cursor-pointer p-2 space-x-2 bg-white text-black"
+                className="flex items-center rounded-xl cursor-pointer p-2 space-x-2 bg-white text-black-medium"
               >
                 <Image
                   src={iconSrc}

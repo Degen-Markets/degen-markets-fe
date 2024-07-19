@@ -1,6 +1,11 @@
 import type { Config } from "tailwindcss";
 const colors = {
+  black: {
+    medium: "#202B38",
+    dark: "#1A222C",
+  },
   blue: {
+    light: "#5A799E",
     medium: "#2387B6",
     dark: "rgb(34, 43, 55)",
   },
@@ -33,10 +38,11 @@ const colors = {
     dark: "#FCBF63",
   },
   green: {
-    light: "#5EC269",
+    light: "#4FD3C4",
     main: "#22c55e", // text-green-500
   },
   red: {
+    light: "#FC997C",
     main: "#ef4444", // text-red-500
   },
   cadet: {
