@@ -15,7 +15,7 @@ const games = [
   },
   {
     id: "game_3",
-    label: "Coming soon",
+    label: "Soon",
   },
 ];
 

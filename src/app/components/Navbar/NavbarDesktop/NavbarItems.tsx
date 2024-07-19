@@ -18,17 +18,17 @@ const NavbarItem: React.FC<{
             "opacity-35",
           )}
         >
-          <Image src={route.icon} alt={route.icon} width={30} height={30} />
+          <Image src={route.icon} alt={route.icon} width={25} height={25} />
           <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
             {route.name}
           </p>
         </div>
-        <Badge>Coming soon</Badge>
+        <Badge>Soon</Badge>
       </div>
     ) : (
       <div className="relative group">
         <div className="flex justify-center items-center space-x-2 cursor-pointer">
-          <Image src={route.icon} alt={route.icon} width={30} height={30} />
+          <Image src={route.icon} alt={route.icon} width={25} height={25} />
           <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
             {route.name}
           </p>

@@ -11,7 +11,7 @@ const Header: FC = () => {
   const [nav, setNav] = useState<boolean>(false);
 
   return (
-    <header className="w-full text-white bg-transparent z-50 border-b-2 p-2">
+    <header className="w-full text-white bg-transparent z-50 border-b border-cadet-blue-light p-2">
       <div className="flex justify-between items-center w-full">
         <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full space-y-2 lg:space-y-0">
           <div className="flex items-center  md:justify-around w-full lg:w-auto">
