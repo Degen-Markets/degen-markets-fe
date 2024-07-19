@@ -44,7 +44,7 @@ const NavbarItem: React.FC<{
                 className="hover:bg-gray-200 rounded-md w-full text-center"
               >
                 <Link href={value}>
-                  <div className="block px-4 py-2 uppercase  whitespace-nowrap">
+                  <div className="block px-4 py-2 uppercase whitespace-nowrap">
                     {key}
                   </div>
                 </Link>
