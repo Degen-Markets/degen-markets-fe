@@ -86,7 +86,7 @@ const ConnectorDialog: FC = () => {
                   alt={connector.name}
                   width={80}
                   height={80}
-                  className="border border-black  rounded-xl p-2 h-20"
+                  className="border border-black-medium rounded-xl p-2 h-20"
                 />
                 <div className="flex flex-col">
                   <h4 className="text-xl font-bold">{connector.name}</h4>
