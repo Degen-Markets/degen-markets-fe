@@ -91,7 +91,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
             <input
               disabled={true}
               value="Price"
-              className="p-2 sring-purple-medium text-black uppercase "
+              className="p-2 ring-purple-medium text-black-medium uppercase "
               placeholder="Price"
             />
           </div>

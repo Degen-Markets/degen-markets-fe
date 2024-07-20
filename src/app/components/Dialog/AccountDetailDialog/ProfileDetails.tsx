@@ -73,7 +73,9 @@ export default function ProfileDetails({
         <ButtonPrimary size="small" onClick={copyAddressAction}>
           <div className="flex text-white space-x-1 items-center justify-center">
             {copiedAddress ? <BiCheckDouble size={20} /> : <CgCopy size={20} />}
-            <p>{copiedAddress ? "Copied!" : "Copy Address"}</p>
+            <p className="text-md">
+              {copiedAddress ? "Copied!" : "Copy Address"}
+            </p>
           </div>
         </ButtonPrimary>
         <Button size="small" className="text-white" onClick={onDisconnect}>

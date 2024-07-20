@@ -184,7 +184,7 @@ const MyHistory = () => {
             {betCategories.map((category, index) => {
               const hasBetsInCategory = category.bets.length > 0;
               return (
-                <TabPanel key={index} index={index} className="">
+                <TabPanel key={index} index={index}>
                   {isLoading ? (
                     <div>Loading...</div>
                   ) : hasBetsInCategory ? (

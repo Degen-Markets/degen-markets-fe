@@ -30,6 +30,7 @@ const colors = {
   pippin: "#FFE6E6",
   vivid: {
     light: "#FFE6E6",
+    medium: "#F1A495",
     dark: "#FF8A8A",
   },
   koromiko: {
@@ -60,11 +61,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      rotate: {
+        "27": "27deg",
+      },
       fontFamily: {
         "chakra-petch": ['"Chakra Petch"', "cursive"],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "logo-gradient": "linear-gradient(90deg, #ED72BF, #F1A495, #F9DD71)",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },

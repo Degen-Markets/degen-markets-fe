@@ -115,7 +115,7 @@ const Reel = <T,>({
           className="cursor-pointer flex justify-center "
           onClick={handleOptionForward}
         >
-          <MdArrowBackIos className=" -rotate-90 text-lg lg:text-4xl" />
+          <MdArrowBackIos className="-rotate-90 text-lg lg:text-4xl" />
         </div>
       </div>
     </div>

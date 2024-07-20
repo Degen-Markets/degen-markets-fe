@@ -1,6 +1,5 @@
 import { FC, useCallback, useMemo, useState } from "react";
-import PixelArtLoader from "../PixelArtLoading";
-import { useConnect } from "wagmi";
+import { useConnect, useAccount } from "wagmi";
 import Image from "next/image";
 import {
   Dialog,
@@ -13,9 +12,11 @@ import {
 } from "./dialog";
 import { useToast } from "../Toast/ToastProvider";
 import { Icons } from "@/app/lib/utils/dialog/constant";
+import GradientText from "../WalletMenu/GradientText";
 
 const ConnectorDialog: FC = () => {
   const { connectors, isPending, connectAsync } = useConnect();
+  const { connector: activeConnector } = useAccount();
   const [pendingConnectorId, setPendingConnectorId] = useState("");
   const { open, setOpen } = useDialog(DialogType.Connector);
   const { showToast } = useToast();
@@ -54,40 +55,54 @@ const ConnectorDialog: FC = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="!text-4xl">Connect Your Wallet</DialogTitle>
-          <DialogDescription className="!text-2xl">
+          <DialogTitle className="!text-4xl">
+            <GradientText className="text-left">
+              Connect Your Wallet
+            </GradientText>
+          </DialogTitle>
+          <DialogDescription className="!text-2xl text-left">
             Please select a wallet to connect.
           </DialogDescription>
         </DialogHeader>
-        <div className="modal-body">
+        <div className="grid sm:grid-cols-2 gap-5">
           {_connectors.map((connector) => {
             const iconSrc =
               connector.name in Icons ? Icons[connector.name] : Icons.Injected;
+            const isConnected = activeConnector?.id === connector.id;
 
             return (
               <div
                 onClick={() => {
-                  onSelect(connector.id);
-                  setPendingConnectorId(connector.id);
+                  if (!isConnected) {
+                    onSelect(connector.id);
+                    setPendingConnectorId(connector.id);
+                  }
                 }}
                 key={connector.id}
-                className="flex justify-between items-center border my-2 cursor-pointer p-2"
+                className="flex items-center rounded-xl cursor-pointer p-2 space-x-2 bg-white text-black-medium"
               >
-                <h4 className="text-3xl">{connector.name}</h4>
-                {isPending && connector.id === pendingConnectorId ? (
-                  <PixelArtLoader
-                    text="Connecting..."
-                    loaderColor="bg-white"
-                    textColor="text-white"
-                  />
-                ) : (
-                  <Image
-                    src={iconSrc}
-                    alt={connector.name}
-                    width={40}
-                    height={40}
-                  />
-                )}
+                <Image
+                  src={iconSrc}
+                  alt={connector.name}
+                  width={80}
+                  height={80}
+                  className="border border-black-medium rounded-xl p-2 h-20"
+                />
+                <div className="flex flex-col">
+                  <h4 className="text-xl font-bold">{connector.name}</h4>
+                  {isConnected ? (
+                    <span className="text-sm font-semibold text-green-main">
+                      (Connected)
+                    </span>
+                  ) : (
+                    isPending &&
+                    connector.id === pendingConnectorId && (
+                      <span className="text-sm font-semibold text-gray-400">
+                        Connecting...
+                      </span>
+                    )
+                  )}
+                </div>
               </div>
             );
           })}

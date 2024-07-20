@@ -48,7 +48,7 @@ const Hero = () => {
                 Predict now!
               </ButtonGradient>
             </Link>
-            <div className="">
+            <div>
               <Image
                 src="./pixelated/down-arrow.svg"
                 className="animate-bounce w-12 md:w-16 h-auto"

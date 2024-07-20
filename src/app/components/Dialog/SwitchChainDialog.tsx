@@ -13,6 +13,7 @@ import Image from "next/image";
 import PixelArtLoader from "../PixelArtLoading";
 import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
 import { useToast } from "../Toast/ToastProvider";
+import GradientText from "../WalletMenu/GradientText";
 type ChainType = 8453;
 
 const SwitchChainDialog = () => {
@@ -41,7 +42,9 @@ const SwitchChainDialog = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="!text-4xl">Switch Networks</DialogTitle>
+          <DialogTitle className="!text-4xl">
+            <GradientText>Switch Networks</GradientText>
+          </DialogTitle>
           {!isCurrentChainSupported && (
             <DialogDescription className="!text-2xl">
               Wrong network detected, switch to continue.
@@ -53,7 +56,7 @@ const SwitchChainDialog = () => {
             <div
               key={chain.id}
               onClick={() => handleSwitchChain(chain.id as ChainType)}
-              className="flex justify-between items-center cursor-pointer border my-2 p-2"
+              className="flex justify-between items-center cursor-pointer border rounded-xl my-2 p-2"
             >
               <div className="flex space-x-2 items-center">
                 <Image
@@ -72,7 +75,10 @@ const SwitchChainDialog = () => {
                     textColor="text-white"
                   />
                 ) : chainId === chain.id ? (
-                  <p>Connected</p>
+                  <div className="flex items-center space-x-1">
+                    <span className="w-2 h-2 rounded-full bg-green-500" />
+                    <p>Connected</p>
+                  </div>
                 ) : null}
               </div>
             </div>

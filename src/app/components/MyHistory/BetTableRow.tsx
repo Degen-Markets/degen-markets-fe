@@ -91,7 +91,7 @@ const BetTableRow = ({ bet, isEven, isAllExpanded }: BetTableRowProps) => {
         </div>
         <div className="center-all p-4 border border-y-0">
           <div className="flex flex-col justify-center items-center ">
-            <span className="">VS</span>
+            <span>VS</span>
             <div className="text-sm px-1 bg-purple-medium leading-3 py-1 group-hover:hidden">
               {getBetTypeText(type)}
             </div>
