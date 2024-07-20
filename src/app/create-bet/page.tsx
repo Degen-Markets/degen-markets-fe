@@ -2,17 +2,20 @@ import EthPrice from "@/app/create-bet/_components/EthPrice";
 import CreateBetButton from "@/app/components/CreateBetButton";
 import BetComponent from "./_components/BetComponent";
 import BetLayout from "@/app/layouts/BetLayout";
+import { useBetContext } from "./BetContext";
+import getETHPrice from "../lib/utils/api/getETHPrice";
 
-const CreateBetPage = () => {
+const CreateBetPage = async () => {
+  const { rate, error } = await getETHPrice();
+  console.log({
+    listeningTOETH: rate,
+  });
   return (
-    <BetLayout className="md:mx-auto lg:max-w-screen-xl text-center">
-      <h2 className="pixel-art-border-sm-dark lg:pixel-art-border-lg-dark bg-prussian-dark text-4xl lg:text-8xl w-fit px-8">
-        Challenge a fren
-      </h2>
-      <BetComponent />
+    <div className="">
+      <BetComponent ethPrice={rate} />
       <EthPrice />
       <CreateBetButton betType="binary" />
-    </BetLayout>
+    </div>
   );
 };
 

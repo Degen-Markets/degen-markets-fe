@@ -51,7 +51,7 @@ const TimePicker = <T,>({
           value={time}
           onChange={handleTimeChange}
           min={getCurrentDateTime()} // disabling the past Date
-          className={`styled-time-input w-full p-[0.4rem] ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
+          className={`styled-time-input w-full rounded-xl p-[0.4rem] ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
           placeholder={placeHolder}
           disabled={disabled}
         />

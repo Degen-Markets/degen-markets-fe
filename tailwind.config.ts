@@ -61,6 +61,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        text: "5px 3px 3px #000000",
+      },
+      borderRadius: {
+        "4xl": "35px",
+      },
       rotate: {
         "27": "27deg",
       },

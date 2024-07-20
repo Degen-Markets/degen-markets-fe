@@ -16,7 +16,7 @@ const RecentActivity: FC<{}> = ({}) => {
   });
 
   return (
-    <div className="flex flex-col items-start bg-blue-light bg-opacity-20 py-6 px-8">
+    <div className="flex flex-col items-start bg-blue-light bg-opacity-20 py-6 px-8 w-full">
       <div className="flex gap-x-2 text-5xl font-bold pb-4">
         <IoStatsChart />
         <span className="drop-shadow-md">Recent Activity</span>

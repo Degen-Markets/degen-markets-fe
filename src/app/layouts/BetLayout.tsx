@@ -6,25 +6,11 @@ import { twMerge } from "tailwind-merge";
 const BetLayout: FC<
   {
     className?: string;
-    leftImage?: string;
-    rightImage?: string;
   } & PropsWithChildren
-> = ({
-  children,
-  className,
-  leftImage = "/bear.png",
-  rightImage = "/bull.png",
-}) => {
+> = ({ children, className }) => {
   return (
     <main className="w-full">
-      <Wrapper
-        className={twMerge(
-          "lg:max-w-screen-md min-h-[calc(100vh-424px)]",
-          className,
-        )}
-      >
-        {children}
-      </Wrapper>
+      <Wrapper className={twMerge("", className)}>{children}</Wrapper>
     </main>
   );
 };
