@@ -78,7 +78,9 @@ export default function Dropdown<T>({
 
   return (
     <div className="relative w-full">
-      {title && <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>}
+      {title && (
+        <h4 className="pt-3 text-left font-bold whitespace-nowrap">{title}</h4>
+      )}
       <div className="relative w-full ">
         {selectedOption.image && (
           <Image
@@ -116,7 +118,7 @@ export default function Dropdown<T>({
                 <li
                   key={token.label}
                   onClick={() => handleTokenSelect(token)}
-                  className={`px-4 py-2 cursor-pointer outlne-none  outline-0 border-none flex justify-center ${
+                  className={`px-4 py-2 cursor-pointer outline-none  outline-0 border-none flex justify-start ${
                     selectedOption.label === token.label
                       ? "text-[#fff] bg-blue-dark"
                       : "text-[#000] hover:bg-gray-200"

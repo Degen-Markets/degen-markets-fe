@@ -1,17 +1,8 @@
 "use client";
 
-import { ButtonGradient } from "@/app/components/Button";
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { BetType, Currency, Metric, Ticker } from "@/app/lib/utils/bets/types";
-import useAllowances from "@/app/lib/utils/hooks/useAllowances";
-import {
-  erc20Abi,
-  maxUint256,
-  parseEther,
-  parseUnits,
-  zeroAddress,
-} from "viem";
+import { parseEther, zeroAddress } from "viem";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
@@ -25,55 +16,19 @@ import { useToast } from "@/app/components/Toast/ToastProvider";
 import { twMerge } from "tailwind-merge";
 import { DegenBetsAbi } from "@/app/lib/utils/bets/DegenBetsAbi";
 import { ButtonSuccess } from "@/app/components/Button/ButtonSuccess";
-import { AnyNode } from "postcss";
+import { ButtonDanger } from "@/app/components/Button/ButtonDanger";
 
-const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
-  betType,
+const LiteBetButton: React.FC<{ isBetUp: boolean; className?: string }> = ({
+  isBetUp,
   className,
 }) => {
   const router = useRouter();
   const {
     value,
     currency,
-    ticker,
-    metric,
-    setCurrency,
-    setCustomDuration,
-    setTicker,
-    setMetric,
-    direction,
-    customDuration,
-    setBetType,
     strikePriceCreator,
     error: createBetError,
   } = useBetContext();
-
-  useEffect(() => {
-    setCustomDuration({
-      label: "6 Hours",
-      value: BigInt(SIX_HOURS_BET_DURATION),
-    });
-    setTicker({
-      label: "ETH",
-      value: Ticker.ETH,
-    });
-    setMetric({
-      label: "Price",
-      value: Metric.PRICE,
-    });
-    setCurrency({
-      label: Currency.ETH,
-      value: zeroAddress,
-    });
-  }, [setTicker, setCustomDuration, setMetric, setCurrency]);
-
-  setBetType(betType);
-
-  // const durationValue = isProMode
-  //   ? customDuration.value
-  //   : BigInt(duration.value);
-
-  const durationValue = customDuration.value;
 
   const { address } = useAccount();
 
@@ -95,14 +50,11 @@ const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
   });
 
   const { userBalances } = useBalances(isCreateBetTxSuccess, address);
-
-  const isEth = currency.label === Currency.ETH;
   const valueInWei = parseEther(value);
 
   const id = createBetVariables?.args && createBetVariables.args[0];
 
-  const isBalanceEnough =
-    userBalances[currency.label as Currency] >= valueInWei;
+  const isBalanceEnough = userBalances["ETH"] >= valueInWei;
 
   const isPending = isCreateBetButtonPending;
   const isProcessing = isCreateBetProcessing;
@@ -116,20 +68,21 @@ const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
     !!createBetError;
 
   const createBet = async () => {
+    const betDirection = isBetUp;
     const randomId = uuid();
-
     const value = valueInWei as any;
     console.log({
       randomId,
-      betType,
-      durationValue,
-      TickerValue: ticker.value,
-      MaticValue: metric.value,
+      betType: "binary",
+      durationValue: BigInt(SIX_HOURS_BET_DURATION),
+      TickerValue: "ETH",
+      MaticValue: "price",
       strikePriceCreator,
-      Direction: direction.value,
+      Direction: isBetUp,
       valueInWei,
       Currency: currency.value,
     });
+
     try {
       await sendCreateBetTx({
         abi: DegenBetsAbi,
@@ -137,14 +90,14 @@ const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
         functionName: "createBet",
         args: [
           randomId,
-          betType,
-          durationValue,
-          ticker.value,
-          metric.value,
+          "binary",
+          BigInt(SIX_HOURS_BET_DURATION),
+          "ETH",
+          "price",
           strikePriceCreator,
-          direction.value,
+          betDirection,
           valueInWei,
-          currency.value,
+          zeroAddress,
         ],
         value,
         chainId: base.id,
@@ -169,7 +122,7 @@ const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
     if (!isBalanceEnough) {
       return "Not enough balance";
     }
-    return "Bet Up";
+    return isBetUp ? "Bet Up" : "Bet Down";
   };
 
   useEffect(() => {
@@ -187,7 +140,9 @@ const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
 
   useEffect(() => {
     if (isCreateBetTxSuccess) {
-      router.push(`/create-bet/success?id=${id}`);
+      router.push(
+        `/create-bet/success?id=${id}&betType=${createBetVariables?.args?.[1]}`,
+      );
     }
   }, [isCreateBetTxSuccess]);
 
@@ -198,19 +153,33 @@ const BetUpButton: React.FC<{ betType: BetType; className?: string }> = ({
         className,
       )}
     >
-      <ButtonSuccess
-        loader={true}
-        isPending={isPending}
-        isProcessing={isProcessing}
-        size={"regular"}
-        disabled={isActionDisabled}
-        onClick={handleActionButtonClick}
-        className="w-full rounded-xl font-bold uppercase"
-      >
-        {getActionButtonText()}
-      </ButtonSuccess>
+      {isBetUp ? (
+        <ButtonSuccess
+          loader={true}
+          isPending={isPending}
+          isProcessing={isProcessing}
+          size={"regular"}
+          disabled={isActionDisabled}
+          onClick={handleActionButtonClick}
+          className="w-full rounded-xl font-bold uppercase"
+        >
+          {getActionButtonText()}
+        </ButtonSuccess>
+      ) : (
+        <ButtonDanger
+          loader={true}
+          isPending={isPending}
+          isProcessing={isProcessing}
+          size={"regular"}
+          disabled={isActionDisabled}
+          onClick={handleActionButtonClick}
+          className="w-full rounded-xl font-bold uppercase"
+        >
+          {getActionButtonText()}
+        </ButtonDanger>
+      )}
     </div>
   );
 };
 
-export default BetUpButton;
+export default LiteBetButton;

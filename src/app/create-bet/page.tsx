@@ -13,8 +13,6 @@ const CreateBetPage = async () => {
   return (
     <div className="">
       <BetComponent ethPrice={rate} />
-      <EthPrice />
-      <CreateBetButton betType="binary" />
     </div>
   );
 };

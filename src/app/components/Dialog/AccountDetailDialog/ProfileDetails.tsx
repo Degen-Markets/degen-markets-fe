@@ -9,6 +9,7 @@ import UserAvatar from "../../UserAvatar";
 import { CgCopy, CgExternal } from "react-icons/cg";
 import { Button, ButtonPrimary } from "../../Button";
 import { BiCheckDouble } from "react-icons/bi";
+import useGetUserAccountDetail from "@/app/lib/utils/hooks/useGetUserAccountDetail";
 
 export default function ProfileDetails({
   address,
@@ -16,11 +17,9 @@ export default function ProfileDetails({
   onDisconnect,
 }: ProfileDetailsProps) {
   const [copiedAddress, setCopiedAddress] = useState(false);
-  const { chain } = useIsChainSupported();
-  const blockExplorerUrl = useMemo(
-    () => chain?.blockExplorers.default.url,
-    [chain],
-  );
+  const { accountEthBalance, symbol, shortAccountAddress, blockExplorerUrl } =
+    useGetUserAccountDetail(address);
+
   const copyAddressAction = useCallback(() => {
     if (address) {
       navigator.clipboard.writeText(address);
@@ -41,12 +40,6 @@ export default function ProfileDetails({
     return null;
   }
 
-  const accountName = getDisplayNameForAddress(address);
-  const ethBalance = balance?.formatted;
-  const displayBalance = ethBalance
-    ? abbreviateETHBalance(parseFloat(ethBalance))
-    : undefined;
-
   return (
     <div className="flex flex-col justify-center items-center">
       <UserAvatar
@@ -57,14 +50,14 @@ export default function ProfileDetails({
       />
       <div className="flex justify-between flex-col items-center mt-4">
         <div className="flex items-center space-x-1">
-          <p>{accountName}</p>
+          <p>{shortAccountAddress}</p>
           <a href={`${blockExplorerUrl}/address/${address}`} target="_blank">
             <CgExternal />
           </a>
         </div>
         {!!balance && (
           <div>
-            {displayBalance} {balance?.symbol}
+            {accountEthBalance} {symbol}
           </div>
         )}
       </div>

@@ -1,14 +1,10 @@
 "use client";
 import { Suspense } from "react";
-import SlotMachine from "./SlotMachine";
-import { Button } from "@/app/components/Button";
 import { useBetContext } from "../BetContext";
 import BetProForm from "./BetProForm";
 import BullOrBear from "./BullOrBear";
 import Image from "next/image";
 import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
-import EthPrice from "./EthPrice";
-import CreateBetButton from "@/app/components/CreateBetButton";
 
 interface CustomButtonProps {
   isActive: boolean;
@@ -50,7 +46,7 @@ const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
   const { isProMode, setIsProMode } = useBetContext();
   return (
     <>
-      <div className="flex justify-center items-start w-full max-w-7xl mx-auto gap-5">
+      <div className="  flex-col md:flex-row flex justify-center items-center md:items-start w-full max-w-7xl mx-auto lg:gap-5">
         <div className="flex justify-center items-center flex-col w-full ">
           <div className="flex mt-6 mb-10 justify-center rounded-4xl border-2 overflow-hidden w-fit p-1 bg-black-medium">
             <CustomButton
@@ -73,14 +69,15 @@ const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
 
           <div className="flex justify-center select-none  mt-6 mx-4 w-full">
             <Suspense fallback={<></>}>
-              {
-                isProMode ? <BetProForm /> : <BullOrBear ethPrice={ethPrice} />
-                // <SlotMachine />
-              }
+              {isProMode ? (
+                <BetProForm ethPrice={ethPrice} />
+              ) : (
+                <BullOrBear ethPrice={ethPrice} />
+              )}
             </Suspense>
           </div>
         </div>
-        <div className="w-full max-w-xl h-[900px] sticky top-10">
+        <div className="w-full max-w-xl  overflow-y-auto md:sticky md:top-10 mx-4">
           <RecentActivity />
         </div>
       </div>

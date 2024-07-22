@@ -43,7 +43,7 @@ const TimePicker = <T,>({
   return (
     <div className="relative w-full">
       <div>
-        <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
+        <h4 className="pt-3 text-left whitespace-nowrap font-bold">{title}</h4>
         <input
           type="datetime-local"
           id="appt"

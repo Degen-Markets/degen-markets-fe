@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 interface RenderBGImageProps {
   children: ReactNode;
@@ -7,13 +7,16 @@ interface RenderBGImageProps {
 
 const RenderBGImage: FC<RenderBGImageProps> = ({ children }) => {
   const pathname = usePathname();
-
+  const searchParams = useSearchParams();
+  const betType = searchParams.get("betType");
   let backgroundImage = "";
 
-  if (pathname === "/create-bet") {
+  if (pathname === "/create-bet" && betType === "binary") {
     backgroundImage = "url(/games/bull_or_bear.webp)";
   } else if (pathname === "/games/price-is-right/create-bet") {
     backgroundImage = "url(/games/price_is_right.webp)";
+  } else if (pathname === "/create-bet/success" && betType === "binary") {
+    backgroundImage = "url(/games/bull_or_bear.webp)";
   }
 
   return (

@@ -20,11 +20,7 @@ const CreateBetPage = () => {
   return (
     <Suspense>
       <BetProvider>
-        <BetLayout
-          className="lg:max-w-screen-xl flex flex-col items-center"
-          leftImage="/price_is_right_creator.png"
-          rightImage="/price_is_right_acceptor.png"
-        >
+        <BetLayout className="lg:max-w-screen-xl flex flex-col items-center">
           <h2 className={styles.headline}>The Price is Right</h2>
           <div className={styles.formWrapper}>
             <div className={styles.betFormContainer}>

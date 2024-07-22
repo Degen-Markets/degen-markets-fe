@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { twMerge } from "tailwind-merge";
 import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
+import { ButtonSuccess } from "./Button/ButtonSuccess";
 
 const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   betType,
@@ -126,6 +127,17 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     const value = isEth ? valueInWei : (undefined as any);
     try {
       const randomId = uuid();
+      console.log({
+        randomId,
+        betType,
+        durationValue,
+        ticker: ticker.value,
+        matric: metric.value,
+        strikePriceCreator,
+        direction: direction.value,
+        valueInWei,
+        currency: currency.value,
+      });
       await sendCreateBetTx({
         abi: DegenBetsAbi,
         address: DEGEN_BETS_ADDRESS,
@@ -208,16 +220,21 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
         className,
       )}
     >
-      <ButtonGradient
+      <ButtonSuccess
         loader={true}
         isPending={isPending}
         isProcessing={isProcessing}
         size={"regular"}
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
+        className={twMerge(
+          isActionDisabled &&
+            "bg-red-light hover:bg-red-main cursor-not-allowed active:bg-red-main ",
+          "rounded-xl",
+        )}
       >
         {getActionButtonText()}
-      </ButtonGradient>
+      </ButtonSuccess>
     </div>
   );
 };

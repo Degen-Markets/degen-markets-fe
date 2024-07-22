@@ -1,5 +1,5 @@
 "use client";
-import { Metric, Ticker } from "@/app/lib/utils/bets/types";
+import { Currency, Metric, Ticker } from "@/app/lib/utils/bets/types";
 import {
   currencyOptions,
   directionOptions,
@@ -12,14 +12,15 @@ import Dropdown from "./Dropdown";
 import TimePicker from "./TimePicker";
 import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
-import EthPrice from "./EthPrice";
 import CreateBetButton from "@/app/components/CreateBetButton";
+import GetBetDetail from "./GetBetDetail";
 
-const BetProForm: React.FC = () => {
+const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
   const {
     ticker,
     metric,
     direction,
+    value,
     currency,
     setTicker,
     setMetric,
@@ -27,9 +28,14 @@ const BetProForm: React.FC = () => {
     setCurrency,
   } = useBetContext();
 
+  const isEth = currency.label === Currency.ETH;
+
+  const calculatedValue =
+    isEth && ethPrice ? (Number(value) * ethPrice).toLocaleString() : value;
+
   return (
-    <div className=" bg-prussian-dark px-5 md:px-10 pb-5 w-full max-w-md md:w-auto md:max-w-fit rounded-2xl p-4 ">
-      <h3 className="text-4xl uppercase text-center font-bold drop-shadow-text">
+    <div className=" bg-prussian-dark px-5 md:px-10 pb-5 w-full max-w-md md:w-auto md:max-w-fit rounded-2xl p-4 mb-5 md:mb-0">
+      <h3 className="text-4xl uppercase text-center font-bold drop-shadow-text py-2">
         The Price Is Right
       </h3>
       <div className="grid md:grid-cols-2 gap-x-3 border-t-2 border-black-medium">
@@ -66,6 +72,10 @@ const BetProForm: React.FC = () => {
         />
 
         <BetAmount<string> title="Amount" placeHolder="Ex: 10" />
+      </div>
+      <div className="flex flex-col justify-center items-center mt-2">
+        <GetBetDetail ethPrice={ethPrice} calculatedValue={calculatedValue} />
+        <CreateBetButton betType="binary" />
       </div>
     </div>
   );

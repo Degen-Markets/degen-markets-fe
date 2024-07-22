@@ -1,13 +1,25 @@
-import { ButtonDanger } from "@/app/components/Button/ButtonDanger";
-import { ButtonSuccess } from "@/app/components/Button/ButtonSuccess";
 import Image from "next/image";
-import { IoIosSearch } from "react-icons/io";
 import { useBetContext } from "../BetContext";
 import { ChangeEvent } from "react";
-import BetUpButton from "./CreateBetUpButton";
+import { useAccount } from "wagmi";
+import { WalletButton } from "@/app/components/Button/ButtonWallet";
+import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
+import LiteBetButton from "./LiteBetButton";
+import useBalances from "@/app/lib/utils/hooks/useBalances";
+import { Address, parseEther } from "viem";
+import useGetUserAccountDetail from "@/app/lib/utils/hooks/useGetUserAccountDetail";
+import GetBetDetail from "./GetBetDetail";
 
 const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   const { value, setValue } = useBetContext();
+  const { address } = useAccount();
+  const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
+  const { userBalances } = useBalances(!!value, address);
+  const { accountEthBalance, symbol } = useGetUserAccountDetail(
+    address as Address,
+  );
+
+  const isBalanceEnough = userBalances["ETH"] <= parseEther(value);
 
   const handleValueInput = async (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -17,8 +29,43 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
     }
   };
 
+  const calculatedValue = ethPrice
+    ? (Number(value) * ethPrice).toLocaleString()
+    : "0";
+
+  const renderBetButton = () => {
+    if (!address) {
+      return (
+        <WalletButton
+          size="regular"
+          className="!w-full mt-4 rounded-xl uppercase"
+          onClick={() => setOpenConnector(true)}
+        >
+          Connect Wallet
+        </WalletButton>
+      );
+    }
+
+    if (isBalanceEnough)
+      return (
+        <WalletButton
+          size="regular"
+          className="!w-full mt-4 rounded-xl uppercase"
+        >
+          Not Enough Balance
+        </WalletButton>
+      );
+
+    return (
+      <div className="flex-col md:flex-row flex space-y-2 lg:space-y-0 justify-between gap-3 mt-4">
+        <LiteBetButton isBetUp />
+        <LiteBetButton isBetUp={false} />
+      </div>
+    );
+  };
+
   return (
-    <div className=" w-full max-w-xl p-6 bg-[#2b3a4d] rounded-xl shadow-md">
+    <div className=" w-full max-w-xl pt-6 px-3 md:px-6 bg-[#2b3a4d] rounded-xl shadow-md mx-2">
       <h2 className="text-4xl font-bold text-center text-white mb-4 drop-shadow-text ">
         BULL OR BEAR
       </h2>
@@ -27,7 +74,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
         <span className="text-white flex text-xl items-center font-bold">
           6 Hours
           <Image
-            src="/games/timer.svg"
+            src="/games/Timer.svg"
             alt="timer"
             width={20}
             height={20}
@@ -35,27 +82,24 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
           />
         </span>
       </div>
-      <div className="p-10 bg-black-medium rounded-xl  border-2">
-        <div className="flex items-center">
-          <div className="w-full mr-2">
-            <p className="text-sm font-bold">ETH : ${ethPrice?.toFixed(2)}</p>
-            <div className="flex items-center gap-2 ">
-              <div className="relative w-full ">
-                <Image
-                  src="/tokens/ETH.svg"
-                  alt="ETH"
-                  width={24}
-                  height={24}
-                  className="absolute top-1/2 transform -translate-y-1/2 left-2"
-                />
-                <input
-                  type="text"
-                  readOnly={true}
-                  defaultValue={"ETH"}
-                  className="pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  rounded-xl pl-2 sm:pl-10"
-                  placeholder="ETH"
-                />
-              </div>
+      <div className="p-4 md:pt-8 md:px-8 md:pb-4 bg-black-medium rounded-t-xl  border-2">
+        <div className="flex justify-center items-end gap-2">
+          <div className="flex items-center w-full">
+            <div className="relative w-full border-2 rounded-2xl ">
+              <Image
+                src="/tokens/ETH.svg"
+                alt="ETH"
+                width={24}
+                height={24}
+                className="absolute top-1/2 transform -translate-y-1/2 left-2"
+              />
+              <input
+                type="text"
+                readOnly={true}
+                defaultValue={"ETH"}
+                className="pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  rounded-xl pl-10"
+                placeholder="ETH"
+              />
             </div>
           </div>
           <div className="flex items-center flex-col justify-between ">
@@ -67,23 +111,28 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
               defaultValue="0.1"
               value={value}
               onChange={handleValueInput}
+              placeholder="0.1"
               lang="en-US"
               step=".000001"
               className="w-28 pl-2 pr-2 py-2 border-2 text-center rounded-xl bg-[#2b3a4d] text-white focus:outline-none"
             />
           </div>
         </div>
-        <div className="flex justify-between gap-3 mt-4">
-          <BetUpButton betType="binary" />
-
-          <ButtonDanger
-            size="regular"
-            className="w-full rounded-xl font-bold uppercase"
-          >
-            BET DOWN
-          </ButtonDanger>
-        </div>
+        {renderBetButton()}
       </div>
+      {address && (
+        <div className="flex justify-center p-2 divide-x-2 text-sm text-center items-center border-t-0 border-2 rounded-b-xl  bg-black-medium">
+          <div className="w-full ">
+            <p className="text-sm font-bold">
+              ETH Price : ${ethPrice?.toFixed(2)}
+            </p>
+          </div>
+          <div className="w-full text-sm font-bold">
+            Your Balance: {accountEthBalance} {symbol}
+          </div>
+        </div>
+      )}
+      <GetBetDetail ethPrice={ethPrice} calculatedValue={calculatedValue} />
     </div>
   );
 };
