@@ -46,7 +46,7 @@ const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
   const { isProMode, setIsProMode } = useBetContext();
   return (
     <>
-      <div className="  flex-col md:flex-row flex justify-center items-center md:items-start w-full max-w-7xl mx-auto lg:gap-5">
+      <div className="flex-col lg:flex-row flex justify-center items-center lg:items-start w-full max-w-7xl mx-auto lg:gap-5">
         <div className="flex justify-center items-center flex-col w-full ">
           <div className="flex mt-6 mb-10 justify-center rounded-4xl border-2 overflow-hidden w-fit p-1 bg-black-medium">
             <CustomButton
@@ -67,7 +67,7 @@ const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
             </CustomButton>
           </div>
 
-          <div className="flex justify-center select-none  mt-6 mx-4 w-full">
+          <div className="flex justify-center select-none mt-6 w-full">
             <Suspense fallback={<></>}>
               {isProMode ? (
                 <BetProForm ethPrice={ethPrice} />
@@ -77,7 +77,7 @@ const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
             </Suspense>
           </div>
         </div>
-        <div className="w-full max-w-xl  overflow-y-auto md:sticky md:top-10 mx-4">
+        <div className="w-full max-w-xl mt-5  overflow-y-auto md:sticky lg:top-10 mx-4">
           <RecentActivity />
         </div>
       </div>

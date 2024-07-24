@@ -81,3 +81,8 @@ export const MINIMUM_BET_DURATION = 60 * 60 * 6;
 export const SIX_HOURS_BET_DURATION = 60 * 60 * 6;
 
 export const PRICE_IS_RIGHT_ROUTE = "/games/price-is-right/create-bet";
+
+// Regular expression to match a UUID
+
+export const uuidRegex =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;

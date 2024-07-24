@@ -65,7 +65,7 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ bet }) => {
   };
 
   return (
-    <div className="flex gap-x-4 items-center bg-blue-light bg-opacity-20 p-3 text-sm tracking-wide leading-none">
+    <div className="flex gap-x-4 items-center bg-blue-light bg-opacity-20 p-3 text-sm tracking-wide leading-none rounded-xl">
       <Image
         className="w-16 h-16 border border-white rounded-md object-cover"
         src={`/games/${betImageId}.jpg`}

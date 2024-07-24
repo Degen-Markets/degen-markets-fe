@@ -52,13 +52,15 @@ const AcceptedBet = ({ bet }: Props) => {
           <BetCoundown
             expirationTimestampInS={Number(expirationTimestamp)}
             message="Bet ends in"
-            countDownClassName="text-white"
+            countDownClassName="text-white "
           />
         </SubHeadline>
       </Heading>
-      <MetricAndWager bet={bet} />
-      <div className="flex justify-center mt-4 md:mt-12">
-        <ReplicateBetAction bet={bet} />
+      <div className="mt-5">
+        <MetricAndWager bet={bet} />
+      </div>
+      <div className="flex justify-center mt-4 md:mt-8">
+        <ReplicateBetAction bet={bet} className="py-7 font-bold" />
       </div>
     </>
   );

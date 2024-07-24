@@ -11,7 +11,7 @@ const CreateBetPage = async () => {
     listeningTOETH: rate,
   });
   return (
-    <div className="">
+    <div className="mx-3">
       <BetComponent ethPrice={rate} />
     </div>
   );

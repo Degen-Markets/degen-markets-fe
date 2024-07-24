@@ -34,7 +34,7 @@ const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
     isEth && ethPrice ? (Number(value) * ethPrice).toLocaleString() : value;
 
   return (
-    <div className=" bg-prussian-dark px-5 md:px-10 pb-5 w-full max-w-md md:w-auto md:max-w-fit rounded-2xl p-4 mb-5 md:mb-0">
+    <div className="bg-blue-secondary px-5 md:px-10 pb-5 w-full md:w-auto md:max-w-fit rounded-2xl p-4">
       <h3 className="text-4xl uppercase text-center font-bold drop-shadow-text py-2">
         The Price Is Right
       </h3>

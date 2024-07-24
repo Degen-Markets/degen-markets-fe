@@ -65,7 +65,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   };
 
   return (
-    <div className=" w-full max-w-xl pt-6 px-3 md:px-6 bg-[#2b3a4d] rounded-xl shadow-md mx-2">
+    <div className=" w-full max-w-xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
       <h2 className="text-4xl font-bold text-center text-white mb-4 drop-shadow-text ">
         BULL OR BEAR
       </h2>
@@ -95,6 +95,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
               />
               <input
                 type="text"
+                name="ETH"
                 readOnly={true}
                 defaultValue={"ETH"}
                 className="pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  rounded-xl pl-10"
@@ -114,7 +115,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
               placeholder="0.1"
               lang="en-US"
               step=".000001"
-              className="w-28 pl-2 pr-2 py-2 border-2 text-center rounded-xl bg-[#2b3a4d] text-white focus:outline-none"
+              className="w-28 pl-2 pr-2 py-2 border-2 text-center rounded-xl bg-blue-secondary text-white focus:outline-none"
             />
           </div>
         </div>

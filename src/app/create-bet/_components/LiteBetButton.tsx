@@ -167,6 +167,7 @@ const LiteBetButton: React.FC<{ isBetUp: boolean; className?: string }> = ({
         </ButtonSuccess>
       ) : (
         <ButtonDanger
+          type="button"
           loader={true}
           isPending={isPending}
           isProcessing={isProcessing}

@@ -8,6 +8,7 @@ const colors = {
     light: "#5A799E",
     medium: "#2387B6",
     dark: "rgb(34, 43, 55)",
+    secondary: "#2b3a4d",
   },
   yellow: {
     main: "#FFE14D",
@@ -75,7 +76,6 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "logo-gradient": "linear-gradient(90deg, #ED72BF, #F1A495, #F9DD71)",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },

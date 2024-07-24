@@ -18,13 +18,12 @@ const Headline: FC<
   } & PropsWithChildren
 > = ({ children, className, variant = "dark", size = "regular" }) => {
   return (
-    <div className={cx("relative text-3xl md:text-8xl", className)}>
+    <div className={cx("relative text-4xl md:text-6xl font-bold", className)}>
       <div
         className={cx(
-          " text-center",
+          "text-center drop-shadow-text uppercase",
           {
-            "pixel-art-border-lg-dark bg-prussian-dark  py-8 px-6":
-              variant === "dark" && size === "regular",
+            "py-8 px-6": variant === "dark" && size === "regular",
           },
           {
             "pixel-art-border-lg-light bg-white text-prussian-dark  py-8 px-6":
@@ -52,10 +51,10 @@ const SubHeadline: FC<
   return (
     <div
       className={cx(
-        "bg-prussian-dark  p-2 border-4 border-purple-medium inline-block -translate-y-1/2",
+        "absolute p-2 border font-bold text-sm rounded-xl inline-block -translate-y-1/5 -translate-x-1/2  bg-blue-light bg-opacity-20",
         className,
         {
-          "absolute mt-0 left-[50%] -translate-x-[50%] -top-[20px] -translate-y-1/2":
+          "absolute mt-0 left-[50%] -translate-x-[50%] -top-5 -translate-y-1/2 rounded-t-none":
             isTop,
         },
       )}

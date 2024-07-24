@@ -8,9 +8,14 @@ import shareContent from "@/app/lib/utils/shareContent";
 import { useEffect, useState } from "react";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { getBetById } from "@/app/lib/utils/api/getBetById";
-import { ButtonGradient } from "@/app/components/Button";
+import { Button, ButtonGradient } from "@/app/components/Button";
 import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
 import Link from "next/link";
+import ActivityRow from "@/app/components/RecentActivity/ActivityRow";
+import { IoEyeSharp } from "react-icons/io5";
+import { IoMdShareAlt } from "react-icons/io";
+import GradientText from "@/app/components/WalletMenu/GradientText";
+import PixelArtLoader from "@/app/components/PixelArtLoading";
 
 const CreateBetSuccess = () => {
   const searchParams = useSearchParams();
@@ -37,10 +42,6 @@ const CreateBetSuccess = () => {
   const betType =
     bet?.type === "binary" ? "Bull or Bear" : "The Price is Right";
 
-  console.log({
-    betDetail: bet,
-  });
-
   const handleShare = () => {
     const url = `${window.location.protocol}//${window.location.hostname}/bets/${id}`;
     shareContent("Check out my bet!", "I just made a bet! Check it out:", url);
@@ -58,46 +59,71 @@ const CreateBetSuccess = () => {
 
   return (
     <div className=" flex-col md:flex-row flex justify-center items-center md:items-start w-full max-w-7xl mx-auto lg:gap-5">
-      <div className="text-center">
-        <Heading>
-          <Headline>Bet Created!</Headline>
-          {creationTimestamp && (
-            <SubHeadline isTop={false}>
-              <BetCountdown
-                expirationTimestampInS={
-                  Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
-                }
-              />
-            </SubHeadline>
-          )}
-        </Heading>
-        <div className="flex flex-col items-center gap-6">
-          <div className="text-white text-center">
-            Your bet on {ticker}&apos;s {metric} going {direction} was
-            successfully created! Challenge your frens by giving them a link to
-            this bet. They have 4 hours to accept!
+      <div>
+        <div className="text-center">
+          <Heading>
+            <Headline>{betType}</Headline>
+          </Heading>
+          <div className="mb-10">
+            {!!bet ? (
+              <div className="border rounded-xl">
+                {" "}
+                {/* bet is null or BetResponse that why showing loading here. */}
+                <ActivityRow bet={bet as BetResponse} />
+              </div>
+            ) : (
+              <div className="text-white drop-shadow-text p-8 border rounded-xl flex justify-center items-center uppercase">
+                <PixelArtLoader
+                  text="Loading..."
+                  loaderColor="bg-white"
+                  textColor="text-white"
+                />
+              </div>
+            )}
+            {creationTimestamp && (
+              <SubHeadline className="border-t-0 rounded-t-none" isTop={false}>
+                <BetCountdown
+                  classNames="!text-sm"
+                  expirationTimestampInS={
+                    Number(creationTimestamp) + BET_ACCEPTANCE_TIME_LIMIT
+                  }
+                />
+              </SubHeadline>
+            )}
           </div>
+        </div>
+        <div className="flex flex-col items-center gap-3 mt-16">
+          <GradientText className="text-center font-bold drop-shadow-text leading-snug ">
+            Your bet on <span className="text-white">{ticker}&apos;s </span>
+            {metric} going {direction} was successfully created! Challenge your
+            frens by giving them a link to this bet. They have
+            <span className="text-white"> 4 hours </span>
+            to accept!
+          </GradientText>
           <div className="flex gap-6">
-            <Link href={`/bets/${id}`}>
-              <ButtonGradient
+            <Link href={`/bets/${id}?betType=${bet?.type}`}>
+              <Button
                 size="regular"
-                className="rounded-xl"
+                className="rounded-xl border-2"
                 onClick={handleCopy}
               >
-                Copy bet link!
-              </ButtonGradient>
+                View bet
+                <IoEyeSharp className="ml-2" />
+              </Button>
             </Link>
-            <ButtonGradient
+            <Button
               size="regular"
-              className="rounded-xl"
+              className="rounded-xl bg-gradient-to-r from-cadet-blue-dark to- bg-cadet-blue-light border-2"
               onClick={handleShare}
             >
               Share
-            </ButtonGradient>
+              <IoMdShareAlt className="ml-2" />
+            </Button>
           </div>
         </div>
       </div>
-      <div className="w-full max-w-xl  overflow-y-auto md:sticky md:top-10 mx-4">
+
+      <div className="w-full max-w-xl mt-5 overflow-y-auto md:sticky md:top-10 mx-4">
         <RecentActivity />
       </div>
     </div>

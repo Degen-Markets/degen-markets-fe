@@ -42,7 +42,7 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
               width={25}
               height={25}
             />
-            <p className="whitespace-nowrap">Connect Wallet</p>
+            <p className="whitespace-nowrap text-xl">Connect Wallet</p>
           </WalletButton>
         </>
       )}
@@ -65,6 +65,7 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
               <WalletButton
                 size="small"
                 onClick={() => setOpenSwitchChain(true)}
+                className="text-xl"
               >
                 Wrong network
               </WalletButton>

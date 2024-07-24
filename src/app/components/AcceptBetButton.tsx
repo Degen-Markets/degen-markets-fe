@@ -12,6 +12,7 @@ import { useToast } from "./Toast/ToastProvider";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
 import { twMerge } from "tailwind-merge";
 import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
+import { ButtonSuccess } from "./Button/ButtonSuccess";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
@@ -148,7 +149,7 @@ const AcceptBetButton = ({
   };
 
   return (
-    <ButtonGradient
+    <ButtonSuccess
       loader={true}
       disabled={isDisabled}
       isPending={isPending}
@@ -158,7 +159,7 @@ const AcceptBetButton = ({
       className={twMerge(className)}
     >
       {getActionButtonText()}
-    </ButtonGradient>
+    </ButtonSuccess>
   );
 };
 

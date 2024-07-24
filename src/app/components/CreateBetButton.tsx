@@ -230,7 +230,7 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
         className={twMerge(
           isActionDisabled &&
             "bg-red-light hover:bg-red-main cursor-not-allowed active:bg-red-main ",
-          "rounded-xl",
+          "rounded-xl font-bold uppercase w-full max-w-xl",
         )}
       >
         {getActionButtonText()}
