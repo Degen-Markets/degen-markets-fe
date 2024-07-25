@@ -3,14 +3,15 @@ import Link from "next/link";
 import WidgetIcon from "@/app/components/Widget/WidgetIcon";
 import { Button } from "@/app/components/Button";
 
+export interface CTA {
+  text: string;
+  link: string;
+  target?: "_blank" | "_self" | "_top" | "_parent";
+}
 interface WidgetProps {
   title: string;
   icon: ReactElement<typeof WidgetIcon>;
-  cta: {
-    link: string;
-    text: string;
-    target?: "_blank" | "_self" | "_top" | "_parent";
-  };
+  cta: CTA;
   bg: string;
 }
 

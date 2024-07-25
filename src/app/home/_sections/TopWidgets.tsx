@@ -1,8 +1,14 @@
-import { FC } from "react";
-import Widget from "@/app/components/Widget/Widget";
+import { FC, ReactElement } from "react";
+import Widget, { CTA } from "@/app/components/Widget/Widget";
 import WidgetIcon from "@/app/components/Widget/WidgetIcon";
 
-const TopWidgets: FC = () => {
+interface WidgetData {
+  title: string;
+  icon: ReactElement;
+  cta: CTA;
+  bg: string;
+}
+const TopWidgets: FC<WidgetData[]> = () => {
   const widgetsData = [
     {
       title: "POOLS ON X",
