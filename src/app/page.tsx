@@ -1,14 +1,17 @@
-import FellowDegens from "@/app/home/_sections/FellowDegens";
-import Games from "@/app/home/_sections/Games";
+import TopWidgets from "@/app/home/_sections/TopWidgets";
+import Wrapper from "@/app/components/Wrapper";
 import Activities from "@/app/home/_sections/Activities";
+import PlatformStats from "@/app/home/_sections/PlatformStats";
 
 const Home = () => {
   return (
-    <div className="flex flex-col text-white">
-      <Games />
-      <Activities />
-      <FellowDegens />
-    </div>
+    <Wrapper className="text-white">
+      <div className="flex flex-col gap-14">
+        <TopWidgets />
+        <Activities />
+        <PlatformStats />
+      </div>
+    </Wrapper>
   );
 };
 
