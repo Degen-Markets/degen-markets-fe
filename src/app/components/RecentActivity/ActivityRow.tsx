@@ -99,8 +99,8 @@ const ActivityRow: FC<ActivityRowProps> = ({ bet }) => {
             width={30}
             height={30}
           />
-          {displayActor} bet{" "}
-          {bet.type === "binary" && (bet.isBetOnUp ? "UP" : "DOWN")} at&nbsp;
+          {displayActor} bet&nbsp;
+          {bet.type === "binary" && (bet.isBetOnUp ? "UP" : "DOWN")} with&nbsp;
           {formattedValueToDisplay(bet.value, bet.currency)}{" "}
           {getCurrencySymbolByAddress(bet.currency)}
         </div>
