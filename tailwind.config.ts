@@ -75,6 +75,10 @@ const config: Config = {
         "chakra-petch": ['"Chakra Petch"', "cursive"],
       },
       backgroundImage: {
+        "olive-to-blue-gradient":
+          "linear-gradient(90deg, #A1AB2A 20%, #95A33D 40%, #899B51 60%, #899B51 80%, #5A799E 100%)",
+        "teal-to-blue-gradient":
+          "linear-gradient(90deg, #4FD3C4 20%, #52BDBB 40%, #53B1B6 60%, #55A6B1 80%, #5A799E 100%)",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
