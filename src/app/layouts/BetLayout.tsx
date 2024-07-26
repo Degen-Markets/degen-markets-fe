@@ -10,7 +10,7 @@ const BetLayout: FC<
 > = ({ children, className }) => {
   return (
     <main className="w-full">
-      <Wrapper className={twMerge("", className)}>{children}</Wrapper>
+      <Wrapper className={className}>{children}</Wrapper>
     </main>
   );
 };
