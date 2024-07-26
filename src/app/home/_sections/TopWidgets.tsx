@@ -32,7 +32,7 @@ const TopWidgets: FC = () => {
       title: "BULL OR BEAR",
       icon: <WidgetIcon name="bull" alt="Bull" className="bg-orange-main" />,
       cta: { text: "Play", link: "/create-bet" },
-      bg: "bull_or_bear.jpg",
+      bg: "bull_or_bear.png",
     },
   ];
 

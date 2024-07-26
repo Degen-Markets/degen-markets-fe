@@ -10,7 +10,7 @@ const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
   icon,
 }) => {
   return (
-    <div className="flex gap-x-2 text-xl lg:text-5xl font-bold pb-4 mb-8 border-b border-black-dark w-full">
+    <div className="flex gap-x-2 text-xl lg:text-4xl font-bold pb-4 mb-8 border-b border-black-dark w-full">
       {icon && <div className="flex-shrink-0">{icon}</div>}
       <span className="drop-shadow-md">{children}</span>
     </div>
