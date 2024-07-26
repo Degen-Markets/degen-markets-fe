@@ -1,12 +1,12 @@
-import { FC, ReactElement } from "react";
+import { FC, HTMLAttributeAnchorTarget, ReactElement } from "react";
 import Link from "next/link";
 import WidgetIcon from "@/app/components/Widget/WidgetIcon";
 import { Button } from "@/app/components/Button";
 
-export interface CTA {
+interface CTA {
   text: string;
   link: string;
-  target?: "_blank" | "_self" | "_top" | "_parent";
+  target?: HTMLAttributeAnchorTarget;
 }
 interface WidgetProps {
   title: string;
