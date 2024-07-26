@@ -68,7 +68,6 @@ const CreateBetSuccess = () => {
             {!!bet ? (
               <div className="border rounded-xl">
                 {" "}
-                {/* bet is null or BetResponse that why showing loading here. */}
                 <ActivityRow bet={bet as BetResponse} />
               </div>
             ) : (
