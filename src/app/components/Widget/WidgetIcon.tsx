@@ -17,7 +17,7 @@ const WidgetIcon: FC<WidgetIconProps> = ({ name, alt, className }) => {
       )}
     >
       <Image
-        src={`/widget-icons/${name}-icon.png`}
+        src={`/top-widgets/${name}-icon.png`}
         alt={alt}
         width={120}
         height={120}
