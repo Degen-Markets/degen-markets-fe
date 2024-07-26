@@ -57,7 +57,6 @@ const BinaryBet: FC<Props> = ({ bet, address }) => {
                 Not a chance...
               </div>
               <AcceptBetButton bet={bet} address={address} />
-            </>
           </div>
         )}
       </div>
