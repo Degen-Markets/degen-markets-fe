@@ -10,7 +10,7 @@ interface StatWidgetProps {
 
 const StatWidget: FC<StatWidgetProps> = ({ total, icon, title }) => {
   return (
-    <div className="bg-blue-light bg-opacity-30 rounded-xl border border-white p-2">
+    <div className="bg-blue-light bg-opacity-30 rounded-xl border border-white py-2 px-3">
       <div className="flex items-center gap-x-4 text-xl font-bold pb-1 w-full">
         {icon}
         <span className="text-lg">{title}</span>

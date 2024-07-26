@@ -29,7 +29,7 @@ const Header: React.FC = () => {
       <header className="w-full text-white bg-transparent z-50 border-b border-cadet-blue-light p-2">
         <Wrapper>
           <div className="flex justify-between items-center w-full lg:h-16">
-            <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full space-y-2 lg:space-y-0">
+            <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full py-0.5 lg:py-0">
               <div className="flex items-center md:justify-around w-full lg:w-auto">
                 <Link
                   href="/"
