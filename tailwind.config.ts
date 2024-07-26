@@ -8,6 +8,7 @@ const colors = {
     light: "#5A799E",
     medium: "#2387B6",
     dark: "rgb(34, 43, 55)",
+    twitter: "#1C98E9",
   },
   yellow: {
     main: "#FFE14D",
@@ -18,7 +19,7 @@ const colors = {
     light: "#ED72BF",
   },
   purple: {
-    light: "#C0A6FE",
+    light: "#AB9FF1",
     medium: "#8E68E5",
   },
   indigo: {
@@ -40,6 +41,7 @@ const colors = {
   green: {
     light: "#4FD3C4",
     main: "#22c55e", // text-green-500
+    dark: "#3C6B5A",
   },
   red: {
     light: "#FC997C",
@@ -50,6 +52,9 @@ const colors = {
       light: "#a9b8ca",
       dark: "#4475af",
     },
+  },
+  orange: {
+    main: "#F8652E",
   },
 };
 

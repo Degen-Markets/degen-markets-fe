@@ -30,7 +30,7 @@ export const Button: FC<ButtonProps> = ({
   return (
     <button
       className={twMerge(
-        "text-white bg-black-medium  hover:bg-black-dark active:bg-black-dark disabled:bg-opacity-50 disabled:text-opacity-50  py-2 px-2 md:px-4 flex items-center justify-center disabled:text-white",
+        "text-white rounded-lg bg-black-medium hover:bg-black-dark active:bg-black-dark disabled:bg-opacity-50 disabled:text-opacity-50  py-2 px-2 md:px-4 flex items-center justify-center disabled:text-white",
         className,
         buttonSize,
       )}
