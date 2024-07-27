@@ -99,7 +99,7 @@ export const getDefaultOption = <T,>(
 
 export const BetProvider = ({ children }: { children: ReactNode }) => {
   const searchParams = useSearchParams();
-  const [isProMode, setIsProMode] = useState<boolean>(false);
+  const [isProMode, setIsProMode] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
   const pathname = usePathname();

@@ -176,15 +176,10 @@ const CreateBetButton: React.FC<{
   };
 
   const handleActionButtonClick = async () => {
-    if (isProMode) {
-      if (!isAllowanceEnough) {
-        await approve();
-        return;
-      }
-      await createBet();
-    } else {
-      await createBet();
+    if (isProMode && !isAllowanceEnough) {
+      await approve();
     }
+    await createBet();
   };
 
   const getActionButtonText = (): string => {
