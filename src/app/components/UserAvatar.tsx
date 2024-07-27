@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getLastLetter } from "@/app/lib/utils/bets/helpers";
-import cx from "classnames";
+import { Address } from "viem";
+import { twMerge } from "tailwind-merge";
 
 const UserAvatar = ({
   address,
@@ -8,7 +9,7 @@ const UserAvatar = ({
   height = width,
   className,
 }: {
-  address?: `0x${string}`;
+  address?: Address;
   width?: number;
   height?: number;
   className?: string;
@@ -18,7 +19,7 @@ const UserAvatar = ({
     alt={address || ""}
     width={width}
     height={height}
-    className={cx("rounded-full", className)}
+    className={twMerge("rounded-full"!, className)}
   />
 );
 

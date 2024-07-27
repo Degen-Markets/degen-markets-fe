@@ -30,7 +30,7 @@ export default function RootLayout({
           <div className="flex min-h-screen flex-col items-center justify-between">
             <Header />
             <PageWrapper>{children}</PageWrapper>
-            {/* <Footer /> */}
+            <Footer />
           </div>
         </Providers>
       </body>
