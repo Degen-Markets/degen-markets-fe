@@ -5,66 +5,37 @@ import BetProForm from "./BetProForm";
 import BullOrBear from "./BullOrBear";
 import Image from "next/image";
 import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
-
-interface CustomButtonProps {
-  isActive: boolean;
-  imageSrc: string;
-  imageAlt: string;
-  onClick: () => void;
-  children: React.ReactNode;
-}
-
-const CustomButton: React.FC<CustomButtonProps> = ({
-  isActive,
-  imageSrc,
-  imageAlt,
-  onClick,
-  children,
-}) => {
-  return (
-    <div
-      className={`uppercase font-bold flex justify-center items-center rounded-[30px] py-2 px-7 md:py-3 md:px-10 ${
-        isActive
-          ? "bg-blue-light !hover:bg-purple-light text-white"
-          : "bg-black-medium text-white cursor-pointer"
-      }`}
-      onClick={onClick}
-    >
-      <Image
-        src={imageSrc}
-        alt={imageAlt}
-        width={50}
-        height={50}
-        className="mr-1"
-      />
-      <p className="text-2xl md:text-4xl drop-shadow-text ">{children}</p>
-    </div>
-  );
-};
+import BetToggleButton from "./BetToggleButton";
 
 const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
-  const { isProMode, setIsProMode } = useBetContext();
+  const { isProMode, setIsProMode, setValue } = useBetContext();
   return (
     <>
       <div className="flex-col lg:flex-row flex justify-center items-center lg:items-start w-full max-w-7xl mx-auto lg:gap-5">
         <div className="flex justify-center items-center flex-col w-full ">
           <div className="flex mt-6 mb-10 justify-center rounded-4xl border-2 overflow-hidden w-fit p-1 bg-black-medium">
-            <CustomButton
+            <BetToggleButton
               isActive={!isProMode}
-              imageSrc="/games/lite.svg"
-              imageAlt="lite"
-              onClick={() => setIsProMode(false)}
+              icon="/games/lite.svg"
+              iconAlt="Lite"
+              onClick={() => {
+                setIsProMode(false);
+                setValue("10");
+              }}
             >
               Lite
-            </CustomButton>
-            <CustomButton
+            </BetToggleButton>
+            <BetToggleButton
               isActive={isProMode}
-              imageSrc="/games/pro.svg"
-              imageAlt="pro"
-              onClick={() => setIsProMode(true)}
+              icon="/games/pro.svg"
+              iconAlt="Pro"
+              onClick={() => {
+                setIsProMode(true);
+                setValue("10");
+              }}
             >
               Pro
-            </CustomButton>
+            </BetToggleButton>
           </div>
 
           <div className="flex justify-center select-none mt-6 w-full">
@@ -77,7 +48,7 @@ const BetComponent = ({ ethPrice }: { ethPrice: number | null }) => {
             </Suspense>
           </div>
         </div>
-        <div className="w-full max-w-xl mt-5  overflow-y-auto md:sticky lg:top-10 mx-4">
+        <div className="hidden md:block w-full max-w-xl mt-5  overflow-y-auto md:sticky lg:top-10 mx-4">
           <RecentActivity />
         </div>
       </div>

@@ -12,11 +12,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RenderBGImage>
-          <ToastProvider>
-            <DialogProvider>{children}</DialogProvider>
-          </ToastProvider>
-        </RenderBGImage>
+        <React.Suspense fallback={<></>}>
+          <RenderBGImage>
+            <ToastProvider>
+              <DialogProvider>{children}</DialogProvider>
+            </ToastProvider>
+          </RenderBGImage>
+        </React.Suspense>
       </QueryClientProvider>
     </WagmiProvider>
   );

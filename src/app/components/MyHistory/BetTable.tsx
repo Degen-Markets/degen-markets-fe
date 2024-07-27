@@ -79,7 +79,7 @@ const BetTable = ({ bets }: BetTableProps) => {
         </WalletButton>
       </div>
       <div className="min-w-full bg-prussian-dark text-white">
-        <div className="grid grid-cols-5 sm:grid-cols-9 sticky bg-prussian-dark top-0 shadow-sm shadow-black z-10">
+        <div className="grid grid-cols-5 sm:grid-cols-9 sticky bg-prussian-dark top-0 shadow-black z-10">
           {" "}
           {/* z-10 to avoid the TableRow's icon overlap the Header of the table */}
           <div className="p-4 sm:col-span-2 border text-center center-all">

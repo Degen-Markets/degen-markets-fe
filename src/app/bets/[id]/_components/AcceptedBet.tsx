@@ -18,8 +18,8 @@ const AcceptedBet = ({ bet }: Props) => {
   return (
     <>
       <Heading>
-        <Headline>
-          <div className="flex justify-center">
+        <Headline textShadow={false}>
+          <div className="flex justify-center ">
             <div className="flex text-lg md:text-[1.75rem] items-center gap-2 md:gap-x-16">
               <div className="flex flex-col gap-1 items-center">
                 <UserAvatar
@@ -30,7 +30,9 @@ const AcceptedBet = ({ bet }: Props) => {
                 />
                 <span>{getDisplayNameForAddress(creator)}</span>
               </div>
-              <div className="text-2xl md:text-[165px]">VS</div>
+              <div className="text-2xl md:text-[165px] drop-shadow-none">
+                VS
+              </div>
               {acceptor && (
                 <div className="flex flex-col gap-1 items-center">
                   <UserAvatar

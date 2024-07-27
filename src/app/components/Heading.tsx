@@ -6,7 +6,9 @@ const Heading: FC<{ className?: string } & PropsWithChildren> = ({
   className,
 }) => {
   return (
-    <div className={cx("relative text-white mx-5", className)}>{children}</div>
+    <div className={cx("relative text-white md:mx-5", className)}>
+      {children}
+    </div>
   );
 };
 
@@ -15,27 +17,37 @@ const Headline: FC<
     className?: string;
     variant?: "light" | "dark";
     size?: "regular" | "compact";
+    textShadow?: boolean;
   } & PropsWithChildren
-> = ({ children, className, variant = "dark", size = "regular" }) => {
+> = ({
+  children,
+  className,
+  variant = "dark",
+  size = "regular",
+  textShadow = true,
+}) => {
   return (
     <div className={cx("relative text-4xl md:text-6xl font-bold", className)}>
       <div
         className={cx(
-          "text-center drop-shadow-text uppercase",
+          "text-center uppercase",
           {
             "py-8 px-6": variant === "dark" && size === "regular",
           },
           {
-            "pixel-art-border-lg-light bg-white text-prussian-dark  py-8 px-6":
+            "bg-white text-prussian-dark border rounded-xl  py-8 px-6":
               variant === "light" && size === "regular",
           },
           {
-            "pixel-art-border-sm-dark bg-prussian-dark py-2 px-1":
+            "bg-prussian-dark border rounded-xl py-2 px-1":
               variant === "dark" && size === "compact",
           },
           {
-            "pixel-art-border-sm-light bg-white text-prussian-dark py-2 px-1":
+            "bg-white text-prussian-dark py-2 px-1":
               variant === "light" && size === "compact",
+          },
+          {
+            "drop-shadow-text": textShadow,
           },
         )}
       >

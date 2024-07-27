@@ -71,17 +71,6 @@ const LiteBetButton: React.FC<{ isBetUp: boolean; className?: string }> = ({
     const betDirection = isBetUp;
     const randomId = uuid();
     const value = valueInWei as any;
-    console.log({
-      randomId,
-      betType: "binary",
-      durationValue: BigInt(SIX_HOURS_BET_DURATION),
-      TickerValue: "ETH",
-      MaticValue: "price",
-      strikePriceCreator,
-      Direction: isBetUp,
-      valueInWei,
-      Currency: currency.value,
-    });
 
     try {
       await sendCreateBetTx({
