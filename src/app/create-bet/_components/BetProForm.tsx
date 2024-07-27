@@ -13,7 +13,7 @@ import TimePicker from "./TimePicker";
 import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
 import CreateBetButton from "@/app/components/CreateBetButton";
-import GetBetDetail from "./GetBetDetail";
+import BetDetail from "./BetDetail";
 
 const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
   const {
@@ -74,8 +74,8 @@ const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
         <BetAmount<string> title="Amount" placeHolder="Ex: 10" />
       </div>
       <div className="flex flex-col justify-center items-center mt-2">
-        <GetBetDetail ethPrice={ethPrice} calculatedValue={calculatedValue} />
-        <CreateBetButton betType="binary" />
+        <BetDetail ethPrice={ethPrice} calculatedValue={calculatedValue} />
+        <CreateBetButton isBetOneUp betType="binary" />
       </div>
     </div>
   );

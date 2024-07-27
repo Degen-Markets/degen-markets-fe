@@ -31,7 +31,7 @@ export default function BetAmount<T>({
         type="number"
         lang="en-US"
         step=".000001"
-        className="px-2 sm:px-4 py-2 rounded-xl ring-purple-medium text-[#000] uppercase w-full"
+        className="px-2 sm:px-4 py-2 rounded-xl ring-purple-medium text-black-main uppercase w-full"
         placeholder={placeHolder}
         disabled={disabled}
       />

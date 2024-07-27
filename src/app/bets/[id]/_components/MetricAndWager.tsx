@@ -39,7 +39,7 @@ const MetricAndWager = ({ bet, hideStartingMetric }: Props) => {
               isBetOnUp={isBetOnUp}
               creationTimestamp={creationTimestamp}
               expirationTimestamp={expirationTimestamp}
-              className="text-white !rounded-xl"
+              className="text-white rounded-xl"
             />
           </div>
         </div>
@@ -51,7 +51,7 @@ const MetricAndWager = ({ bet, hideStartingMetric }: Props) => {
       {startingMetricValue && !hideStartingMetric && (
         <div className="flex justify-center mt-5">
           <span className="bg-prussian-dark text-white p-2 px-6 mt-4 md:-mt-6 rounded-xl border-2 font-bold">
-            starting {metric}: ${Number(startingMetricValue).toFixed(2)}
+            Starting {metric}: ${Number(startingMetricValue).toFixed(2)}
           </span>
         </div>
       )}

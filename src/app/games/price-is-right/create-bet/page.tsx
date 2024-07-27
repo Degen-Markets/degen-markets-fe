@@ -25,7 +25,11 @@ const CreateBetPage = () => {
           <div className={styles.formWrapper}>
             <div className={styles.betFormContainer}>
               <BetForm address={address} formType="creator" />
-              <CreateBetButton betType="closest-guess-wins" className="mt-8" />
+              <CreateBetButton
+                isBetOneUp
+                betType="closest-guess-wins"
+                className="mt-8"
+              />
             </div>
             <div className={styles.vsText}>
               <span className="translate-y-1/2">VS</span>

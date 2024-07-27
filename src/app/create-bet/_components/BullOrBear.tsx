@@ -1,14 +1,14 @@
+import { useMemo, ChangeEvent } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
-import { ChangeEvent } from "react";
 import { useAccount } from "wagmi";
 import { WalletButton } from "@/app/components/Button/ButtonWallet";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
-import LiteBetButton from "./LiteBetButton";
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { Address, parseEther } from "viem";
 import useGetUserAccountDetail from "@/app/lib/utils/hooks/useGetUserAccountDetail";
-import GetBetDetail from "./GetBetDetail";
+import BetDetail from "./BetDetail";
+import CreateBetButton from "@/app/components/CreateBetButton";
 
 const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   const { value, setValue } = useBetContext();
@@ -19,9 +19,11 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
     address as Address,
   );
 
-  const isBalanceEnough = userBalances["ETH"] <= parseEther(value);
+  const isBalanceEnough = useMemo(() => {
+    return userBalances["ETH"] >= parseEther(value);
+  }, [userBalances, value]);
 
-  const handleValueInput = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleValueInput = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     const decimals = newValue.split(/\,|\./)[1];
     if (!decimals || decimals.length < 7) {
@@ -29,9 +31,9 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
     }
   };
 
-  const calculatedValue = ethPrice
-    ? (Number(value) * ethPrice).toLocaleString()
-    : "0";
+  const calculatedValue = useMemo(() => {
+    return ethPrice ? (Number(value) * ethPrice).toLocaleString() : "0";
+  }, [ethPrice, value]);
 
   const renderBetButton = () => {
     if (!address) {
@@ -46,7 +48,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
       );
     }
 
-    if (isBalanceEnough)
+    if (!isBalanceEnough)
       return (
         <WalletButton
           size="regular"
@@ -58,18 +60,18 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
 
     return (
       <div className="flex-col md:flex-row flex space-y-2 lg:space-y-0 justify-between gap-3 mt-4">
-        <LiteBetButton isBetUp />
-        <LiteBetButton isBetUp={false} />
+        <CreateBetButton isBetOneUp betType="binary" />
+        <CreateBetButton isBetOneUp={false} betType="binary" />
       </div>
     );
   };
 
   return (
-    <div className=" w-full max-w-xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
+    <div className="w-full max-w-xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
       <h2 className="text-4xl font-bold text-center text-white mb-4 drop-shadow-text ">
         BULL OR BEAR
       </h2>
-      <div className="flex justify-between items-center py-2 border-t-4 border-black-medium px-2">
+      <div className="flex justify-between items-center py-2 border-t border-black-medium px-2">
         <span className="text-white font-bold text-xl">Duration</span>
         <span className="text-white flex text-xl items-center font-bold">
           6 Hours
@@ -133,7 +135,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
           </div>
         </div>
       )}
-      <GetBetDetail ethPrice={ethPrice} calculatedValue={calculatedValue} />
+      <BetDetail ethPrice={ethPrice} calculatedValue={calculatedValue} />
     </div>
   );
 };

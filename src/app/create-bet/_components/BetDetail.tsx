@@ -2,7 +2,7 @@ import React from "react";
 import BetComponent from "./BetComponent";
 import { useBetContext } from "../BetContext";
 
-const GetBetDetail = ({
+const BetDetail = ({
   ethPrice,
   calculatedValue,
 }: {
@@ -28,4 +28,4 @@ const GetBetDetail = ({
   );
 };
 
-export default GetBetDetail;
+export default BetDetail;

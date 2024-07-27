@@ -53,12 +53,10 @@ const BinaryBet: FC<Props> = ({ bet, address }) => {
         <MetricAndWager bet={bet} />
         {!isCreatedByCurrentUser && (
           <div className="flex flex-col gap-3 items-center">
-            <>
               <div className="text-white font-bold uppercase drop-shadow-text tex-sm">
                 Not a chance...
               </div>
               <AcceptBetButton bet={bet} address={address} />
-            </>
           </div>
         )}
       </div>

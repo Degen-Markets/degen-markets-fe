@@ -58,7 +58,7 @@ const CreateBetSuccess = () => {
   };
 
   return (
-    <div className=" flex-col md:flex-row flex justify-center items-center md:items-start w-full max-w-7xl mx-auto lg:gap-5">
+    <div className="flex-col md:flex-row flex justify-center items-center md:items-start w-full max-w-7xl mx-auto lg:gap-5">
       <div>
         <div className="text-center">
           <Heading>
@@ -68,7 +68,6 @@ const CreateBetSuccess = () => {
             {!!bet ? (
               <div className="border rounded-xl">
                 {" "}
-                {/* bet is null or BetResponse that why showing loading here. */}
                 <ActivityRow bet={bet as BetResponse} />
               </div>
             ) : (
@@ -93,7 +92,7 @@ const CreateBetSuccess = () => {
           </div>
         </div>
         <div className="flex flex-col items-center gap-3 mt-16">
-          <GradientText className="text-center font-bold drop-shadow-text leading-snug ">
+          <GradientText className="text-center font-bold leading-snug ">
             Your bet on <span className="text-white">{ticker}&apos;s </span>
             {metric} going {direction} was successfully created! Challenge your
             frens by giving them a link to this bet. They have
@@ -123,7 +122,7 @@ const CreateBetSuccess = () => {
         </div>
       </div>
 
-      <div className="w-full max-w-xl mt-5 overflow-y-auto md:sticky md:top-10 mx-4">
+      <div className="hidden md:block w-full max-w-xl mt-5 overflow-y-auto md:sticky md:top-10 mx-4">
         <RecentActivity />
       </div>
     </div>
