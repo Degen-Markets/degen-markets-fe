@@ -19,7 +19,7 @@ const NavbarItem: React.FC<{
           )}
         >
           <Image src={route.icon} alt={route.icon} width={25} height={25} />
-          <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
+          <p className="font-bold uppercase  lg:text-xl xl:text-2xl drop-shadow-text">
             {route.name}
           </p>
         </div>
@@ -29,7 +29,7 @@ const NavbarItem: React.FC<{
       <div className="relative group">
         <div className="flex justify-center items-center space-x-2 cursor-pointer">
           <Image src={route.icon} alt={route.icon} width={25} height={25} />
-          <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
+          <p className="font-bold uppercase drop-shadow-text lg:text-xl xl:text-2xl">
             {route.name}
           </p>
           <IoIosArrowDown className="flex-shrink-0" />

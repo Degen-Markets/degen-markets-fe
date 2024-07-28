@@ -197,17 +197,6 @@ input[type="number"] {
     1px 1px 0 black;
 }
 
-::-moz-selection {
-  /* Code for Firefox */
-  color: #fff;
-  background: #8d68e6;
-}
-
-::selection {
-  color: #fff;
-  background: #8d68e6;
-}
-
 /* Scroll style  */
 
 .custom-scrollbar::-webkit-scrollbar {

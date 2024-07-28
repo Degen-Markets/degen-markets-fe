@@ -22,38 +22,48 @@ const WonBet = ({ bet }: Props) => {
   };
   return (
     <>
-      <Heading>
-        <Headline className="uppercase text-mantis-dark lg:text-9xl">
-          Winner
-        </Headline>
-        <SubHeadline
-          isTop={true}
-          className="bg-transparent border-transparent lg:px-6"
-        >
-          <div className="flex flex-col text-xl items-center ">
-            <UserAvatar
-              address={winner}
-              className="w-16 h-16 md:h-32 md:w-32"
-            />
-            <div>{getDisplayNameForAddress(winner)}</div>
-          </div>
-        </SubHeadline>
-      </Heading>
-      <MetricAndWager bet={bet} hideStartingMetric={true} />
-      <Heading className="justify-center flex mt-4 md:-mt-8 -z-10">
-        <Headline className="md:w-2/5 " size="compact">
-          <div className="flex  text-xl justify-center items-center gap-4 ">
-            <UserAvatar address={loser} className="w-8 h-8" />
-            <div className="text-lg">{getDisplayNameForAddress(loser)}</div>
-            <div className="uppercase text-3xl text-red-main">Loser</div>
-          </div>
-        </Headline>
-      </Heading>
-      <div className="flex justify-center mt-8 gap-4">
-        <ReplicateBetAction bet={bet} />
-        <ButtonGradient size="small" className="w-2/5" onClick={handleShare}>
-          Share
-        </ButtonGradient>
+      <div className="mt-20 border-2 rounded-xl p-10 bg-black-medium bg-opacity-70">
+        <Heading>
+          <Headline className="uppercase text-mantis-dark text-5xl lg:text-9xl md:pt-7">
+            Winner
+          </Headline>
+          <SubHeadline
+            isTop={true}
+            className="bg-transparent border-transparent lg:px-6"
+          >
+            <div className="flex flex-col text-xl items-center ">
+              <UserAvatar
+                address={winner}
+                className="w-16 h-16 md:h-36 md:w-36"
+              />
+              <div>{getDisplayNameForAddress(winner)}</div>
+            </div>
+          </SubHeadline>
+        </Heading>
+        <MetricAndWager bet={bet} hideStartingMetric={true} />
+        <Heading className="justify-center flex mt-4">
+          <Headline
+            textShadow={false}
+            className="w-full md:w-2/5 "
+            size="compact"
+          >
+            <div className="flex flex-col md:flex-row w-full text-xl justify-center items-center md:gap-4">
+              <UserAvatar address={loser} className="w-14 h-14 md:w-8 md:h-8" />
+              <div className="text-lg">{getDisplayNameForAddress(loser)}</div>
+              <div className="uppercase text-3xl text-red-main">Loser</div>
+            </div>
+          </Headline>
+        </Heading>
+        <div className="flex flex-col md:flex-row justify-center mt-8 gap-4">
+          <ReplicateBetAction bet={bet} className="py-3" />
+          <ButtonGradient
+            size="small"
+            className="w-full md:w-2/5 py-3"
+            onClick={handleShare}
+          >
+            Share
+          </ButtonGradient>
+        </div>
       </div>
     </>
   );

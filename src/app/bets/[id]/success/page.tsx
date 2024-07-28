@@ -28,8 +28,8 @@ const AcceptBetSuccess = () => {
   if (!bet) return null;
 
   return (
-    <main className="text-center">
-      <Wrapper className="lg:max-w-screen-md">
+    <main className="text-center ">
+      <Wrapper className="lg:max-w-screen-lg border-4 p-10 rounded-xl bg-black-medium bg-opacity-70">
         <AcceptedBet bet={bet} />
       </Wrapper>
     </main>

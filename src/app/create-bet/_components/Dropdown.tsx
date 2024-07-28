@@ -78,7 +78,9 @@ export default function Dropdown<T>({
 
   return (
     <div className="relative w-full">
-      <h4 className="pt-3 text-left whitespace-nowrap">{title}</h4>
+      {title && (
+        <h4 className="pt-3 text-left font-bold whitespace-nowrap">{title}</h4>
+      )}
       <div className="relative w-full ">
         {selectedOption.image && (
           <Image
@@ -96,7 +98,7 @@ export default function Dropdown<T>({
           defaultValue={selectedOption.label}
           onChange={isSearchable ? debouncedHandleInputChange : undefined}
           onFocus={() => setShowDropdown(true)}
-          className={`pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  ${
+          className={`pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  rounded-xl ${
             selectedOption.image ? "pl-10 sm:pl-12" : "pl-2 sm:pl-4"
           }`}
           placeholder={`${placeHolder}...`}
@@ -116,7 +118,7 @@ export default function Dropdown<T>({
                 <li
                   key={token.label}
                   onClick={() => handleTokenSelect(token)}
-                  className={`px-4 py-2 cursor-pointer outlne-none  outline-0 border-none flex justify-center ${
+                  className={`px-4 py-2 cursor-pointer outline-none  outline-0 border-none flex justify-start ${
                     selectedOption.label === token.label
                       ? "text-[#fff] bg-blue-dark"
                       : "text-[#000] hover:bg-gray-200"

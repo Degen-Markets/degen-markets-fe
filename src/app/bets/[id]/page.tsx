@@ -37,16 +37,6 @@ const BetPage = ({ params: { id } }: { params: { id: string } }) => {
       className={twMerge(
         bet.type === "closest-guess-wins" && "lg:max-w-screen-xl ",
       )}
-      leftImage={
-        bet.type === "closest-guess-wins"
-          ? "/price_is_right_creator.png"
-          : "/bear.png"
-      }
-      rightImage={
-        bet.type === "closest-guess-wins"
-          ? "/price_is_right_acceptor.png"
-          : "/bull.png"
-      }
     >
       {winner && <WonBet bet={bet} />}
       {!winner && acceptor && <AcceptedBet bet={bet} />}

@@ -1,6 +1,5 @@
 "use client";
 
-import { ButtonGradient } from "@/app/components/Button";
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { BetType, Currency } from "@/app/lib/utils/bets/types";
@@ -15,17 +14,23 @@ import {
 import useBalances from "@/app/lib/utils/hooks/useBalances";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
-import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
+import {
+  DEGEN_BETS_ADDRESS,
+  SIX_HOURS_BET_DURATION,
+} from "@/app/lib/utils/bets/constants";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { twMerge } from "tailwind-merge";
 import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
+import { ButtonSuccess } from "./Button/ButtonSuccess";
+import { ButtonDanger } from "./Button/ButtonDanger";
 
-const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
-  betType,
-  className,
-}) => {
+const CreateBetButton: React.FC<{
+  betType: BetType;
+  className?: string;
+  isBetOneUp: boolean;
+}> = ({ betType, className, isBetOneUp }) => {
   const router = useRouter();
   const {
     value,
@@ -123,14 +128,16 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   };
 
   const createBet = async () => {
-    const value = isEth ? valueInWei : (undefined as any);
-    try {
-      const randomId = uuid();
-      await sendCreateBetTx({
-        abi: DegenBetsAbi,
-        address: DEGEN_BETS_ADDRESS,
-        functionName: "createBet",
-        args: [
+    const ethValue = !isProMode
+      ? parseEther(value)
+      : isEth
+        ? valueInWei
+        : (undefined as any);
+    const betDirection = isProMode ? direction.value : isBetOneUp;
+    const randomId = uuid();
+
+    const argument = isProMode
+      ? [
           randomId,
           betType,
           durationValue,
@@ -140,8 +147,26 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
           direction.value,
           valueInWei,
           currency.value,
-        ],
-        value,
+        ]
+      : ([
+          randomId,
+          "binary",
+          BigInt(SIX_HOURS_BET_DURATION),
+          "ETH",
+          "price",
+          strikePriceCreator,
+          betDirection,
+          parseEther(value),
+          zeroAddress,
+        ] as any);
+
+    try {
+      await sendCreateBetTx({
+        abi: DegenBetsAbi,
+        address: DEGEN_BETS_ADDRESS,
+        functionName: "createBet",
+        args: argument,
+        value: ethValue,
         chainId: base.id,
       });
     } catch (error: any) {
@@ -151,9 +176,8 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
   };
 
   const handleActionButtonClick = async () => {
-    if (!isAllowanceEnough) {
+    if (isProMode && !isAllowanceEnough) {
       await approve();
-      return;
     }
     await createBet();
   };
@@ -168,11 +192,11 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     if (!isBalanceEnough) {
       return "Not enough balance";
     }
-    if (!isAllowanceEnough) {
+    if (!isAllowanceEnough && isProMode) {
       return `Approve ${currency.label}`;
     }
 
-    return "Create Bet";
+    return isProMode ? "Create Bet" : isBetOneUp ? "Bet Up" : "Bet Down";
   };
 
   useEffect(() => {
@@ -201,23 +225,31 @@ const CreateBetButton: React.FC<{ betType: BetType; className?: string }> = ({
     }
   }, [isCreateBetTxSuccess]);
 
+  const ButtonComponent =
+    isProMode || isBetOneUp ? ButtonSuccess : ButtonDanger;
+
   return (
     <div
       className={twMerge(
-        "flex justify-center flex-col items-center w-full ",
+        "flex justify-center flex-col items-center w-full",
         className,
       )}
     >
-      <ButtonGradient
+      <ButtonComponent
         loader={true}
         isPending={isPending}
         isProcessing={isProcessing}
         size={"regular"}
         disabled={isActionDisabled}
         onClick={handleActionButtonClick}
+        className={twMerge(
+          isActionDisabled &&
+            "bg-red-light hover:bg-red-main cursor-not-allowed active:bg-red-main",
+          "rounded-xl font-bold uppercase w-full max-w-xl",
+        )}
       >
         {getActionButtonText()}
-      </ButtonGradient>
+      </ButtonComponent>
     </div>
   );
 };

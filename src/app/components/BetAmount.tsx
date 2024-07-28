@@ -24,14 +24,14 @@ export default function BetAmount<T>({
 
   return (
     <div className="relative w-full ">
-      <h4 className="pt-3 text-left whitespace-nowrap">{title}:</h4>
+      <h4 className="pt-3 text-left whitespace-nowrap font-bold">{title}:</h4>
       <input
         value={value}
         onChange={handleValueInput}
         type="number"
         lang="en-US"
         step=".000001"
-        className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase w-full"
+        className="px-2 sm:px-4 py-2 rounded-xl ring-purple-medium text-black-main uppercase w-full"
         placeholder={placeHolder}
         disabled={disabled}
       />

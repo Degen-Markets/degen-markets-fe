@@ -3,12 +3,14 @@ const colors = {
   black: {
     medium: "#202B38",
     dark: "#1A222C",
+    main: "#000000",
   },
   blue: {
     light: "#5A799E",
     medium: "#2387B6",
     dark: "rgb(34, 43, 55)",
     twitter: "#1C98E9",
+    secondary: "#2b3a4d",
   },
   yellow: {
     main: "#FFE14D",
@@ -66,6 +68,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        text: "5px 3px 3px #000000",
+      },
+      borderRadius: {
+        "4xl": "35px",
+      },
       rotate: {
         "27": "27deg",
       },
@@ -74,7 +82,6 @@ const config: Config = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "logo-gradient": "linear-gradient(90deg, #ED72BF, #F1A495, #F9DD71)",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },

@@ -26,7 +26,7 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="w-full text-white bg-transparent z-50 border-b border-cadet-blue-light p-2">
+      <header className="w-full text-white z-50 border-b border-cadet-blue-light p-2 bg-black-medium">
         <Wrapper>
           <div className="flex justify-between items-center w-full lg:h-16">
             <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full py-0.5 lg:py-0">
