@@ -39,7 +39,7 @@ const RenderBGImage: FC<RenderBGImageProps> = ({ children }) => {
     <div className="relative">
       {backgroundImage && (
         <div
-          className="absolute inset-0 bg-cover bg-no-repeat opacity-30 -z-10"
+          className="absolute inset-0 bg-cover bg-no-repeat opacity-10 -z-10"
           style={{ backgroundImage }}
         />
       )}
