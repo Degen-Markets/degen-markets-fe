@@ -42,22 +42,18 @@ const TimePicker = <T,>({
 
   return (
     <div className="relative w-full">
-      <div>
-        <label className="pt-3 text-left whitespace-nowrap font-bold">
-          {title}
-        </label>
-        <input
-          type="datetime-local"
-          id="appt"
-          name="appt"
-          value={time}
-          onChange={handleTimeChange}
-          min={getCurrentDateTime()}
-          className={`styled-time-input w-full rounded-md p-2 ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
-          placeholder={placeHolder}
-          disabled={disabled}
-        />
-      </div>
+      <label className="text-left whitespace-nowrap font-bold">{title}</label>
+      <input
+        type="datetime-local"
+        id="appt"
+        name="appt"
+        value={time}
+        onChange={handleTimeChange}
+        min={getCurrentDateTime()}
+        className={`styled-time-input w-full rounded-md p-2 ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
+        placeholder={placeHolder}
+        disabled={disabled}
+      />
     </div>
   );
 };

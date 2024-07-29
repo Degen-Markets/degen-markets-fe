@@ -5,6 +5,7 @@ import { Address } from "viem";
 import Dropdown from "@/app/create-bet/_components/Dropdown";
 import TimePicker from "@/app/create-bet/_components/TimePicker";
 import BetAmount from "@/app/components/BetAmount";
+import Input from "@/app/components/Input";
 import { Ticker } from "@/app/lib/utils/bets/types";
 import { currencyOptions, tickerOptions } from "@/app/lib/utils/bets/constants";
 
@@ -14,7 +15,7 @@ interface Props {
   formType: "creator" | "acceptor";
 }
 
-const BetForm: FC<Props> = ({ disabled, address, formType }) => {
+const BetForm: FC<Props> = ({ disabled, formType }) => {
   const {
     ticker,
     currency,
@@ -27,19 +28,19 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     validateFields,
   } = useBetContext();
 
-  const formGroupClasses = "grid grid-cols-2 gap-2 lg:gap-4";
+  const formGroupClasses = "grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8";
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value.trim();
     const numericValue = Number(inputValue);
-    setError(
+
+    const error =
       numericValue <= 0 || isNaN(numericValue)
         ? "Please enter a guess price!"
-        : "",
-    );
+        : "";
+    setError(error);
 
-    const stringValue =
-      numericValue <= 0 || isNaN(numericValue) ? "" : String(numericValue);
+    const stringValue = error ? "" : String(numericValue);
 
     if (formType === "creator") {
       setStrikePriceCreator(stringValue);
@@ -50,7 +51,7 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
   };
 
   return (
-    <div className={twMerge("p-4 text-base")}>
+    <div className={twMerge("p-4 text-base space-y-2 lg:space-y-4")}>
       <div className={formGroupClasses}>
         <Dropdown<Ticker>
           selectedOption={ticker}
@@ -68,31 +69,22 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
         />
       </div>
       <div className={formGroupClasses}>
-        <div className="flex flex-col">
-          <label className="pt-3 text-left whitespace-nowrap font-bold">
-            Metric:
-          </label>
-          <input
-            disabled={true}
-            value="Price"
-            className="p-2 ring-purple-medium text-black-medium uppercase rounded-md"
-            placeholder="Price"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="pt-3 text-left whitespace-nowrap font-bold">
-            {" "}
-            Price guess:
-          </label>
-          <input
-            disabled={formType === "acceptor"}
-            value={formType === "creator" ? strikePriceCreator : "XXXXX"}
-            onChange={handleInputChange}
-            className="p-2 sring-purple-medium text-black-main rounded-md uppercase"
-            placeholder="Price guess"
-            type="number"
-          />
-        </div>
+        <Input
+          label="Metric:"
+          disabled
+          value="Price"
+          placeholder="Price"
+          className="text-black-medium"
+        />
+        <Input
+          label="Price guess:"
+          disabled={formType === "acceptor"}
+          value={formType === "creator" ? strikePriceCreator : "XXXXX"}
+          onChange={handleInputChange}
+          placeholder="Price guess"
+          type="number"
+          className="text-black-main"
+        />
       </div>
       <div className={formGroupClasses}>
         <Dropdown<Address>
