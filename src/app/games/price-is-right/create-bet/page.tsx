@@ -5,40 +5,32 @@ import { useAccount } from "wagmi";
 import CreateBetButton from "@/app/components/CreateBetButton";
 import { BetProvider } from "@/app/create-bet/BetContext";
 import { Suspense } from "react";
-import BetLayout from "@/app/layouts/BetLayout";
-import { twMerge } from "tailwind-merge";
-
-const styles = {
-  headline: "text-4xl lg:text-8xl text-white text-center",
-  betFormContainer: "flex flex-col items-center px-2 lg:px-0",
-  vsText: "items-center text-8xl hidden lg:flex",
-  formWrapper: "flex gap-8",
-};
+import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
+import Wrapper from "@/app/components/Wrapper";
 
 const CreateBetPage = () => {
   const { address } = useAccount();
   return (
     <Suspense>
       <BetProvider>
-        <BetLayout className="lg:max-w-screen-xl flex flex-col items-center">
-          <h2 className={styles.headline}>The Price is Right</h2>
-          <div className={styles.formWrapper}>
-            <div className={styles.betFormContainer}>
-              <BetForm address={address} formType="creator" />
-              <CreateBetButton
-                isBetOneUp
-                betType="closest-guess-wins"
-                className="mt-8"
-              />
+        <Wrapper className="max-w-screen-xl">
+          <div className="grid grid-cols-5 gap-8 mt-8 lg:mt-18">
+            <div className="col-span-5 lg:col-span-3 lg:pl-[25%]">
+              <div className="bg-blue-secondary px-5 md:px-10 pb-5 w-full md:w-auto md:max-w-fit rounded-2xl p-4">
+                <h3 className="text-4xl uppercase text-center font-bold drop-shadow-text py-2 mb-2">
+                  The Price Is Right
+                </h3>
+                <div className="bg-black-medium border border-white rounded-lg p-8 space-y-4">
+                  <BetForm address={address} formType="creator" />
+                  <CreateBetButton isBetOneUp betType="closest-guess-wins" />
+                </div>
+              </div>
             </div>
-            <div className={styles.vsText}>
-              <span className="translate-y-1/2">VS</span>
-            </div>
-            <div className={twMerge(styles.betFormContainer, "hidden lg:flex")}>
-              <BetForm disabled formType="acceptor" />
+            <div className="hidden lg:block lg:col-span-2">
+              <RecentActivity />
             </div>
           </div>
-        </BetLayout>
+        </Wrapper>
       </BetProvider>
     </Suspense>
   );
