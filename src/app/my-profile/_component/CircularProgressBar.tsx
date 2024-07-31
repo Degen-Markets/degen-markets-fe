@@ -12,9 +12,8 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   const angle = (percentage / 100) * 360;
 
   return (
-    <div className="relative w-36 h-36 flex items-center justify-center">
+    <div className="relative w-36 h-36 flex items-center justify-center flex-shrink-0">
       <svg className="w-full h-full" viewBox="0 0 160 160">
-        {/* Background circle with color */}
         <circle
           className="text-gray-300"
           strokeWidth="2"
@@ -30,10 +29,9 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
           y1="80"
           x2="80"
           y2="10"
-          stroke="#FFFFFF" // Color of the fixed line
+          stroke="#FFFFFF"
           strokeWidth="2"
         />
-        {/* Rotating line */}
         <line
           x1="80"
           y1="80"

@@ -257,11 +257,77 @@ export const getBetTypeText = (type: BetType): string => {
       return "";
   }
 };
+export const getBetImageUrl = (type: BetType): string => {
+  switch (type) {
+    case "binary":
+      return "/games/bull_or_bear.webp";
+    case "closest-guess-wins":
+      return "/games/price_is_right.webp";
+    default:
+      return "";
+  }
+};
 
-export const getBetSideText = (isBetOnUp: boolean) => {
-  return isBetOnUp
-    ? { leftText: "Price Moons", rightText: "Price Rugs" }
-    : { leftText: "Price Rugs", rightText: "Price Moons" };
+interface GetetOutComeProps {
+  text: string;
+  status: boolean;
+}
+export const getBetOutcome = (
+  type: BetType,
+  isBetOnUp: boolean,
+  startingMetricValue: number | null,
+  endingMetricValue: number | null,
+  strikePriceCreator: number,
+  strikePriceAcceptor: number,
+): { outcome: GetetOutComeProps; bgImage: string } => {
+  if (type === "binary") {
+    const startingValue = Number(startingMetricValue);
+    const endingValue = Number(endingMetricValue);
+
+    if (isBetOnUp) {
+      return endingValue > startingValue
+        ? {
+            outcome: { text: "Price Moon", status: true },
+            bgImage: "/profile/Moon.webp",
+          }
+        : {
+            outcome: { text: "Price Rugs", status: false },
+            bgImage: "/profile/Rug.webp",
+          };
+    } else {
+      return endingValue < startingValue
+        ? {
+            outcome: { text: "Price Moon", status: true },
+            bgImage: "/profile/Moon.webp",
+          }
+        : {
+            outcome: { text: "Price Rugs", status: false },
+            bgImage: "/profile/Rug.webp",
+          };
+    }
+  } else if (type === "closest-guess-wins") {
+    const creatorStrikePrice = Number(strikePriceCreator);
+    const acceptorStrikePrice = Number(strikePriceAcceptor);
+    const endingValue = Number(endingMetricValue);
+
+    const diffCreator = Math.pow(endingValue - creatorStrikePrice, 2); // squared difference
+    const diffAcceptor = Math.pow(endingValue - acceptorStrikePrice, 2); // squared difference
+
+    return diffCreator < diffAcceptor
+      ? {
+          outcome: { text: "Price Moon", status: true },
+          bgImage: "/profile/Moon.webp",
+        }
+      : {
+          outcome: { text: "Price Rugs", status: false },
+          bgImage: "/profile/Rug.webp",
+        };
+  } else {
+    return {
+      outcome: { text: "Unknown Bet Type", status: false },
+      bgImage: "",
+    };
+  }
 };
 
 export const getBetStatus = (bet: BetResponse) => {
@@ -307,4 +373,48 @@ export const getUserRole = (
     : user === (winner === creator ? acceptor : creator)
       ? "loser"
       : "";
+};
+
+export const calculateBetStats = (bets: BetResponse[], address: Address) => {
+  const totalBets = bets.length;
+  const totalWins = bets.filter(
+    (bet) => bet.winner?.toLowerCase() === address?.toLowerCase(),
+  ).length;
+  // Total bets for each type
+  const totalBinaryBets = bets.filter((bet) => bet.type === "binary").length;
+  const totalClosestGuessBets = bets.filter(
+    (bet) => bet.type === "closest-guess-wins",
+  ).length;
+
+  // Wins for each type
+  const totalBinaryWins = bets.filter(
+    (bet) =>
+      bet.type === "binary" &&
+      bet.winner?.toLowerCase() === address?.toLowerCase(),
+  ).length;
+  const totalClosestGuessWins = bets.filter(
+    (bet) =>
+      bet.type === "closest-guess-wins" &&
+      bet.winner?.toLowerCase() === address?.toLowerCase(),
+  ).length;
+
+  // Win percentages for each type
+  const binaryWinPercentage =
+    totalBinaryBets > 0 ? (totalBinaryWins / totalBinaryBets) * 100 : 0;
+  const closestGuessWinPercentage =
+    totalClosestGuessBets > 0
+      ? (totalClosestGuessWins / totalClosestGuessBets) * 100
+      : 0;
+  const winPercentage = totalBets > 0 ? (totalWins / totalBets) * 100 : 0;
+
+  const winPercentages = {
+    totalBullOrBearBets: totalBinaryBets,
+    totalThePriceIsRightBets: totalClosestGuessBets,
+    bullOrBearWinPercentage: +binaryWinPercentage.toFixed(1),
+    thePriceIsRightWinPercentage: +closestGuessWinPercentage.toFixed(1),
+    totalBullOrBearWins: totalBinaryWins,
+    totalThePriceIsRightWins: totalClosestGuessWins,
+    totalWinPercentage: +winPercentage.toFixed(1),
+  };
+  return winPercentages;
 };

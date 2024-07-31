@@ -7,8 +7,7 @@ import {
   Tabs,
   TabPanels,
 } from "@/app/components/Tabs/Tabs";
-import { ButtonGradient, ButtonPrimary } from "@/app/components/Button";
-import { useRouter } from "next/navigation";
+import { ButtonGradient } from "@/app/components/Button";
 import {
   calculateProfits,
   isBetConcluded,
@@ -22,7 +21,6 @@ import {
 } from "@/app/lib/utils/bets/constants";
 import { Address } from "viem";
 import { useAccount, useTransactionReceipt } from "wagmi";
-import UserAvatar from "@/app/components/UserAvatar";
 import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
 import BetTable from "./BetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
@@ -30,10 +28,10 @@ import { useWriteContract } from "wagmi";
 import { base } from "viem/chains";
 import { useToast } from "../Toast/ToastProvider";
 import { DegenBetsAbi } from "@/app/lib/utils/bets/DegenBetsAbi";
+import Image from "next/image";
 
-const MyHistory = () => {
+const LastMatches = () => {
   const { address } = useAccount();
-  const router = useRouter();
   const [profits, setProfits] = useState({ usdc: 0, eth: 0 });
   const { bets, isLoading, unclaimedBets, fetchBetsByAddress } =
     useGetBetForAddress(address as Address);
@@ -66,23 +64,23 @@ const MyHistory = () => {
 
   const betCategories = [
     {
-      label: "Existing Bets",
-      className: "bg-indigo-medium md:text-2xl",
-      bets: categorizedBets.running,
-    },
-    {
-      label: "History",
-      className: "bg-purple-medium md:text-2xl",
+      label: (
+        <div className="flex items-center space-x-2">
+          <Image
+            src="/profile/Matches.svg"
+            alt="Matches"
+            width={30}
+            height={30}
+          />
+          <span>Last Matches</span>
+        </div>
+      ),
+      className: "md:text-2xl uppercase font-bold",
       bets: categorizedBets.concluded,
-    },
-    {
-      label: "Expired Bets",
-      className: "bg-red-main md:text-2xl",
-      bets: categorizedBets.expired,
     },
   ];
 
-  const defaultActiveIndex = categorizedBets.running.length ? 0 : 1;
+  const defaultActiveIndex = 0;
 
   const profitButtonDisabled =
     unclaimedBets.length === 0 ||
@@ -143,29 +141,22 @@ const MyHistory = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-4 text-center">
-      <div className="mb-8">
-        <UserAvatar
-          address={address}
-          className="w-40 h-40 mx-auto rounded-full"
-        />
-        <h2 className="text-3xl font-semibold mt-4">@DEGEN</h2>
-        <p className="text-prussian-dark">You</p>
-      </div>
+    <div className="max-w-7xl mx-auto lg:p-4 text-center">
       <div>
         <div className="flex justify-center items-end flex-col">
           <ButtonGradient
-            size="regular"
+            size="small"
             loader={true}
             onClick={handleGetPaid}
             isPending={isClaimButtonPending}
             isProcessing={isClaimButtonProcessing}
             disabled={profitButtonDisabled}
+            className="text-sm"
           >
             Rake in Profits
           </ButtonGradient>
-          <p className="text-yellow-main drop-shadow-sm mt-1">
-            You have won {profits.usdc} USDC and {profits.eth} ETH.
+          <p className="text-yellow-main drop-shadow-sm mt-1 text-sm font-bold">
+            Unclaimed funds {profits.usdc} USDC and {profits.eth} ETH.
           </p>
         </div>
         <Tabs defaultActiveIndex={defaultActiveIndex}>
@@ -189,22 +180,7 @@ const MyHistory = () => {
                     <div>Loading...</div>
                   ) : hasBetsInCategory ? (
                     <BetTable bets={category.bets} />
-                  ) : (
-                    <div className="text-center flex">
-                      <div className="flex flex-col items-center w-full space-y-2 p-8 ">
-                        <p className="text-lg md:text-2xl text-prussian-dark">
-                          There are no {category.label.toLowerCase()} right now.
-                          Go make one!
-                        </p>
-                        <ButtonPrimary
-                          size="small"
-                          onClick={() => router.push("/create-bet")}
-                        >
-                          Create bet
-                        </ButtonPrimary>
-                      </div>
-                    </div>
-                  )}
+                  ) : null}
                 </TabPanel>
               );
             })}
@@ -215,4 +191,4 @@ const MyHistory = () => {
   );
 };
 
-export default MyHistory;
+export default LastMatches;

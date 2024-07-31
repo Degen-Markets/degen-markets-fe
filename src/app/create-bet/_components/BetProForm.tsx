@@ -36,7 +36,7 @@ const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
   return (
     <div className="bg-blue-secondary px-5 md:px-10 pb-5 w-full md:w-auto md:max-w-fit rounded-2xl p-4">
       <h3 className="text-4xl uppercase text-center font-bold drop-shadow-text py-2">
-        The Price Is Right
+        Bull Or Bear
       </h3>
       <div className="grid md:grid-cols-2 gap-x-3 border-t-2 border-black-medium">
         <Dropdown<Ticker>

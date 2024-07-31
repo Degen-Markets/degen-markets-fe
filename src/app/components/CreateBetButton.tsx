@@ -159,7 +159,6 @@ const CreateBetButton: React.FC<{
           parseEther(value),
           zeroAddress,
         ] as any);
-
     try {
       await sendCreateBetTx({
         abi: DegenBetsAbi,
