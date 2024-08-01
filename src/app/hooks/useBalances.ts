@@ -2,10 +2,9 @@ import { getBalance, readContract } from "@wagmi/core";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { useEffect, useState } from "react";
-import { useTransactionReceipt } from "wagmi";
 import { erc20Abi } from "viem";
 import { SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
-import { wagmiConfig } from "../wagmiConfig";
+import { wagmiConfig } from "../lib/utils/wagmiConfig";
 
 const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   const [userBalances, setUserBalances] = useState({

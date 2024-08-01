@@ -5,7 +5,7 @@ import WalletMenu from "../WalletMenu";
 import WalletButtonWithAvatar from "../WalletMenu/WalletButtonWithAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { DialogType, useDialog } from "./dialog";
-import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
+import useIsChainSupported from "@/app/hooks/useIsChainSupported";
 import Image from "next/image";
 interface Props {
   className?: string;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const Web3Status: FC<Props> = ({ className, setNav }) => {
-  const { address, isConnected, chainId } = useAccount();
+  const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { isCurrentChainSupported } = useIsChainSupported();
   const { setOpen: setOpenSwitchChain } = useDialog(DialogType.SwitchChain);

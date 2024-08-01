@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { BetType, Currency } from "@/app/lib/utils/bets/types";
-import useAllowances from "@/app/lib/utils/hooks/useAllowances";
+import useAllowances from "@/app/hooks/useAllowances";
 import {
   erc20Abi,
   maxUint256,
@@ -11,7 +11,7 @@ import {
   parseUnits,
   zeroAddress,
 } from "viem";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
+import useBalances from "@/app/hooks/useBalances";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
 import {

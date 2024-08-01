@@ -8,7 +8,7 @@ import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
 import { maxUint256 } from "viem";
 import { useCallback, useEffect, useState } from "react";
-import { wagmiConfig } from "../wagmiConfig";
+import { wagmiConfig } from "../lib/utils/wagmiConfig";
 
 const useAllowances = (shouldReFetch: boolean, address?: `0x${string}`) => {
   const [userAllowances, setUserAllowances] = useState({

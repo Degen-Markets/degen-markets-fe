@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
-import { useAccount, useBalance } from "wagmi";
+import { useMemo } from "react";
+import { useBalance } from "wagmi";
 import {
   abbreviateETHBalance,
   getDisplayNameForAddress,
-} from "../bets/helpers";
+} from "../lib/utils/bets/helpers";
 import { Address } from "viem";
 import useIsChainSupported from "./useIsChainSupported";
 
