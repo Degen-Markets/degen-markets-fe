@@ -16,7 +16,7 @@ const AcceptedBet = ({ bet }: Props) => {
   const { address } = useAccount();
   const acceptor = bet.acceptor || address; // use connected wallet if acceptor is null
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto border-4 p-10 rounded-xl bg-black-medium bg-opacity-70">
       <Heading>
         <Headline textShadow={false}>
           <div className="flex justify-center">

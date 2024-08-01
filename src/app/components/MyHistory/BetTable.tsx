@@ -19,6 +19,8 @@ import Image from "next/image";
 import BetStatus from "./common/BetStatus";
 import { HiChevronDoubleDown } from "react-icons/hi";
 import ExpandableBetComponent from "./common/ExpandableBetComponent";
+import { BetTableRow } from "../Table/types";
+import PixelArtLoader from "../PixelArtLoading";
 
 interface BetTableProps {
   bets: BetResponse[];
@@ -76,6 +78,7 @@ const BetTable = ({ bets }: BetTableProps) => {
           endingMetricValue,
           strikePriceAcceptor,
           strikePriceCreator,
+          expirationTimestamp,
         } = bet;
         const { outcome, bgImage } = getBetOutcome(
           type,
@@ -95,6 +98,11 @@ const BetTable = ({ bets }: BetTableProps) => {
 
         const isBetExpired = !winner && !acceptor;
 
+        const betExpirationTime = Number(expirationTimestamp) * 1000;
+        const isBetInPending = new Date() <= new Date(betExpirationTime);
+        console.log({
+          expirationTimestamp,
+        });
         return {
           creator: (
             <HistoryTableUserInfo
@@ -151,6 +159,11 @@ const BetTable = ({ bets }: BetTableProps) => {
             <>
               {isBetExpired ? (
                 "xxx xxxx"
+              ) : isBetInPending ? (
+                <div className="center-all py-2 px-4 font-bold space-x-1">
+                  <PixelArtLoader text="" />
+                  <span>Awaiting...</span>
+                </div>
               ) : (
                 <BetOutComeBox bgImage={bgImage}>
                   <span

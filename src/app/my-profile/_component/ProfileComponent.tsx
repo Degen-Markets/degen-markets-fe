@@ -12,12 +12,26 @@ import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 
 const ProfileComponent: React.FC = () => {
   const { address } = useAccount();
-  const { bets } = useGetBetForAddress(address as Address);
+  const { bets, isLoading } = useGetBetForAddress(address as Address);
   const gamePlayed = bets.length;
   const { totalWinPercentage } = useMemo(
     () => calculateBetStats(bets, address as Address),
     [bets, address],
   );
+
+  const joiningDate = useMemo(() => {
+    if (!isLoading) {
+      const firstBet = bets[0];
+      const creationTimestamp = Number(firstBet?.creationTimestamp) * 1000;
+      const date = new Date(creationTimestamp);
+      console.log({
+        dateListening: date,
+        localDate: date.toLocaleDateString(),
+      });
+      return date.toLocaleDateString();
+    }
+    return null;
+  }, [bets, isLoading]);
 
   return (
     <div className="text-white p-4 rounded-lg max-w-7xl mx-auto">
@@ -38,7 +52,7 @@ const ProfileComponent: React.FC = () => {
       </div>
       <div className="border-b pb-2 my-10 font-bold">
         <div className="flex justify-between items-center lg:px-4">
-          <div>Joined 1.07.2024</div>
+          <div>Joined {joiningDate}</div>
           <div>
             <div>
               Me vs:&nbsp;<span className="text-green-light">2w</span>

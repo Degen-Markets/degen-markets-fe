@@ -29,7 +29,7 @@ const AcceptBetSuccess = () => {
 
   return (
     <main className="text-center ">
-      <Wrapper className="lg:max-w-screen-lg border-4 p-10 rounded-xl bg-black-medium bg-opacity-70">
+      <Wrapper className="lg:max-w-screen-lg">
         <AcceptedBet bet={bet} />
       </Wrapper>
     </main>

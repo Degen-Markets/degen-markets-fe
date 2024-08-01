@@ -10,25 +10,23 @@ const ExpandableBetComponent = ({ bet }: { bet: BetResponse }) => {
   };
   return (
     <div>
-      <div className="bg-gray-800 p-4 text-white f-fit">
-        <p className="text-3xl">Bet Details</p>
-        <div className="flex justify-center items-center border-4 border-b-0 text-lg">
-          <p className="px-2">
-            <strong>Created at:</strong> {formatDate(creationTimestamp)}
-          </p>
-          {acceptanceTimestamp && (
-            <>
-              <p className="border-x-4 px-2">
-                <strong>Accepted at:</strong> {formatDate(acceptanceTimestamp)}
-              </p>
-              <p className="px-2">
-                <strong>Ended at:</strong> {formatDate(expirationTimestamp)}
-              </p>
-            </>
-          )}
-        </div>
-        <BetCard bet={bet} />
+      <p className="text-3xl">Bet Details</p>
+      <div className="flex justify-center items-center border-4 border-b-0 text-lg">
+        <p className="px-2">
+          <strong>Created at:</strong> {formatDate(creationTimestamp)}
+        </p>
+        {acceptanceTimestamp && (
+          <>
+            <p className="border-x-4 px-2">
+              <strong>Accepted at:</strong> {formatDate(acceptanceTimestamp)}
+            </p>
+            <p className="px-2">
+              <strong>Ended at:</strong> {formatDate(expirationTimestamp)}
+            </p>
+          </>
+        )}
       </div>
+      <BetCard bet={bet} />
     </div>
   );
 };

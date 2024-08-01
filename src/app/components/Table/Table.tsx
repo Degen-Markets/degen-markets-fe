@@ -2,15 +2,13 @@ import React from "react";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 import { TableProps } from "./types";
-import { korean } from "viem/accounts";
-import { isExternal } from "util/types";
 
-const Table: React.FC<TableProps> = ({
+const Table = <T extends Record<string, unknown>>({
   columns,
   data,
-  isExpandable,
+  isExpandable = false,
   renderExpandableContent,
-}) => {
+}: TableProps<T>) => {
   return (
     <div className="overflow-x-auto rounded-xl">
       <div className="bg-blue-secondary w-[1248px] overflow-hidden p-2">

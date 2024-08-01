@@ -1,5 +1,6 @@
 import React from "react";
 import { PixelArtLoaderProps } from "../lib/utils/bets/types";
+import { twMerge } from "tailwind-merge";
 
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
   text = "Loading",
@@ -11,7 +12,7 @@ const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
   const pixels = [...Array(numPixels)];
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className={twMerge("flex items-center space-x-2")}>
       <div className="relative w-5 h-5">
         {pixels.map((_, index) => (
           <div
