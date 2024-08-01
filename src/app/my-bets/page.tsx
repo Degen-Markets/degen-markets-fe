@@ -5,11 +5,10 @@ import { useEffect } from "react";
 import BetsTab from "@/app/components/BetsTab";
 import Wrapper from "@/app/components/Wrapper";
 import { ButtonGradient } from "../components/Button";
-import DEGEN_BETS_ABI from "@/app/lib/utils/bets/DegenBetsAbi.json";
 import { DEGEN_BETS_ADDRESS } from "../lib/utils/bets/constants";
 import { useToast } from "../components/Toast/ToastProvider";
 import { Address } from "viem";
-import useGetBetForAddress from "../lib/utils/hooks/useGetBetForAddress";
+import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
 
 const MyBets = () => {

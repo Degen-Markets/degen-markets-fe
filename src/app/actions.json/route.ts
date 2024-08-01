@@ -5,7 +5,7 @@ export const GET = async () => {
     rules: [
       {
         pathPattern: "/pools/*",
-        apiPath: "https://actions.degenmarkets.com/bets/*",
+        apiPath: "https://actions.degenmarkets.com/pools/*",
       },
     ],
   };

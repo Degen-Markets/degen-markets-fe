@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getBetsForAddress } from "../api/getBetsForAddress";
-import { BetResponse } from "../bets/types";
+import { getBetsForAddress } from "../lib/utils/api/getBetsForAddress";
+import { BetResponse } from "../lib/utils/bets/types";
 
 const useGetBetForAddress = (address: `0x${string}`) => {
   const [isLoading, setIsLoading] = useState(false);

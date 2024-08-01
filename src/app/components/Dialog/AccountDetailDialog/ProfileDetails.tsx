@@ -1,15 +1,10 @@
-import {
-  abbreviateETHBalance,
-  getDisplayNameForAddress,
-} from "@/app/lib/utils/bets/helpers";
-import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
 import { ProfileDetailsProps } from "@/app/types/dialog";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import UserAvatar from "../../UserAvatar";
 import { CgCopy, CgExternal } from "react-icons/cg";
 import { Button, ButtonPrimary } from "../../Button";
 import { BiCheckDouble } from "react-icons/bi";
-import useGetUserAccountDetail from "@/app/lib/utils/hooks/useGetUserAccountDetail";
+import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 
 export default function ProfileDetails({
   address,

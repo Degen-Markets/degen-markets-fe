@@ -1,6 +1,6 @@
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import { ButtonGradient } from "@/app/components/Button";
-import useReplicateBet from "@/app/lib/utils/hooks/useReplicateBet";
+import useReplicateBet from "@/app/hooks/useReplicateBet";
 import { useRouter } from "next/navigation";
 
 interface Props {

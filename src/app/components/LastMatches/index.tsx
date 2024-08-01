@@ -4,11 +4,11 @@ import { ButtonGradient } from "@/app/components/Button";
 import { isBetConcluded } from "@/app/lib/utils/bets/helpers";
 import { Address } from "viem";
 import { useAccount } from "wagmi";
-import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
 import BetTable from "./MatchesBetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
 import Image from "next/image";
 import RakeInProfitButton from "../Button/RakeInProfitButton";
+import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 
 const LastMatches = () => {
   const { address } = useAccount();

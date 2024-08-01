@@ -11,7 +11,7 @@ import {
 import { useAccount, useSwitchChain } from "wagmi";
 import Image from "next/image";
 import PixelArtLoader from "../PixelArtLoading";
-import useIsChainSupported from "@/app/lib/utils/hooks/useIsChainSupported";
+import useIsChainSupported from "@/app/hooks/useIsChainSupported";
 import { useToast } from "../Toast/ToastProvider";
 import GradientText from "../WalletMenu/GradientText";
 type ChainType = 8453;

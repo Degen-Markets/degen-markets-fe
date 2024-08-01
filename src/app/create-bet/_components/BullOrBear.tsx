@@ -4,9 +4,9 @@ import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
 import { WalletButton } from "@/app/components/Button/ButtonWallet";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
+import useBalances from "@/app/hooks/useBalances";
 import { Address, parseEther } from "viem";
-import useGetUserAccountDetail from "@/app/lib/utils/hooks/useGetUserAccountDetail";
+import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
 
@@ -60,8 +60,12 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
 
     return (
       <div className="flex-col md:flex-row flex space-y-2 lg:space-y-0 justify-between gap-3 mt-4">
-        <CreateBetButton isBetOneUp betType="binary" />
-        <CreateBetButton isBetOneUp={false} betType="binary" />
+        <CreateBetButton isBetOneUp betType="binary" className="!w-full" />
+        <CreateBetButton
+          isBetOneUp={false}
+          betType="binary"
+          className="!w-full"
+        />
       </div>
     );
   };

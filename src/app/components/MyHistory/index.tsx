@@ -17,7 +17,7 @@ import {
 import { Address } from "viem";
 import { useAccount } from "wagmi";
 import UserAvatar from "@/app/components/UserAvatar";
-import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
+import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 import BetTable from "./BetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
 import RakeInProfitButton from "../Button/RakeInProfitButton";

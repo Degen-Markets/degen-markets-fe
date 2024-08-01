@@ -12,7 +12,7 @@ import { Address } from "viem";
 import { useToast } from "../Toast/ToastProvider";
 import { DegenBetsAbi } from "@/app/lib/utils/bets/DegenBetsAbi";
 import { base } from "viem/chains";
-import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
+import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 
 const RakeInProfitButton = () => {
   const { address } = useAccount();

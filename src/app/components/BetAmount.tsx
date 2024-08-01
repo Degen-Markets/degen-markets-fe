@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 import { useBetContext } from "../create-bet/BetContext";
+import Input from "@/app/components/Input";
 
 interface BetAmountProps<T> {
   title: string;
@@ -23,15 +24,15 @@ export default function BetAmount<T>({
   };
 
   return (
-    <div className="relative w-full ">
-      <h4 className="pt-3 text-left whitespace-nowrap font-bold">{title}:</h4>
-      <input
+    <div className="relative w-full">
+      <Input
+        label={`${title}:`}
         value={value}
         onChange={handleValueInput}
         type="number"
-        lang="en-US"
         step=".000001"
-        className="px-2 sm:px-4 py-2 rounded-xl ring-purple-medium text-black-main uppercase w-full"
+        lang="en-US"
+        className="w-full text-black-main"
         placeholder={placeHolder}
         disabled={disabled}
       />

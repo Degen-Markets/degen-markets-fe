@@ -12,7 +12,7 @@ export const ButtonSuccess: FC<ButtonProps> = ({
     <Button
       size={size}
       {...props}
-      className={`bg-green-light text-black-medium hover:bg-green-main active:bg-green-main disabled:bg-opacity-50 disabled:text-opacity-50 ${className}`}
+      className={`bg-green-light text-black-medium hover:bg-green-main active:bg-green-main disabled:bg-opacity-50 disabled:text-opacity-50 w-full ${className}`}
     >
       {children}
     </Button>

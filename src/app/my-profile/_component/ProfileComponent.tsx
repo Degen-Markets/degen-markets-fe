@@ -3,12 +3,12 @@ import React, { useMemo } from "react";
 import { useAccount } from "wagmi";
 import { calculateBetStats } from "@/app/lib/utils/bets/helpers";
 import { Address } from "viem";
-import useGetBetForAddress from "@/app/lib/utils/hooks/useGetBetForAddress";
 import GameList from "./GameList";
 import UserProfileInfo from "./UserProfileInfo";
 import UserStats from "./UserStats";
 import UserActions from "./UserActions";
 import LastMatches from "@/app/components/LastMatches";
+import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 
 const ProfileComponent: React.FC = () => {
   const { address } = useAccount();

@@ -79,7 +79,7 @@ export default function Dropdown<T>({
   return (
     <div className="relative w-full">
       {title && (
-        <h4 className="pt-3 text-left font-bold whitespace-nowrap">{title}</h4>
+        <label className="text-left font-bold whitespace-nowrap">{title}</label>
       )}
       <div className="relative w-full ">
         {selectedOption.image && (
@@ -98,7 +98,7 @@ export default function Dropdown<T>({
           defaultValue={selectedOption.label}
           onChange={isSearchable ? debouncedHandleInputChange : undefined}
           onFocus={() => setShowDropdown(true)}
-          className={`pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  rounded-xl ${
+          className={`p-3 ring-purple-medium text-[#000] uppercase w-full rounded-md ${
             selectedOption.image ? "pl-10 sm:pl-12" : "pl-2 sm:pl-4"
           }`}
           placeholder={`${placeHolder}...`}

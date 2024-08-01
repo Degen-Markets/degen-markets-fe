@@ -1,16 +1,13 @@
-import { FC } from "react";
+import { ChangeEvent, FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { Address } from "viem";
 import Dropdown from "@/app/create-bet/_components/Dropdown";
 import TimePicker from "@/app/create-bet/_components/TimePicker";
 import BetAmount from "@/app/components/BetAmount";
-import PixelArtBorder from "@/app/components/PixelArtBorder";
-import AvatarWithLabel from "@/app/components/AvatarWithLabel";
+import Input from "@/app/components/Input";
 import { Ticker } from "@/app/lib/utils/bets/types";
 import { currencyOptions, tickerOptions } from "@/app/lib/utils/bets/constants";
-import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import { colors } from "../../../../../tailwind.config";
 
 interface Props {
   disabled?: boolean;
@@ -18,7 +15,7 @@ interface Props {
   formType: "creator" | "acceptor";
 }
 
-const BetForm: FC<Props> = ({ disabled, address, formType }) => {
+const BetForm: FC<Props> = ({ disabled, formType }) => {
   const {
     ticker,
     currency,
@@ -31,23 +28,19 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
     validateFields,
   } = useBetContext();
 
-  const displayName = address
-    ? getDisplayNameForAddress(address)
-    : "Mystery Opponent.";
+  const formGroupClasses = "grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8";
 
-  const formGroupClasses = "grid grid-cols-2 gap-2 lg:gap-4";
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value.trim();
     const numericValue = Number(inputValue);
-    setError(
+
+    const error =
       numericValue <= 0 || isNaN(numericValue)
         ? "Please enter a guess price!"
-        : "",
-    );
+        : "";
+    setError(error);
 
-    const stringValue =
-      numericValue <= 0 || isNaN(numericValue) ? "" : String(numericValue);
+    const stringValue = error ? "" : String(numericValue);
 
     if (formType === "creator") {
       setStrikePriceCreator(stringValue);
@@ -58,71 +51,56 @@ const BetForm: FC<Props> = ({ disabled, address, formType }) => {
   };
 
   return (
-    <div className={"-mt-12 lg:-mt-8"}>
-      <AvatarWithLabel
-        address={address}
-        label={displayName}
-        className="translate-y-1/2 z-50"
-      />
-      <PixelArtBorder
-        color={colors.prussian.dark}
-        width={20}
-        className={twMerge("p-4 pt-16 z-1")}
-      >
-        <div className={formGroupClasses}>
-          <Dropdown<Ticker>
-            selectedOption={ticker}
-            setSelectedOption={setTicker}
-            placeHolder="End at"
-            searchOption={tickerOptions}
-            title="&nbsp;Bet on:&nbsp;&nbsp;"
-            isSearchable={true}
-            disabled={disabled}
-          />
-          <TimePicker<number>
-            title="End at:"
-            placeHolder="End at"
-            disabled={disabled}
-          />
-        </div>
-        <div className={formGroupClasses}>
-          <div className="flex flex-col">
-            <h4 className="pt-3 text-left whitespace-nowrap">Metric:</h4>
-            <input
-              disabled={true}
-              value="Price"
-              className="p-2 ring-purple-medium text-black-medium uppercase "
-              placeholder="Price"
-            />
-          </div>
-          <div className="flex flex-col">
-            <h4 className="pt-3 text-left whitespace-nowrap"> Price guess:</h4>
-            <input
-              disabled={formType === "acceptor"}
-              value={formType === "creator" ? strikePriceCreator : "XXXXX"}
-              onChange={handleInputChange}
-              className="px-2 sm:px-4 py-2 sring-purple-medium text-[#000] uppercase"
-              placeholder="Price guess"
-              type="number"
-            />
-          </div>
-        </div>
-        <div className={formGroupClasses}>
-          <Dropdown<Address>
-            selectedOption={currency}
-            setSelectedOption={setCurrency}
-            placeHolder="Select Currency"
-            searchOption={currencyOptions}
-            title="&nbsp;Currency:&nbsp;&nbsp;"
-            disabled={disabled}
-          />
-          <BetAmount<string>
-            title="Amount"
-            placeHolder="Ex: 10"
-            disabled={disabled}
-          />
-        </div>
-      </PixelArtBorder>
+    <div className={twMerge("p-4 text-base space-y-2 lg:space-y-4")}>
+      <div className={formGroupClasses}>
+        <Dropdown<Ticker>
+          selectedOption={ticker}
+          setSelectedOption={setTicker}
+          placeHolder="End at"
+          searchOption={tickerOptions}
+          title="&nbsp;Bet on:&nbsp;&nbsp;"
+          isSearchable={true}
+          disabled={disabled}
+        />
+        <TimePicker<number>
+          title="End at:"
+          placeHolder="End at"
+          disabled={disabled}
+        />
+      </div>
+      <div className={formGroupClasses}>
+        <Input
+          label="Metric:"
+          disabled
+          value="Price"
+          placeholder="Price"
+          className="text-black-medium"
+        />
+        <Input
+          label="Price guess:"
+          disabled={formType === "acceptor"}
+          value={formType === "creator" ? strikePriceCreator : "XXXXX"}
+          onChange={handleInputChange}
+          placeholder="Price guess"
+          type="number"
+          className="text-black-main"
+        />
+      </div>
+      <div className={formGroupClasses}>
+        <Dropdown<Address>
+          selectedOption={currency}
+          setSelectedOption={setCurrency}
+          placeHolder="Select Currency"
+          searchOption={currencyOptions}
+          title="&nbsp;Currency:&nbsp;&nbsp;"
+          disabled={disabled}
+        />
+        <BetAmount<string>
+          title="Amount"
+          placeHolder="Ex: 10"
+          disabled={disabled}
+        />
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { BetType, Currency } from "@/app/lib/utils/bets/types";
-import useAllowances from "@/app/lib/utils/hooks/useAllowances";
+import useAllowances from "@/app/hooks/useAllowances";
 import {
   erc20Abi,
   maxUint256,
@@ -11,7 +11,7 @@ import {
   parseUnits,
   zeroAddress,
 } from "viem";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
+import useBalances from "@/app/hooks/useBalances";
 import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { base } from "wagmi/chains";
 import {
@@ -228,12 +228,7 @@ const CreateBetButton: React.FC<{
     isProMode || isBetOneUp ? ButtonSuccess : ButtonDanger;
 
   return (
-    <div
-      className={twMerge(
-        "flex justify-center flex-col items-center w-full",
-        className,
-      )}
-    >
+    <div className="flex justify-center flex-col items-center w-full">
       <ButtonComponent
         loader={true}
         isPending={isPending}
@@ -244,7 +239,8 @@ const CreateBetButton: React.FC<{
         className={twMerge(
           isActionDisabled &&
             "bg-red-light hover:bg-red-main cursor-not-allowed active:bg-red-main",
-          "rounded-xl font-bold uppercase w-full max-w-xl",
+          "rounded-xl font-bold uppercase",
+          className,
         )}
       >
         {getActionButtonText()}

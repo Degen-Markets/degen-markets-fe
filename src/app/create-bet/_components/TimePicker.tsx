@@ -4,6 +4,7 @@ import {
   getCurrentDateTime,
   getTimeDifferenceInSeconds,
 } from "@/app/lib/utils/bets/helpers";
+import { twMerge } from "tailwind-merge";
 
 interface TokenSearchProps<T> {
   title: string;
@@ -16,7 +17,7 @@ const TimePicker = <T,>({
   placeHolder,
   disabled,
 }: TokenSearchProps<T>) => {
-  const { customDuration, setCustomDuration, error, setError, validateFields } =
+  const { customDuration, setCustomDuration, setError, validateFields } =
     useBetContext();
   const [time, setTime] = useState<string>("");
 
@@ -35,27 +36,26 @@ const TimePicker = <T,>({
         label: inputTime,
         value: BigInt(unixTime),
       });
-      setError(""); // Clear any previous error
+      setError("");
       validateFields();
     }
   };
 
   return (
-    <div className="relative w-full">
-      <div>
-        <h4 className="pt-3 text-left whitespace-nowrap font-bold">{title}</h4>
-        <input
-          type="datetime-local"
-          id="appt"
-          name="appt"
-          value={time}
-          onChange={handleTimeChange}
-          min={getCurrentDateTime()} // disabling the past Date
-          className={`styled-time-input w-full rounded-xl p-[0.4rem] ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`}
-          placeholder={placeHolder}
-          disabled={disabled}
-        />
-      </div>
+    <div className="relative w-full flex flex-col">
+      <label className="text-left whitespace-nowrap font-bold">{title}</label>
+      <input
+        type="datetime-local"
+        name={title}
+        value={time}
+        onChange={handleTimeChange}
+        min={getCurrentDateTime()}
+        className={twMerge(
+          `w-full flex-grow rounded-md h-12 lg:h-auto p-2 ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`,
+        )}
+        placeholder={placeHolder}
+        disabled={disabled}
+      />
     </div>
   );
 };
