@@ -4,9 +4,9 @@ import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
 import { WalletButton } from "@/app/components/Button/ButtonWallet";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
+import useBalances from "@/app/hooks/useBalances";
 import { Address, parseEther } from "viem";
-import useGetUserAccountDetail from "@/app/lib/utils/hooks/useGetUserAccountDetail";
+import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
 

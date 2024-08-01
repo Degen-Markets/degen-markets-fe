@@ -10,63 +10,19 @@ import {
 } from "@/app/lib/utils/bets/helpers";
 import formattedValueToDisplay from "@/app/lib/utils/formattedValueToDisplay";
 import { BetResponse } from "@/app/lib/utils/bets/types";
-import { Button } from "@/app/components/Button";
-import { ButtonSuccess } from "@/app/components/Button/ButtonSuccess";
-import { ButtonDanger } from "@/app/components/Button/ButtonDanger";
-import useReplicateBet from "@/app/lib/utils/hooks/useReplicateBet";
-import { useRouter } from "next/navigation";
 import { FC } from "react";
+import BetButton from "@/app/components/RecentActivity/BetButton";
 
 type ActivityRowProps = {
   bet: BetResponse;
 };
 
 const ActivityRow: FC<ActivityRowProps> = ({ bet }) => {
-  const router = useRouter();
   const { address } = useAccount();
-  const replicateBet = useReplicateBet(router);
-
   const { actor } = getLastActivity(bet);
   const betImageId = bet.type === "binary" ? "bull_or_bear" : "price_is_right";
   const isUserActor = actor.toLowerCase() === address?.toLowerCase();
   const displayActor = isUserActor ? "YOU" : shortenHash(actor, 4);
-
-  const handleReplicateBet = () => {
-    const newBet: BetResponse =
-      bet.type === "binary" ? { ...bet, isBetOnUp: !bet.isBetOnUp } : bet;
-    replicateBet(newBet);
-  };
-
-  const renderBetButton = () => {
-    if (bet.type === "closest-guess-wins") {
-      return (
-        <Button
-          size="small"
-          className="uppercase text-xs lg:text-base"
-          onClick={handleReplicateBet}
-        >
-          PREDICT NOW
-        </Button>
-      );
-    }
-    return bet.isBetOnUp ? (
-      <ButtonDanger
-        size="small"
-        className="uppercase text-xs lg:text-base"
-        onClick={handleReplicateBet}
-      >
-        Bet down
-      </ButtonDanger>
-    ) : (
-      <ButtonSuccess
-        size="small"
-        className="uppercase text-xs lg:text-base"
-        onClick={handleReplicateBet}
-      >
-        Bet up
-      </ButtonSuccess>
-    );
-  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-y-2 lg:gap-y-4 lg:gap-x-4 items-center lg:items-center bg-blue-light bg-opacity-20 p-3 text-sm tracking-wide leading-none">
@@ -106,10 +62,10 @@ const ActivityRow: FC<ActivityRowProps> = ({ bet }) => {
         </div>
       </div>
       <div className="lg:hidden flex-shrink-0 flex justify-center mt-2">
-        {renderBetButton()}
+        <BetButton bet={bet} />
       </div>
       <div className="hidden lg:flex-shrink-0 lg:flex lg:items-center">
-        {renderBetButton()}
+        <BetButton bet={bet} />
       </div>
     </div>
   );

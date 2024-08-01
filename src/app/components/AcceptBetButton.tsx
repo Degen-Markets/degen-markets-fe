@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { erc20Abi, maxUint256, zeroAddress } from "viem";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
-import useAllowances from "@/app/lib/utils/hooks/useAllowances";
-import useBalances from "@/app/lib/utils/hooks/useBalances";
+import useAllowances from "@/app/hooks/useAllowances";
+import useBalances from "@/app/hooks/useBalances";
 import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
-import { ButtonGradient } from "@/app/components/Button";
 import { base } from "wagmi/chains";
 import { Address, BetResponse } from "@/app/lib/utils/bets/types";
 import { useToast } from "./Toast/ToastProvider";
@@ -32,13 +31,11 @@ const AcceptBetButton = ({
   const {
     data: approvalHash,
     writeContractAsync: sendApprovalTx,
-    isIdle: isApprovalButtonIdle,
     isPending: isApprovalButtonPending,
   } = useWriteContract();
   const {
     data: betAcceptHash,
     writeContractAsync: sendAcceptBetTx,
-    isIdle: isAcceptButtonIdle,
     isPending: isAcceptButtonPending,
   } = useWriteContract();
   const {
