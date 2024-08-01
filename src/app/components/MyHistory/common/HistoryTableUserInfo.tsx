@@ -4,10 +4,15 @@ import { Address } from "viem";
 
 interface TableUserInfoProps {
   address: Address;
+  role: string;
   layout: "default" | "reverse";
 }
 
-const TableUserInfo = ({ address, layout }: TableUserInfoProps) => {
+const HistoryTableUserInfo = ({
+  address,
+  role,
+  layout,
+}: TableUserInfoProps) => {
   const isReverseLayout = layout === "reverse";
   return (
     <div
@@ -15,14 +20,17 @@ const TableUserInfo = ({ address, layout }: TableUserInfoProps) => {
     >
       <UserAvatar address={address} className="w-10 h-10 lg:w-12  lg:h-12 " />
       <div
-        className={`flex flex-col justify-center items-center ${isReverseLayout ? "lg:justify-end lg:items-end mr-1" : "lg:justify-start lg:items-start ml-1"} -space-y-2 font-bold`}
+        className={`flex flex-col justify-center items-center ${isReverseLayout ? "lg:justify-end lg:items-end mr-1" : "lg:justify-start lg:items-start ml-1"} -space-y-2`}
       >
-        <span>
-          {address ? getDisplayNameForAddress(address) : "0X00...00000"}
+        <span
+          className={role === "winner" ? "text-green-main" : "text-red-main"}
+        >
+          {role.toUpperCase()}
         </span>
+        <span>{address ? getDisplayNameForAddress(address) : "0X00.."}</span>
       </div>
     </div>
   );
 };
 
-export default TableUserInfo;
+export default HistoryTableUserInfo;

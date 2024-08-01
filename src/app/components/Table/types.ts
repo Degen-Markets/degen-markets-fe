@@ -6,4 +6,6 @@ export interface TableColumn {
 export interface TableProps {
   columns: TableColumn[];
   data: Record<string, any>[];
+  isExpandable: boolean;
+  renderExpandableContent?: (row: Record<string, any>) => React.ReactNode;
 }

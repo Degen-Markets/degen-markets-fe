@@ -1,4 +1,3 @@
-import { BET_ACCEPTANCE_TIME_LIMIT } from "@/app/lib/utils/bets/constants";
 import { getBetStatus } from "@/app/lib/utils/bets/helpers";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import cx from "classnames";

@@ -16,10 +16,10 @@ const AcceptedBet = ({ bet }: Props) => {
   const { address } = useAccount();
   const acceptor = bet.acceptor || address; // use connected wallet if acceptor is null
   return (
-    <div className="rounded-xl border-4 p-10  bg-blue-secondary bg-opacity-80 max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <Heading>
         <Headline textShadow={false}>
-          <div className="flex justify-center ">
+          <div className="flex justify-center">
             <div className="flex text-lg md:text-[1.75rem] items-center gap-2 md:gap-x-16">
               <div className="flex flex-col gap-1 items-center">
                 <UserAvatar

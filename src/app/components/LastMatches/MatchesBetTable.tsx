@@ -1,5 +1,4 @@
-import React, { useMemo } from "react";
-import { Card } from "../Card";
+import { useMemo } from "react";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import {
   getBetImageUrl,
@@ -8,16 +7,16 @@ import {
   getCurrencySymbolByAddress,
   getFormattedValue,
 } from "@/app/lib/utils/bets/helpers";
-import TableUserInfo from "./common/TableUserInfo";
 import BetOutComeBox from "./common/BetOutComeBox";
 import { Address } from "viem";
 import { useAccount } from "wagmi";
 import { twMerge } from "tailwind-merge";
 import Table from "../Table/Table";
+import MatchesTableUserInfo from "./common/MatchesTableUserInfo";
 
-const BetTable = ({ bets }: { bets: BetResponse[] }) => {
+const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
   const { address } = useAccount();
-  const columns = [
+  const profileTableColumns = [
     { key: "opponent", label: "Opponent" },
     { key: "game", label: "Game" },
     { key: "stake", label: "Stake" },
@@ -26,7 +25,7 @@ const BetTable = ({ bets }: { bets: BetResponse[] }) => {
     { key: "profitLoss", label: "Profit/Loss" },
   ];
 
-  const data = useMemo(() => {
+  const profileTableData = useMemo(() => {
     return bets
       .slice()
       .reverse()
@@ -61,7 +60,10 @@ const BetTable = ({ bets }: { bets: BetResponse[] }) => {
 
         return {
           opponent: (
-            <TableUserInfo address={acceptor as Address} layout="default" />
+            <MatchesTableUserInfo
+              address={acceptor as Address}
+              layout="default"
+            />
           ),
           game: (
             <BetOutComeBox bgImage={getBetImageUrl(type)}>
@@ -103,12 +105,12 @@ const BetTable = ({ bets }: { bets: BetResponse[] }) => {
   }, [address, bets]);
 
   return (
-    <div className="overflow-auto rounded-xl">
-      <Card className="rounded-xl w-[1200px]">
-        <Table columns={columns} data={data} />
-      </Card>
-    </div>
+    <Table
+      columns={profileTableColumns}
+      data={profileTableData}
+      isExpandable={false}
+    />
   );
 };
 
-export default BetTable;
+export default MatchesBetTable;

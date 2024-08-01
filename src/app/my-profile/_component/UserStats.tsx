@@ -15,13 +15,7 @@ const UserStats: React.FC<UserStatsProps> = ({
       <div className="flex justify-between items-center flex-col md:space-y-3 px-5 lg:px-10 w-full">
         <div className="w-full">
           <div className="flex items-center space-x-2 font-bold text-lg">
-            <Image
-              src="/profile/Rank.svg"
-              width={30}
-              height={30}
-              alt="cash"
-              className=""
-            />
+            <Image src="/profile/Rank.svg" width={30} height={30} alt="cash" />
             <p>Rank</p>
           </div>
           <div className="border-2 rounded-3xl p-3 bg-[url(/profile/lady.svg)] bg-no-repeat bg-cover uppercase font-bold text-lg bg-opacity-35 text-center">

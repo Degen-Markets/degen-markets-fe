@@ -268,6 +268,12 @@ export const getBetImageUrl = (type: BetType): string => {
   }
 };
 
+export const getBetSideText = (isBetOnUp: boolean) => {
+  return isBetOnUp
+    ? { leftText: "Price Moons", rightText: "Price Rugs" }
+    : { leftText: "Price Rugs", rightText: "Price Moons" };
+};
+
 interface GetetOutComeProps {
   text: string;
   status: boolean;

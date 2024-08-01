@@ -4,8 +4,8 @@ import { PixelArtLoaderProps } from "../lib/utils/bets/types";
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({
   text = "Loading",
   textSize = "text-2xl",
-  loaderColor = "bg-prussian-dark",
-  textColor = "text-prussian-dark",
+  loaderColor = "bg-white",
+  textColor = "text-white",
 }) => {
   const numPixels = 9;
   const pixels = [...Array(numPixels)];

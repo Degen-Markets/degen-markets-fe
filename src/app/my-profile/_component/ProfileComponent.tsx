@@ -20,7 +20,7 @@ const ProfileComponent: React.FC = () => {
   );
 
   return (
-    <div className="text-white p-6 rounded-lg max-w-7xl mx-auto">
+    <div className="text-white p-4 rounded-lg max-w-7xl mx-auto">
       <div className="text-4xl font-bold mb-3 lg:px-4 text-center lg:text-start">
         My Portfolio
       </div>

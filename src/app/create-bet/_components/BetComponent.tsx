@@ -3,7 +3,6 @@ import { Suspense } from "react";
 import { useBetContext } from "../BetContext";
 import BetProForm from "./BetProForm";
 import BullOrBear from "./BullOrBear";
-import Image from "next/image";
 import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
 import BetToggleButton from "./BetToggleButton";
 
