@@ -159,7 +159,6 @@ const CreateBetButton: React.FC<{
           parseEther(value),
           zeroAddress,
         ] as any);
-
     try {
       await sendCreateBetTx({
         abi: DegenBetsAbi,
@@ -229,12 +228,7 @@ const CreateBetButton: React.FC<{
     isProMode || isBetOneUp ? ButtonSuccess : ButtonDanger;
 
   return (
-    <div
-      className={twMerge(
-        "flex justify-center flex-col items-center w-full",
-        className,
-      )}
-    >
+    <div className="flex justify-center flex-col items-center w-full">
       <ButtonComponent
         loader={true}
         isPending={isPending}
@@ -246,6 +240,7 @@ const CreateBetButton: React.FC<{
           isActionDisabled &&
             "bg-red-light hover:bg-red-main cursor-not-allowed active:bg-red-main",
           "rounded-xl font-bold uppercase",
+          className,
         )}
       >
         {getActionButtonText()}

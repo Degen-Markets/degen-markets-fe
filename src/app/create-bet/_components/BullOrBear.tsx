@@ -60,8 +60,12 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
 
     return (
       <div className="flex-col md:flex-row flex space-y-2 lg:space-y-0 justify-between gap-3 mt-4">
-        <CreateBetButton isBetOneUp betType="binary" />
-        <CreateBetButton isBetOneUp={false} betType="binary" />
+        <CreateBetButton isBetOneUp betType="binary" className="!w-full" />
+        <CreateBetButton
+          isBetOneUp={false}
+          betType="binary"
+          className="!w-full"
+        />
       </div>
     );
   };

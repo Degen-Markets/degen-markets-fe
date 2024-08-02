@@ -22,7 +22,7 @@ const WonBet = ({ bet }: Props) => {
   };
   return (
     <>
-      <div className="mt-20 border-2 rounded-xl p-10 bg-black-medium bg-opacity-70">
+      <div className="mt-20 border-4 rounded-xl p-10 max-w-5xl mx-auto bg-black-medium bg-opacity-70">
         <Heading>
           <Headline className="uppercase text-mantis-dark text-5xl lg:text-9xl md:pt-7">
             Winner

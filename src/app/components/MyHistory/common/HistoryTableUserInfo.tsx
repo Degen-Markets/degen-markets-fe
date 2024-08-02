@@ -8,7 +8,11 @@ interface TableUserInfoProps {
   layout: "default" | "reverse";
 }
 
-const TableUserInfo = ({ address, role, layout }: TableUserInfoProps) => {
+const HistoryTableUserInfo = ({
+  address,
+  role,
+  layout,
+}: TableUserInfoProps) => {
   const isReverseLayout = layout === "reverse";
   return (
     <div
@@ -23,12 +27,10 @@ const TableUserInfo = ({ address, role, layout }: TableUserInfoProps) => {
         >
           {role.toUpperCase()}
         </span>
-        <span>
-          {address ? getDisplayNameForAddress(address) : "0X00...00000"}
-        </span>
+        <span>{address ? getDisplayNameForAddress(address) : "0X00.."}</span>
       </div>
     </div>
   );
 };
 
-export default TableUserInfo;
+export default HistoryTableUserInfo;

@@ -20,7 +20,7 @@ export const Web3Status: FC<Props> = ({ className, setNav }) => {
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
 
   const walletMenuItems = [
-    { title: "My Bets", link: "/my-bets", fn: () => null },
+    { title: "My Profile", link: "/my-profile", fn: () => null },
     { title: "My History", link: "/my-history", fn: () => null },
     { title: "Switch Network", link: "", fn: () => setOpenSwitchChain(true) },
     { title: "Switch Wallet", link: "", fn: () => setOpenConnector(true) },

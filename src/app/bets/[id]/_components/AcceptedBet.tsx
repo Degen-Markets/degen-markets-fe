@@ -16,10 +16,10 @@ const AcceptedBet = ({ bet }: Props) => {
   const { address } = useAccount();
   const acceptor = bet.acceptor || address; // use connected wallet if acceptor is null
   return (
-    <>
+    <div className="max-w-4xl mx-auto border-4 p-10 rounded-xl bg-black-medium bg-opacity-70">
       <Heading>
         <Headline textShadow={false}>
-          <div className="flex justify-center ">
+          <div className="flex justify-center">
             <div className="flex text-lg md:text-[1.75rem] items-center gap-2 md:gap-x-16">
               <div className="flex flex-col gap-1 items-center">
                 <UserAvatar
@@ -64,7 +64,7 @@ const AcceptedBet = ({ bet }: Props) => {
       <div className="flex justify-center mt-4 md:mt-8">
         <ReplicateBetAction bet={bet} className="py-7 font-bold" />
       </div>
-    </>
+    </div>
   );
 };
 
