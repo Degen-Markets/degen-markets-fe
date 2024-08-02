@@ -100,9 +100,6 @@ const BetTable = ({ bets }: BetTableProps) => {
 
         const betExpirationTime = Number(expirationTimestamp) * 1000;
         const isBetInPending = new Date() <= new Date(betExpirationTime);
-        console.log({
-          expirationTimestamp,
-        });
         return {
           creator: (
             <HistoryTableUserInfo

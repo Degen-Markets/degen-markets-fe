@@ -24,10 +24,6 @@ const ProfileComponent: React.FC = () => {
       const firstBet = bets[0];
       const creationTimestamp = Number(firstBet?.creationTimestamp) * 1000;
       const date = new Date(creationTimestamp);
-      console.log({
-        dateListening: date,
-        localDate: date.toLocaleDateString(),
-      });
       return date.toLocaleDateString();
     }
     return null;
