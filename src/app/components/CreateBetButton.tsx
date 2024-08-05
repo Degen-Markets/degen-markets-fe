@@ -152,7 +152,7 @@ const CreateBetButton: React.FC<{
           randomId,
           "binary",
           BigInt(SIX_HOURS_BET_DURATION),
-          "ETH",
+          ticker.value,
           "price",
           strikePriceCreator,
           betDirection,
@@ -188,7 +188,7 @@ const CreateBetButton: React.FC<{
     if (!address) {
       return "Wallet not connected";
     }
-    if (!isBalanceEnough) {
+    if ((!isBalanceEnough || !value) && isProMode) {
       return "Not enough balance";
     }
     if (!isAllowanceEnough && isProMode) {

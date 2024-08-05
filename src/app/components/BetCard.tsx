@@ -12,10 +12,11 @@ import ReplicateBetAction from "@/app/bets/[id]/_components/ReplicateBetAction";
 import cx from "classnames";
 import BetCountdown from "@/app/components/BetCoundown";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
-import { Hash } from "viem";
+import { Address, Hash } from "viem";
 import BetMetric from "@/app/components/BetMetric";
 import { base } from "wagmi/chains";
 import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
+import useGetBetForAddress from "../hooks/useGetBetForAddress";
 
 interface Props {
   bet: BetResponse;
@@ -26,6 +27,7 @@ interface Props {
 const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
   const { showToast } = useToast();
   const { address } = useAccount();
+  const { fetchBetsByAddress } = useGetBetForAddress(address as Address);
 
   const {
     data: withdrawBetHash,
@@ -77,11 +79,12 @@ const BetCard: FC<Props> = ({ bet, onWithdraw, className }) => {
         args: [[id]],
         chainId: base.id,
       });
+      fetchBetsByAddress(address as Address);
     } catch (error: any) {
       console.error("Error Withdrawing Bet", error);
       showToast(error.shortMessage ?? error, "error");
     }
-  }, [id, sendWithdrawBetTx]);
+  }, [address, fetchBetsByAddress, id, sendWithdrawBetTx, showToast]);
 
   const getActionButtonText = (): string => {
     if (!address) {

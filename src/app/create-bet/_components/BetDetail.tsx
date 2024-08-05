@@ -23,7 +23,7 @@ const BetDetail = ({
       that{" "}
       {isProMode
         ? `${ticker.label} & ${metric.label} goes ${direction.label.toLowerCase()} in ${durationLabel}`
-        : "ETH's Price goes Up/Down in 6 Hours."}
+        : `${ticker.label}'s Price goes Up/Down in 6 Hours."`}
     </div>
   );
 };
