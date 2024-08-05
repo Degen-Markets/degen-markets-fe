@@ -197,6 +197,10 @@ const CreateBetButton: React.FC<{
 
     return isProMode ? "Create Bet" : isBetOneUp ? "Bet Up" : "Bet Down";
   };
+  useEffect(() => {
+    console.log("testingActionButton");
+  }),
+    [isActionDisabled];
 
   useEffect(() => {
     if (!!betCreationError) {

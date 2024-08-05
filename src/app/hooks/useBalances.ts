@@ -1,7 +1,7 @@
 import { getBalance, readContract } from "@wagmi/core";
 import { base } from "wagmi/chains";
 import { Currency } from "@/app/lib/utils/bets/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { erc20Abi } from "viem";
 import { SETTLE_CURRENCY } from "@/app/lib/utils/bets/constants";
 import { wagmiConfig } from "../lib/utils/wagmiConfig";
@@ -12,7 +12,7 @@ const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
     [Currency.USDbC]: BigInt(0),
     [Currency.ETH]: BigInt(0),
   });
-  const getERC20Balances = async () => {
+  const getERC20Balances = useCallback(async () => {
     if (address) {
       const usdcBalance = (await readContract(wagmiConfig, {
         abi: erc20Abi,
@@ -40,17 +40,17 @@ const useBalances = (shouldReFetch: boolean, address?: `0x${string}`) => {
         [Currency.ETH]: ethBalance.value,
       });
     }
-  };
+  }, [address]);
 
   useEffect(() => {
     getERC20Balances();
-  }, [address]);
+  }, [address, getERC20Balances]);
 
   useEffect(() => {
     if (shouldReFetch) {
       getERC20Balances();
     }
-  }, [shouldReFetch]);
+  }, [getERC20Balances, shouldReFetch]);
 
   return {
     userBalances,

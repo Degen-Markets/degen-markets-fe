@@ -1,4 +1,4 @@
-import { useMemo, ChangeEvent } from "react";
+import { useMemo, ChangeEvent, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
@@ -26,13 +26,16 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
     return userBalances["ETH"] >= parseEther(value);
   }, [userBalances, value]);
 
-  const handleValueInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    const decimals = newValue.split(/\,|\./)[1];
-    if (!decimals || decimals.length < 7) {
-      setValue(newValue);
-    }
-  };
+  const handleValueInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      const decimals = newValue.split(/\,|\./)[1];
+      if (!decimals || decimals.length < 7) {
+        setValue(newValue);
+      }
+    },
+    [setValue],
+  );
 
   const calculatedValue = useMemo(() => {
     return ethPrice ? (Number(value) * ethPrice).toLocaleString() : "0";
