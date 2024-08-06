@@ -100,8 +100,10 @@ const CreateBetButton: React.FC<{
 
   const isAllowanceEnough =
     userAllowances[currency.label as Currency] >= valueInWei;
-  const isBalanceEnough =
-    userBalances[currency.label as Currency] >= valueInWei;
+  const balance = isProMode
+    ? userBalances[currency.label as Currency]
+    : userBalances.ETH;
+  const isBalanceEnough = balance >= valueInWei;
   const isPending = isCreateBetButtonPending || isApprovalButtonPending;
   const isProcessing = isCreateBetProcessing || isApprovalProcessing;
 
@@ -197,10 +199,6 @@ const CreateBetButton: React.FC<{
 
     return isProMode ? "Create Bet" : isBetOneUp ? "Bet Up" : "Bet Down";
   };
-  useEffect(() => {
-    console.log("testingActionButton");
-  }),
-    [isActionDisabled];
 
   useEffect(() => {
     if (!!betCreationError) {

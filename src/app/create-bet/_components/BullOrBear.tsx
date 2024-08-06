@@ -1,4 +1,4 @@
-import { useMemo, ChangeEvent, useEffect, useCallback } from "react";
+import { useMemo, ChangeEvent, useCallback } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
@@ -23,7 +23,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   );
 
   const isBalanceEnough = useMemo(() => {
-    return userBalances["ETH"] >= parseEther(value);
+    return userBalances.ETH >= parseEther(value);
   }, [userBalances, value]);
 
   const handleValueInput = useCallback(
@@ -54,7 +54,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
       );
     }
 
-    if (!isBalanceEnough || !value)
+    if (!isBalanceEnough)
       return (
         <WalletButton
           size="regular"
