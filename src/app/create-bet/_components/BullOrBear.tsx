@@ -1,4 +1,4 @@
-import { useMemo, ChangeEvent } from "react";
+import { useMemo, ChangeEvent, useCallback } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
@@ -9,9 +9,12 @@ import { Address, parseEther } from "viem";
 import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
+import Dropdown from "./Dropdown";
+import { tickerOptions } from "@/app/lib/utils/bets/constants";
+import { Ticker } from "@/app/lib/utils/bets/types";
 
 const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
-  const { value, setValue } = useBetContext();
+  const { value, setValue, ticker, setTicker } = useBetContext();
   const { address } = useAccount();
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
   const { userBalances } = useBalances(!!value, address);
@@ -20,16 +23,19 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   );
 
   const isBalanceEnough = useMemo(() => {
-    return userBalances["ETH"] >= parseEther(value);
+    return userBalances.ETH >= parseEther(value);
   }, [userBalances, value]);
 
-  const handleValueInput = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    const decimals = newValue.split(/\,|\./)[1];
-    if (!decimals || decimals.length < 7) {
-      setValue(newValue);
-    }
-  };
+  const handleValueInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value;
+      const decimals = newValue.split(/\,|\./)[1];
+      if (!decimals || decimals.length < 7) {
+        setValue(newValue);
+      }
+    },
+    [setValue],
+  );
 
   const calculatedValue = useMemo(() => {
     return ethPrice ? (Number(value) * ethPrice).toLocaleString() : "0";
@@ -91,27 +97,18 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
       <div className="p-4 md:pt-8 md:px-8 md:pb-4 bg-black-medium rounded-t-xl  border-2">
         <div className="flex justify-center items-end gap-2">
           <div className="flex items-center w-full">
-            <div className="relative w-full border-2 rounded-2xl ">
-              <Image
-                src="/tokens/ETH.svg"
-                alt="ETH"
-                width={24}
-                height={24}
-                className="absolute top-1/2 transform -translate-y-1/2 left-2"
-              />
-              <input
-                type="text"
-                name="ETH"
-                readOnly={true}
-                defaultValue={"ETH"}
-                className="pr-2 sm:pr-4 py-2 ring-purple-medium text-[#000] uppercase w-full  rounded-xl pl-10"
-                placeholder="ETH"
-              />
-            </div>
+            <Dropdown<Ticker>
+              selectedOption={ticker}
+              setSelectedOption={setTicker}
+              placeHolder="Search Token"
+              searchOption={tickerOptions}
+              title=""
+              isSearchable={true}
+            />
           </div>
           <div className="flex items-center flex-col justify-between ">
             <span className="text-white text-sm whitespace-nowrap font-bold">
-              Input Amount
+              Eth Amount
             </span>
             <input
               type="number"

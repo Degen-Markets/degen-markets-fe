@@ -100,8 +100,10 @@ const CreateBetButton: React.FC<{
 
   const isAllowanceEnough =
     userAllowances[currency.label as Currency] >= valueInWei;
-  const isBalanceEnough =
-    userBalances[currency.label as Currency] >= valueInWei;
+  const balance = isProMode
+    ? userBalances[currency.label as Currency]
+    : userBalances.ETH;
+  const isBalanceEnough = balance >= valueInWei;
   const isPending = isCreateBetButtonPending || isApprovalButtonPending;
   const isProcessing = isCreateBetProcessing || isApprovalProcessing;
 
@@ -152,7 +154,7 @@ const CreateBetButton: React.FC<{
           randomId,
           "binary",
           BigInt(SIX_HOURS_BET_DURATION),
-          "ETH",
+          ticker.value,
           "price",
           strikePriceCreator,
           betDirection,
@@ -188,7 +190,7 @@ const CreateBetButton: React.FC<{
     if (!address) {
       return "Wallet not connected";
     }
-    if (!isBalanceEnough) {
+    if ((!isBalanceEnough || !value) && isProMode) {
       return "Not enough balance";
     }
     if (!isAllowanceEnough && isProMode) {
