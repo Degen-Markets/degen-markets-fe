@@ -4,7 +4,6 @@ import Wrapper from "@/app/components/Wrapper";
 import { getBets } from "@/app/lib/utils/api/getBets";
 import { getTopTokens } from "../lib/utils/api/getTopTokens";
 import TopTokenList from "./_components/TopTokenList";
-export const dynamic = "force-dynamic"; // forces Next to not cache api requests
 const Bets = async () => {
   const { data: fetchedBets } = await getBets();
   const { data: fetchedTopTokens } = await getTopTokens(5);
