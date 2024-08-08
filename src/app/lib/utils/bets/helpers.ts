@@ -424,3 +424,44 @@ export const calculateBetStats = (bets: BetResponse[], address: Address) => {
   };
   return winPercentages;
 };
+
+export function formatNumberToSignificantDigits(number: number): string {
+  let numStr = number.toString();
+
+  if (numStr.includes("e")) {
+    numStr = number.toFixed(20);
+  }
+
+  // Find the position of the first non-zero digit after the decimal point
+  let decimalIndex = numStr.indexOf(".");
+  if (decimalIndex !== -1) {
+    let firstNonZeroAfterDecimal = numStr
+      .slice(decimalIndex + 1)
+      .search(/[1-9]/);
+    if (firstNonZeroAfterDecimal !== -1) {
+      // Determine the required precision (position of the first non-zero digit + 2 digits)
+      let precision = decimalIndex + firstNonZeroAfterDecimal + 3; // Adjusted to include 2 non-zero digits
+      numStr = numStr.slice(0, precision);
+    } else {
+      // If there are no non-zero digits after the decimal point, keep up to 2 decimal places
+      numStr = numStr.slice(0, decimalIndex + 3);
+    }
+  }
+
+  // Remove trailing zeroes after the decimal point
+  numStr = numStr.replace(/(\.\d*?[1-9])0+$/g, "$1").replace(/\.0+$/, "");
+
+  // Add thousands separators
+  const [integerPart, decimalPart] = numStr.split(".");
+
+  // Format integer part with commas
+  const formattedIntegerPart = integerPart.replace(
+    /\B(?=(\d{3})+(?!\d))/g,
+    ",",
+  );
+
+  // Reassemble the number with the formatted integer part and optional decimal part
+  return decimalPart
+    ? `${formattedIntegerPart}.${decimalPart}`
+    : formattedIntegerPart;
+}

@@ -86,3 +86,28 @@ export const PRICE_IS_RIGHT_ROUTE = "/games/price-is-right/create-bet";
 
 export const uuidRegex =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
+export const tickerToCmcId = {
+  BTC: 1,
+  DOGE: 74,
+  ETH: 1027,
+  SOL: 5426,
+  UNI: 7083,
+  AAVE: 7278,
+  FLOKI: 10804,
+  ARB: 11841,
+  RON: 14101,
+  APE: 18876,
+  BANANA: 18998,
+  LINK: 1975,
+  BONK: 23095,
+  BLUR: 23121,
+  PEPE: 24478,
+  dYdX: 28324,
+  MEME: 28301,
+  WIF: 28752,
+  JUP: 29210,
+  // BODEN: 29687,
+  MFER: 30226,
+  PAC: 30662,
+};

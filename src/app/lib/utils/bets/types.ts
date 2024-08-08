@@ -123,3 +123,105 @@ export interface DropdownProps {
 }
 
 export type BetType = "binary" | "closest-guess-wins";
+
+export interface ListedTopTokensProps {
+  liveCoinsToken: ResponseLiveCoin[];
+  topTokens: TopToken[];
+  error: boolean;
+}
+
+export interface ResponseLiveCoin {
+  name: string;
+  symbol: string;
+  rank: number;
+  age: number;
+  png32: string;
+  png64: string;
+  webp32: string;
+  webp64: string;
+  exchanges: number;
+  markets: number;
+  pairs: number;
+  categories: any;
+  allTimeHighUSD: number;
+  circulatingSupply: number;
+  totalSupply: number;
+  maxSupply: null;
+  links: any;
+  code: string;
+  rate: number;
+  volume: number;
+  cap: number;
+
+  delta: any;
+}
+
+export interface BetComponentProps {
+  ethPrice: number | null;
+  tickerCmcResponse: TickerCmcApiData | null;
+}
+
+//  bet top tokens query data type
+
+export interface Tag {
+  slug: string;
+  name: string;
+  category: string;
+}
+
+export interface Quote {
+  USD: Usd;
+}
+
+export interface Usd {
+  price: number;
+  volume_24h: number;
+  volume_change_24h: number;
+  percent_change_1h: number;
+  percent_change_24h: number;
+  percent_change_7d: number;
+  percent_change_30d: number;
+  percent_change_60d: number;
+  percent_change_90d: number;
+  market_cap: number;
+  market_cap_dominance: number;
+  fully_diluted_market_cap: number;
+  tvl: null;
+  last_updated: string;
+}
+export interface TickerCmcApiData {
+  id: number;
+  name: string;
+  symbol: string;
+  slug: string;
+  num_market_pairs: number;
+  date_added: string;
+  tags: Tag[];
+  max_supply: number;
+  circulating_supply: number;
+  total_supply: number;
+  is_active: number;
+  infinite_supply: boolean;
+  platform: null;
+  cmc_rank: number;
+  is_fiat: number;
+  self_reported_circulating_supply: null;
+  self_reported_market_cap: null;
+  tvl_ratio: null;
+  last_updated: string;
+  quote: Quote;
+}
+
+export interface Status {
+  timestamp: Date;
+  error_code: number;
+  error_message: null;
+  elapsed: number;
+  credit_count: number;
+  notice: null;
+}
+
+export interface TickerCmcApiResponse {
+  status: Status;
+  data: TickerCmcApiData;
+}

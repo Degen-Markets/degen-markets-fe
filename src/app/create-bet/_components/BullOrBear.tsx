@@ -1,4 +1,4 @@
-import { useMemo, ChangeEvent, useCallback } from "react";
+import { useState, useMemo, ChangeEvent, useCallback } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
@@ -11,17 +11,26 @@ import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
 import Dropdown from "./Dropdown";
 import { tickerOptions } from "@/app/lib/utils/bets/constants";
-import { Ticker } from "@/app/lib/utils/bets/types";
+import { BetComponentProps, Ticker } from "@/app/lib/utils/bets/types";
+import TokenSearchComponent from "@/app/components/TokenSearch/TokenSearchComponent";
+import useIsChainSupported from "@/app/hooks/useIsChainSupported";
 
-const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
+const BullOrBearLayout = ({
+  ethPrice,
+  tickerCmcResponse,
+}: BetComponentProps) => {
   const { value, setValue, ticker, setTicker } = useBetContext();
   const { address } = useAccount();
+  const { isCurrentChainSupported } = useIsChainSupported();
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
+  const { setOpen: setOpenSwitchChain } = useDialog(DialogType.SwitchChain);
+
   const { userBalances } = useBalances(!!value, address);
   const { accountEthBalance, symbol } = useGetUserAccountDetail(
     address as Address,
   );
 
+  const [showTokenSearch, setShowTokenSearch] = useState(false);
   const isBalanceEnough = useMemo(() => {
     return userBalances.ETH >= parseEther(value);
   }, [userBalances, value]);
@@ -53,7 +62,17 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
         </WalletButton>
       );
     }
-
+    if (!isCurrentChainSupported) {
+      return (
+        <WalletButton
+          size="small"
+          onClick={() => setOpenSwitchChain(true)}
+          className="text-xl !w-full mt-4"
+        >
+          Wrong network
+        </WalletButton>
+      );
+    }
     if (!isBalanceEnough)
       return (
         <WalletButton
@@ -77,7 +96,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   };
 
   return (
-    <div className="w-full max-w-xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
+    <div className="w-full max-w-3xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
       <h2 className="text-4xl font-bold text-center text-white mb-4 drop-shadow-text ">
         BULL OR BEAR
       </h2>
@@ -95,16 +114,33 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
         </span>
       </div>
       <div className="p-4 md:pt-8 md:px-8 md:pb-4 bg-black-medium rounded-t-xl  border-2">
-        <div className="flex justify-center items-end gap-2">
-          <div className="flex items-center w-full">
-            <Dropdown<Ticker>
-              selectedOption={ticker}
-              setSelectedOption={setTicker}
-              placeHolder="Search Token"
-              searchOption={tickerOptions}
-              title=""
-              isSearchable={true}
-            />
+        <button
+          onClick={() => setShowTokenSearch(!showTokenSearch)}
+          className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-lg"
+        >
+          Toggle Search
+        </button>
+        <div className="flex justify-center items-end flex-col md:flex-row gap-2">
+          <div className="relative flex items-center w-full">
+            {showTokenSearch ? (
+              <TokenSearchComponent tickerCmcResponse={tickerCmcResponse} />
+            ) : (
+              <div className="flex items-center bg-white rounded-lg px-2 py-3 space-x-2 w-full">
+                <Image
+                  src={`/tokens/${ticker.value}.svg`}
+                  width={30}
+                  height={30}
+                  alt={ticker.label}
+                />
+                <input
+                  onClick={() => setShowTokenSearch(!showTokenSearch)}
+                  type="text"
+                  value={ticker.value}
+                  className={` ring-purple-medium text-[#000] uppercase w-full rounded-md outline-none focus:outline-none border-none }`}
+                  placeholder="Search Token"
+                />
+              </div>
+            )}
           </div>
           <div className="flex items-center flex-col justify-between ">
             <span className="text-white text-sm whitespace-nowrap font-bold">
