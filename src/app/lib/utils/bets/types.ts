@@ -20,7 +20,6 @@ export enum Ticker {
   MEME = "MEME",
   WIF = "WIF",
   JUP = "JUP",
-  // BODEN = "BODEN",
   MFER = "MFER",
   PAC = "PAC",
 }

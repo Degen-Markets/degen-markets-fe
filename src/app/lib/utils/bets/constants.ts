@@ -107,7 +107,6 @@ export const tickerToCmcId = {
   MEME: 28301,
   WIF: 28752,
   JUP: 29210,
-  // BODEN: 29687,
   MFER: 30226,
   PAC: 30662,
 };
