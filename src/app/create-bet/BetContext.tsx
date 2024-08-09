@@ -57,6 +57,8 @@ interface BetContextProps {
   setError: Dispatch<SetStateAction<string>>;
 
   validateFields: () => void;
+  prettySearch: boolean;
+  setPrettySearch: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultValues: BetContextProps = {
@@ -86,6 +88,8 @@ const defaultValues: BetContextProps = {
   error: "",
   setError: () => {},
   validateFields: () => {},
+  prettySearch: false,
+  setPrettySearch: () => {},
 };
 
 const BetContext = createContext<BetContextProps>(defaultValues);
@@ -149,6 +153,7 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
     defaultStrikePriceCreator || "",
   );
   const [strikePriceAcceptor, setStrikePriceAcceptor] = useState<string>("");
+  const [prettySearch, setPrettySearch] = useState<boolean>(false);
 
   const validateFields = useCallback(() => {
     if (isProMode && (!customDuration.value || customDuration.value <= 0n)) {
@@ -215,6 +220,8 @@ export const BetProvider = ({ children }: { children: ReactNode }) => {
         error,
         setError,
         validateFields,
+        prettySearch,
+        setPrettySearch,
       }}
     >
       {children}

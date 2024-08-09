@@ -1,10 +1,13 @@
 "use client";
-import { Currency, Metric, Ticker } from "@/app/lib/utils/bets/types";
+import {
+  BetComponentProps,
+  Currency,
+  Metric,
+} from "@/app/lib/utils/bets/types";
 import {
   currencyOptions,
   directionOptions,
   metricOptions,
-  tickerOptions,
 } from "@/app/lib/utils/bets/constants";
 import React from "react";
 import { useBetContext } from "@/app/create-bet/BetContext";
@@ -14,8 +17,12 @@ import { Address } from "viem";
 import BetAmount from "../../components/BetAmount";
 import CreateBetButton from "@/app/components/CreateBetButton";
 import BetDetail from "./BetDetail";
+import PrettySearch from "@/app/components/TokenSearch/PrettySearch";
 
-const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
+const BetProForm: React.FC<BetComponentProps> = ({
+  ethPrice,
+  tickerCmcResponse,
+}) => {
   const {
     ticker,
     metric,
@@ -39,14 +46,9 @@ const BetProForm: React.FC<{ ethPrice: number | null }> = ({ ethPrice }) => {
         BULL OR BEAR
       </h3>
       <div className="grid md:grid-cols-2 gap-y-3 gap-x-8 pt-4 border-t-2 border-black-medium">
-        <Dropdown<Ticker>
-          selectedOption={ticker}
-          setSelectedOption={setTicker}
-          placeHolder="Search Token"
-          searchOption={tickerOptions}
-          title="&nbsp;Bet on:&nbsp;&nbsp;"
-          isSearchable={true}
-        />
+        <div className="relative">
+          <PrettySearch tickerCmcResponse={tickerCmcResponse} />
+        </div>
         <TimePicker<number> title="End at:" placeHolder="End at" />
 
         <Dropdown<Metric>

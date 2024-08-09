@@ -5,11 +5,7 @@ import BetProForm from "./BetProForm";
 import BullOrBear from "./BullOrBear";
 import RecentActivity from "@/app/components/RecentActivity/RecentActivity";
 import BetToggleButton from "./BetToggleButton";
-import {
-  BetComponentProps,
-  ResponseLiveCoin,
-  TopToken,
-} from "@/app/lib/utils/bets/types";
+import { BetComponentProps } from "@/app/lib/utils/bets/types";
 
 const BetComponent = ({ ethPrice, tickerCmcResponse }: BetComponentProps) => {
   const { isProMode, setIsProMode, setValue } = useBetContext();
@@ -45,7 +41,10 @@ const BetComponent = ({ ethPrice, tickerCmcResponse }: BetComponentProps) => {
           <div className="flex justify-center select-none mt-6 w-full">
             <Suspense fallback={<></>}>
               {isProMode ? (
-                <BetProForm ethPrice={ethPrice} />
+                <BetProForm
+                  ethPrice={ethPrice}
+                  tickerCmcResponse={tickerCmcResponse}
+                />
               ) : (
                 <BullOrBear
                   ethPrice={ethPrice}

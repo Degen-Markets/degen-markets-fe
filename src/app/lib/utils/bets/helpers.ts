@@ -9,6 +9,8 @@ import {
   BetType,
   Currency,
   Metric,
+  MetricSort,
+  TickerCmcApiData,
 } from "@/app/lib/utils/bets/types";
 import { Address, formatUnits, Hash, zeroAddress } from "viem";
 
@@ -456,3 +458,55 @@ export function formatNumberToSignificantDigits(number: number): string {
     ? `${formattedIntegerPart}.${decimalPart}`
     : formattedIntegerPart;
 }
+
+export function getEthPrice(
+  tickerCmcResponse: TickerCmcApiData,
+): number | null {
+  const ethToken = Object.values(tickerCmcResponse).find(
+    (token) => token.id === 1027,
+  );
+
+  return ethToken ? ethToken.quote.USD.price : null;
+}
+
+export function formatLargeNumber(value: number): string {
+  if (value >= 1_000_000_000) {
+    return `${(value / 1_000_000_000).toFixed(1)}B`;
+  } else if (value >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1)}M`;
+  } else if (value >= 1_000) {
+    return `${(value / 1_000).toFixed(1)}K`;
+  } else {
+    return value.toString();
+  }
+}
+
+export const sortPrettySeaerchTokens = (
+  tokens: TickerCmcApiData[],
+  criteria: MetricSort,
+  order: string,
+) => {
+  return tokens.sort((a, b) => {
+    let aValue: number, bValue: number;
+
+    switch (criteria) {
+      case Metric.PRICE:
+        aValue = a.quote.USD.price ?? 0;
+        bValue = b.quote.USD.price ?? 0;
+        break;
+      case Metric.VOLUME:
+        aValue = a.quote.USD.volume_24h ?? 0;
+        bValue = b.quote.USD.volume_24h ?? 0;
+        break;
+      case Metric.MARKET_CAP_DOMINANCE:
+        aValue = a.quote.USD.market_cap_dominance ?? 0;
+        bValue = b.quote.USD.market_cap_dominance ?? 0;
+        break;
+      default:
+        aValue = 0;
+        bValue = 0;
+    }
+
+    return order === "asc" ? aValue - bValue : bValue - aValue;
+  });
+};

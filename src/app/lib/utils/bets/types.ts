@@ -20,7 +20,7 @@ export enum Ticker {
   MEME = "MEME",
   WIF = "WIF",
   JUP = "JUP",
-  BODEN = "BODEN",
+  // BODEN = "BODEN",
   MFER = "MFER",
   PAC = "PAC",
 }
@@ -225,3 +225,8 @@ export interface TickerCmcApiResponse {
   status: Status;
   data: TickerCmcApiData;
 }
+
+export type MetricSort =
+  | Metric.PRICE
+  | Metric.VOLUME
+  | Metric.MARKET_CAP_DOMINANCE;

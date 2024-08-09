@@ -3,7 +3,6 @@ import Link from "next/link";
 import NavigationRoutes from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileItem from "./NavbarMobileItem";
 import { Web3Status } from "../../Dialog/Web3Status";
-import Search from "../../TokenSearch/ExpandSearch";
 
 export const NavbarMobile: React.FC<{
   nav: boolean;
@@ -24,9 +23,6 @@ export const NavbarMobile: React.FC<{
         className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 h-dvh bg-opacity-80 z-40"
       ></div>
       <div className="flex flex-col absolute top-0 right-0 w-full md:w-[40%] h-dvh bg-neutral-100 text-neutral-800 px-2 z-40 overflow-y-auto">
-        <div className="relative mt-2">
-          <Search />
-        </div>
         <ul className="mt-12 space-y-5 ">
           {sortedRoutes.map((route) => (
             <NavbarMobileItem key={route.name} route={route} setNav={setNav} />

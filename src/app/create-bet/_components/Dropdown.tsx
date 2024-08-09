@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ReelOption } from "@/app/lib/utils/bets/types";
 import { debounce } from "@/app/lib/utils/bets/helpers";
 import Image from "next/image";
+import { useBetContext } from "../BetContext";
 
 interface DropdownProps<T> {
   searchOption: ReelOption<T>[];
@@ -24,6 +25,7 @@ export default function Dropdown<T>({
   disabled,
 }: DropdownProps<T>) {
   const [filteredTokens, setFilteredTokens] = useState(searchOption);
+  const { setPrettySearch } = useBetContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -50,6 +52,7 @@ export default function Dropdown<T>({
     }
     setSelectedOption(token);
     setShowDropdown(false);
+    setPrettySearch(false);
   };
 
   const handleClickOutside = (event: MouseEvent) => {

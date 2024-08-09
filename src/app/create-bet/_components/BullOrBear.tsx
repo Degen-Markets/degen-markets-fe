@@ -1,4 +1,4 @@
-import { useState, useMemo, ChangeEvent, useCallback } from "react";
+import { useMemo, ChangeEvent, useCallback } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
@@ -9,17 +9,15 @@ import { Address, parseEther } from "viem";
 import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
-import Dropdown from "./Dropdown";
-import { tickerOptions } from "@/app/lib/utils/bets/constants";
-import { BetComponentProps, Ticker } from "@/app/lib/utils/bets/types";
-import TokenSearchComponent from "@/app/components/TokenSearch/TokenSearchComponent";
+import { BetComponentProps } from "@/app/lib/utils/bets/types";
 import useIsChainSupported from "@/app/hooks/useIsChainSupported";
+import PrettySearch from "@/app/components/TokenSearch/PrettySearch";
 
 const BullOrBearLayout = ({
   ethPrice,
   tickerCmcResponse,
 }: BetComponentProps) => {
-  const { value, setValue, ticker, setTicker } = useBetContext();
+  const { value, setValue, setPrettySearch } = useBetContext();
   const { address } = useAccount();
   const { isCurrentChainSupported } = useIsChainSupported();
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
@@ -30,7 +28,6 @@ const BullOrBearLayout = ({
     address as Address,
   );
 
-  const [showTokenSearch, setShowTokenSearch] = useState(false);
   const isBalanceEnough = useMemo(() => {
     return userBalances.ETH >= parseEther(value);
   }, [userBalances, value]);
@@ -114,35 +111,9 @@ const BullOrBearLayout = ({
         </span>
       </div>
       <div className="p-4 md:pt-8 md:px-8 md:pb-4 bg-black-medium rounded-t-xl  border-2">
-        <button
-          onClick={() => setShowTokenSearch(!showTokenSearch)}
-          className="ml-2 py-2 px-4 bg-blue-500 text-white rounded-lg"
-        >
-          Toggle Search
-        </button>
-        <div className="flex justify-center items-end flex-col md:flex-row gap-2">
-          <div className="relative flex items-center w-full">
-            {showTokenSearch ? (
-              <TokenSearchComponent tickerCmcResponse={tickerCmcResponse} />
-            ) : (
-              <div className="flex items-center bg-white rounded-lg px-2 py-3 space-x-2 w-full">
-                <Image
-                  src={`/tokens/${ticker.value}.svg`}
-                  width={30}
-                  height={30}
-                  alt={ticker.label}
-                />
-                <input
-                  onClick={() => setShowTokenSearch(!showTokenSearch)}
-                  type="text"
-                  value={ticker.value}
-                  className={` ring-purple-medium text-[#000] uppercase w-full rounded-md outline-none focus:outline-none border-none }`}
-                  placeholder="Search Token"
-                />
-              </div>
-            )}
-          </div>
-          <div className="flex items-center flex-col justify-between ">
+        <div className="flex justify-center items-end flex-col-reverse md:flex-row gap-2">
+          <PrettySearch tickerCmcResponse={tickerCmcResponse} />
+          <div className="flex items-start md:items-center flex-col justify-between w-full md:w-auto ">
             <span className="text-white text-sm whitespace-nowrap font-bold">
               Eth Amount
             </span>
@@ -154,7 +125,7 @@ const BullOrBearLayout = ({
               placeholder="0.1"
               lang="en-US"
               step=".000001"
-              className="w-28 pl-2 pr-2 py-2 border-2 text-center rounded-xl bg-blue-secondary text-white focus:outline-none"
+              className="md:w-28 pl-2 md:pr-2 md:py-2 border-2 md:text-center rounded-xl bg-blue-secondary text-white focus:outline-none w-full text-start p-4 md:p-0"
             />
           </div>
         </div>
