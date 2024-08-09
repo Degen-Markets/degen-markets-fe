@@ -7,24 +7,10 @@ import ConnectorDialog from "./Dialog/ConnectorDialog";
 import { Web3Status } from "./Dialog/Web3Status";
 import GradientText from "./WalletMenu/GradientText";
 import Wrapper from "@/app/components/Wrapper";
-import { getTopTickersCmc } from "../lib/utils/api/getTopTickersCmc";
-import { TickerCmcApiData } from "../lib/utils/bets/types";
 
 const Header: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
 
-  const [api, setApi] = useState<TickerCmcApiData | null>(null);
-  useEffect(() => {
-    async function fetchApi() {
-      const { fetchError, tickerCmcResponse } = await getTopTickersCmc();
-      console.log({ tickerCmcResponse, fetchError });
-      setApi(tickerCmcResponse);
-    }
-  }, []);
-
-  console.log({
-    listeningAPi: api,
-  });
   useEffect(() => {
     if (nav) {
       document.body.setAttribute("data-scroll-locked", "1");

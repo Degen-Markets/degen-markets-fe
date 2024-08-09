@@ -18,6 +18,8 @@ import { useBetContext } from "@/app/create-bet/BetContext";
 import { tickerOptions } from "@/app/lib/utils/bets/constants";
 import TokenInfo from "./TokenInfo";
 import SortButton from "./SortButton";
+import PrettySearchTokenList from "./PrettySearchTokenList";
+import useClickOutside from "@/app/hooks/useClickOutside";
 
 const TokenSearchComponent = ({
   tickerCmcResponse,
@@ -28,13 +30,15 @@ const TokenSearchComponent = ({
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc"); // Default is descending
   const { ticker, setTicker, setPrettySearch } = useBetContext();
   const prettySearchDropdownRef = useRef<HTMLDivElement>(null);
+  useClickOutside(prettySearchDropdownRef, () => setPrettySearch(false));
+
   const mapted: TickerCmcApiData[] = tickerCmcResponse
     ? Object.values(tickerCmcResponse)
     : [];
 
   const filteredTokens: TickerCmcApiData[] = tickerCmcResponse
     ? Object.values(tickerCmcResponse).filter(
-        (token) => [1, 1027].includes(token.id), // btc , eth
+        (token) => [1, 1027].includes(token.id), // BTC , ETH
       )
     : [];
 
@@ -42,22 +46,6 @@ const TokenSearchComponent = ({
     setSortCriteria(criteria);
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
   };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      prettySearchDropdownRef.current &&
-      !prettySearchDropdownRef.current.contains(event.target as Node)
-    ) {
-      setPrettySearch(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const sortButtons: { label: string; sortKey: MetricSort }[] = [
     { label: "Price", sortKey: Metric.PRICE },
@@ -81,44 +69,10 @@ const TokenSearchComponent = ({
         isSearchable={true}
       />
       <h2 className="text-cadet-blue-light mb-2 font-bold text-xl">
+        {" "}
         Popular Tokens
       </h2>
-      <div className="grid grid-cols-2 gap-2 mb-4">
-        {filteredTokens.map((token) => {
-          const price = token.quote.USD.price ?? 0;
-          const name = token.name;
-          const symbol = token.symbol;
-          const volume_change_24h = token.quote.USD.volume_change_24h;
-          return (
-            <div className="bg-white p-3 rounded-xl" key={name}>
-              <div className="flex items-center mb-1 space-x-1">
-                <Image
-                  src={`/tokens/${symbol}.svg`}
-                  width={30}
-                  height={30}
-                  alt=""
-                />
-                <span className="text-black-main font-bold text-xl md:text-lg">
-                  {symbol}
-                </span>
-              </div>
-              <div className="text-black-main font-bold text-xl">
-                ${formatNumberToSignificantDigits(price)}
-              </div>
-              <div
-                className={twMerge(
-                  volume_change_24h > 0 ? "text-green-light" : "text-red-light",
-                  "flex items-center space-x-1 text-lg",
-                )}
-              >
-                <TbTriangleFilled />
-                <span className="font-bold">{volume_change_24h}%</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
+      <PrettySearchTokenList tokens={filteredTokens} />
       <div className="flex justify-end items-center mb-2">
         <div className="flex items-center space-x-2">
           {sortButtons.map((button) => (
