@@ -31,7 +31,10 @@ const RenderBGImage: FC<RenderBGImageProps> = ({ children }) => {
     isBetsSuccessRoute()
   ) {
     backgroundImage = "url(/games/bull_or_bear.webp)";
-  } else if (pathname === "/games/price-is-right/create-bet") {
+  } else if (
+    pathname === "/games/price-is-right/create-bet" ||
+    betType === "closest-guess-wins"
+  ) {
     backgroundImage = "url(/games/price_is_right.webp)";
   }
 

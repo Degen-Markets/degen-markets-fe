@@ -2,25 +2,39 @@ import {
   formatLargeNumber,
   formatNumberToSignificantDigits,
 } from "@/app/lib/utils/bets/helpers";
-import { TickerCmcApiData } from "@/app/lib/utils/bets/types";
+import {
+  PrettySearchProps,
+  Ticker,
+  TickerCmcApiData,
+} from "@/app/lib/utils/bets/types";
 import Image from "next/image";
 import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
-interface TokenInfoProps {
-  data: TickerCmcApiData;
-  rank: number;
-}
-
-const TokenInfo: React.FC<TokenInfoProps> = ({ data, rank }) => {
-  const { quote, symbol, name } = data;
+const PrettySearchTokensList: React.FC<PrettySearchProps<TickerCmcApiData>> = ({
+  data,
+  rank,
+  setPrettySearch,
+  setTicker,
+}) => {
+  const { quote, symbol } = data;
   const marketCapDom = quote.USD.market_cap_dominance ?? 0;
   const tokenPrice = quote.USD.price ?? 0;
   const volume = quote.USD.volume_24h ?? 0;
-  const volume_change_24h = quote.USD.volume_change_24h ?? 0;
+  const percent_change_24h = quote.USD.volume_change_24h ?? 0;
+
+  const handleTickerSelect = (token: TickerCmcApiData) => {
+    setTicker({ label: token.symbol, value: token.symbol as Ticker });
+    setPrettySearch(false);
+  };
 
   return (
-    <div className="w-full flex items-center justify-start px-2 space-x-3">
+    <div
+      className="w-full flex items-center justify-start px-2 space-x-3 cursor-pointer hover:bg-cadet-blue-dark group"
+      onClick={() => {
+        handleTickerSelect(data);
+      }}
+    >
       {/* <span className="text-cadet-blue-light text-lg ">{rank}.</span> */}
       <div className=" mb-1 w-full">
         <div className="flex flex-col">
@@ -40,37 +54,37 @@ const TokenInfo: React.FC<TokenInfoProps> = ({ data, rank }) => {
                   <div className="text-white text-lg text-start">
                     {symbol.toUpperCase()}
                   </div>
-                  <div className="text-sm text-start text-cadet-blue-light ">
+                  <div className="text-sm text-start text-cadet-blue-light group-hover:text-white ">
                     ${formatLargeNumber(volume)} Vol
                   </div>
                 </div>
               </div>
               <div>
                 <div className="text-white text-sm text-end font-bold">
-                  ${formatNumberToSignificantDigits(tokenPrice as number)}
+                  ${formatNumberToSignificantDigits(tokenPrice)}
                 </div>
                 <div className="flex items-center text-sm text-white space-x-1 font-bold">
                   <div
                     className={twMerge(
                       "text-xs text-cadet-blue-light flex justify-center items-center space-x-1",
-                      volume_change_24h >= 0
+                      percent_change_24h >= 0
                         ? "text-green-light"
                         : "text-red-light",
                     )}
                   >
                     <span>
-                      {volume_change_24h > 0 ? (
+                      {percent_change_24h > 0 ? (
                         <TbTriangleFilled />
                       ) : (
                         <TbTriangleInvertedFilled />
                       )}
                     </span>
                     <span>
-                      {formatNumberToSignificantDigits(volume_change_24h)}%
+                      {formatNumberToSignificantDigits(percent_change_24h)}%
                     </span>
                   </div>
                   <span>/</span>
-                  <div className=" text-sm text-end">
+                  <div className="text-sm text-end">
                     ${formatLargeNumber(marketCapDom)}
                   </div>
                 </div>
@@ -84,4 +98,4 @@ const TokenInfo: React.FC<TokenInfoProps> = ({ data, rank }) => {
   );
 };
 
-export default TokenInfo;
+export default PrettySearchTokensList;

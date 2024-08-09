@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { Hash } from "viem";
 
 export enum Ticker {
@@ -123,41 +124,16 @@ export interface DropdownProps {
 
 export type BetType = "binary" | "closest-guess-wins";
 
-export interface ListedTopTokensProps {
-  liveCoinsToken: ResponseLiveCoin[];
-  topTokens: TopToken[];
-  error: boolean;
-}
-
-export interface ResponseLiveCoin {
-  name: string;
-  symbol: string;
-  rank: number;
-  age: number;
-  png32: string;
-  png64: string;
-  webp32: string;
-  webp64: string;
-  exchanges: number;
-  markets: number;
-  pairs: number;
-  categories: any;
-  allTimeHighUSD: number;
-  circulatingSupply: number;
-  totalSupply: number;
-  maxSupply: null;
-  links: any;
-  code: string;
-  rate: number;
-  volume: number;
-  cap: number;
-
-  delta: any;
-}
-
 export interface BetComponentProps {
   ethPrice: number | null;
   tickerCmcResponse: TickerCmcApiData | null;
+}
+
+export interface PrettySearchProps<T> {
+  data: T;
+  setTicker: Dispatch<SetStateAction<ReelOption<Ticker>>>;
+  setPrettySearch: Dispatch<SetStateAction<boolean>>;
+  rank?: number;
 }
 
 //  bet top tokens query data type

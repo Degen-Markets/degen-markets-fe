@@ -2,7 +2,6 @@ import React, { FC, useState, useCallback, useEffect } from "react";
 import AcceptBetButton from "@/app/components/AcceptBetButton";
 import FormInput from "@/app/components/FormInput";
 import { BetResponse, Address } from "@/app/lib/utils/bets/types";
-import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import getCurrencyByAddress from "@/app/lib/getCurrencyByAddress";
 import formatDateTime from "@/app/lib/utils/formatDateTime";
 import formattedValueToDisplay from "@/app/lib/utils/formattedValueToDisplay";
@@ -100,7 +99,7 @@ const PriceIsRightBet: FC<Props> = ({ bet, address }) => {
           <h3 className="text-4xl uppercase text-center font-bold drop-shadow-text py-2 mb-2">
             The Price Is Right
           </h3>
-          <div className="bg-black-medium border border-white rounded-lg p-8 space-y-4">
+          <div className="bg-black-medium border border-white rounded-lg p-4 md:p-8 space-y-4">
             <PriceIsRightBetForm
               bet={bet}
               type="acceptor"

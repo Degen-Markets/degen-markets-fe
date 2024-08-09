@@ -1,19 +1,39 @@
 import { formatNumberToSignificantDigits } from "@/app/lib/utils/bets/helpers";
-import { TickerCmcApiData } from "@/app/lib/utils/bets/types";
+import {
+  PrettySearchProps,
+  ReelOption,
+  Ticker,
+  TickerCmcApiData,
+} from "@/app/lib/utils/bets/types";
 import Image from "next/image";
-import React from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import { TbTriangleFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
-const PrettySearchTokenList = ({ tokens }: { tokens: TickerCmcApiData[] }) => {
+const PrettySearchPopularToken: FC<PrettySearchProps<TickerCmcApiData[]>> = ({
+  data,
+  setTicker,
+  setPrettySearch,
+}) => {
+  const handleTickerSelect = (token: TickerCmcApiData) => {
+    setTicker({ label: token.symbol, value: token.symbol as Ticker });
+    setPrettySearch(false);
+  };
   return (
     <div className="grid grid-cols-2 gap-2 mb-4">
-      {tokens.map((token) => {
-        const { price = 0, volume_change_24h } = token.quote.USD;
+      {data.map((token) => {
+        const { price = 0, volume_change_24h: percent_change_24h } =
+          token.quote.USD;
         const symbol = token.symbol;
 
         return (
-          <div className="bg-white p-3 rounded-xl" key={symbol}>
+          <div
+            className="bg-white p-3 rounded-xl cursor-pointer"
+            key={symbol}
+            onClick={() => {
+              handleTickerSelect(token);
+            }}
+          >
             <div className="flex items-center mb-1 space-x-1">
               <Image
                 src={`/tokens/${symbol}.svg`}
@@ -30,12 +50,12 @@ const PrettySearchTokenList = ({ tokens }: { tokens: TickerCmcApiData[] }) => {
             </div>
             <div
               className={twMerge(
-                volume_change_24h > 0 ? "text-green-light" : "text-red-light",
+                percent_change_24h > 0 ? "text-green-light" : "text-red-light",
                 "flex items-center space-x-1 text-lg",
               )}
             >
               <TbTriangleFilled />
-              <span className="font-bold">{volume_change_24h}%</span>
+              <span className="font-bold">{percent_change_24h}%</span>
             </div>
           </div>
         );
@@ -44,4 +64,4 @@ const PrettySearchTokenList = ({ tokens }: { tokens: TickerCmcApiData[] }) => {
   );
 };
 
-export default PrettySearchTokenList;
+export default PrettySearchPopularToken;

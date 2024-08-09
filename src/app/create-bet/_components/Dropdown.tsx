@@ -101,7 +101,7 @@ export default function Dropdown<T>({
           defaultValue={selectedOption.label}
           onChange={isSearchable ? debouncedHandleInputChange : undefined}
           onFocus={() => setShowDropdown(true)}
-          className={`p-3 ring-purple-medium text-[#000] uppercase w-full rounded-md ${
+          className={`p-3 ring-purple-medium text-[#000] uppercase w-full text-lg rounded-md ${
             selectedOption.image ? "pl-10 sm:pl-12" : "pl-2 sm:pl-4"
           }`}
           placeholder={`${placeHolder}...`}

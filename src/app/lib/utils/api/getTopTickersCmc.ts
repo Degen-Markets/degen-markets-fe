@@ -4,7 +4,7 @@ import {
   TickerCmcApiData,
   TickerCmcApiResponse,
 } from "@/app/lib/utils/bets/types";
-import { tickerToCmcId } from "../bets/constants";
+import { API_BASE_URL } from ".";
 
 const cmcApiKey = "9055cf1c-8db2-48e1-82a4-57a66640f7c9";
 export const getTopTickersCmc = async (): Promise<{
@@ -13,7 +13,13 @@ export const getTopTickersCmc = async (): Promise<{
 }> => {
   let fetchError;
   try {
-    const tickerCmcIds = Object.values(tickerToCmcId);
+    const degenTickerTokens = await axios.get(`${API_BASE_URL}/tickers`);
+
+    const tickerIds = degenTickerTokens.data;
+    const tickerCmcIds = tickerIds
+      .map((item: { id: number; ticker: string }) => item.id)
+      .join(",");
+
     const response: AxiosResponse<TickerCmcApiResponse> = await axios.get(
       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=${tickerCmcIds}`,
       {

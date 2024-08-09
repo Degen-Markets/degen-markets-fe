@@ -51,7 +51,7 @@ const TimePicker = <T,>({
         onChange={handleTimeChange}
         min={getCurrentDateTime()}
         className={twMerge(
-          `w-full flex-grow rounded-md h-12 lg:h-auto p-2 ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-2xl focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none`,
+          `w-full flex-grow rounded-md h-12 lg:h-auto p-2 ${time === "" ? "text-gray-500" : "text-[#000]"} text-sm sm:text-lg focus:outline-none focus:ring-2 focus:ring-purple-medium focus:border-purple-medium focus-visible:outline-none `,
         )}
         placeholder={placeHolder}
         disabled={disabled}

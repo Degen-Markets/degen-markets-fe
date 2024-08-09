@@ -1,7 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { twMerge } from "tailwind-merge";
-import { TbTriangleFilled } from "react-icons/tb";
+import { useRef, useState } from "react";
 import {
   BetComponentProps,
   Metric,
@@ -9,17 +6,14 @@ import {
   Ticker,
   TickerCmcApiData,
 } from "@/app/lib/utils/bets/types";
-import {
-  formatNumberToSignificantDigits,
-  sortPrettySeaerchTokens,
-} from "@/app/lib/utils/bets/helpers";
+import { sortPrettySeaerchTokens } from "@/app/lib/utils/bets/helpers";
 import Dropdown from "@/app/create-bet/_components/Dropdown";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { tickerOptions } from "@/app/lib/utils/bets/constants";
-import TokenInfo from "./TokenInfo";
+import PrettySearchTokensList from "./PrettySearchTokensList";
 import SortButton from "./SortButton";
-import PrettySearchTokenList from "./PrettySearchTokenList";
 import useClickOutside from "@/app/hooks/useClickOutside";
+import PrettySearchPopularToken from "./PrettySearchPopularToken";
 
 const TokenSearchComponent = ({
   tickerCmcResponse,
@@ -65,14 +59,18 @@ const TokenSearchComponent = ({
         setSelectedOption={setTicker}
         placeHolder="Search Token"
         searchOption={tickerOptions}
-        title="Select Token"
+        title="Search Token"
         isSearchable={true}
       />
-      <h2 className="text-cadet-blue-light mb-2 font-bold text-xl">
+      <h2 className="text-cadet-blue-light my-2 font-bold text-xl">
         {" "}
         Popular Tokens
       </h2>
-      <PrettySearchTokenList tokens={filteredTokens} />
+      <PrettySearchPopularToken
+        data={filteredTokens}
+        setTicker={setTicker}
+        setPrettySearch={setPrettySearch}
+      />
       <div className="flex justify-end items-center mb-2">
         <div className="flex items-center space-x-2">
           {sortButtons.map((button) => (
@@ -113,13 +111,19 @@ const TokenSearchComponent = ({
       </div>
 
       <div
-        className="relative text-black-main h-48 overflow-y-auto pr-4 rounded py-2"
+        className="relative text-black-main h-48 overflow-y-auto rounded py-2"
         style={{
           boxShadow: "inset 0px 10px 8px -10px rgb(0 0 0 / 0.5)",
         }}
       >
         {sortedTokens.map((token, ind) => (
-          <TokenInfo data={token} key={token.name} rank={ind + 1} />
+          <PrettySearchTokensList
+            data={token}
+            key={token.name}
+            rank={ind + 1}
+            setTicker={setTicker}
+            setPrettySearch={setPrettySearch}
+          />
         ))}
       </div>
     </div>

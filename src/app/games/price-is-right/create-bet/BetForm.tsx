@@ -6,16 +6,18 @@ import Dropdown from "@/app/create-bet/_components/Dropdown";
 import TimePicker from "@/app/create-bet/_components/TimePicker";
 import BetAmount from "@/app/components/BetAmount";
 import Input from "@/app/components/Input";
-import { Ticker } from "@/app/lib/utils/bets/types";
+import { BetComponentProps, Ticker } from "@/app/lib/utils/bets/types";
 import { currencyOptions, tickerOptions } from "@/app/lib/utils/bets/constants";
+import PrettySearch from "@/app/components/TokenSearch/PrettySearch";
 
 interface Props {
   disabled?: boolean;
   address?: Address;
   formType: "creator" | "acceptor";
+  tickerCmcResponse: BetComponentProps["tickerCmcResponse"];
 }
 
-const BetForm: FC<Props> = ({ disabled, formType }) => {
+const BetForm: FC<Props> = ({ disabled, formType, tickerCmcResponse }) => {
   const {
     ticker,
     currency,
@@ -53,15 +55,7 @@ const BetForm: FC<Props> = ({ disabled, formType }) => {
   return (
     <div className={twMerge("p-4 text-base space-y-2 lg:space-y-4")}>
       <div className={formGroupClasses}>
-        <Dropdown<Ticker>
-          selectedOption={ticker}
-          setSelectedOption={setTicker}
-          placeHolder="End at"
-          searchOption={tickerOptions}
-          title="&nbsp;Bet on:&nbsp;&nbsp;"
-          isSearchable={true}
-          disabled={disabled}
-        />
+        <PrettySearch tickerCmcResponse={tickerCmcResponse} />
         <TimePicker<number>
           title="End at:"
           placeHolder="End at"

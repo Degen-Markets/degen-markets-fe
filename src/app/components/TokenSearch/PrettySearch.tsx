@@ -2,7 +2,7 @@ import React from "react";
 import TokenSearchComponent from "./TokenSearchComponent";
 import Image from "next/image";
 import { useBetContext } from "@/app/create-bet/BetContext";
-import { TickerCmcApiData } from "@/app/lib/utils/bets/types";
+import { Ticker, TickerCmcApiData } from "@/app/lib/utils/bets/types";
 
 const PrettySearch = ({
   tickerCmcResponse,
@@ -12,7 +12,7 @@ const PrettySearch = ({
   const { setPrettySearch, prettySearch, ticker } = useBetContext();
   return (
     <div className="w-full relative">
-      <label className="text-left font-bold whitespace-nowrap">Bet at:</label>
+      <label className="text-left font-bold whitespace-nowrap">Bet on:</label>
 
       <div>
         <div
@@ -20,7 +20,7 @@ const PrettySearch = ({
           className="flex items-center bg-white rounded-lg px-2 py-3 space-x-2 w-full"
         >
           <Image
-            src={`/tokens/${ticker.value}.svg`}
+            src={`/tokens/${ticker.value === ("$mfer" as Ticker) ? "MFER" : ticker.value.toUpperCase()}.svg`}
             width={24}
             height={24}
             alt={ticker.label}
@@ -28,7 +28,7 @@ const PrettySearch = ({
           <input
             type="text"
             value={ticker.value}
-            className={` ring-purple-medium text-[#000] uppercase w-full rounded-md outline-none focus:outline-none border-none}`}
+            className="text-[#000] uppercase w-full rounded-md outline-none focus:outline-none border-none cursor-pointer text-lg"
             placeholder="Search Token"
           />
         </div>
