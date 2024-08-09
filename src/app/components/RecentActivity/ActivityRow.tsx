@@ -23,9 +23,6 @@ const ActivityRow: FC<ActivityRowProps> = ({ bet }) => {
   const betImageId = bet.type === "binary" ? "bull_or_bear" : "price_is_right";
   const isUserActor = actor.toLowerCase() === address?.toLowerCase();
   const displayActor = isUserActor ? "YOU" : shortenHash(actor, 4);
-  // eslint-disable-next-line no-console
-  console.count(bet.id);
-
   return (
     <div className="flex flex-col lg:flex-row gap-y-2 lg:gap-y-4 lg:gap-x-4 items-center lg:items-center bg-blue-light bg-opacity-20 p-3 text-sm tracking-wide leading-none">
       <div className="flex-shrink-0">

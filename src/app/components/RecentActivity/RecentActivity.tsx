@@ -33,8 +33,6 @@ const RecentActivity: FC = () => {
     refetchInterval: 10_000,
   });
 
-  console.count("re-render");
-
   const renderedBets = useMemo(() => {
     if (isLoading) {
       return Array.from({ length: 10 }).map((_, index) => (
@@ -42,7 +40,6 @@ const RecentActivity: FC = () => {
       ));
     }
     if (bets) {
-      console.count("rendering recent activity");
       return bets.map((bet) => <ActivityRow bet={bet} key={bet.id} />);
     }
   }, [bets, isLoading]);

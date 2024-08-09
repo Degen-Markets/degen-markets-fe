@@ -13,6 +13,7 @@ import { useToast } from "@/app/components/Toast/ToastProvider";
 import { isBetExpired } from "@/app/lib/utils/bets/helpers";
 import useIsBalanceEnough from "@/app/hooks/useIsBalanceEnough";
 import { base } from "wagmi/chains";
+import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
 
 type BetButtonProps = {
   bet: BetResponse;
@@ -29,6 +30,7 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
   const valueInWei = useMemo(() => BigInt(value), [value]);
 
   const isBalanceEnough = useIsBalanceEnough(currency, valueInWei);
+  const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
 
   const {
     data: betAcceptHash,
@@ -66,13 +68,23 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
   }, [sendAcceptBetTx, id, isEth, valueInWei, showToast]);
 
   const handleOnClick = useCallback(async () => {
+    if (!address) {
+      setOpenConnector(true);
+      return;
+    }
+
     if (!isBalanceEnough) {
       replicateBet({
         ...bet,
         isBetOnUp: type === "binary" ? !isBetOnUp : isBetOnUp,
       });
-    } else {
+      return;
+    }
+
+    if (bet.type === "binary") {
       await acceptBet();
+    } else {
+      router.push(`/bets/${id}?betType=${bet.type}`);
     }
   }, [isBalanceEnough, replicateBet, bet, type, isBetOnUp, acceptBet]);
 
@@ -85,7 +97,7 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
   const renderButton = useCallback(() => {
     if (
       !isBalanceEnough ||
-      bet.acceptor === null ||
+      bet.acceptor ||
       isBetExpired(bet) ||
       createdByCurrentUser
     ) {
@@ -103,14 +115,14 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
 
     if (type === "closest-guess-wins") {
       return (
-        <Button
+        <ButtonSuccess
           size="small"
           className="uppercase text-xs lg:text-base"
           onClick={handleOnClick}
           disabled={isDisabled}
         >
           PREDICT NOW
-        </Button>
+        </ButtonSuccess>
       );
     }
 
