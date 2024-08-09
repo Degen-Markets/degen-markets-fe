@@ -4,14 +4,15 @@ import { ButtonDanger } from "@/app/components/Button/ButtonDanger";
 import { BetResponse } from "@/app/lib/utils/bets/types";
 import useReplicateBet from "@/app/hooks/useReplicateBet";
 import { useRouter } from "next/navigation";
-import { FC, useMemo, useCallback, memo } from "react";
+import { FC, useMemo, useCallback, memo, useEffect } from "react";
 import { DegenBetsAbi } from "@/app/lib/utils/bets/DegenBetsAbi";
 import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
 import { zeroAddress } from "viem";
-import { useAccount, useWriteContract } from "wagmi";
+import { useAccount, useTransactionReceipt, useWriteContract } from "wagmi";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { isBetExpired } from "@/app/lib/utils/bets/helpers";
 import useIsBalanceEnough from "@/app/hooks/useIsBalanceEnough";
+import { base } from "wagmi/chains";
 
 type BetButtonProps = {
   bet: BetResponse;
@@ -30,6 +31,7 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
   const isBalanceEnough = useIsBalanceEnough(currency, valueInWei);
 
   const {
+    data: betAcceptHash,
     writeContractAsync: sendAcceptBetTx,
     isPending: isAcceptButtonPending,
   } = useWriteContract();
@@ -37,6 +39,15 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
     () => creator.toLowerCase() === address?.toLowerCase(),
     [creator, address],
   );
+  const {
+    isSuccess: isBetAcceptedSuccess,
+    error: betAcceptanceError,
+    isLoading: isApprovalProcessing,
+  } = useTransactionReceipt({
+    hash: betAcceptHash,
+    chainId: base.id,
+  });
+
   const isDisabled = isAcceptButtonPending;
 
   const acceptBet = useCallback(async () => {
@@ -65,8 +76,19 @@ const BetButton: FC<BetButtonProps> = ({ bet }) => {
     }
   }, [isBalanceEnough, replicateBet, bet, type, isBetOnUp, acceptBet]);
 
+  useEffect(() => {
+    if (isBetAcceptedSuccess) {
+      router.push(`/bets/${id}/success`);
+    }
+  }, [isBetAcceptedSuccess, id, router]);
+
   const renderButton = useCallback(() => {
-    if (!isBalanceEnough || isBetExpired(bet) || createdByCurrentUser) {
+    if (
+      !isBalanceEnough ||
+      bet.acceptor === null ||
+      isBetExpired(bet) ||
+      createdByCurrentUser
+    ) {
       return (
         <Button
           size="small"
