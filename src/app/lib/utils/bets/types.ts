@@ -132,7 +132,7 @@ export interface BetComponentProps {
 export interface PrettySearchProps<T> {
   data: T;
   setTicker: Dispatch<SetStateAction<ReelOption<Ticker>>>;
-  setPrettySearch: Dispatch<SetStateAction<boolean>>;
+  setIsPrettySearchOpen: Dispatch<SetStateAction<boolean>>;
   rank?: number;
 }
 

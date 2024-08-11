@@ -9,14 +9,14 @@ const PrettySearch = ({
 }: {
   tickerCmcResponse: TickerCmcApiData | null;
 }) => {
-  const { setPrettySearch, prettySearch, ticker } = useBetContext();
+  const { setIsPrettySearchOpen, isPrettySearchOpen, ticker } = useBetContext();
   return (
     <div className="w-full relative">
       <label className="text-left font-bold whitespace-nowrap">Bet on:</label>
 
       <div>
         <div
-          onClick={() => setPrettySearch(!prettySearch)}
+          onClick={() => setIsPrettySearchOpen(!isPrettySearchOpen)}
           className="flex items-center bg-white rounded-lg px-2 py-3 space-x-2 w-full"
         >
           <Image
@@ -33,7 +33,7 @@ const PrettySearch = ({
           />
         </div>
       </div>
-      {prettySearch && (
+      {isPrettySearchOpen && (
         <TokenSearchComponent tickerCmcResponse={tickerCmcResponse} />
       )}
     </div>

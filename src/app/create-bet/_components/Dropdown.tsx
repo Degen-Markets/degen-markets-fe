@@ -25,7 +25,7 @@ export default function Dropdown<T>({
   disabled,
 }: DropdownProps<T>) {
   const [filteredTokens, setFilteredTokens] = useState(searchOption);
-  const { setPrettySearch } = useBetContext();
+  const { setIsPrettySearchOpen } = useBetContext();
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -52,7 +52,7 @@ export default function Dropdown<T>({
     }
     setSelectedOption(token);
     setShowDropdown(false);
-    setPrettySearch(false);
+    setIsPrettySearchOpen(false);
   };
 
   const handleClickOutside = (event: MouseEvent) => {

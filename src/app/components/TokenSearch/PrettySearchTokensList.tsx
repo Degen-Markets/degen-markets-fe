@@ -14,18 +14,18 @@ import { twMerge } from "tailwind-merge";
 const PrettySearchTokensList: React.FC<PrettySearchProps<TickerCmcApiData>> = ({
   data,
   rank,
-  setPrettySearch,
+  setIsPrettySearchOpen,
   setTicker,
 }) => {
   const { quote, symbol } = data;
   const marketCapDom = quote.USD.market_cap_dominance ?? 0;
   const tokenPrice = quote.USD.price ?? 0;
   const volume = quote.USD.volume_24h ?? 0;
-  const percent_change_24h = quote.USD.volume_change_24h ?? 0;
+  const percent_change_24h = quote.USD.percent_change_24h ?? 0;
 
   const handleTickerSelect = (token: TickerCmcApiData) => {
     setTicker({ label: token.symbol, value: token.symbol as Ticker });
-    setPrettySearch(false);
+    setIsPrettySearchOpen(false);
   };
 
   return (

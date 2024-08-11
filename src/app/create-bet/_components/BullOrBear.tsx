@@ -21,7 +21,7 @@ const BullOrBearLayout = ({
   ethPrice,
   tickerCmcResponse,
 }: BetComponentProps) => {
-  const { value, setValue, setPrettySearch } = useBetContext();
+  const { value, setValue } = useBetContext();
   const { address } = useAccount();
   const { isCurrentChainSupported } = useIsChainSupported();
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);

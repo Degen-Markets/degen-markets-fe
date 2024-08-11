@@ -6,7 +6,7 @@ import {
   Ticker,
   TickerCmcApiData,
 } from "@/app/lib/utils/bets/types";
-import { sortPrettySeaerchTokens } from "@/app/lib/utils/bets/helpers";
+import { sortPrettySearchTokens } from "@/app/lib/utils/bets/helpers";
 import Dropdown from "@/app/create-bet/_components/Dropdown";
 import { useBetContext } from "@/app/create-bet/BetContext";
 import { tickerOptions } from "@/app/lib/utils/bets/constants";
@@ -21,10 +21,10 @@ const TokenSearchComponent = ({
   tickerCmcResponse: BetComponentProps["tickerCmcResponse"];
 }) => {
   const [sortCriteria, setSortCriteria] = useState<MetricSort>(Metric.PRICE);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc"); // Default is descending
-  const { ticker, setTicker, setPrettySearch } = useBetContext();
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const { ticker, setTicker, setIsPrettySearchOpen } = useBetContext();
   const prettySearchDropdownRef = useRef<HTMLDivElement>(null);
-  useClickOutside(prettySearchDropdownRef, () => setPrettySearch(false));
+  useClickOutside(prettySearchDropdownRef, () => setIsPrettySearchOpen(false));
 
   const mapted: TickerCmcApiData[] = tickerCmcResponse
     ? Object.values(tickerCmcResponse)
@@ -47,7 +47,7 @@ const TokenSearchComponent = ({
     { label: "Mkt Cap Dom", sortKey: Metric.MARKET_CAP_DOMINANCE },
   ];
 
-  const sortedTokens = sortPrettySeaerchTokens(mapted, sortCriteria, sortOrder);
+  const sortedTokens = sortPrettySearchTokens(mapted, sortCriteria, sortOrder);
 
   return (
     <div
@@ -69,7 +69,7 @@ const TokenSearchComponent = ({
       <PrettySearchPopularToken
         data={filteredTokens}
         setTicker={setTicker}
-        setPrettySearch={setPrettySearch}
+        setIsPrettySearchOpen={setIsPrettySearchOpen}
       />
       <div className="flex justify-end items-center mb-2">
         <div className="flex items-center space-x-2">
@@ -122,7 +122,7 @@ const TokenSearchComponent = ({
             key={token.name}
             rank={ind + 1}
             setTicker={setTicker}
-            setPrettySearch={setPrettySearch}
+            setIsPrettySearchOpen={setIsPrettySearchOpen}
           />
         ))}
       </div>

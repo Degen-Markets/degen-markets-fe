@@ -13,17 +13,16 @@ import { twMerge } from "tailwind-merge";
 const PrettySearchPopularToken: FC<PrettySearchProps<TickerCmcApiData[]>> = ({
   data,
   setTicker,
-  setPrettySearch,
+  setIsPrettySearchOpen,
 }) => {
   const handleTickerSelect = (token: TickerCmcApiData) => {
     setTicker({ label: token.symbol, value: token.symbol as Ticker });
-    setPrettySearch(false);
+    setIsPrettySearchOpen(false);
   };
   return (
     <div className="grid grid-cols-2 gap-2 mb-4">
       {data.map((token) => {
-        const { price = 0, volume_change_24h: percent_change_24h } =
-          token.quote.USD;
+        const { price = 0, percent_change_24h } = token.quote.USD;
         const symbol = token.symbol;
 
         return (

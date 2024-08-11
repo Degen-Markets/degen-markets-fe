@@ -481,7 +481,7 @@ export function formatLargeNumber(value: number): string {
   }
 }
 
-export const sortPrettySeaerchTokens = (
+export const sortPrettySearchTokens = (
   tokens: TickerCmcApiData[],
   criteria: MetricSort,
   order: string,
