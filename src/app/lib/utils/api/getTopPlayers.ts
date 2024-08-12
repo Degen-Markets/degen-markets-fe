@@ -5,6 +5,4 @@ import { Player } from "@/app/types/player";
 export const getTopPlayers = (
   limit: number,
 ): Promise<AxiosResponse<Player[]>> =>
-  axios.get(
-    `${API_BASE_URL}/players?sort=betCount:DESC&limit${limit}&offset=0`,
-  );
+  axios.get(`${API_BASE_URL}/players?sort=points:DESC&limit${limit}&offset=0`);

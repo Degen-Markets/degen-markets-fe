@@ -10,11 +10,11 @@ interface PlayerRowProps extends Player {
   index: number;
 }
 
-const PlayerRow: FC<PlayerRowProps> = ({ id, betCount, index }) => (
+const PlayerRow: FC<PlayerRowProps> = ({ address, points, index }) => (
   <div className="flex gap-4">
     <div className="relative">
       <UserAvatar
-        address={id}
+        address={address}
         className="rounded-lg h-12 w-12 lg:w-20 lg:h-20"
         width={90}
         height={90}
@@ -24,8 +24,10 @@ const PlayerRow: FC<PlayerRowProps> = ({ id, betCount, index }) => (
       </span>
     </div>
     <div className="flex flex-col gap-1 justify-center">
-      <div className="text-lg font-bold">{getDisplayNameForAddress(id)}</div>
-      <span className="text-gray-400 text-lg">{betCount} Bets</span>
+      <div className="text-lg font-bold">
+        {getDisplayNameForAddress(address)}
+      </div>
+      <span className="text-gray-400 text-lg">{points} Points</span>
     </div>
   </div>
 );
@@ -37,7 +39,7 @@ const TopPlayers: FC = async () => {
       <CardHeading icon={<LiaCertificateSolid />}>Top Players</CardHeading>
       <div className="grid lg:grid-cols-2 gap-4 lg:gap-y-8 gap-x-16">
         {topPlayers?.map((player, index) => (
-          <PlayerRow key={player.id} {...player} index={index} />
+          <PlayerRow key={player.address} {...player} index={index} />
         ))}
       </div>
     </Card>

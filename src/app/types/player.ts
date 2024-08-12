@@ -1,6 +1,8 @@
 import { Address } from "viem";
 
 export type Player = {
-  id: Address;
+  address: Address;
   betCount: number;
+  points: number;
+  winCount: number;
 };
