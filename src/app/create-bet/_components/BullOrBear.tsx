@@ -1,4 +1,4 @@
-import { useMemo, ChangeEvent, useCallback, useState, useEffect } from "react";
+import { useMemo, ChangeEvent, useCallback } from "react";
 import Image from "next/image";
 import { useBetContext } from "../BetContext";
 import { useAccount } from "wagmi";
@@ -9,13 +9,9 @@ import { Address, parseEther } from "viem";
 import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
-import {
-  BetComponentProps,
-  TickerCmcApiData,
-} from "@/app/lib/utils/bets/types";
+import { BetComponentProps } from "@/app/lib/utils/bets/types";
 import useIsChainSupported from "@/app/hooks/useIsChainSupported";
 import PrettySearch from "@/app/components/TokenSearch/PrettySearch";
-import { getTopTickersCmc } from "@/app/lib/utils/api/getTopTickersCmc";
 
 const BullOrBearLayout = ({
   ethPrice,

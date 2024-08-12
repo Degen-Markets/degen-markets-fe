@@ -6,8 +6,8 @@ import Dropdown from "@/app/create-bet/_components/Dropdown";
 import TimePicker from "@/app/create-bet/_components/TimePicker";
 import BetAmount from "@/app/components/BetAmount";
 import Input from "@/app/components/Input";
-import { BetComponentProps, Ticker } from "@/app/lib/utils/bets/types";
-import { currencyOptions, tickerOptions } from "@/app/lib/utils/bets/constants";
+import { BetComponentProps } from "@/app/lib/utils/bets/types";
+import { currencyOptions } from "@/app/lib/utils/bets/constants";
 import PrettySearch from "@/app/components/TokenSearch/PrettySearch";
 
 interface Props {
@@ -19,10 +19,8 @@ interface Props {
 
 const BetForm: FC<Props> = ({ disabled, formType, tickerCmcResponse }) => {
   const {
-    ticker,
     currency,
     strikePriceCreator,
-    setTicker,
     setCurrency,
     setStrikePriceCreator,
     setStrikePriceAcceptor,

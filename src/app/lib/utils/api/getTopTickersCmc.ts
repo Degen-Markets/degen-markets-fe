@@ -15,10 +15,27 @@ export const getTopTickersCmc = async (): Promise<{
   try {
     const degenTickerTokens = await axios.get(`${API_BASE_URL}/tickers`);
 
-    const tickerIds = degenTickerTokens.data;
-    const tickerCmcIds = tickerIds
-      .map((item: { id: number; ticker: string }) => item.id)
+    const tickerCmcIds = degenTickerTokens.data
+      .reduce((acc: string[], item: { id: number; ticker: string }) => {
+        if (item.id !== 29687) {
+          // remove BODEN Ticker
+          acc.push(item.id.toString());
+        }
+        return acc;
+      }, [])
       .join(",");
+
+    if (!tickerCmcIds) {
+      fetchError = {
+        timestamp: new Date(),
+        error_code: 404,
+        error_message: "No tickers found",
+        elapsed: 0,
+        credit_count: 0,
+        notice: null,
+      };
+      return { tickerCmcResponse: null, fetchError };
+    }
 
     const response: AxiosResponse<TickerCmcApiResponse> = await axios.get(
       `https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?id=${tickerCmcIds}`,
@@ -29,6 +46,7 @@ export const getTopTickersCmc = async (): Promise<{
         },
       },
     );
+
     const topTicker = response.data.data;
     fetchError = response.data.status;
 
@@ -36,6 +54,7 @@ export const getTopTickersCmc = async (): Promise<{
       tickerCmcResponse: topTicker,
       fetchError: fetchError,
     };
+
     return returnData;
   } catch (error) {
     console.error("Error fetching token data:", error);

@@ -1,12 +1,11 @@
 import { formatNumberToSignificantDigits } from "@/app/lib/utils/bets/helpers";
 import {
   PrettySearchProps,
-  ReelOption,
   Ticker,
   TickerCmcApiData,
 } from "@/app/lib/utils/bets/types";
 import Image from "next/image";
-import React, { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import { TbTriangleFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
@@ -54,7 +53,9 @@ const PrettySearchPopularToken: FC<PrettySearchProps<TickerCmcApiData[]>> = ({
               )}
             >
               <TbTriangleFilled />
-              <span className="font-bold">{percent_change_24h}%</span>
+              <span className="font-bold">
+                {formatNumberToSignificantDigits(percent_change_24h)}%
+              </span>
             </div>
           </div>
         );

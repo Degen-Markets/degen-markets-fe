@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TokenSearchComponent from "./TokenSearchComponent";
 import Image from "next/image";
 import { useBetContext } from "@/app/create-bet/BetContext";
@@ -9,7 +9,8 @@ const PrettySearch = ({
 }: {
   tickerCmcResponse: TickerCmcApiData | null;
 }) => {
-  const { setIsPrettySearchOpen, isPrettySearchOpen, ticker } = useBetContext();
+  const { ticker } = useBetContext();
+  const [isPrettySearchOpen, setIsPrettySearchOpen] = useState<boolean>(false);
   return (
     <div className="w-full relative">
       <label className="text-left font-bold whitespace-nowrap">Bet on:</label>
@@ -34,7 +35,10 @@ const PrettySearch = ({
         </div>
       </div>
       {isPrettySearchOpen && (
-        <TokenSearchComponent tickerCmcResponse={tickerCmcResponse} />
+        <TokenSearchComponent
+          tickerCmcResponse={tickerCmcResponse}
+          setIsPrettySearchOpen={setIsPrettySearchOpen}
+        />
       )}
     </div>
   );

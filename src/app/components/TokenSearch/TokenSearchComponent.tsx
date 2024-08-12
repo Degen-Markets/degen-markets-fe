@@ -14,15 +14,18 @@ import PrettySearchTokensList from "./PrettySearchTokensList";
 import SortButton from "./SortButton";
 import useClickOutside from "@/app/hooks/useClickOutside";
 import PrettySearchPopularToken from "./PrettySearchPopularToken";
+interface TokenSearchComponentsProps {
+  tickerCmcResponse: BetComponentProps["tickerCmcResponse"];
+  setIsPrettySearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const TokenSearchComponent = ({
   tickerCmcResponse,
-}: {
-  tickerCmcResponse: BetComponentProps["tickerCmcResponse"];
-}) => {
+  setIsPrettySearchOpen,
+}: TokenSearchComponentsProps) => {
   const [sortCriteria, setSortCriteria] = useState<MetricSort>(Metric.PRICE);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const { ticker, setTicker, setIsPrettySearchOpen } = useBetContext();
+  const { ticker, setTicker } = useBetContext();
   const prettySearchDropdownRef = useRef<HTMLDivElement>(null);
   useClickOutside(prettySearchDropdownRef, () => setIsPrettySearchOpen(false));
 
@@ -31,8 +34,8 @@ const TokenSearchComponent = ({
     : [];
 
   const filteredTokens: TickerCmcApiData[] = tickerCmcResponse
-    ? Object.values(tickerCmcResponse).filter(
-        (token) => [1, 1027].includes(token.id), // BTC , ETH
+    ? Object.values(tickerCmcResponse).filter((token) =>
+        [1, 1027].includes(token.id),
       )
     : [];
 
@@ -61,6 +64,7 @@ const TokenSearchComponent = ({
         searchOption={tickerOptions}
         title="Search Token"
         isSearchable={true}
+        setIsPrettySearchOpen={setIsPrettySearchOpen}
       />
       <h2 className="text-cadet-blue-light my-2 font-bold text-xl">
         {" "}

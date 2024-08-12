@@ -190,7 +190,7 @@ export interface TickerCmcApiData {
 export interface Status {
   timestamp: Date;
   error_code: number;
-  error_message: null;
+  error_message: string | null;
   elapsed: number;
   credit_count: number;
   notice: null;

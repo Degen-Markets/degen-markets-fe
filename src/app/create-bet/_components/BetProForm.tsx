@@ -24,12 +24,10 @@ const BetProForm: React.FC<BetComponentProps> = ({
   tickerCmcResponse,
 }) => {
   const {
-    ticker,
     metric,
     direction,
     value,
     currency,
-    setTicker,
     setMetric,
     setDirection,
     setCurrency,
