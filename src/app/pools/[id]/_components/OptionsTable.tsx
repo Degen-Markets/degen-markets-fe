@@ -1,5 +1,5 @@
 "use client";
-import { Entry, Pool } from "@/app/lib/utils/bets/types";
+import { Entry, Pool, PoolAccount } from "@/app/lib/utils/bets/types";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import Table from "@/app/components/Table/Table";
 import React, { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { getEntry } from "@/app/lib/utils/api/getEntry";
 import { Button } from "@/app/components/Button";
 import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
 import { claimWin } from "@/app/lib/utils/api/claimWin";
+import { getPoolAccount } from "@/app/lib/utils/api/getPoolAccount";
 
 const columns = [
   {
@@ -19,6 +20,12 @@ const columns = [
 
 const OptionsTable = ({ pool }: { pool: Pool }) => {
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [poolAccount, setPoolAccount] = useState<PoolAccount>({
+    title: "",
+    winningOption: "",
+    hasConcluded: false,
+    value: 0,
+  });
   const anchorWallet = useAnchorWallet();
   const signer = anchorWallet?.publicKey?.toString();
 
@@ -34,8 +41,14 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
     }
   };
 
+  const fetchPool = async () => {
+    const response = await getPoolAccount(pool.id);
+    setPoolAccount(response.data);
+  };
+
   useEffect(() => {
     fetchEntries();
+    fetchPool();
   }, [anchorWallet]);
 
   if (!signer) {
@@ -74,6 +87,9 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
             await anchorWallet?.signTransaction(transaction);
           }
         }}
+        disabled={
+          poolAccount.winningOption !== option.id || !poolAccount.hasConcluded
+        }
       >
         Claim
       </Button>
@@ -111,6 +127,10 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
                     await anchorWallet?.signTransaction(transaction);
                   }
                 }}
+                disabled={
+                  poolAccount.winningOption !== option.id ||
+                  !poolAccount.hasConcluded
+                }
               >
                 Claim
               </Button>
