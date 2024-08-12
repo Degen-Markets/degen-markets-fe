@@ -139,4 +139,8 @@ export type Entry = {
   isClaimed: boolean;
 };
 
+export type SignatureResponse = {
+  signature: string;
+};
+
 export type BetType = "binary" | "closest-guess-wins";

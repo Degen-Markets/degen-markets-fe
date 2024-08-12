@@ -21,7 +21,7 @@ const PoolsTable = ({ pools }: { pools: PoolsResponse }) => {
           Participate
         </Link>
         &nbsp;|&nbsp;
-        <Link href={`/pools/${pool.id}`}>Claim Win</Link>
+        <Link href={`/pools/${pool.id}`}>View</Link>
       </div>
     ),
   }));

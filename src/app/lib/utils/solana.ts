@@ -1,9 +1,6 @@
-import * as anchor from "@coral-xyz/anchor";
-import { clusterApiUrl, Connection } from "@solana/web3.js";
-import idl from "./target/idl/degen_pools.json";
-import { DegenPools } from "@/app/lib/utils/target/types/degen_pools";
+import { Connection } from "@solana/web3.js";
 
 export const connection = new Connection(
-  clusterApiUrl("mainnet-beta"),
+  "https://mainnet.helius-rpc.com/?api-key=d89de0bd-ea34-4f41-9f17-5e0715a54d78",
   "confirmed",
 );

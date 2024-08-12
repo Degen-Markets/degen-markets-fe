@@ -1,6 +1,6 @@
 "use client";
 import { Entry, Pool } from "@/app/lib/utils/bets/types";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import Table from "@/app/components/Table/Table";
 import { useEffect, useState } from "react";
 import { AnchorProvider } from "@coral-xyz/anchor";
@@ -10,7 +10,8 @@ import idl from "@/app/lib/utils/target/idl/degen_pools.json";
 import { DegenPools } from "@/app/lib/utils/target/types/degen_pools";
 import { getEntry } from "@/app/lib/utils/api/getEntry";
 import { Button } from "@/app/components/Button";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
+import { claimWin } from "@/app/lib/utils/api/claimWin";
 
 const columns = [
   {
@@ -24,6 +25,7 @@ const columns = [
 const OptionsTable = ({ pool }: { pool: Pool }) => {
   const [entries, setEntries] = useState<Entry[]>([]);
   const wallet = useWallet();
+  const anchorWallet = useAnchorWallet();
   const signer = wallet?.publicKey?.toString();
   // @ts-ignore
   const solana = window?.solana;
@@ -43,7 +45,6 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
           getEntry(pool.id, option.id, entrant.toString()),
         ),
       );
-      console.log(entryResponses.map((entryResponse) => entryResponse.data));
       setEntries(entryResponses.map((entryResponse) => entryResponse.data));
     }
   };
@@ -61,7 +62,6 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
       </div>
     );
   }
-  console.log(entries);
 
   const data = pool.options.map((option, index) => ({
     optionTitle: option.title,
@@ -71,7 +71,28 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
         SOL
       </span>
     ),
-    claim: <Button size="small">Claim</Button>,
+    claim: (
+      <Button
+        size="small"
+        onClick={async (event) => {
+          event.preventDefault();
+          const entrant = wallet?.publicKey;
+          if (entrant) {
+            const { data } = await claimWin(
+              pool.id,
+              option.id,
+              entrant.toString(),
+            );
+            const transaction = Transaction.from(
+              Buffer.from(data.signature, "base64"),
+            );
+            await anchorWallet?.signTransaction(transaction);
+          }
+        }}
+      >
+        Claim
+      </Button>
+    ),
   }));
 
   return (
