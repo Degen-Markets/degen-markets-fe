@@ -122,4 +122,25 @@ export interface DropdownProps {
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+export type Pool = {
+  id: string;
+  title: string;
+  options: {
+    title: string;
+    id: string;
+  }[];
+  image: `https://${string}`;
+};
+
+export type PoolsResponse = Pool[];
+
+export type Entry = {
+  value: number;
+  isClaimed: boolean;
+};
+
+export type SignatureResponse = {
+  signature: string;
+};
+
 export type BetType = "binary" | "closest-guess-wins";
