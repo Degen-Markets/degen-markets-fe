@@ -3,11 +3,6 @@ import { Entry, Pool } from "@/app/lib/utils/bets/types";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import Table from "@/app/components/Table/Table";
 import { useEffect, useState } from "react";
-import { AnchorProvider } from "@coral-xyz/anchor";
-import { connection } from "@/app/lib/utils/solana";
-import * as anchor from "@coral-xyz/anchor";
-import idl from "@/app/lib/utils/target/idl/degen_pools.json";
-import { DegenPools } from "@/app/lib/utils/target/types/degen_pools";
 import { getEntry } from "@/app/lib/utils/api/getEntry";
 import { Button } from "@/app/components/Button";
 import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
@@ -24,22 +19,12 @@ const columns = [
 
 const OptionsTable = ({ pool }: { pool: Pool }) => {
   const [entries, setEntries] = useState<Entry[]>([]);
-  const wallet = useWallet();
   const anchorWallet = useAnchorWallet();
-  const signer = wallet?.publicKey?.toString();
-  // @ts-ignore
-  const solana = window?.solana;
-  const provider = new AnchorProvider(connection, solana, {
-    preflightCommitment: "processed",
-  });
-  const program = new anchor.Program(
-    idl as unknown as anchor.Idl,
-    provider,
-  ) as unknown as anchor.Program<DegenPools>;
+  const signer = anchorWallet?.publicKey?.toString();
 
   const fetchEntries = async () => {
-    const entrant = wallet?.publicKey;
-    if (entrant !== null) {
+    const entrant = anchorWallet?.publicKey;
+    if (!!entrant) {
       const entryResponses = await Promise.all(
         pool.options.map((option) =>
           getEntry(pool.id, option.id, entrant.toString()),
@@ -51,9 +36,9 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
 
   useEffect(() => {
     fetchEntries();
-  }, [wallet?.publicKey]);
+  }, [anchorWallet]);
 
-  if (!signer || !program) {
+  if (!signer) {
     return (
       <div className="w-full">
         <div className="flex justify-center h-auto">
@@ -76,7 +61,7 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
         size="small"
         onClick={async (event) => {
           event.preventDefault();
-          const entrant = wallet?.publicKey;
+          const entrant = anchorWallet?.publicKey;
           if (entrant) {
             const { data } = await claimWin(
               pool.id,

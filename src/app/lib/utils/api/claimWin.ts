@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { BetResponse, SignatureResponse } from "@/app/lib/utils/bets/types";
+import { SignatureResponse } from "@/app/lib/utils/bets/types";
 import { API_BASE_URL } from "@/app/lib/utils/api/index";
 
 export const claimWin = (
