@@ -48,8 +48,6 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
     );
   }
 
-  console.log(entries);
-
   const data = pool.options.map((option, index) => ({
     optionTitle: option.title,
     stake: (
