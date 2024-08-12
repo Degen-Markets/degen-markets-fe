@@ -1,12 +1,13 @@
 "use client";
-import { Entry, Pool } from "@/app/lib/utils/bets/types";
+import { Entry, Pool, PoolAccount } from "@/app/lib/utils/bets/types";
 import { useAnchorWallet, useWallet } from "@solana/wallet-adapter-react";
 import Table from "@/app/components/Table/Table";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getEntry } from "@/app/lib/utils/api/getEntry";
 import { Button } from "@/app/components/Button";
 import { LAMPORTS_PER_SOL, Transaction } from "@solana/web3.js";
 import { claimWin } from "@/app/lib/utils/api/claimWin";
+import { getPoolAccount } from "@/app/lib/utils/api/getPoolAccount";
 
 const columns = [
   {
@@ -19,6 +20,12 @@ const columns = [
 
 const OptionsTable = ({ pool }: { pool: Pool }) => {
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [poolAccount, setPoolAccount] = useState<PoolAccount>({
+    title: "",
+    winningOption: "",
+    hasConcluded: false,
+    value: 0,
+  });
   const anchorWallet = useAnchorWallet();
   const signer = anchorWallet?.publicKey?.toString();
 
@@ -34,8 +41,14 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
     }
   };
 
+  const fetchPool = async () => {
+    const response = await getPoolAccount(pool.id);
+    setPoolAccount(response.data);
+  };
+
   useEffect(() => {
     fetchEntries();
+    fetchPool();
   }, [anchorWallet]);
 
   if (!signer) {
@@ -74,6 +87,9 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
             await anchorWallet?.signTransaction(transaction);
           }
         }}
+        disabled={
+          poolAccount.winningOption !== option.id || !poolAccount.hasConcluded
+        }
       >
         Claim
       </Button>
@@ -81,11 +97,53 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
   }));
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <div>{pool.title}</div>
-      <br />
-      <Table columns={columns} data={data} isExpandable={false} />
-    </div>
+    <>
+      <div className="grid gap-4 md:hidden m-5 p-2">
+        {pool.options.map((option, index) => (
+          <div className="flex gap-4 bg-cadet-blue-dark p-1" key={option.id}>
+            <div>{option.title}</div>
+            <div>
+              Your Stake:{" "}
+              {entries[index]?.value
+                ? entries[index]?.value / LAMPORTS_PER_SOL
+                : 0}{" "}
+              SOL
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <Button
+                size="small"
+                onClick={async (event) => {
+                  event.preventDefault();
+                  const entrant = anchorWallet?.publicKey;
+                  if (entrant) {
+                    const { data } = await claimWin(
+                      pool.id,
+                      option.id,
+                      entrant.toString(),
+                    );
+                    const transaction = Transaction.from(
+                      Buffer.from(data.signature, "base64"),
+                    );
+                    await anchorWallet?.signTransaction(transaction);
+                  }
+                }}
+                disabled={
+                  poolAccount.winningOption !== option.id ||
+                  !poolAccount.hasConcluded
+                }
+              >
+                Claim
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:flex flex-col justify-center items-center w-full">
+        <div>{pool.title}</div>
+        <br />
+        <Table columns={columns} data={data} isExpandable={false} />
+      </div>
+    </>
   );
 };
 
