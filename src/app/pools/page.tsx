@@ -11,7 +11,7 @@ import PoolsTable from "@/app/pools/_components/PoolsTable";
 const Pools = async () => {
   const { data: pools } = await getPools();
   return (
-    <Wrapper className="flex">
+    <Wrapper className="flex w-full justify-center">
       <PoolsTable pools={pools} />
     </Wrapper>
   );

@@ -81,8 +81,9 @@ const OptionsTable = ({ pool }: { pool: Pool }) => {
   }));
 
   return (
-    <div className="w-full">
-      <div className="flex justify-center h-auto">{pool.title}</div>
+    <div className="flex flex-col justify-center items-center w-full">
+      <div>{pool.title}</div>
+      <br />
       <Table columns={columns} data={data} isExpandable={false} />
     </div>
   );

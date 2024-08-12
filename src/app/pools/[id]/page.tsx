@@ -8,9 +8,7 @@ const Pool = async ({ params: { id } }: { params: { id: string } }) => {
   const { data: pools } = await getPools();
   const pool = pools.find((pool) => pool.id === id);
   if (!pool) {
-    return (
-      <div className="flex flex-col w-full lg:w-3/4 h-auto">Unknown pool</div>
-    );
+    return <div className="flex justify-center w-full">Unknown pool</div>;
   }
 
   return <OptionsTable pool={pool} />;
