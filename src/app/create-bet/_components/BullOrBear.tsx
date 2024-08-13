@@ -9,14 +9,20 @@ import { Address, parseEther } from "viem";
 import useGetUserAccountDetail from "@/app/hooks/useGetUserAccountDetail";
 import BetDetail from "./BetDetail";
 import CreateBetButton from "@/app/components/CreateBetButton";
-import Dropdown from "./Dropdown";
-import { tickerOptions } from "@/app/lib/utils/bets/constants";
-import { Ticker } from "@/app/lib/utils/bets/types";
+import { BetComponentProps } from "@/app/lib/utils/bets/types";
+import useIsChainSupported from "@/app/hooks/useIsChainSupported";
+import PrettySearch from "@/app/components/TokenSearch/PrettySearch";
 
-const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
-  const { value, setValue, ticker, setTicker } = useBetContext();
+const BullOrBearLayout = ({
+  ethPrice,
+  tickerCmcResponse,
+}: BetComponentProps) => {
+  const { value, setValue } = useBetContext();
   const { address } = useAccount();
+  const { isCurrentChainSupported } = useIsChainSupported();
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
+  const { setOpen: setOpenSwitchChain } = useDialog(DialogType.SwitchChain);
+
   const { userBalances } = useBalances(!!value, address);
   const { accountEthBalance, symbol } = useGetUserAccountDetail(
     address as Address,
@@ -53,7 +59,17 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
         </WalletButton>
       );
     }
-
+    if (!isCurrentChainSupported) {
+      return (
+        <WalletButton
+          size="small"
+          onClick={() => setOpenSwitchChain(true)}
+          className="text-xl !w-full mt-4"
+        >
+          Wrong network
+        </WalletButton>
+      );
+    }
     if (!isBalanceEnough)
       return (
         <WalletButton
@@ -77,7 +93,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
   };
 
   return (
-    <div className="w-full max-w-xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
+    <div className="w-full max-w-3xl pt-6 px-3 md:px-6 bg-blue-secondary rounded-xl shadow-md">
       <h2 className="text-4xl font-bold text-center text-white mb-4 drop-shadow-text ">
         BULL OR BEAR
       </h2>
@@ -95,18 +111,9 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
         </span>
       </div>
       <div className="p-4 md:pt-8 md:px-8 md:pb-4 bg-black-medium rounded-t-xl  border-2">
-        <div className="flex justify-center items-end gap-2">
-          <div className="flex items-center w-full">
-            <Dropdown<Ticker>
-              selectedOption={ticker}
-              setSelectedOption={setTicker}
-              placeHolder="Search Token"
-              searchOption={tickerOptions}
-              title=""
-              isSearchable={true}
-            />
-          </div>
-          <div className="flex items-center flex-col justify-between ">
+        <div className="flex justify-center items-end flex-col-reverse md:flex-row gap-2">
+          <PrettySearch tickerCmcResponse={tickerCmcResponse} />
+          <div className="flex items-start md:items-center flex-col justify-between w-full md:w-auto ">
             <span className="text-white text-sm whitespace-nowrap font-bold">
               Eth Amount
             </span>
@@ -118,7 +125,7 @@ const BullOrBearLayout = ({ ethPrice }: { ethPrice: number | null }) => {
               placeholder="0.1"
               lang="en-US"
               step=".000001"
-              className="w-28 pl-2 pr-2 py-2 border-2 text-center rounded-xl bg-blue-secondary text-white focus:outline-none"
+              className="md:w-28 pl-2 md:pr-2 md:py-2 border-2 md:text-center rounded-xl bg-blue-secondary text-white focus:outline-none w-full text-start p-4 md:p-0"
             />
           </div>
         </div>

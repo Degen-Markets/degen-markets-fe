@@ -5,15 +5,15 @@ import WidgetIcon from "@/app/components/Widget/WidgetIcon";
 const TopWidgets: FC = () => {
   const widgetsData = [
     {
-      title: "POOLS ON X",
+      title: "POOLS ON SOLANA",
       icon: <WidgetIcon name="pools" alt="Bull" className="bg-purple-light" />,
-      cta: { text: "View", link: "/" },
+      cta: { text: "View", link: "/pools" },
       bg: "bg-pools-x.png",
     },
     {
       title: "$DGM AIRDROP",
       icon: <WidgetIcon name="airdrop" alt="Bull" className="bg-green-dark" />,
-      cta: { text: "View", link: "/" },
+      cta: { text: "View", link: "https://twitter.com/DEGEN_MARKETS" },
       bg: "bg-airdrop.png",
     },
     {

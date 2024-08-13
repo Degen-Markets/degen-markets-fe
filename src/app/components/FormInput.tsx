@@ -17,7 +17,7 @@ const FormInput: FC<FormInputProps> = memo(
         disabled={disabled}
         value={value}
         onChange={onChange}
-        className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase"
+        className="px-2 sm:px-4 py-2 ring-purple-medium text-[#000] uppercase text-lg"
         placeholder={placeholder}
         type={type}
       />

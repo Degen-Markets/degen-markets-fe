@@ -9,6 +9,8 @@ import {
   BetType,
   Currency,
   Metric,
+  MetricSort,
+  TickerCmcApiData,
 } from "@/app/lib/utils/bets/types";
 import { Address, formatUnits, Hash, zeroAddress } from "viem";
 
@@ -423,4 +425,88 @@ export const calculateBetStats = (bets: BetResponse[], address: Address) => {
     totalWinPercentage: +winPercentage.toFixed(1),
   };
   return winPercentages;
+};
+
+export function formatNumberToSignificantDigits(number: number): string {
+  let numStr = number.toString();
+
+  if (numStr.includes("e")) {
+    numStr = number.toFixed(20);
+  }
+
+  let decimalIndex = numStr.indexOf(".");
+  if (decimalIndex !== -1) {
+    let firstNonZeroAfterDecimal = numStr
+      .slice(decimalIndex + 1)
+      .search(/[1-9]/);
+    if (firstNonZeroAfterDecimal !== -1) {
+      let precision = decimalIndex + firstNonZeroAfterDecimal + 3;
+      numStr = numStr.slice(0, precision);
+    } else {
+      numStr = numStr.slice(0, decimalIndex + 3);
+    }
+  }
+
+  numStr = numStr.replace(/(\.\d*?[1-9])0+$/g, "$1").replace(/\.0+$/, "");
+  const [integerPart, decimalPart] = numStr.split(".");
+  const formattedIntegerPart = integerPart.replace(
+    /\B(?=(\d{3})+(?!\d))/g,
+    ",",
+  );
+
+  return decimalPart
+    ? `${formattedIntegerPart}.${decimalPart}`
+    : formattedIntegerPart;
+}
+
+export function getEthPrice(
+  tickerCmcResponse: TickerCmcApiData,
+): number | null {
+  const ethToken = Object.values(tickerCmcResponse).find(
+    (token) => token.id === 1027,
+  );
+
+  return ethToken ? ethToken.quote.USD.price : null;
+}
+
+export function formatLargeNumber(value: number): string {
+  if (value >= 1_000_000_000) {
+    return `${(value / 1_000_000_000).toFixed(1)}B`;
+  } else if (value >= 1_000_000) {
+    return `${(value / 1_000_000).toFixed(1)}M`;
+  } else if (value >= 1_000) {
+    return `${(value / 1_000).toFixed(1)}K`;
+  } else {
+    return value.toString();
+  }
+}
+
+export const sortPrettySearchTokens = (
+  tokens: TickerCmcApiData[],
+  criteria: MetricSort,
+  order: string,
+) => {
+  return tokens.sort((a, b) => {
+    let aValue: number, bValue: number;
+
+    switch (criteria) {
+      case Metric.PRICE:
+        aValue = a.quote.USD.price ?? 0;
+        bValue = b.quote.USD.price ?? 0;
+        break;
+      case Metric.VOLUME:
+        aValue = a.quote.USD.volume_24h ?? 0;
+        bValue = b.quote.USD.volume_24h ?? 0;
+        break;
+      case Metric.MARKET_CAP_DOMINANCE:
+        aValue = a.quote.USD.market_cap_dominance ?? 0;
+        bValue = b.quote.USD.market_cap_dominance ?? 0;
+        break;
+      default:
+        aValue = 0;
+        bValue = 0;
+    }
+
+    return order === "asc" ? aValue - bValue : bValue - aValue;
+  });
 };

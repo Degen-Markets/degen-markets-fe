@@ -7,9 +7,13 @@ import ConnectorDialog from "./Dialog/ConnectorDialog";
 import { Web3Status } from "./Dialog/Web3Status";
 import GradientText from "./WalletMenu/GradientText";
 import Wrapper from "@/app/components/Wrapper";
+import { usePathname } from "next/navigation";
+import SolanaWallet from "@/app/components/SolanaWallet";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Header: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
+  const isSolanaRoute = usePathname().includes("pools");
 
   useEffect(() => {
     if (nav) {
@@ -39,13 +43,23 @@ const Header: React.FC = () => {
                   <span className="relative -top-0.5 bg-cadet-blue-light h-24 w-[1px] rotate-27 text-5xl mx-5 hidden lg:block" />
                 </Link>
                 <div className="hidden md:block lg:hidden">
-                  <Web3Status setNav={setNav} />
+                  {isSolanaRoute ? (
+                    <SolanaWallet />
+                  ) : (
+                    <Web3Status setNav={setNav} />
+                  )}
                 </div>
               </div>
+
               <Navbar nav={nav} setNav={setNav} />
             </div>
+
             <div className="hidden lg:block">
-              <Web3Status setNav={setNav} />
+              {isSolanaRoute ? (
+                <SolanaWallet />
+              ) : (
+                <Web3Status setNav={setNav} />
+              )}
             </div>
           </div>
           <SwitchChainDialog />
