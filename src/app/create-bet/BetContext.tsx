@@ -55,7 +55,6 @@ interface BetContextProps {
   setStrikePriceAcceptor: Dispatch<SetStateAction<string>>;
   error: string;
   setError: Dispatch<SetStateAction<string>>;
-
   validateFields: () => void;
 }
 

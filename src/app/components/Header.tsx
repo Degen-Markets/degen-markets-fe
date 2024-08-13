@@ -50,8 +50,10 @@ const Header: React.FC = () => {
                   )}
                 </div>
               </div>
+
               <Navbar nav={nav} setNav={setNav} />
             </div>
+
             <div className="hidden lg:block">
               {isSolanaRoute ? (
                 <SolanaWallet />

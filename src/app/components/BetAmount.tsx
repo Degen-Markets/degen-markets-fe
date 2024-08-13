@@ -32,7 +32,7 @@ export default function BetAmount<T>({
         type="number"
         step=".000001"
         lang="en-US"
-        className="w-full text-black-main"
+        className="w-full text-black-main text-lg"
         placeholder={placeHolder}
         disabled={disabled}
       />
