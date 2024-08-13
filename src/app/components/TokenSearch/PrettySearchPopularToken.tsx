@@ -6,7 +6,7 @@ import {
 } from "@/app/lib/utils/bets/types";
 import Image from "next/image";
 import { FC } from "react";
-import { TbTriangleFilled } from "react-icons/tb";
+import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 import { twMerge } from "tailwind-merge";
 
 const PrettySearchPopularToken: FC<PrettySearchProps<TickerCmcApiData[]>> = ({
@@ -52,7 +52,11 @@ const PrettySearchPopularToken: FC<PrettySearchProps<TickerCmcApiData[]>> = ({
                 "flex items-center space-x-1 text-lg",
               )}
             >
-              <TbTriangleFilled />
+              {percent_change_24h > 0 ? (
+                <TbTriangleFilled />
+              ) : (
+                <TbTriangleInvertedFilled />
+              )}
               <span className="font-bold">
                 {formatNumberToSignificantDigits(percent_change_24h)}%
               </span>
