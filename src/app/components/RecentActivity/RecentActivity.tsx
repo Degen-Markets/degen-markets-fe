@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { IoStatsChart } from "react-icons/io5";
-import { FC } from "react";
+import { FC, memo, useMemo } from "react";
 import { Card, CardHeading } from "@/app/components/Card";
 import { BetsResponse } from "@/app/lib/utils/bets/types";
 import ActivityRow from "@/app/components/RecentActivity/ActivityRow";
@@ -24,7 +24,7 @@ const RowSkeleton = () => (
 );
 
 const RecentActivity: FC = () => {
-  const { data: bets } = useQuery<BetsResponse>({
+  const { data: bets, isLoading } = useQuery<BetsResponse>({
     queryKey: ["repoData"],
     queryFn: () =>
       fetch(
@@ -33,18 +33,23 @@ const RecentActivity: FC = () => {
     refetchInterval: 10_000,
   });
 
+  const renderedBets = useMemo(() => {
+    if (isLoading) {
+      return Array.from({ length: 10 }).map((_, index) => (
+        <RowSkeleton key={index} />
+      ));
+    }
+    if (bets) {
+      return bets.map((bet) => <ActivityRow bet={bet} key={bet.id} />);
+    }
+  }, [bets, isLoading]);
+
   return (
     <Card>
       <CardHeading icon={<IoStatsChart />}>Recent Activity</CardHeading>
-      <div className="flex flex-col gap-y-2 w-full">
-        {!bets &&
-          Array.from({ length: 10 }).map((_, index) => (
-            <RowSkeleton key={index} />
-          ))}
-        {bets?.map((bet) => <ActivityRow bet={bet} key={bet.id} />)}
-      </div>
+      <div className="flex flex-col gap-y-2 w-full">{renderedBets}</div>
     </Card>
   );
 };
 
-export default RecentActivity;
+export default memo(RecentActivity);

@@ -1,10 +1,18 @@
+import { FC, useCallback, useEffect, memo } from "react";
 import { Button } from "@/app/components/Button";
-import { ButtonSuccess } from "@/app/components/Button/ButtonSuccess";
-import { ButtonDanger } from "@/app/components/Button/ButtonDanger";
 import { BetResponse } from "@/app/lib/utils/bets/types";
-import useReplicateBet from "@/app/hooks/useReplicateBet";
+import useBetActions from "@/app/hooks/useBetActions";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { useAccount } from "wagmi";
+import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
+import useReplicateBet from "@/app/hooks/useReplicateBet";
+import { twMerge } from "tailwind-merge";
+import { isBetExpired } from "@/app/lib/utils/bets/helpers";
+
+const betUpButtonCls =
+  "bg-green-light text-black-medium hover:bg-green-main active:bg-green-main";
+const betDownButtonCls =
+  "bg-red-light text-black-medium hover:bg-red-main active:bg-red-main";
 
 type BetButtonProps = {
   bet: BetResponse;
@@ -12,44 +20,89 @@ type BetButtonProps = {
 
 const BetButton: FC<BetButtonProps> = ({ bet }) => {
   const router = useRouter();
+  const { address } = useAccount();
+  const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
   const replicateBet = useReplicateBet(router);
+  const { id, currency, value, type, isBetOnUp, creator } = bet;
+  const createdByCurrentUser = creator.toLowerCase() === address?.toLowerCase();
 
-  const handleOnClick = () => {
-    const newBet: BetResponse =
-      bet.type === "binary" ? { ...bet, isBetOnUp: !bet.isBetOnUp } : bet;
+  const {
+    isBalanceEnough,
+    isPending,
+    isProcessing,
+    approve,
+    acceptBet,
+    isBetAcceptedSuccess,
+    isAllowanceEnough,
+  } = useBetActions({ betId: id, currency, value: BigInt(value) });
 
-    replicateBet(newBet);
-  };
+  const shouldReplicateBet =
+    !isBalanceEnough ||
+    bet.acceptor ||
+    isBetExpired(bet) ||
+    createdByCurrentUser;
 
-  if (bet.type === "closest-guess-wins") {
-    return (
-      <Button
-        size="small"
-        className="uppercase text-xs lg:text-base"
-        onClick={handleOnClick}
-      >
-        PREDICT NOW
-      </Button>
-    );
-  }
+  const handleOnClick = useCallback(async () => {
+    if (!address) {
+      setOpenConnector(true);
+      return;
+    }
 
-  return bet.isBetOnUp ? (
-    <ButtonDanger
+    if (shouldReplicateBet) {
+      replicateBet({
+        ...bet,
+        isBetOnUp: type === "binary" ? !isBetOnUp : isBetOnUp,
+      });
+      return;
+    }
+
+    if (type === "binary") {
+      if (!isAllowanceEnough) {
+        approve();
+      } else {
+        acceptBet();
+      }
+    } else {
+      router.push(`/bets/${id}?betType=${type}`);
+    }
+  }, [
+    address,
+    isBalanceEnough,
+    approve,
+    acceptBet,
+    type,
+    router,
+    id,
+    isAllowanceEnough,
+  ]);
+
+  useEffect(() => {
+    if (isBetAcceptedSuccess) {
+      router.push(`/bets/${id}/success`);
+    }
+  }, [isBetAcceptedSuccess, id, router]);
+
+  return (
+    <Button
       size="small"
-      className="uppercase text-xs lg:text-base"
+      className={twMerge(
+        "uppercase text-xs lg:text-base",
+        bet.type === "binary" && !shouldReplicateBet
+          ? isBetOnUp
+            ? betDownButtonCls
+            : betUpButtonCls
+          : "",
+      )}
       onClick={handleOnClick}
+      disabled={isPending || isProcessing}
     >
-      Bet down
-    </ButtonDanger>
-  ) : (
-    <ButtonSuccess
-      size="small"
-      className="uppercase text-xs lg:text-base"
-      onClick={handleOnClick}
-    >
-      Bet up
-    </ButtonSuccess>
+      {type === "binary" && !createdByCurrentUser
+        ? isBetOnUp
+          ? "Bet down"
+          : "Bet up"
+        : "Replicate"}
+    </Button>
   );
 };
 
-export default BetButton;
+export default memo(BetButton);

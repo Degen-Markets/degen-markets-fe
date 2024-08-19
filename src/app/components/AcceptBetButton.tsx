@@ -1,17 +1,9 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { erc20Abi, maxUint256, zeroAddress } from "viem";
-import { DEGEN_BETS_ADDRESS } from "@/app/lib/utils/bets/constants";
-import useAllowances from "@/app/hooks/useAllowances";
-import useBalances from "@/app/hooks/useBalances";
-import { getCurrencySymbolByAddress } from "@/app/lib/utils/bets/helpers";
-import { base } from "wagmi/chains";
 import { Address, BetResponse } from "@/app/lib/utils/bets/types";
-import { useToast } from "./Toast/ToastProvider";
-import { useTransactionReceipt, useWriteContract } from "wagmi";
+import useBetActions from "@/app/hooks/useBetActions";
+import { ButtonSuccess } from "@/app/components/Button/ButtonSuccess";
 import { twMerge } from "tailwind-merge";
-import { DegenBetsAbi } from "../lib/utils/bets/DegenBetsAbi";
-import { ButtonSuccess } from "./Button/ButtonSuccess";
 
 interface AcceptBetButtonProps {
   bet: BetResponse;
@@ -21,89 +13,31 @@ interface AcceptBetButtonProps {
   error?: string;
 }
 
-const AcceptBetButton = ({
+const AcceptBetButton: FC<AcceptBetButtonProps> = ({
   bet,
   address,
   className,
   strikePriceAcceptor = "",
   error,
-}: AcceptBetButtonProps) => {
-  const {
-    data: approvalHash,
-    writeContractAsync: sendApprovalTx,
-    isPending: isApprovalButtonPending,
-  } = useWriteContract();
-  const {
-    data: betAcceptHash,
-    writeContractAsync: sendAcceptBetTx,
-    isPending: isAcceptButtonPending,
-  } = useWriteContract();
-  const {
-    isSuccess: isBetAcceptedSuccess,
-    error: betAcceptanceError,
-    isLoading: isApprovalProcessing,
-  } = useTransactionReceipt({
-    hash: betAcceptHash,
-    chainId: base.id,
-  });
-  const {
-    isSuccess: isApprovalSuccess,
-    error: approvalError,
-    isLoading: isAcceptanceProcessing,
-  } = useTransactionReceipt({
-    hash: approvalHash,
-    chainId: base.id,
-  });
-  const isPending = isApprovalButtonPending || isAcceptButtonPending;
-  const isProcessing = isAcceptanceProcessing || isApprovalProcessing;
-
-  const { showToast } = useToast();
-  const { id, value, currency } = bet;
-  const isEth = currency === zeroAddress;
-  const valueInWei = BigInt(value);
-
+}) => {
   const router = useRouter();
+  const { id, currency, value } = bet;
 
-  const { userAllowances } = useAllowances(
-    isApprovalSuccess || isBetAcceptedSuccess,
-    address || zeroAddress,
-  );
-  const currencySymbol = getCurrencySymbolByAddress(currency);
-  const { userBalances } = useBalances(false, address);
-
-  const isAllowanceEnough = userAllowances[currencySymbol] >= valueInWei;
-  const isBalanceEnough = userBalances[currencySymbol] >= valueInWei;
-  const isDisabled = !!error || isPending || isProcessing || !isBalanceEnough;
-
-  const acceptBet = async () => {
-    const value = isEth ? valueInWei : (undefined as any);
-    try {
-      await sendAcceptBetTx({
-        abi: DegenBetsAbi,
-        address: DEGEN_BETS_ADDRESS,
-        functionName: "acceptBet",
-        args: [id, strikePriceAcceptor],
-        value,
-      });
-    } catch (error: any) {
-      console.error(error);
-      showToast(error.shortMessage ?? error, "error");
-    }
-  };
-
-  const approve = async () => {
-    try {
-      await sendApprovalTx({
-        abi: erc20Abi,
-        address: currency,
-        functionName: "approve",
-        args: [DEGEN_BETS_ADDRESS, maxUint256],
-      });
-    } catch (error: any) {
-      console.error({ error });
-      showToast(error.shortMessage ?? error, "error");
-    }
-  };
+  const {
+    isBalanceEnough,
+    isPending,
+    isProcessing,
+    approve,
+    acceptBet,
+    isBetAcceptedSuccess,
+    isAllowanceEnough,
+    currencySymbol,
+  } = useBetActions({
+    betId: id,
+    currency,
+    value: BigInt(value),
+    strikePriceAcceptor,
+  });
 
   const handleAccept = () => {
     if (!isAllowanceEnough) {
@@ -112,50 +46,33 @@ const AcceptBetButton = ({
       acceptBet();
     }
   };
-
-  useEffect(() => {
-    if (!!betAcceptanceError) {
-      showToast(betAcceptanceError.message, "error");
-    }
-    if (!!approvalError) {
-      showToast(approvalError.message, "error");
-    }
-  }, [approvalError, betAcceptanceError]);
-
   useEffect(() => {
     if (isBetAcceptedSuccess) {
       router.push(`/bets/${id}/success`);
     }
   }, [isBetAcceptedSuccess, id, router]);
 
-  const getActionButtonText = (): string => {
-    if (error) {
-      return error;
-    }
-    if (!address) {
-      return "Wallet not connected";
-    }
-    if (!isBalanceEnough) {
-      return "Not enough balance";
-    }
-    if (!isAllowanceEnough) {
-      return `Approve ${currencySymbol}`;
-    }
-
-    return "Approve and Bet";
-  };
+  const buttonText =
+    error ||
+    (!address
+      ? "Wallet not connected"
+      : !isBalanceEnough
+        ? "Not enough balance"
+        : !isAllowanceEnough
+          ? `Approve ${currencySymbol}`
+          : "Approve and Bet");
 
   return (
     <ButtonSuccess
       loader={true}
-      disabled={isDisabled}
+      disabled={!!error || isPending || isProcessing}
       isPending={isPending}
       isProcessing={isProcessing}
       size={"regular"}
       onClick={handleAccept}
       className={twMerge(className)}
     >
-      {getActionButtonText()}
+      {buttonText}
     </ButtonSuccess>
   );
 };

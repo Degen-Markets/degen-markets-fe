@@ -16,6 +16,7 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useMemo } from "react";
 import { clusterApiUrl } from "@solana/web3.js";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { BalanceProvider } from "@/app/components/RecentActivity/BalanceContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const network = WalletAdapterNetwork.Mainnet;
@@ -37,7 +38,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
               <ConnectionProvider endpoint={endpoint}>
                 <WalletProvider wallets={wallets} autoConnect>
                   <WalletModalProvider>
-                    <DialogProvider>{children}</DialogProvider>
+                    <DialogProvider>
+                      <BalanceProvider>{children} </BalanceProvider>
+                    </DialogProvider>
                   </WalletModalProvider>
                 </WalletProvider>
               </ConnectionProvider>
