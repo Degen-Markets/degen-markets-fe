@@ -7,7 +7,9 @@ import { useWallet } from "@solana/wallet-adapter-react";
 require("@solana/wallet-adapter-react-ui/styles.css");
 
 const SolanaWallet: FC = () => {
-  return <WalletMultiButton style={{ textWrap: "nowrap" }} />;
+  return (
+    <WalletMultiButton style={{ textWrap: "nowrap", background: "#AB9FF2" }} />
+  );
 };
 
 export default SolanaWallet;

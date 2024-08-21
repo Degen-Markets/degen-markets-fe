@@ -17,7 +17,7 @@ const PoolsTable = ({ pools }: { pools: PoolsResponse }) => {
     title: pool.title,
     options: pool.options.map((option) => option.title).join(", "),
     actions: (
-      <div className="flex">
+      <div className="flex items-center">
         <Button
           size="small"
           onClick={() =>

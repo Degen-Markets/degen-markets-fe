@@ -8,17 +8,19 @@ import {
   DialogType,
   useDialog,
 } from "./dialog";
-import { useAccount, useSwitchChain } from "wagmi";
+import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
 import Image from "next/image";
 import PixelArtLoader from "../PixelArtLoading";
 import useIsChainSupported from "@/app/hooks/useIsChainSupported";
 import { useToast } from "../Toast/ToastProvider";
 import GradientText from "../WalletMenu/GradientText";
+import { Button } from "../Button";
 type ChainType = 8453;
 
 const SwitchChainDialog = () => {
   const { open, setOpen } = useDialog(DialogType.SwitchChain);
   const { chains, isPending, switchChain } = useSwitchChain();
+  const { disconnect } = useDisconnect();
   const { chainId } = useAccount();
   const [pendingChainId, setPendingChainId] = useState<number>();
   const { isCurrentChainSupported } = useIsChainSupported();
@@ -83,6 +85,16 @@ const SwitchChainDialog = () => {
               </div>
             </div>
           ))}
+          <Button
+            size="small"
+            className="w-full text-center mt-5"
+            onClick={() => {
+              disconnect();
+              setOpen(false);
+            }}
+          >
+            Disconnect
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
