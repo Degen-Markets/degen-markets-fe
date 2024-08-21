@@ -55,6 +55,7 @@ const TopWidgets: FC = () => {
             icon={widget.icon}
             cta={widget.cta}
             bg={widget.bg}
+            comingSoon={widget.comingSoon}
           />
         </div>
       ))}
