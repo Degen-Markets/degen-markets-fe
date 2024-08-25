@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, ReactElement } from "react";
+import { FC, HTMLAttributes, PropsWithChildren, ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface CardHeadingProps {
@@ -17,17 +17,22 @@ const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
   );
 };
 
-interface CardProps {
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-const Card: FC<CardProps & PropsWithChildren> = ({ children, className }) => {
+const Card: FC<CardProps & PropsWithChildren> = ({
+  children,
+  className,
+  ...props
+}) => {
   return (
     <div
       className={twMerge(
         "flex flex-col items-start bg-blue-light bg-opacity-20 py-4 px-6 lg:py-6 lg:px-8",
         className,
       )}
+      {...props}
     >
       {children}
     </div>
