@@ -9,7 +9,6 @@ import GradientText from "./WalletMenu/GradientText";
 import Wrapper from "@/app/components/Wrapper";
 import { usePathname } from "next/navigation";
 import SolanaWallet from "@/app/components/SolanaWallet";
-import { useWallet } from "@solana/wallet-adapter-react";
 
 const Header: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);

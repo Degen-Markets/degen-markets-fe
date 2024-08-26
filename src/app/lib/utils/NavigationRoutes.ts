@@ -27,6 +27,13 @@ const NavigationRoutes: NavigationProps = {
     root: "/",
     navbar: [
       {
+        name: "Pools",
+        icon: "/navIcons/pools.svg",
+        route: "/pools",
+        comingSoon: false,
+        isExpandible: false,
+      },
+      {
         name: "Games",
         icon: "/navIcons/game.svg",
         route: [
@@ -44,15 +51,8 @@ const NavigationRoutes: NavigationProps = {
             comingSoon: true,
           },
         ],
-        comingSoon: false,
-        isExpandible: true,
-      },
-      {
-        name: "Pools",
-        icon: "/navIcons/pools.svg",
-        route: "/pools",
         comingSoon: true,
-        isExpandible: false,
+        isExpandible: true,
       },
       {
         name: "Community",
