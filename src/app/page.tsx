@@ -1,4 +1,4 @@
-import Landing from "./components/Home/page";
+import Landing from "./components/Landing";
 import { getPools } from "./lib/utils/api/getPools";
 
 const Home = async () => {
