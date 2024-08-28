@@ -1,33 +1,33 @@
 "use client";
-import { useRef, useState } from "react";
+import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
-const Pagination = () => {
-  const totalPages = 20; // Adjust this as needed
-  const [currentPage, setCurrentPage] = useState(1);
+interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
 
-  const paginationRef = useRef<HTMLDivElement>(null);
-
-  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-    if (!paginationRef.current?.contains(event.relatedTarget as Node)) {
-    }
-  };
-
+const Pagination: React.FC<PaginationProps> = ({
+  totalPages,
+  currentPage,
+  onPageChange,
+}) => {
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= totalPages) {
-      setCurrentPage(page);
+      onPageChange(page);
     }
   };
 
   const handleNext = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
 
   const handlePrevious = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
 
@@ -54,14 +54,9 @@ const Pagination = () => {
   };
 
   return (
-    <div
-      className="mt-10 flex items-center space-x-3 relative"
-      onBlur={handleBlur}
-      tabIndex={0}
-      ref={paginationRef}
-    >
+    <div className="mt-10 flex items-center space-x-3">
       {currentPage > 1 && (
-        <div className="bg-blue-light bg-opacity-70 p-1 rounded-lg cursor-pointer">
+        <div className="bg-blue-light bg-opacity-70 p-1 rounded-lg">
           <IoIosArrowDown
             size={32}
             onClick={handlePrevious}
@@ -86,7 +81,7 @@ const Pagination = () => {
       ))}
 
       {currentPage < totalPages && (
-        <div className="bg-blue-light bg-opacity-70 p-1 rounded-lg cursor-pointer">
+        <div className="bg-blue-light bg-opacity-70 p-1 rounded-lg">
           <IoIosArrowDown
             size={32}
             onClick={handleNext}
