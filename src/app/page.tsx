@@ -1,6 +1,4 @@
-import { Card } from "./components/Card";
 import Landing from "./components/Home/page";
-import Pagination from "./components/Pagination";
 import { getPools } from "./lib/utils/api/getPools";
 
 const Home = async () => {

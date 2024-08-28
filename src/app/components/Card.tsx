@@ -3,16 +3,25 @@ import { twMerge } from "tailwind-merge";
 
 interface CardHeadingProps {
   icon?: ReactElement;
+  showBordered?: boolean;
+  className?: string;
 }
 
 const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
   children,
   icon,
+  showBordered = true,
+  className,
 }) => {
   return (
-    <div className="flex gap-x-2 text-xl lg:text-4xl font-bold pb-4 mb-8 border-b border-black-dark w-full">
+    <div
+      className={twMerge(
+        "flex gap-x-2 text-xl lg:text-4xl font-bold pb-4 border-black-dark w-full",
+        showBordered && "mb-8 border-b",
+      )}
+    >
       {icon && <div className="flex-shrink-0">{icon}</div>}
-      <span className="drop-shadow-md">{children}</span>
+      <span className={twMerge("drop-shadow-md", className)}>{children}</span>
     </div>
   );
 };
