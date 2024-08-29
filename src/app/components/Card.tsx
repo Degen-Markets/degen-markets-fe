@@ -3,21 +3,21 @@ import { twMerge } from "tailwind-merge";
 
 interface CardHeadingProps {
   icon?: ReactElement;
-  showBordered?: boolean;
+  bordered?: boolean;
   className?: string;
 }
 
 const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
   children,
   icon,
-  showBordered = true,
+  bordered = true,
   className,
 }) => {
   return (
     <div
       className={twMerge(
         "flex gap-x-2 text-xl lg:text-4xl font-bold pb-4 border-black-dark w-full",
-        showBordered && "mb-8 border-b",
+        bordered && "mb-8 border-b",
       )}
     >
       {icon && <div className="flex-shrink-0">{icon}</div>}
