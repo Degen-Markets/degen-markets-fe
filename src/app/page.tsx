@@ -8,13 +8,11 @@ const Home = async () => {
   const { data: pools } = await getPools();
 
   return (
-    <div className="my-20 bg-gradient-to-t from-purple-light to-black-medium pb-40">
-      <Wrapper>
-        <HeroSection />
-        <Pools pools={pools} />
-        <StatsAndSocials />
-      </Wrapper>
-    </div>
+    <Wrapper isHome>
+      <HeroSection />
+      <Pools pools={pools} />
+      <StatsAndSocials />
+    </Wrapper>
   );
 };
 
