@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import cx from "classnames";
+import { twMerge } from "tailwind-merge";
 
 interface Props extends PropsWithChildren {
   className?: string;
@@ -11,10 +12,6 @@ const Wrapper = ({ children, className, isHome = false }: Props) => {
     <div
       className={twMerge(
         "md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl px-4 lg:px-6",
-        {
-          "my-20 bg-gradient-to-t from-purple-light to-black-medium pb-40":
-            isHome,
-        },
         className,
       )}
     >
