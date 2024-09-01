@@ -70,6 +70,7 @@ const config: Config = {
     extend: {
       dropShadow: {
         text: "5px 3px 3px #000000",
+        lightText: "2px 3px 0px #00000047",
       },
       borderRadius: {
         "4xl": "35px",

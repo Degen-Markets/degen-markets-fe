@@ -1,16 +1,17 @@
-import TopWidgets from "@/app/home/_sections/TopWidgets";
-import Wrapper from "@/app/components/Wrapper";
-import Activities from "@/app/home/_sections/Activities";
-import PlatformStats from "@/app/home/_sections/PlatformStats";
+import Pools from "./components/Landing";
+import HeroSection from "./components/Landing/HeroSection";
+import StatsAndSocials from "./components/Landing/StatsAndSocial";
+import Wrapper from "./components/Wrapper";
+import { getPools } from "./lib/utils/api/getPools";
 
-const Home = () => {
+const Home = async () => {
+  const { data: pools } = await getPools();
+
   return (
-    <Wrapper className="text-white">
-      <div className="flex flex-col gap-14">
-        <TopWidgets />
-        <Activities />
-        <PlatformStats />
-      </div>
+    <Wrapper className="my-20 bg-gradient-to-t from-purple-light to-black-medium pb-40">
+      <HeroSection />
+      <Pools pools={pools} />
+      <StatsAndSocials />
     </Wrapper>
   );
 };
