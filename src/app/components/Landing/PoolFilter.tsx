@@ -1,5 +1,6 @@
 import { FaMicrosoft, FaSquareXTwitter } from "react-icons/fa6";
 import { RiBankFill } from "react-icons/ri";
+import Link from "next/link";
 
 const PoolsFilter = () => (
   <div className="uppercase flex justify-between items-center w-full border-b border-cadet-blue-light pb-1">
@@ -13,10 +14,14 @@ const PoolsFilter = () => (
         <span className="drop-shadow-lightText font-bold">Elections</span>
       </div>
     </div>
-    <div className="flex items-center space-x-2">
+    <Link
+      className="flex items-center space-x-2 "
+      href="https://x.com/DEGEN_MARKETS"
+      target="_blank"
+    >
       <span className="drop-shadow-lightText font-bold">View on</span>
       <FaSquareXTwitter />
-    </div>
+    </Link>
   </div>
 );
 
