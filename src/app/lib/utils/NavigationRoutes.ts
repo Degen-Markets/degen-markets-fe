@@ -27,13 +27,6 @@ const NavigationRoutes: NavigationProps = {
     root: "/",
     navbar: [
       {
-        name: "Pools",
-        icon: "/navIcons/pools.svg",
-        route: "/pools",
-        comingSoon: false,
-        isExpandible: false,
-      },
-      {
         name: "Games",
         icon: "/navIcons/game.svg",
         route: [

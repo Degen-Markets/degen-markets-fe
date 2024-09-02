@@ -3,17 +3,14 @@ import HeroSection from "./components/Landing/HeroSection";
 import StatsAndSocials from "./components/Landing/StatsAndSocial";
 import Wrapper from "./components/Wrapper";
 import { getPools } from "./lib/utils/api/getPools";
-
 const Home = async () => {
   const { data: pools } = await getPools();
-
   return (
-    <Wrapper className="my-20 bg-gradient-to-t from-purple-light to-black-medium pb-40">
+    <Wrapper className="my-20 pb-40">
       <HeroSection />
       <Pools pools={pools} />
       <StatsAndSocials />
     </Wrapper>
   );
 };
-
 export default Home;
