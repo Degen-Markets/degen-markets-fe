@@ -143,13 +143,6 @@ export type SignatureResponse = {
   signature: string;
 };
 
-export type PoolAccount = {
-  title: string;
-  hasConcluded: boolean;
-  winningOption: string;
-  value: number;
-};
-
 export type BetType = "binary" | "closest-guess-wins";
 
 export interface BetComponentProps {
