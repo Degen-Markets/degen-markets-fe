@@ -4,15 +4,12 @@ import Link from "next/link";
 import Navbar from "@/app/components/Navbar";
 import SwitchChainDialog from "./Dialog/SwitchChainDialog";
 import ConnectorDialog from "./Dialog/ConnectorDialog";
-import { Web3Status } from "./Dialog/Web3Status";
 import GradientText from "./WalletMenu/GradientText";
 import Wrapper from "@/app/components/Wrapper";
-import { usePathname } from "next/navigation";
-import SolanaWallet from "@/app/components/SolanaWallet";
 
 const Header: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
-  const isSolanaRoute = usePathname().includes("pools");
+  // const isSolanaRoute = usePathname().includes("pools");
 
   useEffect(() => {
     if (nav) {
@@ -41,25 +38,25 @@ const Header: React.FC = () => {
                   <GradientText>Degen Markets</GradientText>
                   <span className="relative -top-0.5 bg-cadet-blue-light h-24 w-[1px] rotate-27 text-5xl mx-5 hidden lg:block" />
                 </Link>
-                <div className="hidden md:block lg:hidden">
+                {/*<div className="hidden md:block lg:hidden">
                   {isSolanaRoute ? (
                     <SolanaWallet />
                   ) : (
                     <Web3Status setNav={setNav} />
                   )}
-                </div>
+                </div>*/}
               </div>
 
               <Navbar nav={nav} setNav={setNav} />
             </div>
 
-            <div className="hidden lg:block">
+            {/*<div className="hidden lg:block">
               {isSolanaRoute ? (
                 <SolanaWallet />
               ) : (
                 <Web3Status setNav={setNav} />
               )}
-            </div>
+            </div>*/}
           </div>
           <SwitchChainDialog />
           <ConnectorDialog />
