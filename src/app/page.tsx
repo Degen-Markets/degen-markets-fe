@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic"; // forces Next to not cache api requests
 const Home = async () => {
   const { data: pools } = await getPools();
   return (
-    <Wrapper className="my-20 pb-40">
+    <Wrapper className="flex flex-col gap-40">
       <HeroSection />
       <Pools pools={pools} />
       <StatsAndSocials />

@@ -18,10 +18,11 @@ const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
       className={twMerge(
         "flex gap-x-2 text-xl lg:text-4xl font-bold pb-4 border-black-dark w-full",
         bordered && "mb-8 border-b",
+        className,
       )}
     >
       {icon && <div className="flex-shrink-0">{icon}</div>}
-      <span className={twMerge("drop-shadow-md", className)}>{children}</span>
+      <span className={twMerge("drop-shadow-md")}>{children}</span>
     </div>
   );
 };
