@@ -9,13 +9,13 @@ import {
 } from "@/app/lib/utils/bets/helpers";
 import BetOutComeBox from "./common/BetOutComeBox";
 import { Address } from "viem";
-import { useAccount } from "wagmi";
 import { twMerge } from "tailwind-merge";
 import Table from "../Table/Table";
 import MatchesTableUserInfo from "./common/MatchesTableUserInfo";
+import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
   const profileTableColumns = [
     { key: "opponent", label: "Opponent" },
     { key: "game", label: "Game" },
@@ -92,7 +92,7 @@ const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
           profitLoss: (
             <div
               className={twMerge(
-                winner?.toLowerCase() === address?.toLowerCase()
+                winner?.toLowerCase() === DUMMY_BETS[0].creator?.toLowerCase()
                   ? "text-green-light"
                   : "text-red-light",
               )}
@@ -102,7 +102,7 @@ const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
           ),
         };
       });
-  }, [address, bets]);
+  }, [bets]);
 
   return (
     <Table

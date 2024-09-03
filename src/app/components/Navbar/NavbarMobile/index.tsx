@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import NavigationRoutes from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileItem from "./NavbarMobileItem";
-import { Web3Status } from "../../Dialog/Web3Status";
 import { usePathname } from "next/navigation";
 import SolanaWallet from "@/app/components/SolanaWallet";
 
@@ -10,7 +9,6 @@ export const NavbarMobile: React.FC<{
   nav: boolean;
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ nav, setNav }) => {
-  const isSolanaRoute = usePathname().includes("pools");
   const sortedRoutes = useMemo(() => {
     return [...NavigationRoutes.header.navbar].sort((a, b) => {
       if (a.comingSoon && !b.comingSoon) return 1;
@@ -33,7 +31,7 @@ export const NavbarMobile: React.FC<{
         </ul>
 
         <div className="cursor-pointer uppercase py-4 tracking-wider text-base w-full">
-          {isSolanaRoute ? <SolanaWallet /> : <Web3Status setNav={setNav} />}
+          <SolanaWallet />
         </div>
         <div className="mt-auto bg-[#202b38] text-white">
           <div className="px-6 cursor-pointer uppercase font-oswald py-4 tracking-wider text-base">

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { CrossIcon, HamburgerIcon } from "@/app/components/Icons";
+import { IoClose, IoMenu } from "react-icons/io5";
+
 import { NavbarDesktop } from "./Navbar/NavbarDesktop";
 import { NavbarMobile } from "./Navbar/NavbarMobile";
 
@@ -28,12 +29,10 @@ const Navbar: React.FC<{
       >
         {nav ? (
           <div className="text-black-medium">
-            <CrossIcon />
+            <IoClose size={30} />
           </div>
         ) : (
-          <div>
-            <HamburgerIcon />
-          </div>
+          <IoMenu size={30} />
         )}
       </div>
       {nav && <NavbarMobile nav={nav} setNav={setNav} />}

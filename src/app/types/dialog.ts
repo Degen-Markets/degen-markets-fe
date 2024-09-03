@@ -10,8 +10,6 @@ import {
 
 export enum DialogType {
   Connector,
-  AccountDetail,
-  SwitchChain,
 }
 
 export interface DialogContextProps {

@@ -21,7 +21,7 @@ import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 import BetTable from "./BetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
 import RakeInProfitButton from "../Button/RakeInProfitButton";
-import GradientText from "../WalletMenu/GradientText";
+import GradientText from "../GradientText";
 
 const MyHistory = () => {
   const { address } = useAccount();

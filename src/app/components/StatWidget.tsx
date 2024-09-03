@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
-import GradientText from "@/app/components/WalletMenu/GradientText";
 import GradientBorder from "@/app/components/GradiantBorder";
+import GradientText from "./GradientText";
 
 interface StatWidgetProps {
   total: number;

@@ -4,13 +4,14 @@ import { BetResponse } from "@/app/lib/utils/bets/types";
 import { calculateBetStats } from "@/app/lib/utils/bets/helpers";
 import { useAccount } from "wagmi";
 import { Address } from "viem";
+import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 interface GameListProps {
   bets: BetResponse[];
 }
 
 const GameList: React.FC<GameListProps> = ({ bets }) => {
-  const { address } = useAccount();
+  // const { address } = useAccount();
   const {
     bullOrBearWinPercentage,
     thePriceIsRightWinPercentage,
@@ -19,8 +20,8 @@ const GameList: React.FC<GameListProps> = ({ bets }) => {
     totalThePriceIsRightBets,
     totalThePriceIsRightWins,
   } = useMemo(
-    () => calculateBetStats(bets, address as Address),
-    [bets, address],
+    () => calculateBetStats(bets, DUMMY_BETS[0].creator as Address),
+    [bets],
   );
 
   const userGames = useMemo(() => {

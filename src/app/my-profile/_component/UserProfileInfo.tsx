@@ -3,10 +3,9 @@ import { BsPatchCheckFill } from "react-icons/bs";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import { Address } from "viem";
-import { useAccount } from "wagmi";
+import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 const UserProfileInfo: React.FC = () => {
-  const { address } = useAccount();
   return (
     <div className="col-span-4 lg:col-span-1 flex flex-col justify-center items-center lg:items-start space-y-2 lg:relative w-full">
       <div className="relative lg:block">
@@ -14,9 +13,11 @@ const UserProfileInfo: React.FC = () => {
           ghosthash1
           <BsPatchCheckFill className="absolute -top-3 -right-3" size={25} />
         </span>
-        <UserAvatar address={address} height={170} width={170} />
+        <UserAvatar address={DUMMY_BETS[0].creator} height={170} width={170} />
         <p className="text-lg font-bold w-full text-center">
-          {address ? getDisplayNameForAddress(address as Address) : ""}
+          {DUMMY_BETS[0].creator
+            ? getDisplayNameForAddress(DUMMY_BETS[0].creator as Address)
+            : ""}
         </p>
       </div>
     </div>
