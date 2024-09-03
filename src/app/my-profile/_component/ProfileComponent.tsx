@@ -13,7 +13,7 @@ import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
 const ProfileComponent: React.FC = () => {
   const { address } = useAccount();
   const { bets, isLoading } = useGetBetForAddress(address as Address);
-  const gamePlayed = bets.length;
+  const gamesPlayed = bets.length;
   const { totalWinPercentage } = useMemo(
     () => calculateBetStats(bets, address as Address),
     [bets, address],
@@ -39,7 +39,7 @@ const ProfileComponent: React.FC = () => {
           <div className="grid grid-cols-4 w-full h-full">
             <UserProfileInfo />
             <UserStats
-              gamePlayed={gamePlayed}
+              gamesPlayed={gamesPlayed}
               totalWinPercentage={totalWinPercentage}
             />
           </div>
