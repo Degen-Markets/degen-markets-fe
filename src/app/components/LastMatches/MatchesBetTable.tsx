@@ -24,7 +24,7 @@ const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
       .map((bet) => {
         const { acceptor, type, isBetOnUp, winner } = bet;
 
-        const profitLoss = `1.5 ETH`;
+        const profitLoss = `0 ETH`;
         const prediction = isBetOnUp ? "Price Moons" : "Price Rugs";
         const predictionBgImage =
           prediction === "Price Moons"
