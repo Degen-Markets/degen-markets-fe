@@ -1,13 +1,12 @@
 "use client";
 import { useMemo } from "react";
-import { ButtonGradient } from "@/app/components/Button";
 import { isBetConcluded } from "@/app/lib/utils/bets/helpers";
-import { useAccount } from "wagmi";
 import BetTable from "./MatchesBetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
 import Image from "next/image";
 import RakeInProfitButton from "../Button/RakeInProfitButton";
 import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
+import { Button } from "../Button/Button";
 const LastMatches = () => {
   const isLoading = false;
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
@@ -18,9 +17,13 @@ const LastMatches = () => {
     return (
       <div className="flex justify-center flex-col items-center h-[50vh] space-y-2">
         <h4 className="text-4xl">Please Connect Your Wallet</h4>
-        <ButtonGradient size="regular" onClick={() => setOpenConnector(true)}>
+        <Button
+          size="regular"
+          intent="gradient"
+          onClick={() => setOpenConnector(true)}
+        >
           Wallet not connected
-        </ButtonGradient>
+        </Button>
       </div>
     );
   }

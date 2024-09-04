@@ -2,11 +2,11 @@ import { VariantProps } from "class-variance-authority";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 import { Dispatch, SetStateAction } from "react";
-import { Address } from "viem";
 import {
   dialogOverlayVariants,
   dialogVariants,
 } from "../lib/utils/dialog/constant";
+import { Address } from "../lib/utils/bets/types";
 
 export enum DialogType {
   Connector,

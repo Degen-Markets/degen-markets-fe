@@ -1,21 +1,13 @@
 import { useMemo } from "react";
-import { BetResponse } from "@/app/lib/utils/bets/types";
-import {
-  getBetImageUrl,
-  getBetOutcome,
-  getBetTypeText,
-  getCurrencySymbolByAddress,
-  getFormattedValue,
-} from "@/app/lib/utils/bets/helpers";
+import { Address, BetResponse } from "@/app/lib/utils/bets/types";
+import { getBetImageUrl, getBetTypeText } from "@/app/lib/utils/bets/helpers";
 import BetOutComeBox from "./common/BetOutComeBox";
-import { Address } from "viem";
 import { twMerge } from "tailwind-merge";
 import Table from "../Table/Table";
 import MatchesTableUserInfo from "./common/MatchesTableUserInfo";
 import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
-  // const { address } = useAccount();
   const profileTableColumns = [
     { key: "opponent", label: "Opponent" },
     { key: "game", label: "Game" },
@@ -30,28 +22,9 @@ const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
       .slice()
       .reverse()
       .map((bet) => {
-        const {
-          currency,
-          acceptor,
-          type,
-          value,
-          isBetOnUp,
-          winner,
-          startingMetricValue,
-          endingMetricValue,
-          strikePriceAcceptor,
-          strikePriceCreator,
-        } = bet;
-        const { outcome, bgImage } = getBetOutcome(
-          type,
-          isBetOnUp,
-          startingMetricValue,
-          endingMetricValue,
-          Number(strikePriceCreator),
-          Number(strikePriceAcceptor),
-        );
-        const formattedValueToDisplay = getFormattedValue(value, currency);
-        const profitLoss = `${formattedValueToDisplay} ${getCurrencySymbolByAddress(currency)}`;
+        const { acceptor, type, isBetOnUp, winner } = bet;
+
+        const profitLoss = `1.5 ETH`;
         const prediction = isBetOnUp ? "Price Moons" : "Price Rugs";
         const predictionBgImage =
           prediction === "Price Moons"
@@ -81,11 +54,11 @@ const MatchesBetTable = ({ bets }: { bets: BetResponse[] }) => {
             </BetOutComeBox>
           ),
           outcome: (
-            <BetOutComeBox bgImage={bgImage}>
+            <BetOutComeBox bgImage={"/profile/Moon.webp"}>
               <span
-                className={`${outcome.status ? "text-green-light" : "text-red-light"} drop-shadow-bg`}
+                className={`${true ? "text-green-light" : "text-red-light"} drop-shadow-bg`}
               >
-                {outcome.text}
+                Unknown Bet Type
               </span>
             </BetOutComeBox>
           ),

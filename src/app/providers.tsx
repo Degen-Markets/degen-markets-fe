@@ -34,12 +34,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
               <WalletModalProvider>
-                <DialogProvider>
-                  {/* <BalanceProvider>  */}{" "}
-                  {/* can be reused for Solana balance  */}
-                  {children}
-                  {/* </BalanceProvider> */}
-                </DialogProvider>
+                <DialogProvider>{children}</DialogProvider>
               </WalletModalProvider>
             </WalletProvider>
           </ConnectionProvider>

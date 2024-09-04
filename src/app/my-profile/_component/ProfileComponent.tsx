@@ -10,10 +10,6 @@ import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 const ProfileComponent: React.FC = () => {
   const gamePlayed = DUMMY_BETS.length;
   const isLoading = false;
-  // const { totalWinPercentage } = useMemo(
-  //   () => calculateBetStats(DUMMY_BETS, address as Address),
-  //   [address],
-  // );
 
   const joiningDate = useMemo(() => {
     if (!isLoading) {

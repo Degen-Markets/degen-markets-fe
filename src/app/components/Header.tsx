@@ -4,7 +4,6 @@ import Link from "next/link";
 import Navbar from "@/app/components/Navbar";
 import ConnectorDialog from "./Dialog/ConnectorDialog";
 import Wrapper from "@/app/components/Wrapper";
-import { usePathname } from "next/navigation";
 import SolanaWallet from "@/app/components/SolanaWallet";
 import GradientText from "./GradientText";
 

@@ -2,8 +2,8 @@ import React from "react";
 import { BsPatchCheckFill } from "react-icons/bs";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
-import { Address } from "viem";
 import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
+import { Address } from "@/app/lib/utils/bets/types";
 
 const UserProfileInfo: React.FC = () => {
   return (
