@@ -1,33 +1,25 @@
 "use client";
 import React, { useMemo } from "react";
-import { useAccount } from "wagmi";
-import { calculateBetStats } from "@/app/lib/utils/bets/helpers";
-import { Address } from "viem";
 import GameList from "./GameList";
 import UserProfileInfo from "./UserProfileInfo";
 import UserStats from "./UserStats";
 import UserActions from "./UserActions";
 import LastMatches from "@/app/components/LastMatches";
-import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
+import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 const ProfileComponent: React.FC = () => {
-  const { address } = useAccount();
-  const { bets, isLoading } = useGetBetForAddress(address as Address);
-  const gamesPlayed = bets.length;
-  const { totalWinPercentage } = useMemo(
-    () => calculateBetStats(bets, address as Address),
-    [bets, address],
-  );
+  const gamesPlayed = DUMMY_BETS.length;
+  const isLoading = false;
 
   const joiningDate = useMemo(() => {
     if (!isLoading) {
-      const firstBet = bets[0];
+      const firstBet = DUMMY_BETS[0];
       const creationTimestamp = Number(firstBet?.creationTimestamp) * 1000;
       const date = new Date(creationTimestamp);
       return date.toLocaleDateString();
     }
     return null;
-  }, [bets, isLoading]);
+  }, [isLoading]);
 
   return (
     <div className="text-white p-4 rounded-lg max-w-7xl mx-auto">
@@ -38,10 +30,7 @@ const ProfileComponent: React.FC = () => {
         <div className=" flex items-center space-x-4 border bg-blue-light bg-opacity-20 w-full rounded-xl p-2 py-5 lg:py-10 lg:pr-10">
           <div className="grid grid-cols-4 w-full h-full">
             <UserProfileInfo />
-            <UserStats
-              gamesPlayed={gamesPlayed}
-              totalWinPercentage={totalWinPercentage}
-            />
+            <UserStats gamesPlayed={gamesPlayed} totalWinPercentage={50} />
           </div>
         </div>
         <UserActions />
@@ -57,7 +46,7 @@ const ProfileComponent: React.FC = () => {
           </div>
         </div>
       </div>
-      <GameList bets={bets} />
+      <GameList bets={DUMMY_BETS} />
       <div>
         <LastMatches />
       </div>

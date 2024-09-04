@@ -133,8 +133,6 @@ const DialogContext = createContext<DialogContextProps | undefined>(undefined);
 const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<Record<DialogType, boolean>>({
     [DialogType.Connector]: false,
-    [DialogType.AccountDetail]: false,
-    [DialogType.SwitchChain]: false,
   });
 
   return (

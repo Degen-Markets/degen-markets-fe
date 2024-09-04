@@ -1,6 +1,6 @@
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import UserAvatar from "../../UserAvatar";
-import { Address } from "viem";
+import { Address } from "@/app/lib/utils/bets/types";
 
 interface TableUserInfoProps {
   address: Address;

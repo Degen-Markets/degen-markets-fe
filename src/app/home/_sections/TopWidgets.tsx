@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Widget from "@/app/components/Widget/Widget";
 import WidgetIcon from "@/app/components/Widget/WidgetIcon";
-import GradientText from "@/app/components/WalletMenu/GradientText";
+import GradientText from "@/app/components/GradientText";
 
 const TopWidgets: FC = () => {
   const widgetsData = [
@@ -31,13 +31,6 @@ const TopWidgets: FC = () => {
       },
       bg: "bg-us-election.png",
       comingSoon: false,
-    },
-    {
-      title: "BULL OR BEAR",
-      icon: <WidgetIcon name="bull" alt="Bull" className="bg-orange-main" />,
-      cta: { text: "Play", link: "/create-bet" },
-      bg: "bull_or_bear.png",
-      comingSoon: true,
     },
   ];
 

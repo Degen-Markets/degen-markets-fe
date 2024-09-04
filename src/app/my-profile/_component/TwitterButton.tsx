@@ -4,9 +4,9 @@ import {
   getTwitterLoginLink,
   saveTwitterUser,
 } from "@/app/lib/utils/api/twitter";
-import { Button } from "@/app/components/Button";
 import React, { useEffect, useState } from "react";
 import { BsPatchCheckFill } from "react-icons/bs";
+import { Button } from "@/app/components/Button/Button";
 
 const defaultText = "Connect X";
 

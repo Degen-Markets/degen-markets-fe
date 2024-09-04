@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import CircularProgress from "./CircularProgressBar";
-import GradientText from "@/app/components/WalletMenu/GradientText";
+import GradientText from "@/app/components/GradientText";
 
 interface GameCardProps {
   game: {

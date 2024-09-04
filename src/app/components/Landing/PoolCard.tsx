@@ -1,5 +1,5 @@
 import { Pool } from "@/app/lib/utils/bets/types";
-import { Button } from "../Button";
+import { Button } from "../Button/Button";
 
 const PoolCard = ({ pool }: { pool: Pool }) => (
   <div
