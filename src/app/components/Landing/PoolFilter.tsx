@@ -8,8 +8,8 @@ const PoolsFilter = () => (
       <div className="flex items-center space-x-1">
         <Image
           src="/icons/all-filter-icon.svg"
-          width={48}
-          height={48}
+          width={32}
+          height={32}
           alt="All Filter"
         />
         <span className="drop-shadow-lightText font-bold">ALL</span>
