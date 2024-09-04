@@ -7,7 +7,7 @@ interface Props extends PropsWithChildren {
   isHome?: boolean;
 }
 
-const Wrapper = ({ children, className, isHome = false }: Props) => {
+const Wrapper = ({ children, className }: Props) => {
   return (
     <div
       className={twMerge(

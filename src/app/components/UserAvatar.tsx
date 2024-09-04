@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getLastLetter } from "@/app/lib/utils/bets/helpers";
-import { Address } from "viem";
 import { twMerge } from "tailwind-merge";
+import { Address } from "../lib/utils/bets/types";
 
 const UserAvatar = ({
   address,

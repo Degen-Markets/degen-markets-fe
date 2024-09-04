@@ -1,29 +1,29 @@
 "use client";
 import { useMemo } from "react";
-import { ButtonGradient } from "@/app/components/Button";
 import { isBetConcluded } from "@/app/lib/utils/bets/helpers";
-import { Address } from "viem";
-import { useAccount } from "wagmi";
 import BetTable from "./MatchesBetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
 import Image from "next/image";
 import RakeInProfitButton from "../Button/RakeInProfitButton";
-import useGetBetForAddress from "@/app/hooks/useGetBetForAddress";
-
+import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
+import { Button } from "../Button/Button";
 const LastMatches = () => {
-  const { address } = useAccount();
-  const { bets, isLoading } = useGetBetForAddress(address as Address);
+  const isLoading = false;
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
 
-  const concludedbets = useMemo(() => bets.filter(isBetConcluded), [bets]);
+  const concludedbets = useMemo(() => DUMMY_BETS.filter(isBetConcluded), []);
 
-  if (!address) {
+  if (!DUMMY_BETS[0].creator) {
     return (
       <div className="flex justify-center flex-col items-center h-[50vh] space-y-2">
         <h4 className="text-4xl">Please Connect Your Wallet</h4>
-        <ButtonGradient size="regular" onClick={() => setOpenConnector(true)}>
+        <Button
+          size="regular"
+          intent="gradient"
+          onClick={() => setOpenConnector(true)}
+        >
           Wallet not connected
-        </ButtonGradient>
+        </Button>
       </div>
     );
   }

@@ -1,12 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { WagmiProvider } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastProvider } from "@/app/components/Toast/ToastProvider";
-import { queryClient, wagmiConfig } from "./lib/utils/wagmiConfig";
 import { DialogProvider } from "./components/Dialog/dialog";
-import RenderBGImage from "./components/RenderBgImage";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import {
   ConnectionProvider,
@@ -16,7 +13,8 @@ import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useMemo } from "react";
 import { clusterApiUrl } from "@solana/web3.js";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
-import { BalanceProvider } from "@/app/components/RecentActivity/BalanceContext";
+
+export const queryClient = new QueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const network = WalletAdapterNetwork.Mainnet;
@@ -30,24 +28,18 @@ export function Providers({ children }: { children: React.ReactNode }) {
     [network],
   );
   return (
-    <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
-        <React.Suspense fallback={<></>}>
-          <RenderBGImage>
-            <ToastProvider>
-              <ConnectionProvider endpoint={endpoint}>
-                <WalletProvider wallets={wallets} autoConnect>
-                  <WalletModalProvider>
-                    <DialogProvider>
-                      <BalanceProvider>{children} </BalanceProvider>
-                    </DialogProvider>
-                  </WalletModalProvider>
-                </WalletProvider>
-              </ConnectionProvider>
-            </ToastProvider>
-          </RenderBGImage>
-        </React.Suspense>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <QueryClientProvider client={queryClient}>
+      <React.Suspense fallback={<></>}>
+        <ToastProvider>
+          <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider wallets={wallets} autoConnect>
+              <WalletModalProvider>
+                <DialogProvider>{children}</DialogProvider>
+              </WalletModalProvider>
+            </WalletProvider>
+          </ConnectionProvider>
+        </ToastProvider>
+      </React.Suspense>
+    </QueryClientProvider>
   );
 }

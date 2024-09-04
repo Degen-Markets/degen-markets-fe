@@ -2,12 +2,12 @@ import React from "react";
 import Image from "next/image";
 
 interface UserStatsProps {
-  gamePlayed: number;
+  gamesPlayed: number;
   totalWinPercentage: number;
 }
 
 const UserStats: React.FC<UserStatsProps> = ({
-  gamePlayed,
+  gamesPlayed,
   totalWinPercentage,
 }) => {
   return (
@@ -42,10 +42,10 @@ const UserStats: React.FC<UserStatsProps> = ({
       </div>
 
       <div className="w-full h-60 flex flex-col items-center justify-center">
-        <p className="text-lg text-center font-bold mb-2 ">Game Played</p>
+        <p className="text-lg text-center font-bold mb-2 ">Games Played</p>
         <div className="w-full flex justify-center items-center flex-col h-full">
           <div className="h-full bg-olive-to-blue-gradient flex justify-center w-full items-center border-2 rounded-3xl text-center text-5xl font-bold">
-            {gamePlayed}
+            {gamesPlayed}
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Hash } from "viem";
+export type Hash = `0x${string}`;
 
 export enum Ticker {
   BTC = "BTC",
@@ -37,33 +37,7 @@ export enum Metric {
   MARKET_CAP_DOMINANCE = "market_cap_dominance",
 }
 
-export type MetricOption = {
-  label: string;
-  value: Metric;
-  image?: string;
-};
-
-export type MetricOptions = MetricOption[];
-
-export type ReelOption<T> = {
-  label: string;
-  value: T;
-  image?: string;
-};
-
 export type Address = Hash;
-
-export type CreatedBetObject = {
-  id: string;
-  creator: Address;
-  creationTimestamp: string;
-  expirationTimestamp: string;
-  ticker: Ticker;
-  metric: Metric;
-  isBetOnUp: boolean;
-  value: string;
-  currency: Address;
-};
 
 export type BetResponse = {
   id: string;
@@ -104,24 +78,6 @@ export interface PixelArtLoaderProps {
   textSize?: string;
 }
 
-export type TopToken = {
-  ticker: string;
-  betCount: string;
-};
-
-export interface IWalletMenuItem {
-  title: string;
-  link: string;
-  fn: () => void;
-}
-
-export interface DropdownProps {
-  heading: React.ReactNode;
-  menu: IWalletMenuItem[];
-  account: string;
-  setNav: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 export type Pool = {
   id: string;
   title: string;
@@ -144,85 +100,3 @@ export type SignatureResponse = {
 };
 
 export type BetType = "binary" | "closest-guess-wins";
-
-export interface BetComponentProps {
-  ethPrice: number | null;
-  tickerCmcResponse: TickerCmcApiData | null;
-}
-
-export interface PrettySearchProps<T> {
-  data: T;
-  setTicker: Dispatch<SetStateAction<ReelOption<Ticker>>>;
-  setIsPrettySearchOpen: Dispatch<SetStateAction<boolean>>;
-  rank?: number;
-}
-
-//  bet top tokens query data type
-
-export interface Tag {
-  slug: string;
-  name: string;
-  category: string;
-}
-
-export interface Quote {
-  USD: Usd;
-}
-
-export interface Usd {
-  price: number;
-  volume_24h: number;
-  volume_change_24h: number;
-  percent_change_1h: number;
-  percent_change_24h: number;
-  percent_change_7d: number;
-  percent_change_30d: number;
-  percent_change_60d: number;
-  percent_change_90d: number;
-  market_cap: number;
-  market_cap_dominance: number;
-  fully_diluted_market_cap: number;
-  tvl: null;
-  last_updated: string;
-}
-export interface TickerCmcApiData {
-  id: number;
-  name: string;
-  symbol: string;
-  slug: string;
-  num_market_pairs: number;
-  date_added: string;
-  tags: Tag[];
-  max_supply: number;
-  circulating_supply: number;
-  total_supply: number;
-  is_active: number;
-  infinite_supply: boolean;
-  platform: null;
-  cmc_rank: number;
-  is_fiat: number;
-  self_reported_circulating_supply: null;
-  self_reported_market_cap: null;
-  tvl_ratio: null;
-  last_updated: string;
-  quote: Quote;
-}
-
-export interface Status {
-  timestamp: Date;
-  error_code: number;
-  error_message: string | null;
-  elapsed: number;
-  credit_count: number;
-  notice: null;
-}
-
-export interface TickerCmcApiResponse {
-  status: Status;
-  data: TickerCmcApiData;
-}
-
-export type MetricSort =
-  | Metric.PRICE
-  | Metric.VOLUME
-  | Metric.MARKET_CAP_DOMINANCE;

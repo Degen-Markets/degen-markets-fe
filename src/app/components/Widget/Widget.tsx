@@ -1,7 +1,7 @@
 import { FC, HTMLAttributeAnchorTarget, ReactElement } from "react";
 import Link from "next/link";
 import WidgetIcon from "@/app/components/Widget/WidgetIcon";
-import { Button } from "@/app/components/Button";
+import { Button } from "../Button/Button";
 
 interface CTA {
   text: string;
