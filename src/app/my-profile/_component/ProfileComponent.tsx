@@ -8,7 +8,7 @@ import LastMatches from "@/app/components/LastMatches";
 import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 const ProfileComponent: React.FC = () => {
-  const gamePlayed = DUMMY_BETS.length;
+  const gamesPlayed = DUMMY_BETS.length;
   const isLoading = false;
 
   const joiningDate = useMemo(() => {
@@ -30,7 +30,7 @@ const ProfileComponent: React.FC = () => {
         <div className=" flex items-center space-x-4 border bg-blue-light bg-opacity-20 w-full rounded-xl p-2 py-5 lg:py-10 lg:pr-10">
           <div className="grid grid-cols-4 w-full h-full">
             <UserProfileInfo />
-            <UserStats gamePlayed={gamePlayed} totalWinPercentage={50} />
+            <UserStats gamesPlayed={gamesPlayed} totalWinPercentage={50} />
           </div>
         </div>
         <UserActions />
