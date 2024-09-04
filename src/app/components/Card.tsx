@@ -22,7 +22,7 @@ const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
       )}
     >
       {icon && <div className="flex-shrink-0">{icon}</div>}
-      <span className={twMerge("drop-shadow-md")}>{children}</span>
+      <span className="drop-shadow-md">{children}</span>
     </div>
   );
 };

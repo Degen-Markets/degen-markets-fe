@@ -8,11 +8,11 @@ const SectionHeader = ({
   icon?: ReactElement;
   title: string;
 }) => (
-  <div className="flex items-center space-x-2 ml-5">
+  <div className="flex space-x-2">
     <CardHeading
       icon={icon}
       bordered={false}
-      className="uppercase items-center justify-center"
+      className="uppercase items-center"
     >
       {title}
     </CardHeading>

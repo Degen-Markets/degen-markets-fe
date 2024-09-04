@@ -24,11 +24,11 @@ const PoolSection = ({
 
   return (
     <div
-      className="bg-black-medium bg-opacity-90 p-10 bg-no-repeat bg-contain bg-center rounded-xl py-10 mb-20"
-      style={{ backgroundImage: "url(/Lending-Flow.svg)" }}
+      className="bg-white bg-opacity-5 p-10 bg-no-repeat bg-contain bg-center rounded-xl py-10"
+      style={{ backgroundImage: "url(/images/pools-bg.png)" }}
     >
       <PoolsFilter />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full place-items-center place-content-center my-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full place-items-center place-content-center">
         <PoolsGrid pools={displayedPools} />
         <PoolCardPlaceHolder count={placeholdersCount} />
       </div>
