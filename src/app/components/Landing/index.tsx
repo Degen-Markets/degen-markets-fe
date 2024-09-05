@@ -22,6 +22,7 @@ const Pools = ({ pools }: { pools: PoolsResponse }) => {
             width={64}
             height={64}
             alt="poolc icon"
+            className="w-10 md:w-16"
           />
         }
         title="Pools"

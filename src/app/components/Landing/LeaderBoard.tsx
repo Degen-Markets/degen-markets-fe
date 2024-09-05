@@ -10,6 +10,7 @@ const LeaderBoard = () => (
           alt="LeaderBoard"
           width={48}
           height={48}
+          className="w-8 md:w-14"
         />
       }
       title="LeaderBoard"
