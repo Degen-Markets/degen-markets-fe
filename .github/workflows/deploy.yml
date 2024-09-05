@@ -3,7 +3,7 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main
+      - feat/custom_ui_for_pool_card
   pull_request:
     branches:
       - "*"
@@ -58,7 +58,7 @@ jobs:
           npm install -g vercel
 
           # Determine deployment type (production or preview)
-          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/feat/custom_ui_for_pool_card" ]; then
             # Production deployment
             vercel --prod --token $VERCEL_TOKEN | tee deployment.log
           else
