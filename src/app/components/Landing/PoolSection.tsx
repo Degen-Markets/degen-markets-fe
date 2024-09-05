@@ -24,7 +24,7 @@ const PoolSection = ({
 
   return (
     <div
-      className="bg-white bg-opacity-5 p-6 md:p-10 bg-no-repeat bg-contain bg-center rounded-xl py-10"
+      className="bg-white bg-opacity-5 p-6 md:p-10 bg-no-repeat bg-contain bg-center rounded-xl"
       style={{ backgroundImage: "url(/images/pools-bg.png)" }}
     >
       <PoolsFilter />
