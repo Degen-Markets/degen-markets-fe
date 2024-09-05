@@ -1,10 +1,10 @@
 import Wrapper from "@/app/components/Wrapper";
-import BlinkCard from "@/app/pools/[id]/BlinkCard";
+import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
 
 const PoolPage = ({ params: { id } }: { params: { id: string } }) => {
   return (
     <Wrapper>
-      <BlinkCard poolId={id} />
+      <BlinkLoader poolId={id} />
     </Wrapper>
   );
 };
