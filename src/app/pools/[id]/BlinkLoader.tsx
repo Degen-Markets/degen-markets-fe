@@ -10,10 +10,7 @@ interface BlinkCardProps {
   poolId: string;
 }
 const BlinkLoader = ({ poolId }: BlinkCardProps) => {
-  // eslint-disable-next-line no-console
-  console.log("poolId :", poolId);
-
-  const actionApiUrl = `https://dial.to/donate`;
+  const actionApiUrl = `https://degenmarkets.com/pools/${poolId}`;
 
   const { adapter } = useActionSolanaWalletAdapter(RPC_URL);
   const { action } = useAction({ url: actionApiUrl, adapter });
