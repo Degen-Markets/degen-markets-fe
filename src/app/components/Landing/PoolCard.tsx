@@ -12,10 +12,7 @@ const PoolCard = ({ pool }: { pool: Pool }) => (
       <h2 className="font-bold group-hover:opacity-0 transition-all ease duration-300">
         {pool.title}
       </h2>
-      <a
-        href={`https://dial.to/?action=solana-action:https://actions.degenmarkets.com/pools/${pool.id}`}
-        target="_blank"
-      >
+      <a href={`/pools/${pool.id}`} target="_blank">
         <Button
           size="regular"
           className="bg-opacity-90 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all ease duration-300"
