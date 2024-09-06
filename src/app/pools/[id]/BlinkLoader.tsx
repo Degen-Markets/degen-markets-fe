@@ -3,6 +3,7 @@ import "@dialectlabs/blinks/index.css";
 
 import { useActionSolanaWalletAdapter } from "@dialectlabs/blinks/hooks/solana";
 import { Blink, useAction } from "@dialectlabs/blinks";
+import Skeleton from "@/app/pools/[id]/Skeleton";
 
 const RPC_URL = "https://api.mainnet-beta.solana.com";
 
@@ -15,7 +16,7 @@ const BlinkLoader = ({ poolId }: BlinkCardProps) => {
   const { adapter } = useActionSolanaWalletAdapter(RPC_URL);
   const { action } = useAction({ url: actionApiUrl, adapter });
 
-  if (!action) return null;
+  if (!action) return <Skeleton />;
 
   return (
     <Blink
