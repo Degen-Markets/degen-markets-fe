@@ -3,8 +3,10 @@ import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
 
 const PoolPage = ({ params: { id } }: { params: { id: string } }) => {
   return (
-    <Wrapper>
-      <BlinkLoader poolId={id} />
+    <Wrapper className="flex justify-center">
+      <div className="w-full md:w-2/6">
+        <BlinkLoader poolId={id} />
+      </div>
     </Wrapper>
   );
 };
