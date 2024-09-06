@@ -4,9 +4,9 @@
 
 .blink.x-dark {
   --blink-bg-primary: #202b38;
-  --blink-button: #8e68e5;
-  --blink-button-disabled: #ab9ff1;
-  --blink-button-hover: #ab9ff1;
+  --blink-button: #ab9ff1;
+  --blink-button-disabled: #2e3a47;
+  --blink-button-hover: #8e68e5;
   --blink-button-success: #00ae661a;
   --blink-icon-error: #ff6565;
   --blink-icon-error-hover: #ff7a7a;
@@ -25,7 +25,7 @@
   --blink-stroke-secondary: #3d4144;
   --blink-stroke-warning: #ffb545;
   --blink-text-brand: #ab9ff1;
-  --blink-text-button: #ffffff;
+  --blink-text-button: #202b38;
   --blink-text-button-disabled: #768088;
   --blink-text-button-success: #22c55e;
   --blink-text-error: #ff6565;
