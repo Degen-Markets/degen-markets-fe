@@ -8,15 +8,14 @@ import React, {
 } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
-  WalletProvider,
   ConnectionProvider,
+  WalletProvider,
   useWallet,
   WalletContextState,
 } from "@solana/wallet-adapter-react";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { clusterApiUrl } from "@solana/web3.js";
 import nacl from "tweetnacl";
-import { decodeUTF8 } from "tweetnacl-util";
 import bs58 from "bs58";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
@@ -27,20 +26,14 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
-export function WalletContextProvider({
+function WalletContextProviderInner({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
-
-  const network = WalletAdapterNetwork.Mainnet;
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
-
   const wallet = useWallet();
 
-  // Automatically set the wallet address when the wallet is connected
   useEffect(() => {
     if (wallet.connected && wallet.publicKey) {
       setWalletAddress(wallet.publicKey.toBase58());
@@ -50,12 +43,26 @@ export function WalletContextProvider({
   }, [wallet.connected, wallet.publicKey]);
 
   return (
+    <WalletContext.Provider value={{ walletAddress, setWalletAddress }}>
+      {children}
+    </WalletContext.Provider>
+  );
+}
+
+export function WalletContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const network = WalletAdapterNetwork.Mainnet;
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
+
+  return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
-          <WalletContext.Provider value={{ walletAddress, setWalletAddress }}>
-            {children}
-          </WalletContext.Provider>
+          <WalletContextProviderInner>{children}</WalletContextProviderInner>
         </WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
@@ -76,7 +83,7 @@ export async function signMessage(
   wallet: WalletContextState,
 ): Promise<{ message: string; signature: Uint8Array } | null> {
   const message = "Welcome to degenmarkets.com";
-  const messageBytes = decodeUTF8(message);
+  const messageBytes = Buffer.from(message, "utf8");
 
   if (!wallet || !wallet.connected || !wallet.signMessage) {
     throw new Error(
@@ -102,7 +109,7 @@ export async function verifySignedMessage(
   messageToVerify: string,
   signature: Uint8Array,
 ): Promise<boolean> {
-  const messageBytes = decodeUTF8(messageToVerify);
+  const messageBytes = Buffer.from(messageToVerify, "utf-8");
 
   if (!wallet || !wallet.connected || !wallet.publicKey) {
     console.error(
