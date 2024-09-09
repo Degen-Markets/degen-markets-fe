@@ -81,6 +81,7 @@ export interface PixelArtLoaderProps {
 export type Pool = {
   id: string;
   title: string;
+  description: string;
   options: {
     title: string;
     id: string;
