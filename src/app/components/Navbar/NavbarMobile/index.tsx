@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import NavigationRoutes from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileItem from "./NavbarMobileItem";
-import { usePathname } from "next/navigation";
 import SolanaWallet from "@/app/components/SolanaWallet";
 
 export const NavbarMobile: React.FC<{
@@ -24,7 +23,7 @@ export const NavbarMobile: React.FC<{
         className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 h-dvh bg-opacity-80 z-40"
       ></div>
       <div className="flex flex-col absolute top-0 right-0 w-full md:w-[40%] h-dvh bg-neutral-100 text-neutral-800 px-2 z-40 overflow-y-auto">
-        <ul className="mt-12 space-y-5 ">
+        <ul className="mt-12 space-y-5 hidden">
           {sortedRoutes.map((route) => (
             <NavbarMobileItem key={route.name} route={route} setNav={setNav} />
           ))}

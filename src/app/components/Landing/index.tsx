@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
-import { BsFillPieChartFill } from "react-icons/bs";
 import { PoolsResponse } from "@/app/lib/utils/bets/types";
 import SectionHeader from "./SectionHeading";
-import StatsAndSocials from "./StatsAndSocial";
 import PoolSection from "./PoolSection";
+import PoolsIcon from "@/app/components/Icons/PoolsIcon";
 
 const Pools = ({ pools }: { pools: PoolsResponse }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,17 +14,18 @@ const Pools = ({ pools }: { pools: PoolsResponse }) => {
   };
 
   return (
-    <>
-      <div className="my-40">
-        <SectionHeader icon={<BsFillPieChartFill size={30} />} title="Pools" />
-        <PoolSection
-          pools={pools}
-          currentPage={currentPage}
-          poolsPerPage={poolsPerPage}
-          handlePageChange={handlePageChange}
-        />
-      </div>
-    </>
+    <div>
+      <SectionHeader
+        icon={<PoolsIcon width="64" height="64" />}
+        title="Pools"
+      />
+      <PoolSection
+        pools={pools}
+        currentPage={currentPage}
+        poolsPerPage={poolsPerPage}
+        handlePageChange={handlePageChange}
+      />
+    </div>
   );
 };
 
