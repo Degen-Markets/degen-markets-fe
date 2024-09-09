@@ -2,7 +2,7 @@ import Pools from "./components/Landing";
 import HeroSection from "./components/Landing/HeroSection";
 import LeaderBoard from "./components/Landing/LeaderBoard";
 import Wrapper from "./components/Wrapper";
-import { getPools } from "./lib/utils/api/getPools";
+import { getPools } from "./lib/utils/api/pools";
 
 export const dynamic = "force-dynamic"; // forces Next to not cache api requests
 
