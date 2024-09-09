@@ -27,25 +27,11 @@ const NavigationRoutes: NavigationProps = {
     root: "/",
     navbar: [
       {
-        name: "Games",
-        icon: "/navIcons/game.svg",
-        route: [
-          {
-            routeName: "bull or bear",
-            link: "/create-bet",
-          },
-          {
-            routeName: "the price is right",
-            link: "/games/price-is-right/create-bet",
-          },
-          {
-            routeName: "moon or rug",
-            link: "/",
-            comingSoon: true,
-          },
-        ],
-        comingSoon: true,
-        isExpandible: true,
+        name: "Profile",
+        icon: "",
+        route: "/my-profile",
+        comingSoon: false,
+        isExpandible: false,
       },
       {
         name: "Community",
@@ -66,20 +52,6 @@ const NavigationRoutes: NavigationProps = {
         isExpandible: false,
       },
     ],
-  },
-  bet: {
-    existingBets: {
-      root: "/bets",
-      betWithId: (id: string) => `/bets/${id}`,
-    },
-    createBet: {
-      bullOrBear: "/create-bet",
-      priceIsRight: "/games/price-is-right/create-bet",
-    },
-  },
-  account: {
-    myBet: "/my-bets",
-    myHistory: "/my-history",
   },
 };
 

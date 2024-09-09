@@ -15,7 +15,7 @@ const UserAvatar = ({
   className?: string;
 }) => (
   <Image
-    src={`/user-avatars/${address ? getLastLetter(address) : "default"}.jpg`}
+    src="/user-avatars/default.jpg"
     alt={address || ""}
     width={width}
     height={height}

@@ -11,7 +11,7 @@ export const isTimestampInFuture = (timestampInSeconds: number): boolean =>
 
 export const getLastLetter = (str: string): string => str.slice(str.length - 1);
 
-export const getDisplayNameForAddress = (address: Hash): string =>
+export const getDisplayNameForAddress = (address: string): string =>
   address.slice(0, 4) + "..." + address.slice(-5);
 
 export function getTimeDifferenceInSeconds(
