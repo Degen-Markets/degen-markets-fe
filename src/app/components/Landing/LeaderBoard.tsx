@@ -1,18 +1,10 @@
-import Image from "next/image";
 import SectionHeader from "./SectionHeading";
+import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";
 
 const LeaderBoard = () => (
   <div className="">
     <SectionHeader
-      icon={
-        <Image
-          src={"/icons/leaderboard-icon.svg"}
-          alt="LeaderBoard"
-          width={48}
-          height={48}
-          className="w-8 md:w-14"
-        />
-      }
+      icon={<LeaderboardIcon width="64" height="64" />}
       title="LeaderBoard"
     />
     <div className="bg-white bg-opacity-5 p-6 md:p-10 bg-no-repeat bg-contain bg-center rounded-xl py-10 mb-20"></div>
