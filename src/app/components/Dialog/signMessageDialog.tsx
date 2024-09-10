@@ -1,21 +1,18 @@
 "use client";
-import { FC, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogType,
-  useDialog,
 } from "./dialog";
 import GradientText from "../GradientText";
 import { signMessage, verifySignedMessage } from "@/app/context/WalletContext";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useToast } from "../Toast/ToastProvider";
-import { saveTwitterUser } from "@/app/lib/utils/api/twitter";
-import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../Button/Button";
+import bs58 from "bs58";
 
 interface SignatureDialogProps {
   open: boolean;
@@ -33,7 +30,7 @@ const SignatureDialog = ({ open, setOpen, saveUser }: SignatureDialogProps) => {
       setLoading(true);
       if (!wallet.connected || !wallet.signMessage) {
         showToast(
-          "Please connect your wallet and authorize via Twitter.",
+          "Wallet is not connected or doesn't support message signing",
           "info",
         );
         return;
@@ -48,13 +45,10 @@ const SignatureDialog = ({ open, setOpen, saveUser }: SignatureDialogProps) => {
 
       const { message, signature } = signedData;
       const verified = await verifySignedMessage(wallet, message, signature);
-
-      console.log({
-        verified,
-      });
+      const signatureBase58 = bs58.encode(signature);
 
       if (verified) {
-        await saveUser(signature.toString());
+        await saveUser(signatureBase58);
         setOpen(false);
       } else {
         showToast("Message verification failed.", "error");

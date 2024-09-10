@@ -93,10 +93,6 @@ export async function signMessage(
 
   try {
     const signature = await wallet.signMessage(messageBytes);
-    console.log({
-      message,
-      signature: bs58.encode(signature), // Display signature in Base58 for readability
-    });
     return { message, signature };
   } catch (error) {
     console.error("Error signing the message:", error);
@@ -119,11 +115,11 @@ export async function verifySignedMessage(
   }
 
   try {
-    const publicKeyBytes = bs58.decode(wallet.publicKey.toString());
+    const publicKeyBase58 = bs58.decode(wallet.publicKey.toBase58());
     const verified = nacl.sign.detached.verify(
       messageBytes,
       signature,
-      publicKeyBytes,
+      publicKeyBase58,
     );
     return verified;
   } catch (error) {

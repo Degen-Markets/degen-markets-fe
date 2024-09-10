@@ -2,7 +2,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   getTwitterLoginLink,
-  saveTwitterUser,
+  saveTwitterProfile,
 } from "@/app/lib/utils/api/twitter";
 import React, { useEffect, useState } from "react";
 import { BsPatchCheckFill } from "react-icons/bs";
@@ -12,6 +12,7 @@ import { useToast } from "@/app/components/Toast/ToastProvider";
 import { signMessage, verifySignedMessage } from "@/app/context/WalletContext"; // Import your signMessage function
 import SignatureDialog from "@/app/components/Dialog/signMessageDialog";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
+import bs58 from "bs58";
 
 const defaultText = "Connect X";
 
@@ -47,16 +48,16 @@ const TwitterButton = () => {
 
     try {
       setLoading(true);
-      if (twitterCode && signature) {
-        // // Save Twitter user with the signature
-        // const twitterUserResponse = await saveTwitterUser(
-        //   twitterCode,
-        //   signature,
-        //   wallet.publicKey.toString(),
-        // );
-        // const twitterUser = twitterUserResponse.data;
-        // setText(`@${twitterUser.username}`);
 
+      if (twitterCode && signature && wallet.publicKey) {
+        // Save Twitter user with the signature
+        const twitterUserResponse = await saveTwitterProfile(
+          twitterCode,
+          signature,
+          wallet.publicKey.toBase58(),
+        );
+        const twitterUser = twitterUserResponse.data;
+        setText(`@${twitterUser.username}`);
         router.replace(pathname); // Remove the code from the URL
       }
     } catch (error) {
