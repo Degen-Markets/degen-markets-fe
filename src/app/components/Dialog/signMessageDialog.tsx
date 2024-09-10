@@ -8,11 +8,11 @@ import {
   DialogTitle,
 } from "./dialog";
 import GradientText from "../GradientText";
-import { signMessage, verifySignedMessage } from "@/app/context/WalletContext";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useToast } from "../Toast/ToastProvider";
 import { Button } from "../Button/Button";
 import bs58 from "bs58";
+import { signMessage, verifySignedMessage } from "@/app/lib/utils/cryptography";
 
 interface SignatureDialogProps {
   open: boolean;
