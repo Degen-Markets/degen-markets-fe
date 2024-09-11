@@ -5,7 +5,7 @@ import bs58 from "bs58";
 export async function signMessage(
   wallet: WalletContextState,
 ): Promise<{ message: string; signature: Uint8Array } | null> {
-  const message = "Welcome to degenmarkets.com";
+  const message = "Welcome to degenmarkets.com"; // "this same string is stored in the backend and verified on api requests, please do not change"
   const messageBytes = Buffer.from(message, "utf8");
 
   if (!wallet || !wallet.connected || !wallet.signMessage) {
@@ -20,33 +20,5 @@ export async function signMessage(
   } catch (error) {
     console.error("Error signing the message:", error);
     return null;
-  }
-}
-
-export async function verifySignedMessage(
-  wallet: WalletContextState,
-  messageToVerify: string,
-  signature: Uint8Array,
-): Promise<boolean> {
-  const messageBytes = Buffer.from(messageToVerify, "utf-8");
-
-  if (!wallet || !wallet.connected || !wallet.publicKey) {
-    console.error(
-      "Error: Wallet is not connected or does not have a public key",
-    );
-    return false;
-  }
-
-  try {
-    const publicKeyBase58 = bs58.decode(wallet.publicKey.toBase58());
-    const verified = nacl.sign.detached.verify(
-      messageBytes,
-      signature,
-      publicKeyBase58,
-    );
-    return verified;
-  } catch (error) {
-    console.error("Error during signature verification:", error);
-    return false;
   }
 }

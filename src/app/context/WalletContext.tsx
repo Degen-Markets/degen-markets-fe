@@ -1,46 +1,23 @@
 "use client";
-import React, {
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-  useEffect,
-} from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import {
   ConnectionProvider,
   WalletProvider,
-  useWallet,
 } from "@solana/wallet-adapter-react";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
-interface WalletContextType {
-  walletAddress: string | null;
-  setWalletAddress: React.Dispatch<React.SetStateAction<string | null>>;
-}
-
-const WalletContext = createContext<WalletContextType | undefined>(undefined);
+const WalletContext = createContext<undefined>(undefined);
 
 function WalletContextProviderInner({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const wallet = useWallet();
-
-  useEffect(() => {
-    if (wallet.connected && wallet.publicKey) {
-      setWalletAddress(wallet.publicKey.toBase58());
-    } else {
-      setWalletAddress(null);
-    }
-  }, [wallet.connected, wallet.publicKey]);
-
   return (
-    <WalletContext.Provider value={{ walletAddress, setWalletAddress }}>
+    <WalletContext.Provider value={undefined}>
       {children}
     </WalletContext.Provider>
   );

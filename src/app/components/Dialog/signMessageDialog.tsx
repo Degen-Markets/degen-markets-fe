@@ -12,7 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useToast } from "../Toast/ToastProvider";
 import { Button } from "../Button/Button";
 import bs58 from "bs58";
-import { signMessage, verifySignedMessage } from "@/app/lib/utils/cryptography";
+import { signMessage } from "@/app/lib/utils/cryptography";
 
 interface SignatureDialogProps {
   open: boolean;
@@ -44,15 +44,9 @@ const SignatureDialog = ({ open, setOpen, saveUser }: SignatureDialogProps) => {
       }
 
       const { message, signature } = signedData;
-      const verified = await verifySignedMessage(wallet, message, signature);
       const signatureBase58 = bs58.encode(signature);
-
-      if (verified) {
-        await saveUser(signatureBase58);
-        setOpen(false);
-      } else {
-        showToast("Message verification failed.", "error");
-      }
+      await saveUser(signatureBase58);
+      setOpen(false);
     } catch (error) {
       console.error("Error during Twitter login and message signing:", error);
       showToast("Error signing message or saving Twitter user.", "error");
