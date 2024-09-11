@@ -33,24 +33,6 @@ const NavigationRoutes: NavigationProps = {
         comingSoon: false,
         isExpandible: false,
       },
-      {
-        name: "Community",
-        icon: "/navIcons/community.svg",
-        route: {
-          twitter: "/",
-          discord: "/",
-          telegram: "/",
-        },
-        comingSoon: true,
-        isExpandible: true,
-      },
-      {
-        name: "LeaderBoard",
-        icon: "/navIcons/leaderBoard.svg",
-        route: "/leaderboard",
-        comingSoon: true,
-        isExpandible: false,
-      },
     ],
   },
 };

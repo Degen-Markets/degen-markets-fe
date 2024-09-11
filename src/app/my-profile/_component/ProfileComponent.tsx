@@ -1,13 +1,21 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import UserProfileInfo from "./UserProfileInfo";
 import UserStats from "./UserStats";
 import UserActions from "./UserActions";
 import LastMatches from "@/app/components/LastMatches";
 import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useRouter } from "next/navigation";
 
 const ProfileComponent: React.FC = () => {
   const gamesPlayed = DUMMY_BETS.length;
+  const router = useRouter();
+  const wallet = useWallet();
+
+  useEffect(() => {
+    if (!wallet?.connected) router.push("/");
+  }, [router, wallet?.connected]);
 
   return (
     <div className="text-white p-4 rounded-lg max-w-7xl mx-auto">
