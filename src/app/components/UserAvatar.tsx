@@ -8,14 +8,20 @@ const UserAvatar = ({
   width = 120,
   height = width,
   className,
+  twitterPfpUrl,
 }: {
   address?: Address;
   width?: number;
   height?: number;
   className?: string;
+  twitterPfpUrl?: string | undefined;
 }) => (
   <Image
-    src="/user-avatars/default.jpg"
+    // src={twitterPfpUrl || "/user-avatars/default.jpg"}
+    src={
+      "https://pbs.twimg.com/profile_images/1623208016156954624/ap_7Vpc9_normal.jpg" ||
+      "/user-avatars/default.jpg"
+    }
     alt={address || ""}
     width={width}
     height={height}
