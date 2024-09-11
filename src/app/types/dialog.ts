@@ -10,6 +10,7 @@ import { Address } from "../lib/utils/bets/types";
 
 export enum DialogType {
   Connector,
+  signature,
 }
 
 export interface DialogContextProps {

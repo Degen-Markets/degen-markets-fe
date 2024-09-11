@@ -21,7 +21,9 @@ const NavbarMobileItem: React.FC<{
               route.comingSoon && "opacity-35",
             )}
           >
-            <Image src={route.icon} alt={route.icon} width={30} height={30} />
+            {route.icon && (
+              <Image src={route.icon} alt={route.icon} width={30} height={30} />
+            )}
             <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
               {route.name}
             </p>
@@ -29,9 +31,16 @@ const NavbarMobileItem: React.FC<{
           <Badge>soon</Badge>
         </div>
       ) : typeof route.route === "string" ? (
-        <Link href={route.route}>
+        <Link
+          href={route.route}
+          onClick={() => {
+            setNav(false);
+          }}
+        >
           <div className="flex justify-center items-center space-x-2 bg-[#202b38] hover:bg-[#131921] px-3 py-2 rounded-lg text-white">
-            <Image src={route.icon} alt={route.icon} width={30} height={30} />
+            {route.icon && (
+              <Image src={route.icon} alt={route.icon} width={30} height={30} />
+            )}
             <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
               {route.name}
             </p>

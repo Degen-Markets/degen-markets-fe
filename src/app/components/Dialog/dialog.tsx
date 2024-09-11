@@ -133,6 +133,7 @@ const DialogContext = createContext<DialogContextProps | undefined>(undefined);
 const DialogProvider = ({ children }: { children: ReactNode }) => {
   const [state, setState] = useState<Record<DialogType, boolean>>({
     [DialogType.Connector]: false,
+    [DialogType.signature]: false,
   });
 
   return (

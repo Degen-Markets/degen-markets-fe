@@ -4,14 +4,13 @@ import { isBetConcluded } from "@/app/lib/utils/bets/helpers";
 import BetTable from "./MatchesBetTable";
 import { DialogType, useDialog } from "../Dialog/dialog";
 import Image from "next/image";
-import RakeInProfitButton from "../Button/RakeInProfitButton";
 import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 import { Button } from "../Button/Button";
 const LastMatches = () => {
   const isLoading = false;
   const { setOpen: setOpenConnector } = useDialog(DialogType.Connector);
 
-  const concludedbets = useMemo(() => DUMMY_BETS.filter(isBetConcluded), []);
+  const concludedbets = useMemo(() => DUMMY_BETS.filter(() => null), []);
 
   if (!DUMMY_BETS[0].creator) {
     return (
@@ -31,7 +30,6 @@ const LastMatches = () => {
   return (
     <div className="max-w-7xl mx-auto text-center">
       <div>
-        <RakeInProfitButton />
         <div className="border-b border-gray-300 flex justify-start items-end mb-10">
           <div className="flex items-center space-x-2 font-bold uppercase">
             <Image
