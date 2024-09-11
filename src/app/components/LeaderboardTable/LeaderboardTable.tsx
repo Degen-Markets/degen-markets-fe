@@ -3,6 +3,7 @@ import { FC } from "react";
 import UserAvatar from "@/app/components/UserAvatar";
 import RankIcon from "@/app/components/Icons/RankIcon";
 import { twMerge } from "tailwind-merge";
+import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 
 interface PlayerRowProps {
   player: Player;
@@ -10,7 +11,7 @@ interface PlayerRowProps {
 }
 
 const PlayerRow: FC<PlayerRowProps> = ({
-  player: { twitterUsername, twitterPfpUrl, points },
+  player: { twitterUsername, twitterPfpUrl, points, address },
   order,
 }) => {
   const isHighRank = order <= 3;
@@ -34,7 +35,11 @@ const PlayerRow: FC<PlayerRowProps> = ({
         </div>
       </div>
       <div className="flex flex-col gap-1 justify-center font-bold">
-        <div className="text-base">{twitterUsername}</div>
+        <div className="text-base">
+          {twitterUsername
+            ? twitterUsername
+            : getDisplayNameForAddress(address)}
+        </div>
         <span className="text-gray-400 text-sm">{points} Points</span>
       </div>
     </div>
