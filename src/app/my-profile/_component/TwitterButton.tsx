@@ -61,7 +61,7 @@ const TwitterButton = () => {
           wallet.publicKey.toBase58(),
         );
 
-        const twitterUser = twitterUserResponse;
+        const twitterUser = twitterUserResponse.data;
 
         setText(`@${twitterUser.twitterUsername}`);
         router.replace(pathname);

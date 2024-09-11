@@ -1,6 +1,4 @@
 import { WalletContextState } from "@solana/wallet-adapter-react";
-import nacl from "tweetnacl";
-import bs58 from "bs58";
 
 export async function signMessage(
   wallet: WalletContextState,
