@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import IconProps from "@/app/types/Icon";
 
 const LeaderboardIcon: FC<IconProps> = ({
-  width = "184",
-  height = "184",
+  width = 64,
+  height = 64,
   style,
   className,
 }) => {

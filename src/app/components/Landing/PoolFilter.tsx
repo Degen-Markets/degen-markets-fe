@@ -7,11 +7,11 @@ const PoolsFilter = () => (
   <div className="uppercase flex justify-between items-center w-full border-b border-cadet-blue-light pb-1 mb-10">
     <div className="flex items-center space-x-3 md:space-x-8">
       <div className="flex items-center space-x-1">
-        <AllIcon width="32" height="32" />
+        <AllIcon width={32} height={32} />
         <span className="drop-shadow-lightText font-bold">ALL</span>
       </div>
       <div className="flex items-center space-x-1">
-        <ElectionIcon width="32" height="32" />
+        <ElectionIcon width={32} height={32} />
         <span className="drop-shadow-lightText font-bold">Elections</span>
       </div>
     </div>
