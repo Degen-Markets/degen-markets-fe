@@ -26,11 +26,12 @@ const TwitterButton = () => {
   const { showToast } = useToast();
   const twitterCode = searchParams.get("code");
 
-  const signMessageModal = twitterCode && wallet.connected && wallet.publicKey;
+  const isSignatureRequired =
+    twitterCode && wallet.connected && wallet.publicKey;
 
   const handleLogin = async () => {
     if (!wallet?.connected) {
-      showToast("Please connect your wallet.", "info");
+      showToast("Please connect your wallet first.", "info");
       return;
     }
 
@@ -63,6 +64,10 @@ const TwitterButton = () => {
 
         const twitterUser = twitterUserResponse.data;
 
+        console.log({
+          twitterUser,
+        });
+
         setText(`@${twitterUser.twitterUsername}`);
         router.replace(pathname);
       }
@@ -74,7 +79,7 @@ const TwitterButton = () => {
   };
 
   useEffect(() => {
-    if (signMessageModal) {
+    if (isSignatureRequired) {
       setOpen(true);
     }
   }, [twitterCode, wallet.connected, wallet.publicKey]);
@@ -88,7 +93,7 @@ const TwitterButton = () => {
         <BsPatchCheckFill className="absolute -top-3 -right-3" size={25} />
       )}
 
-      {signMessageModal && (
+      {isSignatureRequired && (
         <SignatureDialog open={open} setOpen={setOpen} saveUser={saveUser} />
       )}
     </>

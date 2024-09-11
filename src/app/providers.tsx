@@ -4,7 +4,6 @@ import * as React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastProvider } from "@/app/components/Toast/ToastProvider";
 import { DialogProvider } from "./components/Dialog/dialog";
-import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { WalletContextProvider } from "./context/WalletContext";
 
 export const queryClient = new QueryClient();

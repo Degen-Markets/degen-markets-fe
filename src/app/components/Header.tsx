@@ -51,15 +51,13 @@ const Header: React.FC = () => {
                 )}
               </div>
               {nav && <NavbarMobile nav={nav} setNav={setNav} />}
-              <div className="hidden md:flex items-center space-x-2">
-                {wallet.connected && (
-                  <Link
-                    href={"/my-profile"}
-                    className="hover:underline underline-offset-4 font-semibold hover:text-purple-light transition-all ease-in duration-150 "
-                  >
-                    Profile
-                  </Link>
-                )}
+              <div className="hidden md:flex items-center space-x-4">
+                <Link
+                  href={"/my-profile"}
+                  className="hover:underline underline-offset-4 font-semibold hover:text-purple-light transition-all ease-in duration-150 "
+                >
+                  Profile
+                </Link>
                 <SolanaWallet />
               </div>
             </div>
