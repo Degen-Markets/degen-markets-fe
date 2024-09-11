@@ -17,11 +17,7 @@ const UserAvatar = ({
   twitterPfpUrl?: string | undefined;
 }) => (
   <Image
-    // src={twitterPfpUrl || "/user-avatars/default.jpg"}
-    src={
-      "https://pbs.twimg.com/profile_images/1623208016156954624/ap_7Vpc9_normal.jpg" ||
-      "/user-avatars/default.jpg"
-    }
+    src={twitterPfpUrl || "/user-avatars/default.jpg"}
     alt={address || ""}
     width={width}
     height={height}
