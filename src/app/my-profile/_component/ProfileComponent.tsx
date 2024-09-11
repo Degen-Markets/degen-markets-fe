@@ -1,6 +1,5 @@
 "use client";
-import React, { useMemo } from "react";
-import GameList from "./GameList";
+import React, { useEffect, useMemo } from "react";
 import UserProfileInfo from "./UserProfileInfo";
 import UserStats from "./UserStats";
 import UserActions from "./UserActions";
@@ -9,17 +8,6 @@ import { DUMMY_BETS } from "@/app/lib/utils/bets/constants";
 
 const ProfileComponent: React.FC = () => {
   const gamesPlayed = DUMMY_BETS.length;
-  const isLoading = false;
-
-  const joiningDate = useMemo(() => {
-    if (!isLoading) {
-      const firstBet = DUMMY_BETS[0];
-      const creationTimestamp = Number(firstBet?.creationTimestamp) * 1000;
-      const date = new Date(creationTimestamp);
-      return date.toLocaleDateString();
-    }
-    return null;
-  }, [isLoading]);
 
   return (
     <div className="text-white p-4 rounded-lg max-w-7xl mx-auto">
@@ -35,18 +23,6 @@ const ProfileComponent: React.FC = () => {
         </div>
         <UserActions />
       </div>
-      <div className="border-b pb-2 my-10 font-bold">
-        <div className="flex justify-between items-center lg:px-4">
-          <div>Joined {joiningDate}</div>
-          <div>
-            <div>
-              Me vs:&nbsp;<span className="text-green-light">2w</span>
-              &nbsp;/&nbsp;<span className="text-red-light">0L</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <GameList bets={DUMMY_BETS} />
       <div>
         <LastMatches />
       </div>

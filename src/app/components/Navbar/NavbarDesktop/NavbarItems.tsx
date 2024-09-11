@@ -29,7 +29,9 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
       )}
       onClick={!route.comingSoon ? handleClick : undefined}
     >
-      <Image src={route.icon} alt={route.name} width={25} height={25} />
+      {route.icon && (
+        <Image src={route.icon} alt={route.name} width={25} height={25} />
+      )}
       <p className="font-bold uppercase drop-shadow-text lg:text-xl xl:text-2xl">
         {route.name}
       </p>
