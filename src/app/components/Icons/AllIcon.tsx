@@ -11,18 +11,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clipPath="url(#clip0_1_83)">
-        <g filter="url(#filter0_f_1_83)">
-          <rect
-            x="44"
-            y="96.152"
-            width="168.848"
-            height="168.848"
-            rx="25"
-            fill="url(#paint0_linear_1_83)"
-          />
-        </g>
-        <g filter="url(#filter1_bd_1_83)">
+      <g clip-path="url(#clip0_1_83)">
+        <g filter="url(#filter0_bd_1_83)">
           <rect
             x="107.999"
             y="36"
@@ -30,18 +20,18 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             height="158.295"
             rx="25"
             transform="rotate(20 107.999 36)"
-            fill="url(#paint1_linear_1_83)"
+            fill="url(#paint0_linear_1_83)"
           />
         </g>
-        <g filter="url(#filter2_bd_1_83)">
+        <g filter="url(#filter1_bd_1_83)">
           <rect
             x="49.2765"
             y="101.429"
             width="158.295"
             height="158.295"
             rx="25"
-            fill="url(#paint2_linear_1_83)"
-            shapeRendering="crispEdges"
+            fill="url(#paint1_linear_1_83)"
+            shape-rendering="crispEdges"
           />
           <rect
             x="49.6765"
@@ -49,71 +39,50 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             width="157.495"
             height="157.495"
             rx="24.6"
-            stroke="url(#paint3_linear_1_83)"
-            strokeWidth="0.8"
-            shapeRendering="crispEdges"
+            stroke="url(#paint2_linear_1_83)"
+            stroke-width="0.8"
+            shape-rendering="crispEdges"
           />
         </g>
-        <g filter="url(#filter3_di_1_83)">
+        <g filter="url(#filter2_di_1_83)">
           <circle
             cx="90.9608"
             cy="182.159"
             r="13.1912"
-            fill="url(#paint4_linear_1_83)"
-            shapeRendering="crispEdges"
+            fill="url(#paint3_linear_1_83)"
+            shape-rendering="crispEdges"
           />
         </g>
-        <g filter="url(#filter4_di_1_83)">
+        <g filter="url(#filter3_di_1_83)">
           <circle
             cx="128.952"
             cy="182.159"
             r="13.1912"
-            fill="url(#paint5_linear_1_83)"
-            shapeRendering="crispEdges"
+            fill="url(#paint4_linear_1_83)"
+            shape-rendering="crispEdges"
           />
         </g>
-        <g filter="url(#filter5_di_1_83)">
+        <g filter="url(#filter4_di_1_83)">
           <circle
             cx="166.942"
             cy="182.159"
             r="13.1912"
-            fill="url(#paint6_linear_1_83)"
-            shapeRendering="crispEdges"
+            fill="url(#paint5_linear_1_83)"
+            shape-rendering="crispEdges"
           />
         </g>
       </g>
       <defs>
         <filter
-          id="filter0_f_1_83"
-          x="0"
-          y="52.152"
-          width="256.848"
-          height="256.848"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="22"
-            result="effect1_foregroundBlur_1_83"
-          />
-        </filter>
-        <filter
-          id="filter1_bd_1_83"
+          id="filter0_bd_1_83"
           x="56.8947"
           y="39.036"
           width="196.817"
           height="200.817"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
+          color-interpolation-filters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
           <feComposite
             in2="SourceAlpha"
@@ -146,15 +115,15 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           />
         </filter>
         <filter
-          id="filter2_bd_1_83"
+          id="filter1_bd_1_83"
           x="39.2765"
           y="91.4286"
           width="178.295"
           height="178.295"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
+          color-interpolation-filters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -187,15 +156,68 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           />
         </filter>
         <filter
-          id="filter3_di_1_83"
+          id="filter2_di_1_83"
           x="76.2695"
           y="168.468"
           width="29.3825"
           height="30.8825"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
+          color-interpolation-filters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="1" />
+          <feGaussianBlur stdDeviation="0.75" />
+          <feComposite in2="hardAlpha" operator="out" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_1_83"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_1_83"
+            result="shape"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
+          <feOffset dy="8" />
+          <feGaussianBlur stdDeviation="2" />
+          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
+          />
+          <feBlend
+            mode="normal"
+            in2="shape"
+            result="effect2_innerShadow_1_83"
+          />
+        </filter>
+        <filter
+          id="filter3_di_1_83"
+          x="114.26"
+          y="168.468"
+          width="29.3825"
+          height="30.8825"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -241,67 +263,14 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
         </filter>
         <filter
           id="filter4_di_1_83"
-          x="114.26"
-          y="168.468"
-          width="29.3825"
-          height="30.8825"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="1" />
-          <feGaussianBlur stdDeviation="0.75" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="BackgroundImageFix"
-            result="effect1_dropShadow_1_83"
-          />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="effect1_dropShadow_1_83"
-            result="shape"
-          />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset dy="8" />
-          <feGaussianBlur stdDeviation="2" />
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix
-            type="matrix"
-            values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"
-          />
-          <feBlend
-            mode="normal"
-            in2="shape"
-            result="effect2_innerShadow_1_83"
-          />
-        </filter>
-        <filter
-          id="filter5_di_1_83"
           x="152.251"
           y="168.468"
           width="29.3825"
           height="30.8825"
           filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
+          color-interpolation-filters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -347,80 +316,69 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
         </filter>
         <linearGradient
           id="paint0_linear_1_83"
-          x1="44"
-          y1="96.152"
-          x2="212.848"
-          y2="265"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#BDBDFF" stopOpacity="0.4" />
-          <stop offset="1" stopColor="#8B7DEC" stopOpacity="0.4" />
-        </linearGradient>
-        <linearGradient
-          id="paint1_linear_1_83"
           x1="107.999"
           y1="36"
           x2="266.294"
           y2="194.295"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#BDBDFF" />
-          <stop offset="1" stopColor="#8B7DEC" />
+          <stop stop-color="#BDBDFF" />
+          <stop offset="1" stop-color="#8B7DEC" />
         </linearGradient>
         <linearGradient
-          id="paint2_linear_1_83"
+          id="paint1_linear_1_83"
           x1="25.5322"
           y1="275.553"
           x2="207.571"
           y2="101.429"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" stopOpacity="0.2" />
-          <stop offset="1" stopColor="white" stopOpacity="0.5" />
+          <stop stop-color="white" stop-opacity="0.2" />
+          <stop offset="1" stop-color="white" stop-opacity="0.5" />
         </linearGradient>
         <linearGradient
-          id="paint3_linear_1_83"
+          id="paint2_linear_1_83"
           x1="191.742"
           y1="275.553"
           x2="49.2765"
           y2="105.386"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" stopOpacity="0" />
-          <stop offset="1" stopColor="white" />
+          <stop stop-color="white" stop-opacity="0" />
+          <stop offset="1" stop-color="white" />
         </linearGradient>
         <linearGradient
-          id="paint4_linear_1_83"
+          id="paint3_linear_1_83"
           x1="73.8122"
           y1="197.989"
           x2="104.152"
           y2="168.968"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" stopOpacity="0.2" />
-          <stop offset="1" stopColor="white" stopOpacity="0.5" />
+          <stop stop-color="white" stop-opacity="0.2" />
+          <stop offset="1" stop-color="white" stop-opacity="0.5" />
         </linearGradient>
         <linearGradient
-          id="paint5_linear_1_83"
+          id="paint4_linear_1_83"
           x1="111.803"
           y1="197.989"
           x2="142.143"
           y2="168.968"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" stopOpacity="0.2" />
-          <stop offset="1" stopColor="white" stopOpacity="0.5" />
+          <stop stop-color="white" stop-opacity="0.2" />
+          <stop offset="1" stop-color="white" stop-opacity="0.5" />
         </linearGradient>
         <linearGradient
-          id="paint6_linear_1_83"
+          id="paint5_linear_1_83"
           x1="149.794"
           y1="197.989"
           x2="180.134"
           y2="168.968"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="white" stopOpacity="0.2" />
-          <stop offset="1" stopColor="white" stopOpacity="0.5" />
+          <stop stop-color="white" stop-opacity="0.2" />
+          <stop offset="1" stop-color="white" stop-opacity="0.5" />
         </linearGradient>
         <clipPath id="clip0_1_83">
           <rect width="300" height="300" fill="white" />
