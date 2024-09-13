@@ -36,7 +36,6 @@ const TwitterButton = ({
   const isSignatureRequired =
     twitterCode && wallet.connected && wallet.publicKey;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const checkPlayerExists = async (address: string) => {
     try {
       const { data } = await getPlayerById(address);
@@ -87,7 +86,7 @@ const TwitterButton = ({
     } catch (error) {
       console.error("Error saving Twitter user:", error);
       showToast("Failed to save Twitter user.", "error");
-      router.replace(pathname); // Remove the code from the URL
+      router.replace(pathname);
     }
   };
 
