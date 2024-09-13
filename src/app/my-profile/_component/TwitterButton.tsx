@@ -102,9 +102,6 @@ const TwitterButton = ({
         setLoading(true);
         setText("Loading...");
         const playerData = await checkPlayerExists(publicKey);
-        console.log({
-          playerData,
-        });
         setLoading(false);
         if (playerData) {
           setText(`@${playerData.twitterUsername}`);
