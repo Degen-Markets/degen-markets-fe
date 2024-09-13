@@ -1,6 +1,6 @@
 const HeroSection = () => (
   <section
-    className="w-full overflow-hidden relative max-w-screen-2xl mx-auto text-center space-y-10 hidden md:flex flex-col items-center justify-center bg-cover bg-center bg-indigo-medium rounded-3xl px-4 py-16"
+    className="w-full overflow-hidden relative max-w-screen-2xl mx-auto text-center space-y-10 hidden md:flex flex-col items-center justify-center bg-cover bg-center bg-indigo-medium rounded-3xl px-4 py-24"
     style={{ backgroundImage: "url(/images/hero-bg.gif)" }}
   >
     <div className="backdrop-blur-lg absolute right-0 left-0 top-0 bottom-0 z-0"></div>
