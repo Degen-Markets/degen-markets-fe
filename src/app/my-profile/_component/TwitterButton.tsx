@@ -14,7 +14,11 @@ import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
 
 const defaultText = "Connect X";
 
-const TwitterButton = () => {
+const TwitterButton = ({
+  setTwitterPfpUrl,
+}: {
+  setTwitterPfpUrl: (url: string) => void;
+}) => {
   const [text, setText] = useState(defaultText);
   const { open, setOpen } = useDialog(DialogType.signature);
 
@@ -63,12 +67,8 @@ const TwitterButton = () => {
         );
 
         const twitterUser = twitterUserResponse.data;
-
-        console.log({
-          twitterUser,
-        });
-
         setText(`@${twitterUser.twitterUsername}`);
+        setTwitterPfpUrl(twitterUser.twitterPfpUrl);
         router.replace(pathname);
       }
     } catch (error) {

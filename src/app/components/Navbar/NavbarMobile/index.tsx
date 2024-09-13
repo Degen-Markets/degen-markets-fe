@@ -16,9 +16,6 @@ export const NavbarMobile: React.FC<{
     });
   }, []);
 
-  console.log({
-    sortedRoutes,
-  });
   return (
     <>
       <div

@@ -15,12 +15,11 @@ const PlayerRow: FC<PlayerRowProps> = ({
   order,
 }) => {
   const isHighRank = order <= 3;
-
   return (
     <div className="flex gap-4">
       <div className="relative">
         <UserAvatar
-          src={twitterPfpUrl || "/user-avatars/default.jpg"}
+          src={twitterPfpUrl}
           className="rounded-md h-16 w-16 lg:w-20 lg:h-20"
           width={90}
           height={90}
