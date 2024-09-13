@@ -1,7 +1,6 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
-  getPlayerById,
   getTwitterLoginLink,
   saveTwitterProfile,
 } from "@/app/lib/utils/api/twitter";
@@ -12,6 +11,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import SignatureDialog from "@/app/components/Dialog/signMessageDialog";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
+import { getPlayerById } from "@/app/lib/utils/api/players";
 
 const defaultText = "Connect X";
 
@@ -39,7 +39,6 @@ const TwitterButton = ({
   const checkPlayerExists = useCallback(async (address: string) => {
     try {
       const { data } = await getPlayerById(address);
-      setLoading(false);
       return data;
     } catch (error) {
       console.error("Error checking player:", error);
@@ -52,20 +51,6 @@ const TwitterButton = ({
       showToast("Please connect your wallet first.", "info");
       return;
     }
-
-    if (!publicKey) return;
-
-    setLoading(true);
-    setText("Loading...");
-    // Check if the player already exists
-    const playerData = await checkPlayerExists(publicKey);
-    setLoading(false);
-    if (playerData) {
-      setText(`@${playerData.twitterUsername}`);
-      setTwitterPfpUrl(playerData.twitterPfpUrl);
-      return; // Skip saving the user
-    }
-
     if (!twitterCode) {
       try {
         const { data } = await getTwitterLoginLink();
@@ -110,6 +95,29 @@ const TwitterButton = ({
       setOpen(true);
     }
   }, [twitterCode, wallet.connected, publicKey]);
+
+  useEffect(() => {
+    const fetchPlayerProfile = async () => {
+      if (wallet.connected && publicKey) {
+        setLoading(true);
+        setText("Loading...");
+        const playerData = await checkPlayerExists(publicKey);
+        console.log({
+          playerData,
+        });
+        setLoading(false);
+        if (playerData) {
+          setText(`@${playerData.twitterUsername}`);
+          setTwitterPfpUrl(playerData.twitterPfpUrl);
+        } else {
+          setText(defaultText);
+        }
+        setLoading(false);
+      }
+    };
+
+    fetchPlayerProfile();
+  }, [wallet.connected, publicKey, checkPlayerExists, setTwitterPfpUrl]);
 
   return (
     <>
