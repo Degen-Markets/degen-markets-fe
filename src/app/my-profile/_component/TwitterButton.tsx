@@ -36,7 +36,8 @@ const TwitterButton = ({
   const isSignatureRequired =
     twitterCode && wallet.connected && wallet.publicKey;
 
-  const checkPlayerExists = useCallback(async (address: string) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const checkPlayerExists = async (address: string) => {
     try {
       const { data } = await getPlayerById(address);
       return data;
@@ -44,7 +45,7 @@ const TwitterButton = ({
       console.error("Error checking player:", error);
       return false;
     }
-  }, []);
+  };
 
   const handleLogin = async () => {
     if (!wallet?.connected) {
@@ -114,7 +115,7 @@ const TwitterButton = ({
     };
 
     fetchPlayerProfile();
-  }, [wallet.connected, publicKey, checkPlayerExists, setTwitterPfpUrl]);
+  }, [wallet.connected, publicKey, setTwitterPfpUrl]);
 
   return (
     <>
