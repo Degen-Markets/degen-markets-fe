@@ -1,10 +1,11 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
+  getPlayerById,
   getTwitterLoginLink,
   saveTwitterProfile,
 } from "@/app/lib/utils/api/twitter";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { Button } from "@/app/components/Button/Button";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -21,6 +22,7 @@ const TwitterButton = ({
 }) => {
   const [text, setText] = useState(defaultText);
   const { open, setOpen } = useDialog(DialogType.signature);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const twitterUserFound = text !== defaultText;
   const router = useRouter();
@@ -29,14 +31,39 @@ const TwitterButton = ({
   const wallet = useWallet();
   const { showToast } = useToast();
   const twitterCode = searchParams.get("code");
+  const publicKey = wallet.publicKey?.toBase58();
 
   const isSignatureRequired =
     twitterCode && wallet.connected && wallet.publicKey;
+
+  const checkPlayerExists = useCallback(async (address: string) => {
+    try {
+      const { data } = await getPlayerById(address);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      console.error("Error checking player:", error);
+      return false;
+    }
+  }, []);
 
   const handleLogin = async () => {
     if (!wallet?.connected) {
       showToast("Please connect your wallet first.", "info");
       return;
+    }
+
+    if (!publicKey) return;
+
+    setLoading(true);
+    setText("Loading...");
+    // Check if the player already exists
+    const playerData = await checkPlayerExists(publicKey);
+    setLoading(false);
+    if (playerData) {
+      setText(`@${playerData.twitterUsername}`);
+      setTwitterPfpUrl(playerData.twitterPfpUrl);
+      return; // Skip saving the user
     }
 
     if (!twitterCode) {
@@ -53,17 +80,17 @@ const TwitterButton = ({
   };
 
   const saveUser = async (signature: string) => {
-    if (!wallet.connected || !wallet.publicKey) {
+    if (!wallet.connected || !publicKey) {
       showToast("Please connect your wallet.", "info");
       return;
     }
 
     try {
-      if (twitterCode && signature && wallet.publicKey) {
+      if (twitterCode && signature && publicKey) {
         const twitterUserResponse = await saveTwitterProfile(
           twitterCode,
           signature,
-          wallet.publicKey.toBase58(),
+          publicKey,
         );
 
         const twitterUser = twitterUserResponse.data;
@@ -82,7 +109,7 @@ const TwitterButton = ({
     if (isSignatureRequired) {
       setOpen(true);
     }
-  }, [twitterCode, wallet.connected, wallet.publicKey]);
+  }, [twitterCode, wallet.connected, publicKey]);
 
   return (
     <>

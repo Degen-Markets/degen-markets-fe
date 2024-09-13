@@ -13,3 +13,6 @@ export const saveTwitterProfile = (
     signature,
     address,
   });
+
+export const getPlayerById = (address: string) =>
+  axios.get(`https://api.degenmarkets.com/players/${address}`);
