@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import UserAvatar from "@/app/components/UserAvatar";
-import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
+import {
+  getDisplayNameForAddress,
+  getLastLetter,
+} from "@/app/lib/utils/bets/helpers";
 import TwitterButton from "@/app/my-profile/_component/TwitterButton";
 import { Address } from "@/app/lib/utils/bets/types";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -18,7 +21,7 @@ const UserProfileInfo: React.FC = () => {
         </span>
         <UserAvatar
           address={address as Address}
-          twitterPfpUrl={twitterPfpUrl}
+          src={twitterPfpUrl}
           height={170}
           width={170}
         />

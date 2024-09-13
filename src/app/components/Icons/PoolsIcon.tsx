@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import IconProps from "@/app/types/Icon";
 
-const PoolsIcon: FC<IconProps> = ({ width = "184", height = "184", style }) => {
+const PoolsIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
   return (
     <svg
       width={width}

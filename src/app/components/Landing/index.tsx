@@ -16,7 +16,7 @@ const Pools = ({ pools }: { pools: PoolsResponse }) => {
   return (
     <div>
       <SectionHeader
-        icon={<PoolsIcon width="64" height="64" />}
+        icon={<PoolsIcon width={64} height={64} />}
         title="Pools"
       />
       <PoolSection

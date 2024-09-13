@@ -67,11 +67,6 @@ const TwitterButton = ({
         );
 
         const twitterUser = twitterUserResponse.data;
-
-        console.log({
-          twitterUser,
-        });
-
         setText(`@${twitterUser.twitterUsername}`);
         setTwitterPfpUrl(twitterUser.twitterPfpUrl);
         router.replace(pathname);

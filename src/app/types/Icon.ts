@@ -1,8 +1,8 @@
 import { CSSProperties } from "react";
 
 interface IconProps {
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
   style?: CSSProperties;
   className?: string;
 }
