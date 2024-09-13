@@ -1,6 +1,6 @@
 import { PoolsResponse } from "@/app/lib/utils/bets/types";
 import PoolsFilter from "./PoolFilter";
-import PoolCardPlaceHolder from "./PoolCardPlaceHolder";
+import PoolCardPlaceHoldersGrid from "./PoolCardPlaceHoldersGrid";
 import PoolsGrid from "./PoolGrid";
 import Pagination from "../Pagination";
 
@@ -30,7 +30,7 @@ const PoolSection = ({
       <PoolsFilter />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full place-items-center place-content-center">
         <PoolsGrid pools={displayedPools} />
-        <PoolCardPlaceHolder count={placeholdersCount} />
+        <PoolCardPlaceHoldersGrid count={placeholdersCount} />
       </div>
       <Pagination
         totalPages={totalPages}
