@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Button } from "../Button/Button";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useWalletModal } from "@solana/wallet-adapter-react-ui";
@@ -9,7 +9,7 @@ const PoolPlaceholderCard = () => {
   const { setVisible } = useWalletModal();
   const { showToast } = useToast();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (!connected) {
       setVisible(true);
       return;
@@ -20,7 +20,7 @@ const PoolPlaceholderCard = () => {
       "You need at least 1,000 $DGN tokens to be able to create a pool on Degen Markets",
       "error",
     );
-  };
+  }, [connected, setVisible, showToast]);
 
   return (
     <div className="group relative w-full h-60 bg-blue-light rounded-xl center-all text-center p-4 bg-opacity-50 hover:scale-105 hover:shadow transition-all ease duration-300">
