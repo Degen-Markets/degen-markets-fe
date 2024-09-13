@@ -4,10 +4,10 @@ const HeroSection = () => (
     style={{ backgroundImage: "url(/images/hero-bg.gif)" }}
   >
     <div className="backdrop-blur-lg absolute right-0 left-0 top-0 bottom-0 z-0"></div>
-    <h1 className="text-4xl md:text-8xl font-bold leading-none z-10">
+    <h1 className="text-2xl md:text-6xl font-bold leading-none z-10">
       Decentralized Prediction <br /> Market on Blinks
     </h1>
-    <p className="w-full max-w-4xl mx-auto font-semibold text-lg  md:text-xl z-10">
+    <p className="w-full max-w-4xl mx-auto font-semibold text-md md:text-lg z-10">
       Make Predictions on Events Directly on Twitter via Solana Blinks. Predict
       Now to Claim YOUR Share of the $DGM AirDrop
     </p>
