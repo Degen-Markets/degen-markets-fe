@@ -15,9 +15,9 @@ const PoolPlaceholderCard = () => {
       return;
     }
 
-    // TODO: Once DGN is released, we will actually check if the connected wallet has those tokens
+    // TODO: Once DGM is released, we will actually check if the connected wallet has those tokens
     showToast(
-      "You need at least 1,000 $DGN tokens to be able to create a pool on Degen Markets",
+      "You need at least 1,000 $DGM tokens to be able to create a pool on Degen Markets",
       "error",
     );
   }, [connected, setVisible, showToast]);
