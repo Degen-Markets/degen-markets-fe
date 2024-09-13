@@ -15,10 +15,12 @@ const Pools = ({ pools }: { pools: PoolsResponse }) => {
 
   return (
     <div>
-      <SectionHeader
-        icon={<PoolsIcon width={64} height={64} />}
-        title="Pools"
-      />
+      <div className="hidden md:block">
+        <SectionHeader
+          icon={<PoolsIcon width={64} height={64} />}
+          title="Pools"
+        />
+      </div>
       <PoolSection
         pools={pools}
         currentPage={currentPage}
