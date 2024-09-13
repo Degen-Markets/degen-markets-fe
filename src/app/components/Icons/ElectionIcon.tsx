@@ -15,7 +15,7 @@ const ElectionIcon: FC<IconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_41_12)">
+      <g clipPath="url(#clip0_41_12)">
         <g filter="url(#filter0_bd_41_12)">
           <rect
             x="133"
@@ -55,7 +55,7 @@ const ElectionIcon: FC<IconProps> = ({
             rx="20"
             transform="rotate(90 250 220.295)"
             fill="url(#paint3_linear_41_12)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <rect
             x="249.6"
@@ -65,20 +65,20 @@ const ElectionIcon: FC<IconProps> = ({
             rx="19.6"
             transform="rotate(90 249.6 220.695)"
             stroke="url(#paint4_linear_41_12)"
-            stroke-width="0.8"
-            shape-rendering="crispEdges"
+            strokeWidth="0.8"
+            shapeRendering="crispEdges"
           />
         </g>
         <g filter="url(#filter4_bd_41_12)">
           <path
             d="M250 136C250 149.807 238.807 161 225 161L75 161C61.1929 161 50 149.807 50 136L50 109.333C50 100.101 55.0887 91.6193 63.2353 87.2745L138.235 47.2745C145.588 43.3529 154.412 43.3529 161.765 47.2745L236.765 87.2745C244.911 91.6194 250 100.101 250 109.333L250 136Z"
             fill="url(#paint5_linear_41_12)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <path
             d="M249.5 136C249.5 149.531 238.531 160.5 225 160.5L75 160.5C61.469 160.5 50.5 149.531 50.5 136L50.5 109.333C50.5 100.285 55.4869 91.9736 63.4706 87.7157L138.471 47.7157C145.676 43.8725 154.324 43.8725 161.529 47.7157L236.529 87.7157C244.513 91.9736 249.5 100.285 249.5 109.333L249.5 136Z"
             stroke="url(#paint6_linear_41_12)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
         </g>
       </g>
@@ -90,9 +90,9 @@ const ElectionIcon: FC<IconProps> = ({
           width="43"
           height="112"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
           <feComposite
             in2="SourceAlpha"
@@ -131,9 +131,9 @@ const ElectionIcon: FC<IconProps> = ({
           width="43"
           height="112"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
           <feComposite
             in2="SourceAlpha"
@@ -172,9 +172,9 @@ const ElectionIcon: FC<IconProps> = ({
           width="43"
           height="112"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
           <feComposite
             in2="SourceAlpha"
@@ -213,9 +213,9 @@ const ElectionIcon: FC<IconProps> = ({
           width="220"
           height="60"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -254,9 +254,9 @@ const ElectionIcon: FC<IconProps> = ({
           width="220"
           height="136.667"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -296,8 +296,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="184.783"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_41_12"
@@ -307,8 +307,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="184.783"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_41_12"
@@ -318,8 +318,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="184.783"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_41_12"
@@ -329,8 +329,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="424.038"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_41_12"
@@ -340,8 +340,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="420.552"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_41_12"
@@ -351,8 +351,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="227.262"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_41_12"
@@ -362,8 +362,8 @@ const ElectionIcon: FC<IconProps> = ({
           y2="204.208"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <clipPath id="clip0_41_12">
           <rect width="300" height="300" fill="white" />

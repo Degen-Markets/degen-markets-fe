@@ -17,7 +17,7 @@ const LeaderboardIcon: FC<IconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_33_2)">
+      <g clipPath="url(#clip0_33_2)">
         <path
           d="M81.5 69.6141C81.5 65.8172 78.3974 62.6745 74.6619 63.3547C72.7512 63.7027 70.8771 64.1966 69.0628 64.8324C65.1197 66.2145 61.5369 68.2401 58.519 70.7937C55.5011 73.3473 53.1072 76.3789 51.4739 79.7153C49.8406 83.0518 49 86.6278 49 90.2391C49 93.8505 49.8406 97.4265 51.4739 100.763C53.1072 104.099 55.5011 107.131 58.519 109.685C61.5369 112.238 65.1197 114.264 69.0628 115.646C70.8771 116.282 72.7513 116.776 74.6619 117.124C78.3974 117.804 81.5 114.661 81.5 110.864L81.5 110.325C81.5 106.826 78.5836 104.1 75.2814 102.942C73.3099 102.251 71.5185 101.239 70.0095 99.9619C68.5006 98.685 67.3036 97.1693 66.487 95.501C65.6703 93.8328 65.25 92.0448 65.25 90.2391C65.25 88.4335 65.6703 86.6455 66.487 84.9772C67.3036 83.309 68.5006 81.7932 70.0095 80.5164C71.5185 79.2396 73.3099 78.2268 75.2814 77.5358C78.5836 76.3784 81.5 73.6525 81.5 70.1533L81.5 69.6141Z"
           fill="url(#paint0_linear_33_2)"
@@ -42,7 +42,7 @@ const LeaderboardIcon: FC<IconProps> = ({
             height="30"
             rx="15"
             fill="url(#paint3_linear_33_2)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <rect
             x="103.2"
@@ -51,28 +51,28 @@ const LeaderboardIcon: FC<IconProps> = ({
             height="29.6"
             rx="14.8"
             stroke="url(#paint4_linear_33_2)"
-            stroke-width="0.4"
-            shape-rendering="crispEdges"
+            strokeWidth="0.4"
+            shapeRendering="crispEdges"
           />
         </g>
         <g filter="url(#filter1_bd_33_2)">
           <path
             d="M75 67.6087C75 53.8016 86.1929 42.6087 100 42.6087H200C213.807 42.6087 225 53.8016 225 67.6087V137.609C225 179.03 191.421 212.609 150 212.609C108.579 212.609 75 179.03 75 137.609V67.6087Z"
             fill="url(#paint5_linear_33_2)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <path
             d="M75.35 67.6087C75.35 53.9949 86.3862 42.9587 100 42.9587H200C213.614 42.9587 224.65 53.9949 224.65 67.6087V137.609C224.65 178.837 191.228 212.259 150 212.259C108.772 212.259 75.35 178.837 75.35 137.609V67.6087Z"
             stroke="url(#paint6_linear_33_2)"
-            stroke-width="0.7"
-            shape-rendering="crispEdges"
+            strokeWidth="0.7"
+            shapeRendering="crispEdges"
           />
         </g>
         <g filter="url(#filter2_di_33_2)">
           <path
             d="M145.754 89.4381C147.71 86.2915 152.29 86.2915 154.246 89.4381L162.998 103.514C163.686 104.621 164.78 105.416 166.045 105.728L182.137 109.702C185.734 110.59 187.149 114.946 184.761 117.779L174.079 130.452C173.239 131.449 172.821 132.734 172.915 134.034L174.108 150.567C174.375 154.262 170.67 156.954 167.238 155.558L151.883 149.315C150.676 148.824 149.324 148.824 148.117 149.315L132.762 155.558C129.33 156.954 125.625 154.262 125.892 150.566L127.085 134.034C127.179 132.734 126.761 131.449 125.921 130.452L115.239 117.779C112.851 114.946 114.266 110.59 117.863 109.702L133.955 105.728C135.22 105.416 136.314 104.621 137.002 103.514L145.754 89.4381Z"
             fill="url(#paint7_linear_33_2)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
         </g>
       </g>
@@ -84,9 +84,9 @@ const LeaderboardIcon: FC<IconProps> = ({
           width="115"
           height="50"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -125,9 +125,9 @@ const LeaderboardIcon: FC<IconProps> = ({
           width="170"
           height="190"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -166,9 +166,9 @@ const LeaderboardIcon: FC<IconProps> = ({
           width="74.8839"
           height="73.3546"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -220,8 +220,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="125.891"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_33_2"
@@ -231,8 +231,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="110.859"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_33_2"
@@ -242,8 +242,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="181.559"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_33_2"
@@ -253,8 +253,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="201.155"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_33_2"
@@ -264,8 +264,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="212.164"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_33_2"
@@ -275,8 +275,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="59.5454"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_33_2"
@@ -286,8 +286,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="66.0322"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_33_2"
@@ -297,8 +297,8 @@ const LeaderboardIcon: FC<IconProps> = ({
           y2="82.6087"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <clipPath id="clip0_33_2">
           <rect width="300" height="300" fill="white" />

@@ -17,7 +17,7 @@ const DgmLogoIcon: FC<IconProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_114_8)">
+      <g clipPath="url(#clip0_114_8)">
         <g filter="url(#filter0_d_114_8)">
           <path
             d="M311.95 238.5H492.273C694.608 238.5 858.889 400.061 858.889 599.045C858.889 798.029 694.608 959.589 492.273 959.589H231.613C173.163 959.467 125.782 912.87 125.782 855.389V421.586C125.782 320.565 209.228 238.5 311.95 238.5Z"
@@ -34,12 +34,12 @@ const DgmLogoIcon: FC<IconProps> = ({
           <path
             d="M859.262 598.408C859.262 698.174 817.584 788.502 750.142 853.828C686.995 915.109 601.24 954.451 506.14 959.108H366.079C270.852 959.108 222.607 847.822 289.291 781.761L735.162 328.678C808.035 394.617 859.262 493.985 859.262 598.408Z"
             fill="url(#paint2_linear_114_8)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <path
             d="M749.795 853.469L750.142 853.828L749.794 853.469C686.735 914.664 601.099 953.954 506.128 958.608H366.079C271.266 958.608 223.299 847.84 289.643 782.116L289.647 782.112L735.182 329.371C807.775 395.229 858.762 494.315 858.762 598.408C858.762 698.031 817.145 788.232 749.795 853.469Z"
             stroke="url(#paint3_linear_114_8)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
         </g>
       </g>
@@ -51,9 +51,9 @@ const DgmLogoIcon: FC<IconProps> = ({
           width="753.107"
           height="741.089"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -86,9 +86,9 @@ const DgmLogoIcon: FC<IconProps> = ({
           width="837.234"
           height="741.089"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -121,9 +121,9 @@ const DgmLogoIcon: FC<IconProps> = ({
           width="620.907"
           height="650.43"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -157,8 +157,8 @@ const DgmLogoIcon: FC<IconProps> = ({
           y2="724.505"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_114_8"
@@ -168,8 +168,8 @@ const DgmLogoIcon: FC<IconProps> = ({
           y2="964.933"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_114_8"
@@ -179,8 +179,8 @@ const DgmLogoIcon: FC<IconProps> = ({
           y2="363.315"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_114_8"
@@ -190,8 +190,8 @@ const DgmLogoIcon: FC<IconProps> = ({
           y2="371.435"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <clipPath id="clip0_114_8">
           <rect width="1200" height="1200" fill="white" />

@@ -25,7 +25,7 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0_49_38)">
+    <g clipPath="url(#clip0_49_38)">
       <path
         d="M207.132 200.465V253.275C207.132 259.898 204.042 265.827 199.194 269.7C193.827 273.992 185.889 273.135 180.999 268.309L164.907 252.429C156.503 244.189 142.97 244.189 134.621 252.429L119.613 267.239C114.094 272.686 104.801 272.932 99.6825 267.122C96.4186 263.419 94.4342 258.571 94.4342 253.264V200.455C94.4342 188.791 104.02 179.331 115.84 179.331H185.727C197.546 179.331 207.132 188.791 207.132 200.455V200.465Z"
         fill="url(#paint0_linear_49_38)"
@@ -36,14 +36,14 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
           cy="133.068"
           r="90"
           fill="url(#paint1_linear_49_38)"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
         <circle
           cx="150.054"
           cy="133.068"
           r="89.5"
           stroke="url(#paint2_linear_49_38)"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
       </g>
     </g>
@@ -55,9 +55,9 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
         width="200"
         height="200"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
         <feComposite
           in2="SourceAlpha"
@@ -96,9 +96,9 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
         width="38"
         height="78.5"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -146,8 +146,8 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
         y2="271.993"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#BDBDFF" />
-        <stop offset="1" stop-color="#8B7DEC" />
+        <stop stopColor="#BDBDFF" />
+        <stop offset="1" stopColor="#8B7DEC" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_49_38"
@@ -157,8 +157,8 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
         y2="43.0677"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="white" stop-opacity="0.2" />
-        <stop offset="1" stop-color="white" stop-opacity="0.5" />
+        <stop stopColor="white" stopOpacity="0.2" />
+        <stop offset="1" stopColor="white" stopOpacity="0.5" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_49_38"
@@ -168,8 +168,8 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
         y2="47.5677"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="white" stop-opacity="0" />
-        <stop offset="1" stop-color="white" />
+        <stop stopColor="white" stopOpacity="0" />
+        <stop offset="1" stopColor="white" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_49_38"
@@ -179,8 +179,8 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
         y2="91.2069"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="white" stop-opacity="0.2" />
-        <stop offset="1" stop-color="white" stop-opacity="0.5" />
+        <stop stopColor="white" stopOpacity="0.2" />
+        <stop offset="1" stopColor="white" stopOpacity="0.5" />
       </linearGradient>
       <clipPath id="clip0_49_38">
         <rect width="300" height="300" fill="white" />

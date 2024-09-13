@@ -11,7 +11,7 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1_83)">
+      <g clipPath="url(#clip0_1_83)">
         <g filter="url(#filter0_bd_1_83)">
           <rect
             x="107.999"
@@ -31,7 +31,7 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             height="158.295"
             rx="25"
             fill="url(#paint1_linear_1_83)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <rect
             x="49.6765"
@@ -40,8 +40,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             height="157.495"
             rx="24.6"
             stroke="url(#paint2_linear_1_83)"
-            stroke-width="0.8"
-            shape-rendering="crispEdges"
+            strokeWidth="0.8"
+            shapeRendering="crispEdges"
           />
         </g>
         <g filter="url(#filter2_di_1_83)">
@@ -50,7 +50,7 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             cy="182.159"
             r="13.1912"
             fill="url(#paint3_linear_1_83)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
         </g>
         <g filter="url(#filter3_di_1_83)">
@@ -59,7 +59,7 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             cy="182.159"
             r="13.1912"
             fill="url(#paint4_linear_1_83)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
         </g>
         <g filter="url(#filter4_di_1_83)">
@@ -68,7 +68,7 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
             cy="182.159"
             r="13.1912"
             fill="url(#paint5_linear_1_83)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
         </g>
       </g>
@@ -80,9 +80,9 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           width="196.817"
           height="200.817"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="2" />
           <feComposite
             in2="SourceAlpha"
@@ -121,9 +121,9 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           width="178.295"
           height="178.295"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -162,9 +162,9 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           width="29.3825"
           height="30.8825"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -215,9 +215,9 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           width="29.3825"
           height="30.8825"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -268,9 +268,9 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           width="29.3825"
           height="30.8825"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -322,8 +322,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           y2="194.295"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_1_83"
@@ -333,8 +333,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           y2="101.429"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_1_83"
@@ -344,8 +344,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           y2="105.386"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_1_83"
@@ -355,8 +355,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           y2="168.968"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_1_83"
@@ -366,8 +366,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           y2="168.968"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_1_83"
@@ -377,8 +377,8 @@ const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
           y2="168.968"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <clipPath id="clip0_1_83">
           <rect width="300" height="300" fill="white" />
