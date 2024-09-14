@@ -25,7 +25,6 @@ export const generateMetadata = async ({
   params: { id: string };
 }): Promise<Metadata> => {
   const { data: pool } = await getPoolById(id);
-  // const cleanImageUrl = replaceGifExtension(pool.image);
   return {
     title: pool.title,
     description: pool.description,
