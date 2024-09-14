@@ -25,21 +25,20 @@ export const generateMetadata = async ({
   params: { id: string };
 }): Promise<Metadata> => {
   const { data: pool } = await getPoolById(id);
-  const cleanImageUrl = replaceGifExtension(pool.image);
   return {
     title: pool.title,
     description: pool.description,
     openGraph: {
       type: "website",
       title: pool.title,
-      images: [cleanImageUrl],
+      images: [replaceGifExtension(pool.image)],
       url: `https://degenmarkets.com/pools/${pool.id}`,
     },
     twitter: {
       card: "summary_large_image",
       title: pool.title,
       description: pool.description,
-      images: [cleanImageUrl],
+      images: [replaceGifExtension(pool.image)],
       site: "@DEGEN_MARKETS", // our X/Twitter account
     },
   };
