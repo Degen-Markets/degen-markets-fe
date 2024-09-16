@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import UserProfileInfo from "./UserProfileInfo";
 import UserStats from "./UserStats";
 import UserActions from "./UserActions";
