@@ -18,7 +18,7 @@ import { Player } from "../types/player";
 import { Address } from "../lib/utils/bets/types";
 
 interface UserContextType {
-  userProfile: Player | null;
+  userProfile: Player;
   connectTwitter: () => void;
   isProfileLoading: boolean;
   saveUser: (signature: string) => Promise<void>;
@@ -37,7 +37,11 @@ const initialUserProfile = {
   twitterPfpUrl: "",
 };
 
-export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+export const UserProfileProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const wallet = useWallet();
   const [userProfile, setUserProfile] = useState<Player>(initialUserProfile);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
@@ -57,9 +61,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     wallet.publicKey
   );
 
-  const handleError = (error: any, defaultMessage: string) => {
+  const handleError = (
+    error: any,
+    defaultMessage: string,
+    additionalMessage?: string,
+  ) => {
     const errorMessage = error?.response?.data?.error ?? defaultMessage;
-    showToast(errorMessage, "error");
+    const finalMessage = additionalMessage
+      ? `${errorMessage}${additionalMessage}`
+      : errorMessage;
+    showToast(finalMessage, "error");
     console.error(error);
   };
 
@@ -69,7 +80,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       const { data } = await getPlayerById(address);
       setUserProfile(data || null);
     } catch (error) {
-      handleError(error, "Failed to fetch user profile.");
+      handleError(
+        error,
+        "Failed to fetch user profile.",
+        "! Please Connect to X",
+      );
     } finally {
       setIsProfileLoading(false);
     }
@@ -143,7 +158,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 export const useUserProfileContext = () => {
   const context = useContext(UserProfileContext);
   if (context === undefined) {
-    throw new Error("useUserProfileContext must be used within a UserProvider");
+    throw new Error(
+      "useUserProfileContext must be used within a UserProfileProvider",
+    );
   }
   return context;
 };

@@ -23,26 +23,21 @@ const TwitterButton = () => {
       ? `@${userProfile.twitterUsername}`
       : "Connect X";
 
+  const isProfileEmpty = !userProfile?.address && !userProfile?.twitterUsername;
+
   useEffect(() => {
     if (isSignatureRequired) {
       setOpen(true);
     }
   }, [isSignatureRequired]);
 
-  useEffect(() => {
-    if (userProfile?.twitterPfpUrl) {
-      setUserProfile((prevProfile) => {
-        return {
-          ...prevProfile, // Spread the previous profile to keep existing fields
-          twitterPfpUrl: userProfile.twitterPfpUrl, // Update only the twitterPfpUrl
-        };
-      });
-    }
-  }, [userProfile?.twitterPfpUrl, setUserProfile]);
-
   return (
     <>
-      <Button size={"small"} onClick={connectTwitter} disabled={!!userProfile}>
+      <Button
+        size={"small"}
+        onClick={connectTwitter}
+        disabled={!isProfileEmpty || isProfileLoading}
+      >
         {isSignatureRequired ? "Sign Msg" : buttonText}
       </Button>
       {userProfile?.twitterUsername && (

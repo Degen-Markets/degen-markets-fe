@@ -1,13 +1,12 @@
 "use client";
-import { UserProvider } from "@/app/context/UserProfileContext";
-import React, { ReactNode } from "react";
+import { UserProfileProvider } from "@/app/context/UserProfileContext";
 import ProfileComponent from "./ProfileComponent";
 
 const ProfileContextProvider = () => {
   return (
-    <UserProvider>
+    <UserProfileProvider>
       <ProfileComponent />
-    </UserProvider>
+    </UserProfileProvider>
   );
 };
 
