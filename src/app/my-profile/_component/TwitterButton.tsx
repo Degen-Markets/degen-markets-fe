@@ -32,8 +32,6 @@ const TwitterButton = () => {
   useEffect(() => {
     if (userProfile?.twitterPfpUrl) {
       setUserProfile((prevProfile) => {
-        if (!prevProfile) return null;
-
         return {
           ...prevProfile, // Spread the previous profile to keep existing fields
           twitterPfpUrl: userProfile.twitterPfpUrl, // Update only the twitterPfpUrl

@@ -1,6 +1,11 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
-
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { getPlayerById } from "../lib/utils/api/players";
@@ -10,6 +15,7 @@ import {
 } from "../lib/utils/api/twitter";
 import { DialogType, useDialog } from "../components/Dialog/dialog";
 import { Player } from "../types/player";
+import { Address } from "../lib/utils/bets/types";
 
 interface UserContextType {
   userProfile: Player | null;
@@ -17,16 +23,23 @@ interface UserContextType {
   isProfileLoading: boolean;
   saveUser: (signature: string) => Promise<void>;
   isSignatureRequired: boolean;
-  setUserProfile: React.Dispatch<React.SetStateAction<Player | null>>;
+  setUserProfile: React.Dispatch<React.SetStateAction<Player>>;
 }
 
 const UserProfileContext = createContext<UserContextType | undefined>(
   undefined,
 );
 
+const initialUserProfile = {
+  address: "" as Address,
+  points: 0,
+  twitterUsername: "",
+  twitterPfpUrl: "",
+};
+
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const wallet = useWallet();
-  const [userProfile, setUserProfile] = useState<Player | null>(null);
+  const [userProfile, setUserProfile] = useState<Player>(initialUserProfile);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
   const { open, setOpen: setSignatureModal } = useDialog(DialogType.signature);
 
@@ -38,37 +51,31 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const twitterCode = searchParams.get("code");
   const publicKey = wallet.publicKey?.toBase58();
 
-  const isSignatureRequired = (twitterCode &&
+  const isSignatureRequired = !!(
+    twitterCode &&
     wallet.connected &&
-    wallet.publicKey) as boolean;
+    wallet.publicKey
+  );
+
+  const handleError = (error: any, defaultMessage: string) => {
+    const errorMessage = error?.response?.data?.error ?? defaultMessage;
+    showToast(errorMessage, "error");
+    console.error(error);
+  };
 
   const fetchUserProfile = async (address: string) => {
     setIsProfileLoading(true);
     try {
       const { data } = await getPlayerById(address);
-      if (data) {
-        setUserProfile(data);
-      } else {
-        setUserProfile(null);
-      }
-    } catch (error: any) {
-      console.error("Error getting Twitter login link:", error);
-
-      // check if backend has a response with an error message
-      if (error.response && error.response.data && error.response.data.error) {
-        showToast(
-          `Info: ${error.response?.data?.error}!, Please Connect X`,
-          "info",
-        );
-      } else {
-        showToast("Failed to Connect Twitter", "error");
-      }
+      setUserProfile(data || null);
+    } catch (error) {
+      handleError(error, "Failed to fetch user profile.");
     } finally {
       setIsProfileLoading(false);
     }
   };
 
-  const connectTwitter = async () => {
+  const connectTwitter = useCallback(async () => {
     if (!wallet.connected) {
       showToast("Please connect your wallet first.", "info");
       return;
@@ -78,43 +85,42 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const { data } = await getTwitterLoginLink();
         router.push(data.url);
       } catch (error) {
-        console.error("Error getting Twitter login link:", error);
-        showToast("Failed to get Twitter login link.", "error");
+        handleError(error, "Failed to get Twitter login link.");
       }
     } else {
-      // Trigger signature if Twitter login is complete
       setSignatureModal(true);
     }
-  };
+  }, [wallet.connected, twitterCode, showToast, setSignatureModal, router]);
 
-  const saveUser = async (signature: string) => {
-    if (!wallet.connected || !publicKey) {
-      showToast("Please connect your wallet.", "info");
-      return;
-    }
-    try {
-      if (twitterCode && signature && publicKey) {
-        const twitterUserResponse = await saveTwitterProfile(
-          twitterCode,
-          signature,
-          publicKey,
-        );
-        const twitterUser = twitterUserResponse.data;
-        setUserProfile(twitterUser);
+  const saveUser = useCallback(
+    async (signature: string) => {
+      if (!wallet.connected || !publicKey) {
+        showToast("Please connect your wallet.", "info");
+        return;
+      }
+      try {
+        if (twitterCode && signature && publicKey) {
+          const { data: twitterUser } = await saveTwitterProfile(
+            twitterCode,
+            signature,
+            publicKey,
+          );
+          setUserProfile(twitterUser);
+          router.replace(pathname);
+        }
+      } catch (error) {
+        handleError(error, "Failed to save Twitter user.");
         router.replace(pathname);
       }
-    } catch (error) {
-      console.error("Error saving Twitter user:", error);
-      showToast("Failed to save Twitter user.", "error");
-      router.replace(pathname);
-    }
-  };
+    },
+    [wallet.connected, publicKey, twitterCode, showToast, router, pathname],
+  );
 
   useEffect(() => {
     if (wallet.connected && publicKey) {
       fetchUserProfile(publicKey);
     } else if (!wallet.connected) {
-      setUserProfile(null);
+      setUserProfile(initialUserProfile); // Reset profile on wallet disconnection
     }
   }, [wallet.connected, publicKey]);
 
