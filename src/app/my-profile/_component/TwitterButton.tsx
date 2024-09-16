@@ -73,7 +73,11 @@ const TwitterButton = ({
       }
     } catch (error) {
       console.error("Error saving Twitter user:", error);
-      showToast("Failed to save Twitter user.", "error");
+      showToast(
+        (error as Error).message ||
+          "Failed to save your X/Twitter profile. Please contact the team through https://x.com/DEGEN_MARKETS.",
+        "error",
+      );
       router.replace(pathname); // Remove the code from the URL
     }
   };
