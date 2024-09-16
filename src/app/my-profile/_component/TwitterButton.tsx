@@ -23,7 +23,8 @@ const TwitterButton = () => {
       ? `@${userProfile.twitterUsername}`
       : "Connect X";
 
-  const isProfileEmpty = !userProfile?.address && !userProfile?.twitterUsername;
+  const twitterUserFound = !!userProfile?.twitterUsername;
+  const isDisabled = twitterUserFound || isProfileLoading;
 
   useEffect(() => {
     if (isSignatureRequired) {
@@ -33,11 +34,7 @@ const TwitterButton = () => {
 
   return (
     <>
-      <Button
-        size={"small"}
-        onClick={connectTwitter}
-        disabled={!isProfileEmpty || isProfileLoading}
-      >
+      <Button size={"small"} onClick={connectTwitter} disabled={isDisabled}>
         {isSignatureRequired ? "Sign Msg" : buttonText}
       </Button>
       {userProfile?.twitterUsername && (
