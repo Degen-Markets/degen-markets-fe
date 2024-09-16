@@ -20,3 +20,8 @@ export const getPlayers = ({
       offset,
     },
   });
+
+export const getPlayerById = (
+  address: string,
+): Promise<AxiosResponse<Player>> =>
+  axios.get(`https://api.degenmarkets.com/players/${address}`);
