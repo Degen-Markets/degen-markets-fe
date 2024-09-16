@@ -6,6 +6,7 @@ import SolanaWallet from "./SolanaWallet";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { NavbarMobile } from "./Navbar/NavbarMobile";
 import { IoMenu, IoCloseSharp } from "react-icons/io5";
+import DgmLogoIcon from "./Icons/DgmLogoIcon";
 
 const Header: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
@@ -30,11 +31,8 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center w-full lg:h-16">
           <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full py-0.5 lg:py-0">
             <div className="flex items-center justify-between w-full">
-              <Link
-                href="/"
-                className="uppercase font-bold whitespace-nowrap text-3xl xl:text-4xl flex justify-center items-center text-purple-light"
-              >
-                Degen Markets
+              <Link href="/">
+                <DgmLogoIcon width={64} height={64} />
               </Link>
               <div
                 onClick={() => setNav(!nav)}

@@ -11,7 +11,7 @@ const Wrapper = ({ children, className }: Props) => {
   return (
     <div
       className={twMerge(
-        "md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl px-4 lg:px-6",
+        "md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl px-4 lg:px-12",
         className,
       )}
     >

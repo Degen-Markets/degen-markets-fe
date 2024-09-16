@@ -16,7 +16,7 @@ const CardHeading: FC<CardHeadingProps & PropsWithChildren> = ({
   return (
     <div
       className={twMerge(
-        "flex gap-x-2 text-xl lg:text-4xl font-bold pb-4 border-black-dark w-full",
+        "flex gap-x-2 text-xl lg:text-3xl font-bold pb-4 border-black-dark w-full",
         bordered && "mb-8 border-b",
         className,
       )}
