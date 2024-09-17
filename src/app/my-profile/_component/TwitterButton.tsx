@@ -37,7 +37,7 @@ const TwitterButton = () => {
     <>
       <Button
         className={twMerge(
-          "bg-black-light  border flex items-center justify-center cursor-pointer !px-2",
+          "bg-black-medium bg-opacity-50 border flex items-center  justify-center cursor-pointer !rounded !px-2",
           isDisabled && "cursor-not-allowed",
         )}
         size={"small"}

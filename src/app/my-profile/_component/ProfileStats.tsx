@@ -10,7 +10,7 @@ interface ProfileStatsProps {
 }
 
 const ProfileStats: React.FC<ProfileStatsProps> = ({ title, value, Icon }) => (
-  <Card className="border rounded-xl bg-black-light !py-8">
+  <Card className="border rounded-xl bg-black-medium bg-opacity-80 !py-8">
     <div className="flex items-start md:space-x-2 ">
       <Icon width={50} height={50} className="relative -top-2" />
 

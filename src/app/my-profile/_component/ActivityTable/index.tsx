@@ -7,22 +7,22 @@ const ActivityTable: React.FC = () => {
     {
       marketName:
         "Who will be the first to mention crypto on tonight's interview?",
-      value: "$210.27",
-      payout: "$510.27",
+      value: "$0",
+      payout: "$0",
       imageUrl: "/user-avatars/default.jpg",
     },
     {
       marketName:
         "Who will be the first to mention crypto on tonight's interview?",
-      value: "$210.27",
-      payout: "$510.27",
+      value: "$0",
+      payout: "$0",
       imageUrl: "/user-avatars/default.jpg",
     },
     {
       marketName:
         "Who will be the first to mention crypto on tonight's interview?",
-      value: "$210.27",
-      payout: "$510.27",
+      value: "$0",
+      payout: "$0",
       imageUrl: "/user-avatars/default.jpg",
     },
   ];

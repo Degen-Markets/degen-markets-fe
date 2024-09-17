@@ -6,7 +6,7 @@ import ActivityTable from "./ActivityTable";
 
 const ProfileComponent: React.FC = () => {
   return (
-    <div className="border-t pt-14">
+    <div className="pt-14">
       <UserProfileInfo />
       <ProfileStatsGrid />
       <ActivityTable />

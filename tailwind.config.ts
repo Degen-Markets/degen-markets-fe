@@ -12,6 +12,7 @@ const colors = {
     dark: "rgb(34, 43, 55)",
     twitter: "#1C98E9",
     secondary: "#2b3a4d",
+    grayishBlue: "#14222F",
   },
   yellow: {
     main: "#FFE14D",
