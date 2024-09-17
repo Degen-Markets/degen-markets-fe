@@ -1,15 +1,19 @@
 import React, { FC } from "react";
 import IconProps from "@/app/types/Icon";
 
-const PoolsIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
+const PoolsIcon: FC<IconProps> = ({
+  width = "64",
+  height = "64",
+  ...props
+}) => {
   return (
     <svg
       width={width}
       height={height}
-      style={style}
       fill="none"
       viewBox="0 0 300 300"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_41_22)">
         <circle

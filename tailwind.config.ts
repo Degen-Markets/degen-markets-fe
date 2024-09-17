@@ -4,6 +4,7 @@ const colors = {
     medium: "#202B38",
     dark: "#1A222C",
     main: "#000000",
+    light: "#1A2734",
   },
   blue: {
     light: "#5A799E",

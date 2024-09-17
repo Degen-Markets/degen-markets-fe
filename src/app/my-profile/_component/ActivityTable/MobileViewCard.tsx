@@ -1,0 +1,60 @@
+import React from "react";
+import Image from "next/image";
+import { SiSolana } from "react-icons/si";
+
+interface Activity {
+  marketName: string;
+  value: string;
+  payout: string;
+  imageUrl: string;
+}
+
+interface MobileViewCardProps {
+  activities: Activity[];
+}
+
+const MobileViewCard: React.FC<MobileViewCardProps> = ({ activities }) => {
+  return (
+    <div className="block md:hidden">
+      {activities.map((activity, index) => (
+        <div
+          key={index}
+          className="mb-6 p-4 bg-black-light rounded-lg border border-gray-700 shadow-md font-bold"
+        >
+          <div className="flex items-center space-x-4 mb-4">
+            <Image
+              src={activity.imageUrl}
+              alt="Market"
+              width={60}
+              height={60}
+              className="rounded"
+            />
+            <div className="text-left">
+              <p className="text-lg font-semibold mb-1 text-white">
+                {activity.marketName}
+              </p>
+              <div className="flex items-center space-x-2 text-sm text-gray-400">
+                <span className="bg-black-dark rounded-lg border font-bold px-2 py-0.5">
+                  Based Trump
+                </span>
+                <div className="flex items-center space-x-1">
+                  <span>1.6</span>
+                  <SiSolana
+                    size={12}
+                    className="rounded-full bg-white p-0.5 text-black-dark"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-between items-center text-lg">
+            <div className="text-white">Value: {activity.value}</div>
+            <div className="text-green-400">Payout: {activity.payout}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default MobileViewCard;

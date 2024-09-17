@@ -1,0 +1,25 @@
+import React from "react";
+import { Card } from "@/app/components/Card";
+import EarnPoints from "@/app/components/Icons/EarnPoints";
+import IconProps from "@/app/types/Icon";
+
+interface ProfileStatsProps {
+  title: string;
+  value: string | number;
+  Icon: React.FC<IconProps>;
+}
+
+const ProfileStats: React.FC<ProfileStatsProps> = ({ title, value, Icon }) => (
+  <Card className="border rounded-xl bg-black-light !py-8">
+    <div className="flex items-start md:space-x-2 ">
+      <Icon width={50} height={50} className="relative -top-2" />
+
+      <div className="space-y-6">
+        <h3 className="text-gray-300 mb-2 text-3xl font-bold">{title}</h3>
+        <p className="text-4xl font-bold">{value}</p>
+      </div>
+    </div>
+  </Card>
+);
+
+export default ProfileStats;

@@ -54,7 +54,6 @@ export const UserProfileProvider = ({
 
   const twitterCode = searchParams.get("code");
   const publicKey = wallet.publicKey?.toBase58();
-
   const isSignatureRequired = !!(
     twitterCode &&
     wallet.connected &&
