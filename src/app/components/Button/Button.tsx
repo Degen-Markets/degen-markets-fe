@@ -26,6 +26,7 @@ export const Button: FC<ButtonProps> = ({
         className,
         customStyle,
       )}
+      disabled={isProcessing || isPending}
       {...props}
     >
       {isIdle && children}

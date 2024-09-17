@@ -1,12 +1,12 @@
 import { cva } from "class-variance-authority";
 
 export const buttonVariants = cva(
-  "text-white rounded-lg py-2 px-2 md:px-4 flex items-center justify-center uppercase font-bold",
+  "text-white rounded-lg py-2 px-2 md:px-4 flex items-center justify-center uppercase font-bold disabled:bg-opacity-50 disabled:text-opacity-50 disabled:pointer-events-none",
   {
     variants: {
       intent: {
-        main: "text-white rounded-lg bg-black-medium hover:bg-black-dark active:bg-black-dark disabled:bg-opacity-50 disabled:text-opacity-50  py-2 px-2 md:px-4 flex items-center justify-center disabled:text-white uppercase font-bold",
-        primary: "bg-purple-medium hover:bg-purple-600 active:bg-purple-600",
+        main: "text-white rounded-lg bg-black-medium hover:bg-black-dark active:bg-black-dark py-2 px-2 md:px-4 flex items-center justify-center disabled:text-white uppercase font-bold",
+        primary: "bg-purple-medium hover:bg-purple-600 active:bg-purple-600 ",
         secondary: "bg-blue-dark hover:bg-[#131921] active:bg-[#131921]",
         danger:
           "bg-red-light text-black-medium hover:bg-red-main active:bg-red-main",
