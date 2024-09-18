@@ -6,6 +6,7 @@ import NavDropdownMenu from "./NavDropDown";
 import Link from "next/link";
 import { NavItem } from "@/app/lib/utils/NavigationRoutes";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface NavbarItemProps {
   route: NavItem;
@@ -13,6 +14,8 @@ interface NavbarItemProps {
 
 const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const isActive = typeof route.route === "string" && pathname === route.route;
 
   const handleClick = () => {
     if (typeof route.route === "string") {
@@ -25,13 +28,14 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
       <div
         className={twMerge(
           "flex justify-center items-center space-x-2 cursor-pointer",
+          isActive && "border-b-2 border-purple-medium pb-2 text-purple-medium",
         )}
         onClick={typeof route.route === "string" ? handleClick : undefined}
       >
         {route.icon && (
           <Image src={route.icon} alt={route.name} width={25} height={25} />
         )}
-        <p className="font-bold uppercase drop-shadow-text lg:text-xl xl:text-2xl">
+        <p className="font-bold uppercase  lg:text-xl xl:text-2xl">
           {route.name}
         </p>
         {Array.isArray(route.route) && (
