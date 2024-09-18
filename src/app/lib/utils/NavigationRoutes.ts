@@ -3,15 +3,14 @@
 export interface RouteItem {
   routeName: string;
   link: string;
-  comingSoon?: boolean;
 }
 
 export interface NavItem {
   name: string;
   icon: string;
   route: RouteItem[] | { [key: string]: string } | string;
-  comingSoon?: boolean;
-  isExpandible: boolean;
+  isExpandable: boolean;
+  protected?: boolean;
 }
 
 interface NavigationProps {
@@ -27,11 +26,23 @@ const NavigationRoutes: NavigationProps = {
     root: "/",
     navbar: [
       {
+        name: "Home",
+        icon: "",
+        route: "/",
+        isExpandable: false,
+      },
+      {
+        name: "Leaderboard",
+        icon: "",
+        route: "/#leaderboard",
+        isExpandable: false,
+      },
+      {
         name: "Profile",
         icon: "",
         route: "/my-profile",
-        comingSoon: false,
-        isExpandible: false,
+        isExpandable: false,
+        protected: true,
       },
     ],
   },

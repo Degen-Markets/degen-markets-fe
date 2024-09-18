@@ -3,14 +3,11 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Wrapper from "@/app/components/Wrapper";
 import SolanaWallet from "./SolanaWallet";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { NavbarMobile } from "./Navbar/NavbarMobile";
-import { IoMenu, IoCloseSharp } from "react-icons/io5";
 import DgmLogoIcon from "./Icons/DgmLogoIcon";
+import Navbar from "@/app/components/Navbar";
 
 const Header: React.FC = () => {
   const [nav, setNav] = useState<boolean>(false);
-  const wallet = useWallet();
 
   useEffect(() => {
     if (nav) {
@@ -26,39 +23,18 @@ const Header: React.FC = () => {
   }, [nav]);
 
   return (
-    <header className="w-full text-white z-50">
+    <header className="w-full text-white z-50 p-2 mt-4">
       <Wrapper>
-        <div className="flex justify-between items-center w-full lg:h-24  border-b ">
+        <div className="flex justify-between items-center w-full lg:h-16">
           <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full py-0.5 lg:py-0">
             <div className="flex items-center justify-between w-full">
-              <Link href="/" className="flex items-center">
+              <Link href="/">
                 <DgmLogoIcon width={64} height={64} />
-                <div className="text-4xl font-bold uppercase hidden md:block">
-                  Degen Markets
-                </div>
               </Link>
-              <div
-                onClick={() => setNav(!nav)}
-                className="cursor-pointer z-50 md:hidden ml-auto"
-              >
-                {nav ? (
-                  <div className="text-black-medium">
-                    <IoCloseSharp size={30} />
-                  </div>
-                ) : (
-                  <div>
-                    <IoMenu size={30} />
-                  </div>
-                )}
+              <div className="flex items-center space-x-6">
+                <Navbar nav={nav} setNav={setNav} />
               </div>
-              {nav && <NavbarMobile nav={nav} setNav={setNav} />}
-              <div className="hidden md:flex items-center space-x-6">
-                <Link
-                  href={"/my-profile"}
-                  className="hover:underline underline-offset-4 font-semibold hover:text-purple-light transition-all ease-in duration-150 "
-                >
-                  Profile
-                </Link>
+              <div className="hidden md:flex">
                 <SolanaWallet />
               </div>
             </div>

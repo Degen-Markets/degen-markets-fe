@@ -1,36 +1,17 @@
-import React from "react";
+import React, { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { NavItem } from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileSubItems from "./NavbarMobileSubItems";
-import { twMerge } from "tailwind-merge";
-import Badge from "../../Badge";
 
-const NavbarMobileItem: React.FC<{
+const NavbarMobileItem: FC<{
   route: NavItem;
   setNav: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ route, setNav }) => {
   return (
     <li className="w-full rounded-lg bg-[#202b38] cursor-not-allowed relative">
-      {route.comingSoon ? (
-        <div>
-          <div
-            className={twMerge(
-              "flex justify-center items-center space-x-2 rounded-lg hover:bg-[#131921] px-3 py-2 text-white",
-              route.comingSoon && "opacity-35",
-            )}
-          >
-            {route.icon && (
-              <Image src={route.icon} alt={route.icon} width={30} height={30} />
-            )}
-            <p className="font-bold uppercase drop-shadow lg:text-xl xl:text-2xl">
-              {route.name}
-            </p>
-          </div>
-          <Badge>soon</Badge>
-        </div>
-      ) : typeof route.route === "string" ? (
+      {typeof route.route === "string" ? (
         <Link
           href={route.route}
           onClick={() => {
@@ -65,12 +46,11 @@ const NavbarMobileItem: React.FC<{
 
                   <ul className="text-white border-t shadow-lg mt-3 z-20 w-full opacity-0 group-hover:opacity-100 transition-all ease-in duration-300">
                     {Array.isArray(route.route)
-                      ? route.route.map(({ link, routeName, comingSoon }) => (
+                      ? route.route.map(({ link, routeName }) => (
                           <NavbarMobileSubItems
                             key={routeName}
                             link={link}
                             routeName={routeName}
-                            comingSoon={comingSoon}
                             setNav={setNav}
                           />
                         ))
