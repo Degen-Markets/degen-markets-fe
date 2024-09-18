@@ -25,12 +25,10 @@ const Navbar: React.FC<{
       <NavbarDesktop />
       <div
         onClick={() => setNav(!nav)}
-        className="cursor-pointer z-50 md:hidden ml-auto"
+        className="cursor-pointer z-10 md:hidden ml-auto"
       >
         {nav ? (
-          <div className="text-black-medium">
-            <IoClose size={30} />
-          </div>
+          <IoClose size={30} className="text-black-medium" />
         ) : (
           <IoMenu size={30} />
         )}
