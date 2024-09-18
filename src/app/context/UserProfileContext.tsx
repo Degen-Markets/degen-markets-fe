@@ -65,7 +65,7 @@ export const UserProfileProvider = ({
     defaultMessage: string,
     additionalMessage?: string,
   ) => {
-    const errorMessage = error?.response?.data?.error ?? defaultMessage;
+    const errorMessage = error?.response?.data?.message ?? defaultMessage;
     const finalMessage = additionalMessage
       ? `${errorMessage}${additionalMessage}`
       : errorMessage;

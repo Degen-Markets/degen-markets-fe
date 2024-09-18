@@ -16,6 +16,12 @@ const chakraPetch = Chakra_Petch({
 export const metadata: Metadata = {
   title: "Degen Markets",
   description: "Degen Markets Hub",
+  icons: {
+    icon: "/favicon/favicon.ico",
+    shortcut: "/favicon/favicon-16x16.png",
+    apple: "/favicon/apple-touch-icon.png",
+  },
+  manifest: `/favicon/site.webmanifest`,
 };
 
 export default function RootLayout({
