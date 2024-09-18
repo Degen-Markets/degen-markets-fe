@@ -1,18 +1,8 @@
 import React from "react";
 import ActivityRow from "../ActivityRow";
+import { ActivitiesProps } from "./type";
 
-interface Activity {
-  marketName: string;
-  value: string;
-  payout: string;
-  imageUrl: string;
-}
-
-interface DesktopViewTableProps {
-  activities: Activity[];
-}
-
-const DesktopViewTable: React.FC<DesktopViewTableProps> = ({ activities }) => {
+const DesktopViewTable: React.FC<ActivitiesProps> = ({ activities }) => {
   return (
     <div className="hidden md:block overflow-x-auto">
       <table className="w-full max-w-screen-2xl min-w-[900px]">

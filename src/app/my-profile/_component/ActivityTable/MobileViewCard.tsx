@@ -1,19 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { SiSolana } from "react-icons/si";
+import { ActivitiesProps } from "./type";
 
-interface Activity {
-  marketName: string;
-  value: string;
-  payout: string;
-  imageUrl: string;
-}
-
-interface MobileViewCardProps {
-  activities: Activity[];
-}
-
-const MobileViewCard: React.FC<MobileViewCardProps> = ({ activities }) => {
+const MobileViewCard: React.FC<ActivitiesProps> = ({ activities }) => {
   return (
     <div className="block md:hidden">
       {activities.map((activity, index) => (

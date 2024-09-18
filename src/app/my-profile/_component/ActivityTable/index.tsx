@@ -1,37 +1,31 @@
 import React from "react";
 import DesktopViewTable from "./DesktopViewTable";
 import MobileViewCard from "./MobileViewCard";
+import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";
+import { Activity } from "./type";
 
 const ActivityTable: React.FC = () => {
-  const activities = [
-    {
-      marketName:
-        "Who will be the first to mention crypto on tonight's interview?",
-      value: "$0",
-      payout: "$0",
-      imageUrl: "/user-avatars/default.jpg",
-    },
-    {
-      marketName:
-        "Who will be the first to mention crypto on tonight's interview?",
-      value: "$0",
-      payout: "$0",
-      imageUrl: "/user-avatars/default.jpg",
-    },
-    {
-      marketName:
-        "Who will be the first to mention crypto on tonight's interview?",
-      value: "$0",
-      payout: "$0",
-      imageUrl: "/user-avatars/default.jpg",
-    },
-  ];
-
+  const activities: Activity[] = [];
   return (
     <main>
       <h3 className="font-bold mb-4 text-3xl border-b pb-5">Activity</h3>
-      <DesktopViewTable activities={activities} />
-      <MobileViewCard activities={activities} />
+
+      {activities.length > 0 ? (
+        <>
+          <DesktopViewTable activities={activities} />
+          <MobileViewCard activities={activities} />
+        </>
+      ) : (
+        <div className="w-full flex flex-col items-center justify-center h-96">
+          <LeaderboardIcon />
+          <h3 className="text-center font-bold text-3xl text-gray-400">
+            No recent activities.
+          </h3>
+          <p className="text-center text-lg text-gray-500 mt-2">
+            Participate in markets to see your activity here!
+          </p>
+        </div>
+      )}
     </main>
   );
 };
