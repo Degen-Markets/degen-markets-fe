@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Player } from "@/app/types/player";
 import UserAvatar from "@/app/components/UserAvatar";
-import RankIcon from "@/app/components/Icons/RankIcon";
 import { twMerge } from "tailwind-merge";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
+import PositionIcon from "@/app/components/Icons/PositionIcon";
 
 interface PlayerRowProps {
   player: Player;
@@ -25,7 +25,7 @@ const PlayerRow: FC<PlayerRowProps> = ({ player, order }) => (
           order <= 3 ? "-top-10 -right-10" : "-top-5 -right-5",
         )}
       >
-        <RankIcon width={80} height={80} order={order} />
+        <PositionIcon width={80} height={80} order={order} />
       </div>
     </div>
     <div className="flex flex-col gap-1 justify-center font-bold">

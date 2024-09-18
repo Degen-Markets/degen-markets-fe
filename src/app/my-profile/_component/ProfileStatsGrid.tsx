@@ -1,10 +1,9 @@
-import React from "react";
 import ProfileStats from "./ProfileStats";
 import { formatNumberToSignificantDigits } from "@/app/lib/utils/bets/helpers";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import EarnPoints from "@/app/components/Icons/EarnPoints";
 import ProfitLoss from "@/app/components/Icons/ProfitLoss";
-import ElectionIcon from "@/app/components/Icons/ElectionIcon";
+import RankingIcon from "@/app/components/Icons/RankingIcon";
 
 const ProfileStatsGrid = () => {
   const { userProfile } = useUserProfileContext();
@@ -23,7 +22,7 @@ const ProfileStatsGrid = () => {
     {
       title: "Total volume",
       value: "$0",
-      Icon: ElectionIcon,
+      Icon: RankingIcon,
     },
   ];
   return (

@@ -385,7 +385,7 @@ const DefaultIcon: FC<IconProps> = ({ ...props }) => (
   </svg>
 );
 
-const RankIcon: FC<IconProps & { order: number }> = ({
+const PositionIcon: FC<IconProps & { order: number }> = ({
   order,
   width = "64",
   height = "64",
@@ -407,4 +407,4 @@ const RankIcon: FC<IconProps & { order: number }> = ({
   );
 };
 
-export default RankIcon;
+export default PositionIcon;

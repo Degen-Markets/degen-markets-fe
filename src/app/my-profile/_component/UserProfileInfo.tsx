@@ -5,8 +5,8 @@ import { Address } from "@/app/lib/utils/bets/types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import Image from "next/image";
-import RankIcon from "@/app/components/Icons/RankIcon";
 import { twMerge } from "tailwind-merge";
+import PositionIcon from "@/app/components/Icons/PositionIcon";
 
 const UserProfileInfo: React.FC = () => {
   const { userProfile, isSignatureRequired } = useUserProfileContext();
@@ -30,7 +30,7 @@ const UserProfileInfo: React.FC = () => {
               1 <= 3 ? "-top-10 -right-10" : "-top-5 -right-5",
             )}
           >
-            <RankIcon width={100} height={100} order={1} />
+            <PositionIcon width={100} height={100} order={1} />
           </div>
         </div>
         <div className="space-y-6 font-bold">
