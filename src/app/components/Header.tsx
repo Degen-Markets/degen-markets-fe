@@ -31,9 +31,7 @@ const Header: React.FC = () => {
               <Link href="/">
                 <DgmLogoIcon width={64} height={64} />
               </Link>
-              <div className="flex items-center space-x-6">
-                <Navbar nav={nav} setNav={setNav} />
-              </div>
+              <Navbar nav={nav} setNav={setNav} />
               <div className="hidden md:flex">
                 <SolanaWallet />
               </div>
