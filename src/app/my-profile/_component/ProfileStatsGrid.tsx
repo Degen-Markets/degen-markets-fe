@@ -1,8 +1,8 @@
 import ProfileStats from "./ProfileStats";
 import { formatNumberToSignificantDigits } from "@/app/lib/utils/bets/helpers";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
-import EarnPoints from "@/app/components/Icons/EarnPoints";
-import ProfitLoss from "@/app/components/Icons/ProfitLoss";
+import EarnPoints from "@/app/components/Icons/EarnPointsIcon";
+import ProfitLoss from "@/app/components/Icons/ProfitLossIcon";
 import RankingIcon from "@/app/components/Icons/RankingIcon";
 
 const ProfileStatsGrid = () => {
