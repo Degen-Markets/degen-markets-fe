@@ -26,13 +26,16 @@ const Header: React.FC = () => {
   }, [nav]);
 
   return (
-    <header className="w-full text-white z-50 p-2 mt-4">
+    <header className="w-full text-white z-50">
       <Wrapper>
-        <div className="flex justify-between items-center w-full lg:h-16">
+        <div className="flex justify-between items-center w-full lg:h-24  border-b ">
           <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full py-0.5 lg:py-0">
             <div className="flex items-center justify-between w-full">
-              <Link href="/">
+              <Link href="/" className="flex items-center">
                 <DgmLogoIcon width={64} height={64} />
+                <div className="text-4xl font-bold uppercase hidden md:block">
+                  Degen Markets
+                </div>
               </Link>
               <div
                 onClick={() => setNav(!nav)}

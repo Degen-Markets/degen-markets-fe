@@ -5,18 +5,11 @@ interface IconWithOrderProps extends IconProps {
   order: number;
 }
 
-const Icon: FC<IconWithOrderProps> = ({ order, width = 64, height = 64 }) => {
-  return order <= 3 ? (
-    <TopThreeIcon width={width} height={height} />
-  ) : (
-    <DefaultIcon width={width} height={height} />
-  );
+const Icon: FC<IconWithOrderProps> = ({ order, ...props }) => {
+  return order <= 3 ? <TopThreeIcon {...props} /> : <DefaultIcon {...props} />;
 };
 
-const TopThreeIcon: FC<{ width: number; height: number }> = ({
-  width,
-  height,
-}) => (
+export const TopThreeIcon: FC<IconProps> = ({ width, height, ...props }) => (
   <svg
     width={width}
     height={height}
@@ -24,6 +17,7 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
     transform="translate(0, 3) scale(0.65)" // Move down by 10px and scale
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <g clipPath="url(#clip0_49_38)">
       <path
@@ -189,16 +183,12 @@ const TopThreeIcon: FC<{ width: number; height: number }> = ({
   </svg>
 );
 
-const DefaultIcon: FC<{ width: number; height: number }> = ({
-  width,
-  height,
-}) => (
+const DefaultIcon: FC<IconProps> = ({ ...props }) => (
   <svg
-    width={width}
-    height={height}
     viewBox="0 0 278 278"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <g filter="url(#filter0_f_407_14)">
       <circle cx="139" cy="139" r="95" fill="url(#paint0_linear_407_14)" />
@@ -395,20 +385,21 @@ const DefaultIcon: FC<{ width: number; height: number }> = ({
   </svg>
 );
 
-const RankIcon: FC<IconProps & { order: number }> = ({
-  width = 60,
-  height = 70,
+const PositionIcon: FC<IconProps & { order: number }> = ({
   order,
+  width = "64",
+  height = "64",
+  ...props
 }) => {
-  const iconWidth = order > 3 ? width - 36 : width;
-  const iconHeight = order > 3 ? height - 36 : height;
+  const iconWidth = order > 3 ? (width as number) - 36 : (width as number);
+  const iconHeight = order > 3 ? (height as number) - 36 : (height as number);
 
   return (
     <div
       className="relative"
       style={{ width: `${iconWidth}px`, height: `${iconHeight}px` }}
     >
-      <Icon order={order} height={iconWidth} width={iconWidth} />
+      <Icon order={order} {...props} />{" "}
       <span className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 drop-shadow-md font-bold">
         {order}
       </span>
@@ -416,4 +407,4 @@ const RankIcon: FC<IconProps & { order: number }> = ({
   );
 };
 
-export default RankIcon;
+export default PositionIcon;

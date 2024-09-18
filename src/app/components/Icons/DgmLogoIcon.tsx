@@ -4,18 +4,16 @@ import IconProps from "@/app/types/Icon";
 const DgmLogoIcon: FC<IconProps> = ({
   width = "64",
   height = "64",
-  style,
-  className,
+  ...props
 }) => {
   return (
     <svg
       width={width}
       height={height}
-      style={style}
-      className={className}
       viewBox="0 0 1200 1200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_114_8)">
         <g filter="url(#filter0_d_114_8)">

@@ -1,15 +1,15 @@
 import React, { FC } from "react";
 import IconProps from "@/app/types/Icon";
 
-const AllIcon: FC<IconProps> = ({ width = "64", height = "64", style }) => {
+const AllIcon: FC<IconProps> = ({ width = "64", height = "64", ...props }) => {
   return (
     <svg
       width={width}
       height={height}
-      style={style}
       viewBox="0 0 300 300"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_1_83)">
         <g filter="url(#filter0_bd_1_83)">

@@ -1,10 +1,3 @@
-import { CSSProperties } from "react";
-
-interface IconProps {
-  width?: number;
-  height?: number;
-  style?: CSSProperties;
-  className?: string;
-}
+interface IconProps extends React.ComponentProps<"svg"> {}
 
 export default IconProps;
