@@ -131,7 +131,7 @@ export const UserProfileProvider = ({
   );
 
   useEffect(() => {
-    if (wallet.connected && publicKey && !isSignatureRequired) {
+    if (wallet.connected && publicKey) {
       fetchUserProfile(publicKey);
     } else if (!wallet.connected) {
       setUserProfile(initialUserProfile); // Reset profile on wallet disconnection
