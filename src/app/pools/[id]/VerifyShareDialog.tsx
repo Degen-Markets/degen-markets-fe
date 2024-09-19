@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +9,7 @@ import { tryItAsync } from "@/app/lib/utils/tryIt";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import Input from "@/app/components/Input";
 import { Button } from "@/app/components/Button/Button";
+import { claimPoolTweetPoints } from "@/app/lib/utils/api/twitter";
 import { Player } from "@/app/types/player";
 
 const VerifyShareDialog = ({
@@ -24,7 +24,7 @@ const VerifyShareDialog = ({
   onClose: () => void;
 }) => {
   const { showToast } = useToast();
-  const [tweetLink, setTweetLink] = useState("");
+  const [tweetUrl, setTweetUrl] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
 
   const handleOpenChange = useCallback(
@@ -36,24 +36,14 @@ const VerifyShareDialog = ({
 
   const handleVerify = useCallback(async () => {
     setIsVerifying(true);
-    const verifyRequestTrial = await tryItAsync(() =>
-      axios.post<{ isSuccess: boolean }>(`${API_BASE_URL}/api/verify-x-share`, {
-        tweetLink,
-        poolId,
-      }),
+    const claimTrial = await tryItAsync(() =>
+      claimPoolTweetPoints({ tweetUrl, poolId, playerAddress: userAddress }),
     );
     setIsVerifying(false);
 
-    if (
-      !verifyRequestTrial.success ||
-      !verifyRequestTrial.data.data.isSuccess
-    ) {
+    if (!claimTrial.success) {
       showToast("Failed to verify tweet. Please try again.", "error");
-      console.error(
-        verifyRequestTrial.success
-          ? verifyRequestTrial.data
-          : verifyRequestTrial.err,
-      );
+      console.error(claimTrial.err);
       return;
     }
 
@@ -66,7 +56,7 @@ const VerifyShareDialog = ({
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setTweetLink(e.target.value);
+      setTweetUrl(e.target.value);
     },
     [],
   );
@@ -78,7 +68,7 @@ const VerifyShareDialog = ({
           <DialogTitle>Verify Your Tweet</DialogTitle>
         </DialogHeader>
         <Input
-          value={tweetLink}
+          value={tweetUrl}
           disabled={isVerifying}
           onChange={handleInputChange}
           placeholder="Enter the link to your tweet"
