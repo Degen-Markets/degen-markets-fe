@@ -42,6 +42,16 @@ interface LeaderboardProps {
 }
 
 const LeaderboardTable: FC<LeaderboardProps> = ({ players }) => {
+  const sortedPlayers = [...players].sort((a, b) => b.points - a.points);
+
+  const rowsPerColumn = Math.ceil(sortedPlayers.length / 3);
+
+  const columns: Player[][] = [[], [], []];
+
+  sortedPlayers.forEach((player, index) => {
+    columns[Math.floor(index / rowsPerColumn)].push(player);
+  });
+
   const renderPlayerRows = (players: Player[], offset = 0) =>
     players.map((player, index) => (
       <PlayerRow
@@ -52,13 +62,12 @@ const LeaderboardTable: FC<LeaderboardProps> = ({ players }) => {
     ));
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-y-8 gap-x-16">
-      <div className="flex flex-col gap-6">
-        {renderPlayerRows(players.slice(0, 5))}
-      </div>
-      <div className="flex flex-col gap-6">
-        {renderPlayerRows(players.slice(5), 5)}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-y-8 gap-x-16">
+      {columns.map((column, colIndex) => (
+        <div key={colIndex} className="flex flex-col gap-6">
+          {renderPlayerRows(column, colIndex * rowsPerColumn)}
+        </div>
+      ))}
     </div>
   );
 };
