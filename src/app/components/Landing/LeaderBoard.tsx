@@ -6,7 +6,7 @@ import { getPlayers } from "@/app/lib/utils/api/players";
 const LeaderBoard = async () => {
   const { data: players } = await getPlayers();
   return (
-    <div>
+    <div id="leaderboard">
       <SectionHeader
         icon={<LeaderboardIcon width={64} height={64} />}
         title="LeaderBoard"

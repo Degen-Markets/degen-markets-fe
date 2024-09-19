@@ -4,18 +4,16 @@ import IconProps from "@/app/types/Icon";
 const LeaderboardIcon: FC<IconProps> = ({
   width = 64,
   height = 64,
-  style,
-  className,
+  ...props
 }) => {
   return (
     <svg
       width={width}
       height={height}
-      style={style}
       viewBox="0 0 300 300"
-      className={className}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <g clipPath="url(#clip0_33_2)">
         <path

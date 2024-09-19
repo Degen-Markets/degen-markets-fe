@@ -6,6 +6,7 @@ import React from "react";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import { Chakra_Petch } from "next/font/google";
+import { twMerge } from "tailwind-merge";
 
 const chakraPetch = Chakra_Petch({
   weight: ["400", "700"],
@@ -30,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={chakraPetch.className}>
+    <html lang="en" className={twMerge("scroll-smooth", chakraPetch.className)}>
       <body className="text-sm sm:text-lg md:text-xl bg-contain bg-center bg-no-repeat min-h-screen ">
         <Providers>
           <div className="flex min-h-screen flex-col items-center justify-between">

@@ -1,45 +1,50 @@
-import React, { useMemo } from "react";
-import Link from "next/link";
 import NavigationRoutes from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileItem from "./NavbarMobileItem";
 import SolanaWallet from "@/app/components/SolanaWallet";
+import { Dispatch, FC, SetStateAction } from "react";
+import Link from "next/link";
+import { FaXTwitter } from "react-icons/fa6";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-export const NavbarMobile: React.FC<{
+export const NavbarMobile: FC<{
   nav: boolean;
-  setNav: React.Dispatch<React.SetStateAction<boolean>>;
+  setNav: Dispatch<SetStateAction<boolean>>;
 }> = ({ nav, setNav }) => {
-  const sortedRoutes = useMemo(() => {
-    return [...NavigationRoutes.header.navbar].sort((a, b) => {
-      if (a.comingSoon && !b.comingSoon) return 1;
-      if (!a.comingSoon && b.comingSoon) return -1;
-      return 0;
-    });
-  }, []);
-
+  const wallet = useWallet();
   return (
-    <>
+    <aside className="top-0 left-0 right-0 bottom-0fixed">
       <div
         onClick={() => setNav(!nav)}
-        className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 h-dvh bg-opacity-80 z-40"
+        className="absolute inset-0 bottom-0 left-0 right-0 top-0 h-full w-full bg-black bg-opacity-70 backdrop-blur-sm transition-opacity"
       ></div>
-      <div className="flex flex-col absolute top-0 right-0 w-full md:w-[40%] h-dvh bg-neutral-100 text-neutral-800 px-2 z-40 overflow-y-auto">
-        <ul className="mt-20 space-y-5">
-          {sortedRoutes.map((route) => (
-            <NavbarMobileItem key={route.name} route={route} setNav={setNav} />
-          ))}
-        </ul>
-
-        <div className="cursor-pointer uppercase py-4 tracking-wider text-base w-full">
-          <SolanaWallet />
-        </div>
-        <div className="mt-auto bg-[#202b38] text-white">
-          <div className="px-6 cursor-pointer uppercase font-oswald py-4 tracking-wider text-base">
-            <Link href="https://twitter.com/DEGEN_MARKETS" target="_blank">
-              <div>Twitter</div>
+      <div className="fixed bottom-0 right-0 h-full w-[85%] bg-white p-4 ">
+        <div className="flex flex-col h-full ">
+          <ul className="mt-20">
+            {NavigationRoutes.header.navbar.map((route) => {
+              if (route.protected && !wallet.connected) return null;
+              return (
+                <NavbarMobileItem
+                  key={route.name}
+                  route={route}
+                  setNav={setNav}
+                />
+              );
+            })}
+          </ul>
+          <div className="flex justify-center cursor-pointer uppercase py-4 tracking-wider text-base mt-20">
+            <SolanaWallet />
+          </div>
+          <div className="flex justify-center mt-auto">
+            <Link
+              href="https://x.com/DEGEN_MARKETS"
+              target="_blank"
+              className="text-black-medium flex gap-2"
+            >
+              <FaXTwitter className="text-lg" /> @DEGEN_MARKETS
             </Link>
           </div>
         </div>
       </div>
-    </>
+    </aside>
   );
 };
