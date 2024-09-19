@@ -10,14 +10,16 @@ import { tryItAsync } from "@/app/lib/utils/tryIt";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import Input from "@/app/components/Input";
 import { Button } from "@/app/components/Button/Button";
-import { API_BASE_URL } from "@/app/lib/utils/api";
+import { Player } from "@/app/types/player";
 
 const VerifyShareDialog = ({
   poolId,
+  userAddress,
   isOpen,
   onClose: handleClose,
 }: {
   poolId: string;
+  userAddress: Player["address"];
   isOpen: boolean;
   onClose: () => void;
 }) => {
@@ -27,10 +29,7 @@ const VerifyShareDialog = ({
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
-      if (!open) {
-        setTweetLink("");
-      }
-      handleClose();
+      if (!open) handleClose();
     },
     [handleClose],
   );
@@ -62,8 +61,8 @@ const VerifyShareDialog = ({
       "Successfully verified tweet. You have been awarded 10 points!",
       "success",
     );
-    handleOpenChange(false);
-  }, [tweetLink, poolId, showToast, handleOpenChange]);
+    handleClose();
+  }, [tweetUrl, poolId, showToast, handleClose, userAddress]);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

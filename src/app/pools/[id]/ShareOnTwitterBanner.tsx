@@ -55,11 +55,14 @@ const Content = ({ poolId }: { poolId: string }) => {
       <Button intent="primary" onClick={handleShare}>
         Share
       </Button>
-      <VerifyShareDialog
-        poolId={poolId}
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-      />
+      {isDialogOpen && !!userProfile.address && (
+        <VerifyShareDialog
+          poolId={poolId}
+          isOpen={isDialogOpen}
+          userAddress={userProfile.address}
+          onClose={() => setIsDialogOpen(false)}
+        />
+      )}
     </div>
   );
 };
