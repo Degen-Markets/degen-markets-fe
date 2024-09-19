@@ -24,9 +24,11 @@ export const claimPoolTweetPoints = ({
   tweetUrl: string;
   poolId: string;
   playerAddress: string;
-}): Promise<AxiosResponse<{ message: string; pointsAwarded: number }>> =>
-  axios.post(`${API_BASE_URL}/claim-pool-tweet-points`, {
-    poolId,
-    tweetUrl,
-    playerAddress,
-  });
+}): Promise<{ message: string; pointsAwarded: number }> =>
+  axios
+    .post(`${API_BASE_URL}/claim-pool-tweet-points`, {
+      poolId,
+      tweetUrl,
+      playerAddress,
+    })
+    .then((res) => res.data);

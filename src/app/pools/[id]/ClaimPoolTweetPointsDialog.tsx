@@ -12,7 +12,7 @@ import { Button } from "@/app/components/Button/Button";
 import { claimPoolTweetPoints } from "@/app/lib/utils/api/twitter";
 import { Player } from "@/app/types/player";
 
-const VerifyShareDialog = ({
+const ClaimPoolTweetPointsDialog = ({
   poolId,
   userAddress,
   isOpen,
@@ -34,7 +34,7 @@ const VerifyShareDialog = ({
     [handleClose],
   );
 
-  const handleVerify = useCallback(async () => {
+  const handleClaim = useCallback(async () => {
     setIsVerifying(true);
     const claimTrial = await tryItAsync(() =>
       claimPoolTweetPoints({ tweetUrl, poolId, playerAddress: userAddress }),
@@ -42,13 +42,14 @@ const VerifyShareDialog = ({
     setIsVerifying(false);
 
     if (!claimTrial.success) {
-      showToast("Failed to verify tweet. Please try again.", "error");
+      showToast("Failed to claim points. Please try again.", "error");
       console.error(claimTrial.err);
       return;
     }
 
+    const { pointsAwarded } = claimTrial.data;
     showToast(
-      "Successfully verified tweet. You have been awarded 10 points!",
+      `Successfully claimed points. You have been awarded ${pointsAwarded} points!`,
       "success",
     );
     handleClose();
@@ -76,7 +77,7 @@ const VerifyShareDialog = ({
         <Button
           loader
           isProcessing={isVerifying}
-          onClick={handleVerify}
+          onClick={handleClaim}
           intent="primary"
         >
           Verify
@@ -86,4 +87,4 @@ const VerifyShareDialog = ({
   );
 };
 
-export default VerifyShareDialog;
+export default ClaimPoolTweetPointsDialog;

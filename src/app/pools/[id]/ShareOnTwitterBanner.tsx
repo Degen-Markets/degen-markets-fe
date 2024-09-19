@@ -7,7 +7,7 @@ import {
 } from "@/app/context/UserProfileContext";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { useRouter } from "next/navigation";
-import VerifyShareDialog from "./VerifyShareDialog";
+import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
 
 const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
   return (
@@ -56,7 +56,7 @@ const Content = ({ poolId }: { poolId: string }) => {
         Share
       </Button>
       {isDialogOpen && !!userProfile.address && (
-        <VerifyShareDialog
+        <ClaimPoolTweetPointsDialog
           poolId={poolId}
           isOpen={isDialogOpen}
           userAddress={userProfile.address}
