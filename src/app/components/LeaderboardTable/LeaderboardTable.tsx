@@ -4,6 +4,7 @@ import UserAvatar from "@/app/components/UserAvatar";
 import { twMerge } from "tailwind-merge";
 import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 import PositionIcon from "@/app/components/Icons/PositionIcon";
+import Link from "next/link";
 
 interface PlayerRowProps {
   player: Player;
@@ -30,7 +31,15 @@ const PlayerRow: FC<PlayerRowProps> = ({ player, order }) => (
     </div>
     <div className="flex flex-col gap-1 justify-center font-bold">
       <div className="text-base">
-        {player.twitterUsername || getDisplayNameForAddress(player.address)}
+        {player.twitterUsername && (
+          <Link
+            href={`https://x.com/${player.twitterUsername}`}
+            target="_blank"
+          >
+            @{player.twitterUsername}
+          </Link>
+        )}
+        {!player.twitterUsername && getDisplayNameForAddress(player.address)}
       </div>
       <span className="text-gray-400 text-sm">{player.points} Points</span>
     </div>

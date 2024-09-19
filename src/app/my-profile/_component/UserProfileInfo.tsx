@@ -9,7 +9,7 @@ import { twMerge } from "tailwind-merge";
 import PositionIcon from "@/app/components/Icons/PositionIcon";
 
 const UserProfileInfo: React.FC = () => {
-  const { userProfile, isSignatureRequired } = useUserProfileContext();
+  const { userProfile } = useUserProfileContext();
   const wallet = useWallet();
   const address = wallet.publicKey?.toBase58();
 
@@ -35,7 +35,9 @@ const UserProfileInfo: React.FC = () => {
         </div>
         <div className="space-y-6 font-bold">
           <h2 className="text-3xl  text-center md:text-left md:text-5xl">
-            {userProfile?.twitterUsername || "@Degen"}
+            {userProfile?.twitterUsername
+              ? `@${userProfile.twitterUsername}`
+              : "@Degen"}
           </h2>
           <div className="flex items-center space-x-4">
             <p className="text-gray-400 rounded-full bg-black-light py-2 px-4 text-center">
