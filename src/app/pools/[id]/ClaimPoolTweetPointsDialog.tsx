@@ -25,7 +25,7 @@ const ClaimPoolTweetPointsDialog = ({
 }) => {
   const { showToast } = useToast();
   const [tweetUrl, setTweetUrl] = useState("");
-  const [isVerifying, setIsVerifying] = useState(false);
+  const [isVerifyingClaim, setIsVerifyingClaim] = useState(false);
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -34,12 +34,12 @@ const ClaimPoolTweetPointsDialog = ({
     [handleClose],
   );
 
-  const handleClaim = useCallback(async () => {
-    setIsVerifying(true);
+  const verifyClaim = useCallback(async () => {
+    setIsVerifyingClaim(true);
     const claimTrial = await tryItAsync(() =>
       claimPoolTweetPoints({ tweetUrl, poolId, playerAddress: userAddress }),
     );
-    setIsVerifying(false);
+    setIsVerifyingClaim(false);
 
     if (!claimTrial.success) {
       showToast("Failed to claim points. Please try again.", "error");
@@ -66,21 +66,21 @@ const ClaimPoolTweetPointsDialog = ({
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Verify Your Tweet</DialogTitle>
+          <DialogTitle>Claim Points</DialogTitle>
         </DialogHeader>
         <Input
           value={tweetUrl}
-          disabled={isVerifying}
+          disabled={isVerifyingClaim}
           onChange={handleInputChange}
-          placeholder="Enter the link to your tweet"
+          placeholder="Enter the link to your tweet sharing this page"
         />
         <Button
           loader
-          isProcessing={isVerifying}
-          onClick={handleClaim}
+          isProcessing={isVerifyingClaim}
+          onClick={verifyClaim}
           intent="primary"
         >
-          Verify
+          Claim
         </Button>
       </DialogContent>
     </Dialog>
