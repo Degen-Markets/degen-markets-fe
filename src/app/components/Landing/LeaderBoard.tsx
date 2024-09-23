@@ -10,7 +10,6 @@ const LeaderBoard = async () => {
       <SectionHeader
         icon={<LeaderboardIcon width={64} height={64} />}
         title="LeaderBoard"
-        className="justify-center"
       />
       <div className="bg-white bg-opacity-5 p-6 md:p-10 bg-no-repeat bg-contain bg-center rounded-xl py-10 mb-20">
         <LeaderboardTable players={players} />
