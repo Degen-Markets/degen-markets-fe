@@ -51,15 +51,19 @@ const Content: FC = () => {
           </>
         ) : (
           <>
-            {connecting ? null : (
-              <Image
-                src={"/navIcons/Wallet.svg"}
-                alt="Wallet"
-                width={24}
-                height={24}
-              />
+            {connecting ? (
+              "Connecting..."
+            ) : (
+              <>
+                <Image
+                  src={"/navIcons/Wallet.svg"}
+                  alt="Wallet"
+                  width={24}
+                  height={24}
+                />
+                Connect Wallet
+              </>
             )}
-            Connect Wallet
           </>
         )}
       </div>

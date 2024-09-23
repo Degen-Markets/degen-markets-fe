@@ -6,6 +6,9 @@ import {
   WalletProvider,
 } from "@solana/wallet-adapter-react";
 import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { LedgerWalletAdapter } from "@solana/wallet-adapter-ledger";
+import { SolflareWalletAdapter } from "@solana/wallet-adapter-solflare";
+import { WalletConnectWalletAdapter } from "@solana/wallet-adapter-walletconnect";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 
@@ -16,7 +19,20 @@ export function WalletContextProvider({
 }) {
   const network = WalletAdapterNetwork.Mainnet;
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-  const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
+  const wallets = useMemo(
+    () => [
+      new PhantomWalletAdapter(),
+      new LedgerWalletAdapter(),
+      new SolflareWalletAdapter(),
+      new WalletConnectWalletAdapter({
+        network: WalletAdapterNetwork.Mainnet,
+        options: {
+          projectId: "df952832de2940f86aef97c2279d298f", // public identifier, plus goes to client side. So safe to expose/hardcode
+        },
+      }),
+    ],
+    [],
+  );
 
   return (
     <ConnectionProvider endpoint={endpoint}>
