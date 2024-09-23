@@ -10,7 +10,7 @@ type GetPlayersParams = {
 
 export const getPlayers = ({
   sort = "DESC",
-  limit = 10,
+  limit = 20,
   offset = 0,
 }: GetPlayersParams = {}): Promise<AxiosResponse<Array<Player>>> =>
   axios.get(`${API_BASE_URL}/players`, {

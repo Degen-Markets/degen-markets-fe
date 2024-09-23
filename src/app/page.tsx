@@ -1,10 +1,9 @@
-import Pools from "./components/Landing";
-import HeroSection from "./components/Landing/HeroSection";
-import LeaderBoard from "./components/Landing/LeaderBoard";
-import Wrapper from "./components/Wrapper";
-import { getPools } from "./lib/utils/api/pools";
+import { getPools } from "@/app/lib/utils/api/pools";
+import Wrapper from "@/app/components/Wrapper";
+import HeroSection from "@/app/components/Landing/HeroSection";
+import Pools from "@/app/components/Landing";
 
-export const dynamic = "force-dynamic"; // forces Next to not cache api requests
+export const dynamic = "force-dynamic";
 
 const Home = async () => {
   const { data: pools } = await getPools();
@@ -12,7 +11,6 @@ const Home = async () => {
     <Wrapper className="flex flex-col gap-16">
       <HeroSection />
       <Pools pools={pools} />
-      <LeaderBoard />
     </Wrapper>
   );
 };
