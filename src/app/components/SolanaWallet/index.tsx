@@ -12,6 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 // Import default styles and override them
 require("@solana/wallet-adapter-react-ui/styles.css");
 import "./index.css";
+import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
 
 const SolanaWallet = () => {
   return (
@@ -24,9 +25,10 @@ const SolanaWallet = () => {
 const Content: FC = () => {
   const { userProfile } = useUserProfileContext();
   const { publicKey, connected, connecting } = useWallet();
-  const publicKeyString = publicKey?.toBase58();
-  const walletAddrDisplayStr = publicKeyString
-    ? `${publicKeyString.slice(0, 4)}...${publicKeyString.slice(-4)}`
+
+  const publicKeyStr = publicKey?.toBase58();
+  const walletAddrDisplayStr = publicKeyStr
+    ? getDisplayNameForAddress(publicKeyStr)
     : null;
 
   return (
