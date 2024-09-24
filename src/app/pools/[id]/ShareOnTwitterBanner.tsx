@@ -6,8 +6,15 @@ import {
   useUserProfileContext,
 } from "@/app/context/UserProfileContext";
 import { useToast } from "@/app/components/Toast/ToastProvider";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
+
+const DIALOG_SEARCH_PARAM = {
+  key: "open-claim-dialog",
+  values: {
+    open: "true",
+  },
+};
 
 const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
   return (
@@ -18,13 +25,29 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
 };
 
 const Content = ({ poolId }: { poolId: string }) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const isDialogOpenByDefault =
+    searchParams.get(DIALOG_SEARCH_PARAM.key) ===
+    DIALOG_SEARCH_PARAM.values.open;
+  const [isDialogOpen, setIsDialogOpen] = useState(isDialogOpenByDefault);
   const { userProfile } = useUserProfileContext();
   const { showToast, hideToast } = useToast();
   const router = useRouter();
   const currPath = usePathname();
 
   const redirectWithToast = useCallback(() => {
+    const getRedirectPath = () => {
+      const modifiedSearchParams = new URLSearchParams(searchParams);
+      modifiedSearchParams.set(
+        DIALOG_SEARCH_PARAM.key,
+        DIALOG_SEARCH_PARAM.values.open,
+      );
+      // user is redirected to this path after they connect their X account, and the
+      // claim dialog is automatically opened
+      const pathToReturnAfterRedirect = `${currPath}?${modifiedSearchParams.toString()}`;
+      return `/my-profile?redirect=${encodeURIComponent(pathToReturnAfterRedirect)}`;
+    };
+
     let secondsLeft = 5;
     const intervalId = setInterval(() => {
       showToast(
@@ -34,11 +57,12 @@ const Content = ({ poolId }: { poolId: string }) => {
       if (secondsLeft === 0) {
         clearInterval(intervalId);
         hideToast();
-        router.replace(`/my-profile?redirect=${encodeURIComponent(currPath)}`);
+        const redirectPath = getRedirectPath();
+        router.replace(redirectPath);
       }
       secondsLeft--;
     }, 1000);
-  }, [router, showToast, hideToast, currPath]);
+  }, [router, showToast, hideToast, currPath, searchParams]);
 
   const handleShare = useCallback(() => {
     if (!userProfile?.twitterUsername) {
