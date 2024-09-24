@@ -1,10 +1,6 @@
 /* Override Solana wallet adapter modal styles */
 .wallet-adapter-modal-wrapper {
-  @apply bg-black-main/10 backdrop-blur-lg transition-all duration-100 font-[inherit];
-}
-
-.wallet-adapter-modal-title {
-  @apply whitespace-normal;
+  @apply bg-black-main/10 backdrop-blur-lg font-[inherit];
 }
 
 .wallet-adapter-button-trigger {
