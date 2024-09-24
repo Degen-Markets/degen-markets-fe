@@ -11,7 +11,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 
 // Import default styles and override them
 require("@solana/wallet-adapter-react-ui/styles.css");
-import "./SolanaWallet.css";
+import "./index.css";
 
 const SolanaWallet = () => {
   return (
