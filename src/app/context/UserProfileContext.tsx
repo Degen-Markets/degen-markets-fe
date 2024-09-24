@@ -73,11 +73,16 @@ export const UserProfileProvider = ({
     console.error(error);
   };
 
+  const redirectPath = searchParams.get("redirect");
+
   const fetchUserProfile = async (address: string) => {
     setIsProfileLoading(true);
     try {
       const { data } = await getPlayerById(address);
       setUserProfile(data || null);
+      if (redirectPath) {
+        router.replace(redirectPath); // Redirect to given url
+      }
     } catch (error) {
       handleError(
         error,

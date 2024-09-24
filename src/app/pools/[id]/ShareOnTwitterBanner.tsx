@@ -1,12 +1,12 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "@/app/components/Button/Button";
 import {
   UserProfileProvider,
   useUserProfileContext,
 } from "@/app/context/UserProfileContext";
 import { useToast } from "@/app/components/Toast/ToastProvider";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
 
 const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
@@ -22,22 +22,27 @@ const Content = ({ poolId }: { poolId: string }) => {
   const { userProfile } = useUserProfileContext();
   const { showToast, hideToast } = useToast();
   const router = useRouter();
+  const currPath = usePathname();
 
-  const handleShare = () => {
+  const redirectWithToast = useCallback(() => {
+    let secondsLeft = 5;
+    const intervalId = setInterval(() => {
+      showToast(
+        `You must connect your X account first. Redirecting in ${secondsLeft} seconds...`,
+        "info",
+      );
+      if (secondsLeft === 0) {
+        clearInterval(intervalId);
+        hideToast();
+        router.replace(`/my-profile?redirect=${encodeURIComponent(currPath)}`);
+      }
+      secondsLeft--;
+    }, 1000);
+  }, [router, showToast, hideToast, currPath]);
+
+  const handleShare = useCallback(() => {
     if (!userProfile?.twitterUsername) {
-      let secondsLeft = 5;
-      const intervalId = setInterval(() => {
-        showToast(
-          `You must connect your X account first. Redirecting in ${secondsLeft} seconds...`,
-          "info",
-        );
-        if (secondsLeft === 0) {
-          clearInterval(intervalId);
-          hideToast();
-          router.push("/my-profile");
-        }
-        secondsLeft--;
-      }, 1000);
+      redirectWithToast();
       return;
     }
 
@@ -46,7 +51,8 @@ const Content = ({ poolId }: { poolId: string }) => {
     );
     window.open(`https://x.com/compose/post?text=${tweetText}`, "_blank");
     setIsDialogOpen(true);
-  };
+  }, [redirectWithToast, userProfile?.twitterUsername, poolId]);
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row items-center justify-between p-4">
       <div className="mb-4 sm:mb-0">
