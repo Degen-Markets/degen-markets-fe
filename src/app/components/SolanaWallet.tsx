@@ -29,15 +29,7 @@ const Content: FC = () => {
     : null;
 
   return (
-    <WalletMultiButton
-      style={{
-        textWrap: "nowrap",
-        background: "#AB9FF2",
-        borderRadius: "2rem",
-        fontFamily: "inherit",
-      }}
-      className="!w-full"
-    >
+    <WalletMultiButton>
       <div className="flex items-center gap-2">
         {connected && walletAddrDisplayStr ? (
           <>
