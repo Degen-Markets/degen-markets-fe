@@ -315,17 +315,3 @@ input[type="number"] {
     1px -1px #fff,
     -1px 1px #fff;
 }
-
-/* Override Solana wallet adapter modal styles */
-.wallet-adapter-modal-wrapper {
-  @apply bg-black-main/10 backdrop-blur-lg fixed inset-0 z-50 transition-all duration-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-fit font-[inherit] whitespace-nowrap;
-}
-
-.wallet-adapter-button-trigger {
-  @apply shadow-xl hover:shadow-2xl transition-all duration-150 font-[inherit] rounded-full bg-purple-light focus-visible:bg-purple-medium;
-}
-
-/* We override using class selector because the default class has higher specificity */
-.wallet-adapter-button-trigger:not(:disabled):hover {
-  @apply bg-purple-medium;
-}

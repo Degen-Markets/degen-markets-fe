@@ -1,6 +1,6 @@
 import NavigationRoutes from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileItem from "./NavbarMobileItem";
-import SolanaWallet from "@/app/components/SolanaWallet";
+import SolanaWallet from "@/app/components/SolanaWallet/SolanaWallet";
 import { Dispatch, FC, SetStateAction } from "react";
 import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";

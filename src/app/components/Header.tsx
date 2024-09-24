@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Wrapper from "@/app/components/Wrapper";
-import SolanaWallet from "./SolanaWallet";
+import SolanaWallet from "./SolanaWallet/SolanaWallet";
 import DgmLogoIcon from "./Icons/DgmLogoIcon";
 import Navbar from "@/app/components/Navbar";
 

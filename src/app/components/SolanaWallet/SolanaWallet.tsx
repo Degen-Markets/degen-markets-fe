@@ -5,12 +5,13 @@ import { FC } from "react";
 import {
   UserProfileProvider,
   useUserProfileContext,
-} from "../context/UserProfileContext";
-import UserAvatar from "./UserAvatar";
+} from "../../context/UserProfileContext";
+import UserAvatar from "../UserAvatar";
 import { useWallet } from "@solana/wallet-adapter-react";
 
-// Default styles that can be overridden by your app
+// Import default styles and override them
 require("@solana/wallet-adapter-react-ui/styles.css");
+import "./SolanaWallet.css";
 
 const SolanaWallet = () => {
   return (
