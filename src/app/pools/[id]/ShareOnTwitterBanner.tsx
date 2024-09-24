@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/app/components/Button/Button";
 import {
   UserProfileProvider,
@@ -8,11 +8,12 @@ import {
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-const DIALOG_SEARCH_PARAM = {
-  key: "open-claim-dialog",
+const RESUME_SHARE_FLOW_SEARCH_PARAM = {
+  key: "resume-share",
   values: {
-    open: "true",
+    true: "true",
   },
 };
 
@@ -25,25 +26,23 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
 };
 
 const Content = ({ poolId }: { poolId: string }) => {
-  const searchParams = useSearchParams();
-  const isDialogOpenByDefault =
-    searchParams.get(DIALOG_SEARCH_PARAM.key) ===
-    DIALOG_SEARCH_PARAM.values.open;
-  const [isDialogOpen, setIsDialogOpen] = useState(isDialogOpenByDefault);
-  const { userProfile } = useUserProfileContext();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { userProfile, isProfileLoading } = useUserProfileContext();
   const { showToast, hideToast } = useToast();
   const router = useRouter();
   const currPath = usePathname();
+  const searchParams = useSearchParams();
+  const { connected } = useWallet();
 
-  const redirectWithToast = useCallback(() => {
+  const redirectToConnectTwitter = useCallback(() => {
     const getRedirectPath = () => {
       const modifiedSearchParams = new URLSearchParams(searchParams);
       modifiedSearchParams.set(
-        DIALOG_SEARCH_PARAM.key,
-        DIALOG_SEARCH_PARAM.values.open,
+        RESUME_SHARE_FLOW_SEARCH_PARAM.key,
+        RESUME_SHARE_FLOW_SEARCH_PARAM.values.true,
       );
-      // user is redirected to this path after they connect their X account, and the
-      // claim dialog is automatically opened
+      // user is redirected to this path after they connect their twitter account, and the
+      // share flow is resumed
       const pathToReturnAfterRedirect = `${currPath}?${modifiedSearchParams.toString()}`;
       return `/my-profile?redirect=${encodeURIComponent(pathToReturnAfterRedirect)}`;
     };
@@ -65,8 +64,8 @@ const Content = ({ poolId }: { poolId: string }) => {
   }, [router, showToast, hideToast, currPath, searchParams]);
 
   const handleShare = useCallback(() => {
-    if (!userProfile?.twitterUsername) {
-      redirectWithToast();
+    if (!isProfileLoading && !userProfile?.twitterUsername) {
+      redirectToConnectTwitter();
       return;
     }
 
@@ -75,8 +74,29 @@ const Content = ({ poolId }: { poolId: string }) => {
     );
     window.open(`https://x.com/compose/post?text=${tweetText}`, "_blank");
     setIsDialogOpen(true);
-  }, [redirectWithToast, userProfile?.twitterUsername, poolId]);
+  }, [
+    redirectToConnectTwitter,
+    userProfile?.twitterUsername,
+    poolId,
+    isProfileLoading,
+  ]);
 
+  // let the user pick up after redirect auth flow
+  const isResumingShareViaSearchParam =
+    searchParams.get(RESUME_SHARE_FLOW_SEARCH_PARAM.key) ===
+    RESUME_SHARE_FLOW_SEARCH_PARAM.values.true;
+  const isReadyToShare =
+    isResumingShareViaSearchParam &&
+    connected &&
+    !isProfileLoading &&
+    !!userProfile?.twitterUsername;
+  useEffect(() => {
+    if (!isReadyToShare) {
+      return;
+    }
+
+    handleShare();
+  }, [isReadyToShare, handleShare]);
   return (
     <div className="flex flex-col gap-4 sm:flex-row items-center justify-between p-4">
       <div className="mb-4 sm:mb-0">
