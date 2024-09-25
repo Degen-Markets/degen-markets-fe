@@ -9,6 +9,7 @@ import { useToast } from "@/app/components/Toast/ToastProvider";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnectProfileThen } from "@/app/hooks/enhancedWallet";
 
 const RESUME_SHARE_FLOW_SEARCH_PARAM = {
   key: "resume-share",
@@ -33,6 +34,7 @@ const Content = ({ poolId }: { poolId: string }) => {
   const currPath = usePathname();
   const searchParams = useSearchParams();
   const { connected } = useWallet();
+  const connectProfileThen = useConnectProfileThen();
 
   const redirectToConnectTwitter = useCallback(() => {
     const getRedirectPath = () => {
@@ -63,40 +65,52 @@ const Content = ({ poolId }: { poolId: string }) => {
     }, 1000);
   }, [router, showToast, hideToast, currPath, searchParams]);
 
-  const handleShare = useCallback(() => {
-    if (!isProfileLoading && !userProfile?.twitterUsername) {
-      redirectToConnectTwitter();
-      return;
-    }
-
+  const startShareFlow = useCallback(() => {
     const tweetText = encodeURIComponent(
       `Place your bets on @DEGEN_MARKETS\ndegenmarkets.com/pools/${poolId}`,
     );
     window.open(`https://x.com/compose/post?text=${tweetText}`, "_blank");
     setIsDialogOpen(true);
+  }, [poolId]);
+
+  const isReadyToShare =
+    connected && !isProfileLoading && !!userProfile?.twitterUsername;
+  const handleShare = useCallback(() => {
+    if (!connected) {
+      connectProfileThen(async (userProfile) => {
+        if (!!userProfile.twitterUsername) {
+          startShareFlow();
+        } else {
+          redirectToConnectTwitter();
+        }
+      });
+      return;
+    }
+    if (!isReadyToShare) {
+      redirectToConnectTwitter();
+      return;
+    }
+    startShareFlow();
   }, [
     redirectToConnectTwitter,
-    userProfile?.twitterUsername,
-    poolId,
-    isProfileLoading,
+    isReadyToShare,
+    connectProfileThen,
+    connected,
+    startShareFlow,
   ]);
 
   // let the user pick up after redirect auth flow
   const isResumingShareViaSearchParam =
     searchParams.get(RESUME_SHARE_FLOW_SEARCH_PARAM.key) ===
     RESUME_SHARE_FLOW_SEARCH_PARAM.values.true;
-  const isReadyToShare =
-    isResumingShareViaSearchParam &&
-    connected &&
-    !isProfileLoading &&
-    !!userProfile?.twitterUsername;
+  const isReadyToResumeShare = isResumingShareViaSearchParam && isReadyToShare;
   useEffect(() => {
-    if (!isReadyToShare) {
+    if (!isReadyToResumeShare) {
       return;
     }
 
     handleShare();
-  }, [isReadyToShare, handleShare]);
+  }, [isReadyToResumeShare, handleShare]);
   return (
     <div className="flex flex-col gap-4 sm:flex-row items-center justify-between p-4">
       <div className="mb-4 sm:mb-0">
