@@ -10,17 +10,6 @@ export interface PixelArtLoaderProps {
   textSize?: string;
 }
 
-export type PoolWithOptions = {
-  address: string;
-  title: string;
-  description: string;
-  options: {
-    title: string;
-    id: string;
-  }[];
-  image: `https://${string}`;
-};
-
 export type Pool = {
   address: string;
   title: string;
