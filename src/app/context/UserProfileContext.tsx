@@ -1,12 +1,12 @@
 import React, {
   createContext,
-  useContext,
-  useState,
-  useEffect,
   useCallback,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { getPlayerById } from "../lib/utils/api/players";
 import {
@@ -15,7 +15,6 @@ import {
 } from "../lib/utils/api/twitter";
 import { DialogType, useDialog } from "../components/Dialog/dialog";
 import { Player } from "../types/player";
-import { Address } from "../lib/utils/bets/types";
 
 // This helps you easily change the param in all the places that use it
 export const REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY = "redirect";
@@ -35,7 +34,7 @@ const UserProfileContext = createContext<UserContextType | undefined>(
 );
 
 const initialUserProfile = {
-  address: "" as Address,
+  address: "",
   points: 0,
   twitterUsername: "",
   twitterPfpUrl: "",

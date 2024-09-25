@@ -1,5 +1,5 @@
 import React from "react";
-import { PixelArtLoaderProps } from "../lib/utils/bets/types";
+import { PixelArtLoaderProps } from "../lib/utils/types";
 import { twMerge } from "tailwind-merge";
 
 const PixelArtLoader: React.FC<PixelArtLoaderProps> = ({

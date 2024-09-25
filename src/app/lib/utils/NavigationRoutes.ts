@@ -32,9 +32,9 @@ const NavigationRoutes: NavigationProps = {
         isExpandable: false,
       },
       {
-        name: "Leaderboard",
+        name: "Airdrop",
         icon: "",
-        route: "/#leaderboard",
+        route: "/airdrop",
         isExpandable: false,
       },
       {

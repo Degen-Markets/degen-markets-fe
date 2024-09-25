@@ -1,0 +1,13 @@
+/* Override Solana wallet adapter modal styles */
+.wallet-adapter-modal-wrapper {
+  @apply bg-black-main/10 backdrop-blur-lg font-[inherit];
+}
+
+.wallet-adapter-button-trigger {
+  @apply shadow-xl hover:shadow-2xl transition-all duration-150 font-[inherit] rounded-full bg-purple-light focus-visible:bg-purple-medium;
+}
+
+/* We override using class selector because the default class has higher specificity */
+.wallet-adapter-button-trigger:not(:disabled):hover {
+  @apply bg-purple-medium;
+}

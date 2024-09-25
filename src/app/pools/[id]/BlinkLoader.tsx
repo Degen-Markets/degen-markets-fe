@@ -12,6 +12,7 @@ interface BlinkCardProps {
   poolId: string;
 }
 const BlinkLoader = ({ poolId }: BlinkCardProps) => {
+  // will get redirected to https://actions.degenmarkets.com/pools/${poolId} because of actions.json
   const actionApiUrl = `https://degenmarkets.com/pools/${poolId}`;
 
   const { adapter } = useActionSolanaWalletAdapter(RPC_URL);

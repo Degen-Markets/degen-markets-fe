@@ -34,7 +34,7 @@ export const generateMetadata = async ({
       type: "website",
       title: pool.title,
       images: [replaceGifExtension(pool.image)],
-      url: `https://degenmarkets.com/pools/${pool.id}`,
+      url: `https://degenmarkets.com/pools/${pool.address}`,
     },
     twitter: {
       card: "summary_large_image",

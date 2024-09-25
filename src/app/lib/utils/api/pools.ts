@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Pool, PoolsResponse } from "@/app/lib/utils/bets/types";
+import { Pool, PoolsResponse } from "@/app/lib/utils/types";
 import { API_BASE_URL } from "@/app/lib/utils/api/index";
 
 export const getPools = (): Promise<AxiosResponse<PoolsResponse>> =>

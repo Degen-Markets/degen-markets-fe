@@ -18,10 +18,10 @@ const ActivityTable: React.FC = () => {
       ) : (
         <div className="w-full flex flex-col items-center justify-center h-96">
           <LeaderboardIcon />
-          <h3 className="text-center font-bold text-3xl text-gray-400">
+          <h3 className="text-center font-bold text-2xl text-gray-400">
             No recent activities.
           </h3>
-          <p className="text-center text-lg text-gray-500 mt-2">
+          <p className="text-center text-base">
             Participate in markets to see your activity here!
           </p>
         </div>
