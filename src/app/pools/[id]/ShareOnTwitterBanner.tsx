@@ -11,7 +11,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useConnectProfileThen } from "@/app/hooks/enhancedWallet";
-import { Pool } from "@/app/lib/utils/bets/types";
+import { Pool } from "@/app/lib/utils/types";
 
 const RESUME_SHARE_FLOW_SEARCH_PARAM = {
   key: "resume-share",
@@ -20,7 +20,7 @@ const RESUME_SHARE_FLOW_SEARCH_PARAM = {
   },
 };
 
-const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["id"] }) => {
+const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["address"] }) => {
   return (
     <UserProfileProvider>
       <Content poolId={poolId} />
@@ -28,7 +28,7 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["id"] }) => {
   );
 };
 
-const Content = ({ poolId }: { poolId: Pool["id"] }) => {
+const Content = ({ poolId }: { poolId: Pool["address"] }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const openDialog = useCallback(() => setIsDialogOpen(true), []);
   const closeDialog = useCallback(() => setIsDialogOpen(false), []);
@@ -60,7 +60,7 @@ const useShareOnTwitterFlow = ({
   poolId,
   openDialog,
 }: {
-  poolId: Pool["id"];
+  poolId: Pool["address"];
   openDialog: () => void;
 }) => {
   const { connected } = useWallet();
