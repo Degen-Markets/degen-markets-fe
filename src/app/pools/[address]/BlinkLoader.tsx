@@ -3,7 +3,7 @@ import "@dialectlabs/blinks/index.css";
 
 import { useActionSolanaWalletAdapter } from "@dialectlabs/blinks/hooks/solana";
 import { Blink, useAction } from "@dialectlabs/blinks";
-import Skeleton from "@/app/pools/[id]/Skeleton";
+import Skeleton from "@/app/pools/[address]/Skeleton";
 
 const RPC_URL =
   "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b";

@@ -6,6 +6,6 @@ export const getPools = (): Promise<AxiosResponse<PoolsResponse>> =>
   axios.get(`${API_BASE_URL}/pools`);
 
 export const getPoolById = (
-  id: string,
+  address: string,
 ): Promise<AxiosResponse<PoolWithOptions>> =>
-  axios.get(`${API_BASE_URL}/pools/${id}`);
+  axios.get(`${API_BASE_URL}/pools/${address}`);

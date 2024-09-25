@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Wrapper from "@/app/components/Wrapper";
-import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
+import BlinkLoader from "@/app/pools/[address]/BlinkLoader";
 import { getPoolById } from "@/app/lib/utils/api/pools";
 
-const PoolPage = ({ params: { id } }: { params: { id: string } }) => {
+const PoolPage = ({ params: { address } }: { params: { address: string } }) => {
   return (
     <Wrapper className="flex justify-center">
       <div className="w-full md:w-2/6 text-lg">
-        <BlinkLoader poolId={id} />
+        <BlinkLoader poolId={address} />
       </div>
     </Wrapper>
   );
@@ -20,11 +20,11 @@ const replaceGifExtension = (imageUrl: string) => {
 };
 
 export const generateMetadata = async ({
-  params: { id },
+  params: { address },
 }: {
-  params: { id: string };
+  params: { address: string };
 }): Promise<Metadata> => {
-  const { data: pool } = await getPoolById(id);
+  const { data: pool } = await getPoolById(address);
   return {
     title: pool.title,
     description: pool.description,
