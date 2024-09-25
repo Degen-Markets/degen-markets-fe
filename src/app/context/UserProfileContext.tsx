@@ -24,6 +24,7 @@ interface UserContextType {
   userProfile: Player;
   connectTwitter: () => void;
   isProfileLoading: boolean;
+  isProfileFetchInititated: boolean;
   saveUser: (signature: string) => Promise<void>;
   isSignatureRequired: boolean;
   setUserProfile: React.Dispatch<React.SetStateAction<Player>>;
@@ -48,6 +49,8 @@ export const UserProfileProvider = ({
   const wallet = useWallet();
   const [userProfile, setUserProfile] = useState<Player>(initialUserProfile);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
+  const [isProfileFetchInititated, setIsProfileFetchInititated] =
+    useState<boolean>(false);
   const { open, setOpen: setSignatureModal } = useDialog(DialogType.signature);
 
   const router = useRouter();
@@ -77,6 +80,7 @@ export const UserProfileProvider = ({
   };
 
   const fetchUserProfile = async (address: string) => {
+    setIsProfileFetchInititated(true);
     setIsProfileLoading(true);
     try {
       const { data } = await getPlayerById(address);
@@ -145,6 +149,7 @@ export const UserProfileProvider = ({
       fetchUserProfile(publicKey);
     } else if (!wallet.connected) {
       setUserProfile(initialUserProfile); // Reset profile on wallet disconnection
+      setIsProfileFetchInititated(false);
     }
   }, [wallet.connected, publicKey]);
 
@@ -156,6 +161,7 @@ export const UserProfileProvider = ({
         connectTwitter,
         saveUser,
         isProfileLoading,
+        isProfileFetchInititated,
         isSignatureRequired,
       }}
     >

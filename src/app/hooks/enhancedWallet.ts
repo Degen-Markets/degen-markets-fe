@@ -46,16 +46,19 @@ const useConnectProfileThen = () => {
   const callbackRef = useRef<((userProfile: Player) => void) | null>(null);
 
   useEffect(() => {
-    if (visible || userProfileContext.isProfileLoading) {
+    const isAuthFlowOver =
+      visible || // modal should be closed
+      userProfileContext.isProfileLoading || // profile loading completed
+      !userProfileContext.isProfileFetchInititated; // and profile load actually attempted
+    if (isAuthFlowOver) {
       return;
     }
     const isUserRejectedConn = !connected && !connecting;
-    const isUserConnectedAndProfileLoaded =
-      connected && !connecting && !userProfileContext.isProfileLoading;
+    const isUserConnected = connected && !connecting;
     if (isUserRejectedConn) {
       callbackRef.current = null;
-    } else if (isUserConnectedAndProfileLoaded && callbackRef.current) {
-      callbackRef.current(userProfileContext.userProfile);
+    } else if (isUserConnected) {
+      callbackRef.current?.(userProfileContext.userProfile);
       callbackRef.current = null;
     }
   }, [
@@ -63,6 +66,7 @@ const useConnectProfileThen = () => {
     connected,
     userProfileContext.userProfile,
     userProfileContext.isProfileLoading,
+    userProfileContext.isProfileFetchInititated,
     visible,
   ]);
 
