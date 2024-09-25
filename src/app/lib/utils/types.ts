@@ -11,7 +11,7 @@ export interface PixelArtLoaderProps {
 }
 
 export type PoolWithOptions = {
-  id: string;
+  address: string;
   title: string;
   description: string;
   options: {
@@ -22,7 +22,7 @@ export type PoolWithOptions = {
 };
 
 export type Pool = {
-  id: string;
+  address: string;
   title: string;
   description: string;
   image: `https://${string}`;
