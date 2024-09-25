@@ -1,7 +1,6 @@
 import React from "react";
-import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
+import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 import TwitterButton from "@/app/my-profile/_component/TwitterButton";
-import { Address } from "@/app/lib/utils/bets/types";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import Image from "next/image";
@@ -41,9 +40,7 @@ const UserProfileInfo: React.FC = () => {
           </h2>
           <div className="flex items-center space-x-4">
             <p className="text-gray-400 rounded-full bg-black-light py-2 px-4 text-center text-base">
-              {address
-                ? getDisplayNameForAddress(address as Address)
-                : "0XXX...XXX"}
+              {address ? getDisplayNameForAddress(address) : "0XXX...XXX"}
             </p>
             <p className="text-gray-400 text-base">Joined Oct 2024</p>
           </div>

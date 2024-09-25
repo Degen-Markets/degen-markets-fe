@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import { Address } from "../lib/utils/bets/types";
 
 const UserAvatar = ({
   address,
@@ -9,7 +8,7 @@ const UserAvatar = ({
   className,
   src,
 }: {
-  address?: Address;
+  address?: string;
   width?: number;
   height?: number;
   className?: string;

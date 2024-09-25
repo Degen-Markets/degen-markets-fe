@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Player } from "@/app/types/player";
 import UserAvatar from "@/app/components/UserAvatar";
 import { twMerge } from "tailwind-merge";
-import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
+import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 import PositionIcon from "@/app/components/Icons/PositionIcon";
 import Link from "next/link";
 

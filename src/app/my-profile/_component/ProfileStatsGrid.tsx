@@ -1,5 +1,5 @@
 import ProfileStats from "./ProfileStats";
-import { formatNumberToSignificantDigits } from "@/app/lib/utils/bets/helpers";
+import { formatNumberToSignificantDigits } from "@/app/lib/utils/helpers";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import EarnPoints from "@/app/components/Icons/EarnPointsIcon";
 import ProfitLoss from "@/app/components/Icons/ProfitLossIcon";

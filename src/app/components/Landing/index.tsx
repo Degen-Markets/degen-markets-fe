@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { PoolsResponse } from "@/app/lib/utils/bets/types";
+import { PoolsResponse } from "@/app/lib/utils/types";
 import SectionHeader from "./SectionHeading";
 import PoolSection from "./PoolSection";
 import PoolsIcon from "@/app/components/Icons/PoolsIcon";

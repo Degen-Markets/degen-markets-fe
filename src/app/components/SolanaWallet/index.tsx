@@ -12,7 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 // Import default styles and override them
 require("@solana/wallet-adapter-react-ui/styles.css");
 import "./index.css";
-import { getDisplayNameForAddress } from "@/app/lib/utils/bets/helpers";
+import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 
 const SolanaWallet = () => {
   return (

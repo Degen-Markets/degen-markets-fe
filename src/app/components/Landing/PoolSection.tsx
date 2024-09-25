@@ -1,4 +1,4 @@
-import { PoolsResponse } from "@/app/lib/utils/bets/types";
+import { PoolsResponse } from "@/app/lib/utils/types";
 import PoolsFilter from "./PoolFilter";
 import PoolCardPlaceHoldersGrid from "./PoolCardPlaceHoldersGrid";
 import PoolsGrid from "./PoolGrid";
