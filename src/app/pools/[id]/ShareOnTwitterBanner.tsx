@@ -11,6 +11,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClaimPoolTweetPointsDialog from "./ClaimPoolTweetPointsDialog";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useConnectProfileThen } from "@/app/hooks/enhancedWallet";
+import { Pool } from "@/app/lib/utils/bets/types";
 
 const RESUME_SHARE_FLOW_SEARCH_PARAM = {
   key: "resume-share",
@@ -19,7 +20,7 @@ const RESUME_SHARE_FLOW_SEARCH_PARAM = {
   },
 };
 
-const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
+const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["id"] }) => {
   return (
     <UserProfileProvider>
       <Content poolId={poolId} />
@@ -27,29 +28,65 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: string }) => {
   );
 };
 
-const Content = ({ poolId }: { poolId: string }) => {
+const Content = ({ poolId }: { poolId: Pool["id"] }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { userProfile, isProfileLoading } = useUserProfileContext();
+  const openDialog = useCallback(() => setIsDialogOpen(true), []);
+  const closeDialog = useCallback(() => setIsDialogOpen(false), []);
+
+  const { handleShare } = useShareOnTwitterFlow({ poolId, openDialog });
+  const { userProfile } = useUserProfileContext();
+
+  return (
+    <div className="flex flex-col gap-4 sm:flex-row items-center justify-between p-4">
+      <div className="mb-4 sm:mb-0">
+        Share this on X to get 10 airdrop points
+      </div>
+      <Button intent="primary" onClick={handleShare}>
+        Share
+      </Button>
+      {isDialogOpen && !!userProfile.address && (
+        <ClaimPoolTweetPointsDialog
+          poolId={poolId}
+          isOpen={isDialogOpen}
+          userAddress={userProfile.address}
+          onClose={closeDialog}
+        />
+      )}
+    </div>
+  );
+};
+
+const useShareOnTwitterFlow = ({
+  poolId,
+  openDialog,
+}: {
+  poolId: Pool["id"];
+  openDialog: () => void;
+}) => {
+  const { connected } = useWallet();
+  const connectProfileThen = useConnectProfileThen();
   const { showToast, hideToast } = useToast();
   const router = useRouter();
   const currPath = usePathname();
   const searchParams = useSearchParams();
-  const { connected } = useWallet();
-  const connectProfileThen = useConnectProfileThen();
+  const { userProfile, isProfileLoading } = useUserProfileContext();
+
+  const getRedirectPath = (
+    searchParams: ReturnType<typeof useSearchParams>,
+    currPath: string,
+  ) => {
+    const modifiedSearchParams = new URLSearchParams(searchParams);
+    modifiedSearchParams.set(
+      RESUME_SHARE_FLOW_SEARCH_PARAM.key,
+      RESUME_SHARE_FLOW_SEARCH_PARAM.values.true,
+    );
+    // user is redirected to this path after they connect their twitter account, and the
+    // share flow is resumed
+    const pathToReturnAfterRedirect = `${currPath}?${modifiedSearchParams.toString()}`;
+    return `/my-profile?${REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY}=${encodeURIComponent(pathToReturnAfterRedirect)}`;
+  };
 
   const redirectToConnectTwitter = useCallback(() => {
-    const getRedirectPath = () => {
-      const modifiedSearchParams = new URLSearchParams(searchParams);
-      modifiedSearchParams.set(
-        RESUME_SHARE_FLOW_SEARCH_PARAM.key,
-        RESUME_SHARE_FLOW_SEARCH_PARAM.values.true,
-      );
-      // user is redirected to this path after they connect their twitter account, and the
-      // share flow is resumed
-      const pathToReturnAfterRedirect = `${currPath}?${modifiedSearchParams.toString()}`;
-      return `/my-profile?${REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY}=${encodeURIComponent(pathToReturnAfterRedirect)}`;
-    };
-
     let secondsLeft = 5;
     const intervalId = setInterval(() => {
       showToast(
@@ -59,7 +96,7 @@ const Content = ({ poolId }: { poolId: string }) => {
       if (secondsLeft === 0) {
         clearInterval(intervalId);
         hideToast();
-        const redirectPath = getRedirectPath();
+        const redirectPath = getRedirectPath(searchParams, currPath);
         router.push(redirectPath);
       }
       secondsLeft--;
@@ -70,16 +107,19 @@ const Content = ({ poolId }: { poolId: string }) => {
     const tweetText = encodeURIComponent(
       `Place your bets on @DEGEN_MARKETS\ndegenmarkets.com/pools/${poolId}`,
     );
+    // window.open won't run unless it's called in response to a user action (browser blocks popups)
+    // in most of our flows, user has already clicked somewhere on screen, so this will work
     window.open(`https://x.com/compose/post?text=${tweetText}`, "_blank");
-    setIsDialogOpen(true);
-  }, [poolId]);
+    openDialog();
+  }, [poolId, openDialog]);
 
   const isReadyToShare =
     connected && !isProfileLoading && !!userProfile?.twitterUsername;
+
   const handleShare = useCallback(() => {
     if (!connected) {
       connectProfileThen(async (userProfile) => {
-        if (!!userProfile.twitterUsername) {
+        if (!!userProfile?.twitterUsername) {
           startShareFlow();
         } else {
           redirectToConnectTwitter();
@@ -110,26 +150,10 @@ const Content = ({ poolId }: { poolId: string }) => {
       return;
     }
 
-    handleShare();
-  }, [isReadyToResumeShare, handleShare]);
-  return (
-    <div className="flex flex-col gap-4 sm:flex-row items-center justify-between p-4">
-      <div className="mb-4 sm:mb-0">
-        Share this on X to get 10 airdrop points
-      </div>
-      <Button intent="primary" onClick={handleShare}>
-        Share
-      </Button>
-      {isDialogOpen && !!userProfile.address && (
-        <ClaimPoolTweetPointsDialog
-          poolId={poolId}
-          isOpen={isDialogOpen}
-          userAddress={userProfile.address}
-          onClose={() => setIsDialogOpen(false)}
-        />
-      )}
-    </div>
-  );
+    startShareFlow();
+  }, [isReadyToResumeShare, startShareFlow]);
+
+  return { handleShare };
 };
 
 export default ShareOnTwitterBanner;
