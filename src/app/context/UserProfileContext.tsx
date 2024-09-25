@@ -17,6 +17,9 @@ import { DialogType, useDialog } from "../components/Dialog/dialog";
 import { Player } from "../types/player";
 import { Address } from "../lib/utils/bets/types";
 
+// This helps you easily change the param in all the places that use it
+export const REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY = "redirect";
+
 interface UserContextType {
   userProfile: Player;
   connectTwitter: () => void;
@@ -73,15 +76,17 @@ export const UserProfileProvider = ({
     console.error(error);
   };
 
-  const redirectPath = searchParams.get("redirect");
-
   const fetchUserProfile = async (address: string) => {
     setIsProfileLoading(true);
     try {
       const { data } = await getPlayerById(address);
       setUserProfile(data || null);
+      const redirectPath = searchParams.get(
+        REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
+      );
+
       if (redirectPath) {
-        router.replace(redirectPath); // Redirect to given url
+        router.push(redirectPath); // Redirect to given url
       }
     } catch (error) {
       handleError(

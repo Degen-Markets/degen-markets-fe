@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/app/components/Button/Button";
 import {
+  REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
   UserProfileProvider,
   useUserProfileContext,
 } from "@/app/context/UserProfileContext";
@@ -46,7 +47,7 @@ const Content = ({ poolId }: { poolId: string }) => {
       // user is redirected to this path after they connect their twitter account, and the
       // share flow is resumed
       const pathToReturnAfterRedirect = `${currPath}?${modifiedSearchParams.toString()}`;
-      return `/my-profile?redirect=${encodeURIComponent(pathToReturnAfterRedirect)}`;
+      return `/my-profile?${REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY}=${encodeURIComponent(pathToReturnAfterRedirect)}`;
     };
 
     let secondsLeft = 5;
@@ -59,7 +60,7 @@ const Content = ({ poolId }: { poolId: string }) => {
         clearInterval(intervalId);
         hideToast();
         const redirectPath = getRedirectPath();
-        router.replace(redirectPath);
+        router.push(redirectPath);
       }
       secondsLeft--;
     }, 1000);
