@@ -7,6 +7,7 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import { Chakra_Petch } from "next/font/google";
 import { twMerge } from "tailwind-merge";
+import { GoogleAnalytics } from "./components/GoogleAnalytics";
 
 const chakraPetch = Chakra_Petch({
   weight: ["400", "700"],
@@ -36,7 +37,10 @@ export default function RootLayout({
         <Providers>
           <div className="flex min-h-screen flex-col items-center justify-between">
             <Header />
-            <PageWrapper>{children}</PageWrapper>
+            <PageWrapper>
+              {children}
+              <GoogleAnalytics />
+            </PageWrapper>
             <Footer />
           </div>
         </Providers>
