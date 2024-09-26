@@ -23,7 +23,7 @@ export const GoogleAnalytics = () => {
     <>
       <Script
         strategy="afterInteractive" // load after the user can interact with the page, optimizing performance.
-        src={`https://www.googletagmanager.com/gtag/js?id=G-D7035XXNCN`} // add g-tag-id to env later.
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_G_TAG_ID}`}
       />
       <Script
         id="gtag-init"
@@ -33,7 +33,7 @@ export const GoogleAnalytics = () => {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-D7035XXNCN', {
+          gtag('config', '${process.env.NEXT_PUBLIC_G_TAG_ID}', {
             page_path: window.location.pathname, 
             cookie_flags: 'max-age=7200;secure;samesite=none'
           });
