@@ -12,6 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useConnectProfileThen } from "@/app/hooks/enhancedWallet";
 import { Pool } from "@/app/lib/utils/types";
 import useShareOnTwitterFlow from "./utils/useShareOnTwitterFlow";
+import { useDialogControls } from "@/app/components/Dialog/dialog";
 
 export const RESUME_SHARE_FLOW_SEARCH_PARAM = {
   key: "resume-share",
@@ -28,21 +29,14 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["address"] }) => {
   );
 };
 
-const useDialog = (initialState = false) => {
-  const [isOpen, setIsOpen] = useState(initialState);
-  const open = useCallback(() => setIsOpen(true), []);
-  const close = useCallback(() => setIsOpen(false), []);
-  return { isOpen, open, close };
-};
-
 const Content = ({ poolId }: { poolId: Pool["address"] }) => {
-  const claimDialog = useDialog();
-  const connectTwitterDialog = useDialog();
+  const claimDialogControls = useDialogControls();
+  const connectTwitterDialogControls = useDialogControls();
 
   const { handleShare } = useShareOnTwitterFlow({
     poolId,
-    openClaimDialog: claimDialog.open,
-    openConnectTwitterDialog: connectTwitterDialog.open,
+    openClaimDialog: claimDialogControls.open,
+    openConnectTwitterDialog: connectTwitterDialogControls.open,
   });
   const { userProfile } = useUserProfileContext();
 
@@ -54,15 +48,15 @@ const Content = ({ poolId }: { poolId: Pool["address"] }) => {
       <Button intent="primary" onClick={handleShare}>
         Share
       </Button>
-      {claimDialog.isOpen && !!userProfile.address && (
+      {claimDialogControls.isOpen && !!userProfile.address && (
         <ClaimPoolTweetPointsDialog
-          isOpen={claimDialog.isOpen}
-          onClose={claimDialog.close}
+          isOpen={claimDialogControls.isOpen}
+          onClose={claimDialogControls.close}
         />
       )}
       <ConnectTwitterDialog
-        isOpen={connectTwitterDialog.isOpen}
-        onClose={connectTwitterDialog.close}
+        isOpen={connectTwitterDialogControls.isOpen}
+        onClose={connectTwitterDialogControls.close}
       />
     </div>
   );

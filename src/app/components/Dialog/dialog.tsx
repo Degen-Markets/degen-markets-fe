@@ -2,7 +2,14 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import classNames from "classnames";
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { MdClose } from "react-icons/md";
 import {
   DialogContentProps,
@@ -160,6 +167,17 @@ const useDialog = (type: DialogType) => {
   );
 };
 
+/**
+ * For normal dialogs that don't latch onto {@link DialogContext}.
+ * Provides quick, memoized open/close methods.
+ */
+const useDialogControls = (initialState = false) => {
+  const [isOpen, setIsOpen] = useState(initialState);
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+  return { isOpen, open, close };
+};
+
 export {
   Dialog,
   DialogClose,
@@ -174,4 +192,5 @@ export {
   DialogTrigger,
   DialogType,
   useDialog,
+  useDialogControls,
 };
