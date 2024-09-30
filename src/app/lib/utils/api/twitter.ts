@@ -18,17 +18,13 @@ export const saveTwitterProfile = (
 
 export const claimPoolTweetPoints = ({
   tweetUrl,
-  poolId,
-  playerAddress,
 }: {
   tweetUrl: string;
-  poolId: string;
-  playerAddress: string;
-}): Promise<{ message: string; pointsAwarded: number }> =>
+}): Promise<{
+  message: string;
+  pointsAwarded: number;
+  authorUsername: string | null;
+}> =>
   axios
-    .post(`${API_BASE_URL}/claim-pool-tweet-points`, {
-      poolId,
-      tweetUrl,
-      playerAddress,
-    })
+    .post(`${API_BASE_URL}/claim-pool-tweet-points`, { tweetUrl })
     .then((res) => res.data);

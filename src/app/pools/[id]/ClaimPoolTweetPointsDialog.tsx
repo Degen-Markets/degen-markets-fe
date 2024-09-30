@@ -37,9 +37,8 @@ const ClaimPoolTweetPointsDialog = ({
   const verifyClaim = useCallback(async () => {
     setIsVerifyingClaim(true);
     const claimTrial = await tryItAsync(() =>
-      claimPoolTweetPoints({ tweetUrl, poolId, playerAddress: userAddress }),
+      claimPoolTweetPoints({ tweetUrl }),
     );
-    setIsVerifyingClaim(false);
 
     if (!claimTrial.success) {
       showToast("Failed to claim points. Please try again.", "error");
@@ -47,13 +46,19 @@ const ClaimPoolTweetPointsDialog = ({
       return;
     }
 
-    const { pointsAwarded } = claimTrial.data;
+    const { pointsAwarded, authorUsername } = claimTrial.data;
+    const displayedUsername = authorUsername
+      ? `@${authorUsername}`
+      : "the author of that tweet";
     showToast(
-      `Successfully claimed points. You have been awarded ${pointsAwarded} points!`,
+      `Awarded ${pointsAwarded} points to ${displayedUsername}!`,
       "success",
     );
-    handleClose();
-  }, [tweetUrl, poolId, showToast, handleClose, userAddress]);
+    setTimeout(() => {
+      setIsVerifyingClaim(false);
+      handleClose();
+    }, 2000);
+  }, [tweetUrl, showToast, handleClose]);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
