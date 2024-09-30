@@ -16,10 +16,14 @@ import {
 import { DialogType, useDialog } from "../components/Dialog/dialog";
 import { Player } from "../types/player";
 
+// This helps you easily change the param in all the places that use it
+export const REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY = "redirect";
+
 interface UserContextType {
   userProfile: Player;
   connectTwitter: () => void;
   isProfileLoading: boolean;
+  isProfileFetchInititated: boolean;
   saveUser: (signature: string) => Promise<void>;
   isSignatureRequired: boolean;
   setUserProfile: React.Dispatch<React.SetStateAction<Player>>;
@@ -44,6 +48,8 @@ export const UserProfileProvider = ({
   const wallet = useWallet();
   const [userProfile, setUserProfile] = useState<Player>(initialUserProfile);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
+  const [isProfileFetchInititated, setIsProfileFetchInititated] =
+    useState<boolean>(false);
   const { open, setOpen: setSignatureModal } = useDialog(DialogType.signature);
 
   const router = useRouter();
@@ -73,10 +79,18 @@ export const UserProfileProvider = ({
   };
 
   const fetchUserProfile = async (address: string) => {
+    setIsProfileFetchInititated(true);
     setIsProfileLoading(true);
     try {
       const { data } = await getPlayerById(address);
       setUserProfile(data || null);
+      const redirectPath = searchParams.get(
+        REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
+      );
+
+      if (redirectPath) {
+        router.push(redirectPath); // Redirect to given url
+      }
     } catch (error) {
       handleError(
         error,
@@ -134,6 +148,7 @@ export const UserProfileProvider = ({
       fetchUserProfile(publicKey);
     } else if (!wallet.connected) {
       setUserProfile(initialUserProfile); // Reset profile on wallet disconnection
+      setIsProfileFetchInititated(false);
     }
   }, [wallet.connected, publicKey]);
 
@@ -145,6 +160,7 @@ export const UserProfileProvider = ({
         connectTwitter,
         saveUser,
         isProfileLoading,
+        isProfileFetchInititated,
         isSignatureRequired,
       }}
     >
