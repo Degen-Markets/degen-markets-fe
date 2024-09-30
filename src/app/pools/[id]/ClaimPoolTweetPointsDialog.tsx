@@ -10,16 +10,11 @@ import { useToast } from "@/app/components/Toast/ToastProvider";
 import Input from "@/app/components/Input";
 import { Button } from "@/app/components/Button/Button";
 import { claimPoolTweetPoints } from "@/app/lib/utils/api/twitter";
-import { Player } from "@/app/types/player";
 
 const ClaimPoolTweetPointsDialog = ({
-  poolId,
-  userAddress,
   isOpen,
   onClose: handleClose,
 }: {
-  poolId: string;
-  userAddress: Player["address"];
   isOpen: boolean;
   onClose: () => void;
 }) => {
@@ -50,7 +45,7 @@ const ClaimPoolTweetPointsDialog = ({
     const { pointsAwarded, authorUsername } = claimTrial.data;
     const displayedUsername = authorUsername
       ? `@${authorUsername}`
-      : "the author of that tweet";
+      : "the author of that post (tweet)";
     showToast(
       `Awarded ${pointsAwarded} points to ${displayedUsername}!`,
       "success",
@@ -78,7 +73,7 @@ const ClaimPoolTweetPointsDialog = ({
           value={tweetUrl}
           disabled={isVerifyingClaim}
           onChange={handleInputChange}
-          placeholder="Enter the link to your tweet sharing this page"
+          placeholder="Enter the link to your post (tweet) sharing this page"
         />
         <Button
           loader
