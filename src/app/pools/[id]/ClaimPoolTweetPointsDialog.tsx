@@ -43,6 +43,7 @@ const ClaimPoolTweetPointsDialog = ({
     if (!claimTrial.success) {
       showToast("Failed to claim points. Please try again.", "error");
       console.error(claimTrial.err);
+      setIsVerifyingClaim(false);
       return;
     }
 
