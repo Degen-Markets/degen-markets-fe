@@ -11,7 +11,7 @@ const ProfileStatsGrid = () => {
   const stats = [
     {
       title: "Points Earned",
-      value: `${formatNumberToSignificantDigits(userProfile.points)} Pts`,
+      value: `${formatNumberToSignificantDigits(userProfile?.points || 0)} Pts`,
       Icon: EarnPoints,
     },
     {

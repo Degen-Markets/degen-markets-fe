@@ -1,4 +1,11 @@
-import { createContext, FC, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import Toast from "@/app/components/Toast/Toast";
 
 interface ToastContextType {
@@ -30,8 +37,11 @@ export const ToastProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setToast(null);
   };
 
+  // memoize to avoid reference changes to context consumers. Without this you could have infinite rerenders
+  const contextVal = useMemo(() => ({ showToast, hideToast }), []);
+
   return (
-    <ToastContext.Provider value={{ showToast, hideToast }}>
+    <ToastContext.Provider value={contextVal}>
       {children}
       {toast && (
         <Toast

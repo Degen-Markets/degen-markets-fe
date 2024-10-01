@@ -1,22 +1,18 @@
 "use client";
 import { useEffect } from "react";
-import { BsPatchCheckFill } from "react-icons/bs";
 import { Button } from "@/app/components/Button/Button";
 import SignatureDialog from "@/app/components/Dialog/signMessageDialog";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
+import useTwitterAuthFlow from "./useTwitterAuthFlow";
 
 const TwitterButton = () => {
   const { open, setOpen } = useDialog(DialogType.signature);
-  const {
-    userProfile,
-    connectTwitter,
-    isSignatureRequired,
-    saveUser,
-    isProfileLoading,
-  } = useUserProfileContext();
+  const { userProfile, isProfileLoading } = useUserProfileContext();
+  const { connectTwitter, saveUser, isSignatureRequired } =
+    useTwitterAuthFlow();
 
   const buttonText = isProfileLoading
     ? "Connecting..."

@@ -1,11 +1,7 @@
 "use client";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import Image from "next/image";
-import { FC } from "react";
-import {
-  UserProfileProvider,
-  useUserProfileContext,
-} from "../../context/UserProfileContext";
+import { useUserProfileContext } from "../../context/UserProfileContext";
 import UserAvatar from "../UserAvatar";
 import { useWallet } from "@solana/wallet-adapter-react";
 
@@ -15,14 +11,6 @@ import "./index.css";
 import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 
 const SolanaWallet = () => {
-  return (
-    <UserProfileProvider>
-      <Content />
-    </UserProfileProvider>
-  );
-};
-
-const Content: FC = () => {
   const { userProfile } = useUserProfileContext();
   const { publicKey, connected, connecting } = useWallet();
 
@@ -37,7 +25,7 @@ const Content: FC = () => {
         {connected && walletAddrDisplayStr ? (
           <>
             <UserAvatar
-              src={userProfile.twitterPfpUrl}
+              src={userProfile?.twitterPfpUrl}
               className="rounded-full h-12 w-12 absolute top-0 left-0 "
               width={90}
               height={90}
