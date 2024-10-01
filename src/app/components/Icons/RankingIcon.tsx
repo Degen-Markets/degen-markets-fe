@@ -11,7 +11,7 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_49_50)">
+      <g clipPath="url(#clip0_49_50)">
         <path
           d="M152.886 51H147.886C134.079 51 122.886 62.1929 122.886 76V190.571C122.886 204.379 134.079 215.571 147.886 215.571H152.886C166.693 215.571 177.886 204.379 177.886 190.571V76C177.886 62.1929 166.693 51 152.886 51Z"
           fill="url(#paint0_linear_49_50)"
@@ -33,7 +33,7 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
             rx="25"
             transform="rotate(90 265 189)"
             fill="url(#paint3_linear_49_50)"
-            shape-rendering="crispEdges"
+            shapeRendering="crispEdges"
           />
           <rect
             x="264.6"
@@ -43,8 +43,8 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
             rx="24.6"
             transform="rotate(90 264.6 189.4)"
             stroke="url(#paint4_linear_49_50)"
-            stroke-width="0.8"
-            shape-rendering="crispEdges"
+            strokeWidth="0.8"
+            shapeRendering="crispEdges"
           />
         </g>
       </g>
@@ -56,9 +56,9 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
           width="250"
           height="75"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feGaussianBlur in="BackgroundImageFix" stdDeviation="5" />
           <feComposite
             in2="SourceAlpha"
@@ -98,8 +98,8 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
           y2="197.922"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_49_50"
@@ -109,8 +109,8 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
           y2="196.949"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_49_50"
@@ -120,8 +120,8 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
           y2="200.685"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#BDBDFF" />
-          <stop offset="1" stop-color="#8B7DEC" />
+          <stop stopColor="#BDBDFF" />
+          <stop offset="1" stopColor="#8B7DEC" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_49_50"
@@ -131,8 +131,8 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
           y2="415.673"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0.2" />
-          <stop offset="1" stop-color="white" stop-opacity="0.5" />
+          <stop stopColor="white" stopOpacity="0.2" />
+          <stop offset="1" stopColor="white" stopOpacity="0.5" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_49_50"
@@ -142,8 +142,8 @@ const RankingIcon: FC<IconProps> = ({ width = 64, height = 64, ...props }) => {
           y2="410.278"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" stop-opacity="0" />
-          <stop offset="1" stop-color="white" />
+          <stop stopColor="white" stopOpacity="0" />
+          <stop offset="1" stopColor="white" />
         </linearGradient>
         <clipPath id="clip0_49_50">
           <rect width="300" height="300" fill="white" />
