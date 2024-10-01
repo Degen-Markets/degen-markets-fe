@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastProvider } from "@/app/components/Toast/ToastProvider";
 import { DialogProvider } from "./components/Dialog/dialog";
 import { WalletContextProvider } from "./context/WalletContext";
+import { UserProfileProvider } from "./context/UserProfileContext";
 
 export const queryClient = new QueryClient();
 
@@ -14,7 +15,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <React.Suspense fallback={<></>}>
         <ToastProvider>
           <WalletContextProvider>
-            <DialogProvider>{children}</DialogProvider>
+            <DialogProvider>
+              <UserProfileProvider>{children}</UserProfileProvider>
+            </DialogProvider>
           </WalletContextProvider>
         </ToastProvider>
       </React.Suspense>

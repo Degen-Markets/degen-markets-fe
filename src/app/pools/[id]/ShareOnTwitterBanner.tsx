@@ -1,9 +1,8 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/app/components/Button/Button";
 import {
   REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
-  UserProfileProvider,
   useUserProfileContext,
 } from "@/app/context/UserProfileContext";
 import { useToast } from "@/app/components/Toast/ToastProvider";
@@ -21,14 +20,6 @@ const RESUME_SHARE_FLOW_SEARCH_PARAM = {
 };
 
 const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["address"] }) => {
-  return (
-    <UserProfileProvider>
-      <Content poolId={poolId} />
-    </UserProfileProvider>
-  );
-};
-
-const Content = ({ poolId }: { poolId: Pool["address"] }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const openDialog = useCallback(() => setIsDialogOpen(true), []);
   const closeDialog = useCallback(() => setIsDialogOpen(false), []);
