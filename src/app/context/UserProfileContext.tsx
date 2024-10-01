@@ -60,10 +60,7 @@ export const UserProfileProvider = ({
           router.push(redirectPath); // Redirect to given url
         }
       } catch (error) {
-        console.error(
-          error,
-          "Failed to fetch user profile! Please Connect to X",
-        );
+        console.error("Failed to fetch user profile", error);
       } finally {
         setIsProfileLoading(false);
       }
