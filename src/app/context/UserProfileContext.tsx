@@ -6,14 +6,8 @@ import React, {
   useState,
 } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useToast } from "@/app/components/Toast/ToastProvider";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getPlayerById } from "../lib/utils/api/players";
-import {
-  getTwitterLoginLink,
-  saveTwitterProfile,
-} from "../lib/utils/api/twitter";
-import { DialogType, useDialog } from "../components/Dialog/dialog";
 import { Player } from "../types/player";
 
 // This helps you easily change the param in all the places that use it
@@ -21,11 +15,8 @@ export const REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY = "redirect";
 
 interface UserContextType {
   userProfile: Player;
-  connectTwitter: () => void;
   isProfileLoading: boolean;
   isProfileFetchInititated: boolean;
-  saveUser: (signature: string) => Promise<void>;
-  isSignatureRequired: boolean;
   setUserProfile: React.Dispatch<React.SetStateAction<Player>>;
 }
 
@@ -50,97 +41,36 @@ export const UserProfileProvider = ({
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
   const [isProfileFetchInititated, setIsProfileFetchInititated] =
     useState<boolean>(false);
-  const { open, setOpen: setSignatureModal } = useDialog(DialogType.signature);
 
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { showToast } = useToast();
 
-  const twitterCode = searchParams.get("code");
   const publicKey = wallet.publicKey?.toBase58();
-  const isSignatureRequired = !!(
-    twitterCode &&
-    wallet.connected &&
-    wallet.publicKey
-  );
 
-  const handleError = (
-    error: any,
-    defaultMessage: string,
-    additionalMessage?: string,
-  ) => {
-    const errorMessage = error?.response?.data?.message ?? defaultMessage;
-    const finalMessage = additionalMessage
-      ? `${errorMessage}${additionalMessage}`
-      : errorMessage;
-    showToast(finalMessage, "error");
-    console.error(error);
-  };
-
-  const fetchUserProfile = async (address: string) => {
-    setIsProfileFetchInititated(true);
-    setIsProfileLoading(true);
-    try {
-      const { data } = await getPlayerById(address);
-      setUserProfile(data || null);
-      const redirectPath = searchParams.get(
-        REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
-      );
-
-      if (redirectPath) {
-        router.push(redirectPath); // Redirect to given url
-      }
-    } catch (error) {
-      handleError(
-        error,
-        "Failed to fetch user profile.",
-        "! Please Connect to X",
-      );
-    } finally {
-      setIsProfileLoading(false);
-    }
-  };
-
-  const connectTwitter = useCallback(async () => {
-    if (!wallet.connected) {
-      showToast("Please connect your wallet first.", "info");
-      return;
-    }
-    if (!twitterCode) {
+  const fetchUserProfile = useCallback(
+    async (address: string) => {
+      setIsProfileFetchInititated(true);
+      setIsProfileLoading(true);
       try {
-        const { data } = await getTwitterLoginLink();
-        router.push(data.url);
-      } catch (error) {
-        handleError(error, "Failed to get Twitter login link.");
-      }
-    } else {
-      setSignatureModal(true);
-    }
-  }, [wallet.connected, twitterCode, showToast, setSignatureModal, router]);
+        const { data } = await getPlayerById(address);
+        setUserProfile(data || null);
+        const redirectPath = searchParams.get(
+          REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
+        );
 
-  const saveUser = useCallback(
-    async (signature: string) => {
-      if (!wallet.connected || !publicKey) {
-        showToast("Please connect your wallet.", "info");
-        return;
-      }
-      try {
-        if (twitterCode && signature && publicKey) {
-          const { data: twitterUser } = await saveTwitterProfile(
-            twitterCode,
-            signature,
-            publicKey,
-          );
-          setUserProfile(twitterUser);
-          router.replace(pathname);
+        if (redirectPath) {
+          router.push(redirectPath); // Redirect to given url
         }
       } catch (error) {
-        handleError(error, "Failed to save Twitter user.");
-        router.replace(pathname);
+        console.error(
+          error,
+          "Failed to fetch user profile! Please Connect to X",
+        );
+      } finally {
+        setIsProfileLoading(false);
       }
     },
-    [wallet.connected, publicKey, twitterCode, showToast, router, pathname],
+    [router, searchParams],
   );
 
   useEffect(() => {
@@ -150,18 +80,15 @@ export const UserProfileProvider = ({
       setUserProfile(initialUserProfile); // Reset profile on wallet disconnection
       setIsProfileFetchInititated(false);
     }
-  }, [wallet.connected, publicKey]);
+  }, [wallet.connected, publicKey, fetchUserProfile]);
 
   return (
     <UserProfileContext.Provider
       value={{
         userProfile,
         setUserProfile,
-        connectTwitter,
-        saveUser,
         isProfileLoading,
         isProfileFetchInititated,
-        isSignatureRequired,
       }}
     >
       {children}
