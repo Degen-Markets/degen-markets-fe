@@ -13,23 +13,20 @@ import { Player } from "../types/player";
 // This helps you easily change the param in all the places that use it
 export const REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY = "redirect";
 
-interface UserContextType {
-  userProfile: Player;
+type UserProfile = Player | null;
+
+export interface UserContextType {
+  userProfile: UserProfile;
   isProfileLoading: boolean;
   isProfileFetchInititated: boolean;
-  setUserProfile: React.Dispatch<React.SetStateAction<Player>>;
+  setUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
 }
 
 const UserProfileContext = createContext<UserContextType | undefined>(
   undefined,
 );
 
-const initialUserProfile = {
-  address: "",
-  points: 0,
-  twitterUsername: "",
-  twitterPfpUrl: "",
-};
+const initialUserProfile: UserProfile = null;
 
 export const UserProfileProvider = ({
   children,
@@ -37,7 +34,8 @@ export const UserProfileProvider = ({
   children: React.ReactNode;
 }) => {
   const wallet = useWallet();
-  const [userProfile, setUserProfile] = useState<Player>(initialUserProfile);
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(initialUserProfile);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
   const [isProfileFetchInititated, setIsProfileFetchInititated] =
     useState<boolean>(false);
@@ -53,7 +51,7 @@ export const UserProfileProvider = ({
       setIsProfileLoading(true);
       try {
         const { data } = await getPlayerById(address);
-        setUserProfile(data || null);
+        setUserProfile(data);
         const redirectPath = searchParams.get(
           REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
         );

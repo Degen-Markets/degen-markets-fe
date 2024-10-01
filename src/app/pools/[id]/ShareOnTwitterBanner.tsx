@@ -35,7 +35,7 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["address"] }) => {
       <Button intent="primary" onClick={handleShare}>
         Share
       </Button>
-      {isDialogOpen && !!userProfile.address && (
+      {isDialogOpen && !!userProfile?.address && (
         <ClaimPoolTweetPointsDialog
           poolId={poolId}
           isOpen={isDialogOpen}

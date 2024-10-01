@@ -25,7 +25,7 @@ const SolanaWallet = () => {
         {connected && walletAddrDisplayStr ? (
           <>
             <UserAvatar
-              src={userProfile.twitterPfpUrl}
+              src={userProfile?.twitterPfpUrl}
               className="rounded-full h-12 w-12 absolute top-0 left-0 "
               width={90}
               height={90}

@@ -23,5 +23,5 @@ export const getPlayers = ({
 
 export const getPlayerById = (
   address: string,
-): Promise<AxiosResponse<Player>> =>
+): Promise<AxiosResponse<Player | null>> =>
   axios.get(`https://api.degenmarkets.com/players/${address}`);
