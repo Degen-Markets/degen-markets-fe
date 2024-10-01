@@ -21,8 +21,8 @@ const useConnectWalletThen = () => {
     const isUserConnected = connected && !connecting;
     if (isUserRejectedConn) {
       callbackRef.current = null;
-    } else if (isUserConnected && callbackRef.current) {
-      callbackRef.current();
+    } else if (isUserConnected) {
+      callbackRef.current?.();
       callbackRef.current = null;
     }
   }, [connected, connecting, visible]);
@@ -46,11 +46,11 @@ const useConnectProfileThen = () => {
   const callbackRef = useRef<((userProfile: Player) => void) | null>(null);
 
   useEffect(() => {
-    const isAuthFlowOver =
-      visible || // modal should be closed
-      userProfileContext.isProfileLoading || // profile loading completed
-      !userProfileContext.isProfileFetchInititated; // and profile load actually attempted
-    if (isAuthFlowOver) {
+    const isAuthFlowPending =
+      visible || // wallet modal is open
+      userProfileContext.isProfileLoading || // profile is still loading
+      !userProfileContext.isProfileFetchInititated; // or profile load has not yet been attempted
+    if (isAuthFlowPending) {
       return;
     }
     const isUserRejectedConn = !connected && !connecting;
