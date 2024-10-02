@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
-    "@dialectlabs/blinks": "^0.9.3",
+    "@dialectlabs/blinks": "^0.12.1",
     "@radix-ui/react-dialog": "1.0.4",
-    "@solana/actions": "^1.0.3",
+    "@solana/actions": "^1.6.4",
     "@solana/wallet-adapter-base": "^0.9.23",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/wallet-adapter-react-ui": "^0.9.35",
