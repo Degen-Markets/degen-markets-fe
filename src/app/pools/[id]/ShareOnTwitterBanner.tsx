@@ -28,7 +28,7 @@ const ShareOnTwitterBanner = ({ poolId }: { poolId: Pool["address"] }) => {
   const { userProfile } = useUserProfileContext();
 
   return (
-    <div className="flex flex-col gap-4 sm:flex-row items-center justify-between p-4">
+    <div className="flex flex-row gap-4 items-center justify-between p-4">
       <div className="mb-4 sm:mb-0">
         Share this on X to get 10 airdrop points
       </div>

@@ -19,7 +19,7 @@ const PoolCard = ({ pool }: { pool: Pool }) => {
             size="regular"
             className="bg-opacity-90 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all ease duration-300"
           >
-            Bet Now
+            {pool.isPaused ? "Claim Win" : "Bet Now"}
           </Button>
         </Link>
       </div>
