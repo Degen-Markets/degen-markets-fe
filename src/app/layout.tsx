@@ -1,20 +1,15 @@
+import { ReactNode } from "react";
 import type { Metadata } from "next";
-import "./globals.css";
-import { Providers } from "./providers";
+import { twMerge } from "tailwind-merge";
 import PageWrapper from "@/app/components/PageWrapper";
-import React from "react";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
-import { Chakra_Petch } from "next/font/google";
-import { twMerge } from "tailwind-merge";
-import { GoogleAnalytics } from "./components/GoogleAnalytics";
+import { Providers } from "@/app/providers";
+import { GoogleAnalytics } from "@/app/components/GoogleAnalytics";
+import { montserrat, openSans } from "@/app/config/fonts";
 
-const chakraPetch = Chakra_Petch({
-  weight: ["400", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-  display: "swap",
-});
+import "./globals.css";
+
 export const metadata: Metadata = {
   title: "Degen Markets",
   description: "Degen Markets Hub",
@@ -29,21 +24,26 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="en" className={twMerge("scroll-smooth", chakraPetch.className)}>
-      <body className="text-sm sm:text-lg md:text-xl bg-contain bg-center bg-no-repeat min-h-screen ">
+    <html
+      lang="en"
+      className={twMerge(
+        "scroll-smooth",
+        montserrat.className,
+        openSans.className,
+      )}
+    >
+      <body className="bg-base text-white text-sm sm:text-lg md:text-xl bg-contain bg-center bg-no-repeat min-h-screen ">
         <Providers>
           <div className="flex min-h-screen flex-col items-center justify-between">
             <Header />
-            <PageWrapper>
-              {children}
-              <GoogleAnalytics />
-            </PageWrapper>
+            <PageWrapper>{children}</PageWrapper>
             <Footer />
           </div>
         </Providers>
+        <GoogleAnalytics />
       </body>
     </html>
   );

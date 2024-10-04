@@ -69,11 +69,6 @@
   }
 }
 
-body {
-  color: white;
-  background: #14222f;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: normal;
@@ -82,6 +77,15 @@ body {
 
 .center-all {
   @apply flex justify-center items-center text-center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
 }
 
 /*Hide arrows of number input*/
