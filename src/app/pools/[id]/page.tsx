@@ -26,7 +26,17 @@ export const generateMetadata = async ({
 }: {
   params: { id: string };
 }): Promise<Metadata> => {
-  const { data: pool } = await getPoolById(id);
+  const poolCreationForm = {
+    data: {
+      title: "Create a new bet",
+      description: "Enter the details for your bet",
+      image:
+        "https://degen-markets-static.s3.eu-west-1.amazonaws.com/degen-markets-banner.jpeg",
+      address: "create",
+    },
+  };
+  const { data: pool } =
+    id === "create" ? poolCreationForm : await getPoolById(id);
   return {
     title: pool.title,
     description: pool.description,
