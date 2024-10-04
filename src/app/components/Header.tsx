@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import Link from "next/link";
 import Wrapper from "@/app/components/Wrapper";
-import SolanaWallet from "./SolanaWallet";
-import DgmLogoIcon from "./Icons/DgmLogoIcon";
 import Navbar from "@/app/components/Navbar";
+import DgmLogoIcon from "@/app/components/Icons/DgmLogoIcon";
+import SolanaWallet from "@/app/components/SolanaWallet";
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const [nav, setNav] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   }, [nav]);
 
   return (
-    <header className="w-full text-white z-50 p-2 mt-4">
+    <header className="w-full text-white z-50 p-2 border-b border-white border-opacity-10">
       <Wrapper>
         <div className="flex justify-between items-center w-full lg:h-16">
           <div className="flex-row md:flex-col justify-center items-center flex lg:flex-row lg:justify-start lg:items-center w-full h-full py-0.5 lg:py-0">

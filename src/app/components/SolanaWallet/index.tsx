@@ -1,14 +1,14 @@
 "use client";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
-import Image from "next/image";
-import { useUserProfileContext } from "../../context/UserProfileContext";
-import UserAvatar from "../UserAvatar";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { HiOutlineWallet } from "react-icons/hi2";
+import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
+import UserAvatar from "@/app/components/UserAvatar";
+import { useUserProfileContext } from "@/app/context/UserProfileContext";
 
 // Import default styles and override them
 require("@solana/wallet-adapter-react-ui/styles.css");
 import "./index.css";
-import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 
 const SolanaWallet = () => {
   const { userProfile } = useUserProfileContext();
@@ -26,7 +26,7 @@ const SolanaWallet = () => {
           <>
             <UserAvatar
               src={userProfile?.twitterPfpUrl}
-              className="rounded-full h-12 w-12 absolute top-0 left-0 "
+              className="rounded-full h-10 w-10 absolute top-1 left-1 "
               width={90}
               height={90}
             />
@@ -38,12 +38,7 @@ const SolanaWallet = () => {
               "Connecting..."
             ) : (
               <>
-                <Image
-                  src={"/navIcons/Wallet.svg"}
-                  alt="Wallet"
-                  width={24}
-                  height={24}
-                />
+                <HiOutlineWallet size={24} />
                 Connect Wallet
               </>
             )}

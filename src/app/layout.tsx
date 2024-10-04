@@ -35,7 +35,7 @@ export default function RootLayout({
         openSans.className,
       )}
     >
-      <body className="bg-base text-white text-sm sm:text-lg md:text-xl bg-contain bg-center bg-no-repeat min-h-screen ">
+      <body className="bg-main text-white text-sm sm:text-lg md:text-xl bg-contain bg-center bg-no-repeat min-h-screen ">
         <Providers>
           <div className="flex min-h-screen flex-col items-center justify-between">
             <Header />

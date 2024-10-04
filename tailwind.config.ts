@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 const colors = {
-  base: "#0C0C1A",
+  main: "#0C0C1A",
+  primary: "#8F7CFF",
   black: {
     medium: "#202B38",
     dark: "#1A222C",
@@ -82,7 +83,8 @@ const config: Config = {
         "27": "27deg",
       },
       fontFamily: {
-        "chakra-petch": ['"Chakra Petch"', "cursive"],
+        sans: ["Open Sans", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
       },
       backgroundImage: {
         "olive-to-blue-gradient":

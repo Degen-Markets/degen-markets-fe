@@ -28,16 +28,14 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
       <div
         className={twMerge(
           "flex justify-center items-center space-x-2 cursor-pointer",
-          isActive && "border-b-2 border-purple-medium pb-2 text-purple-medium",
+          isActive && "font-semibold",
         )}
         onClick={typeof route.route === "string" ? handleClick : undefined}
       >
         {route.icon && (
           <Image src={route.icon} alt={route.name} width={25} height={25} />
         )}
-        <p className="font-bold uppercase  lg:text-xl xl:text-2xl">
-          {route.name}
-        </p>
+        <span className="text-base lg:text-lg">{route.name}</span>
         {Array.isArray(route.route) && (
           <IoIosArrowDown className="flex-shrink-0" />
         )}
