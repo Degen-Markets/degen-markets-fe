@@ -1,5 +1,5 @@
 import { VariantProps } from "class-variance-authority";
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactElement } from "react";
 import { buttonVariants } from "./constant";
 
 export interface ButtonProps
@@ -11,4 +11,5 @@ export interface ButtonProps
   isProcessing?: boolean;
   pendingText?: string;
   processingText?: string;
+  icon?: ReactElement;
 }

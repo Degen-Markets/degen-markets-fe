@@ -15,6 +15,7 @@ export const Button: FC<ButtonProps> = ({
   isProcessing,
   pendingText = "Pending...",
   processingText = "Processing...",
+  icon,
   ...props
 }) => {
   const isIdle = !isProcessing && !isPending;
@@ -29,6 +30,7 @@ export const Button: FC<ButtonProps> = ({
       disabled={isProcessing || isPending}
       {...props}
     >
+      {isIdle && icon && <span className="pr-2">{icon}</span>}
       {isIdle && children}
       {isPending && loader && (
         <PixelArtLoader text={pendingText} textSize="2xl" />

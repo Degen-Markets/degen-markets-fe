@@ -1,16 +1,38 @@
+"use client";
+
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { Button } from "@/app/components/Button/Button";
+import Link from "next/link";
+import { HiMiniArrowTrendingUp } from "react-icons/hi2";
+
 const HeroSection = () => (
-  <section
-    className="w-full overflow-hidden relative max-w-screen-2xl mx-auto text-center space-y-10 hidden md:flex flex-col items-center justify-center bg-cover bg-center bg-indigo-medium rounded-3xl px-8 py-24"
-    style={{ backgroundImage: "url(/images/hero-bg.gif)" }}
-  >
-    <div className="backdrop-blur-lg absolute right-0 left-0 top-0 bottom-0 z-0"></div>
-    <h1 className="text-2xl md:text-6xl font-bold leading-none z-10">
-      Decentralized Prediction <br /> Market on Blinks
-    </h1>
-    <p className="w-full max-w-4xl mx-auto font-semibold text-md md:text-lg z-10">
-      Make Predictions on Events Directly on Twitter via Solana Blinks. Predict
-      Now to Claim YOUR Share of the $DGM AirDrop
-    </p>
+  <section className="space-y-10 hidden md:flex gap-4 py-24">
+    <div className="w-[60%]">
+      <h1 className="text-2xl md:text-6xl md:leading-snug  mb-8">
+        Decentralized Prediction Market on Blinks
+      </h1>
+      <p className="w-[60%] text-base md:text-md text-lavender-blue mb-6">
+        Make Predictions on Events Directly on Twitter via Solana Blinks.
+        Predict Now to Claim YOUR Share of the $DGM AirDrop
+      </p>
+      <Link href="/bets">
+        <Button
+          intent="primary"
+          size="small"
+          icon={<HiMiniArrowTrendingUp size={24} />}
+        >
+          Predict now
+        </Button>
+      </Link>
+    </div>
+    <div className="relative w-[40%]">
+      <div className="absolute top-5 -right-16">
+        <DotLottieReact src="/animations/hero-shape.lottie" loop autoplay />
+      </div>
+      <div className="absolute">
+        <DotLottieReact src="/animations/blink.lottie" autoplay />
+      </div>
+    </div>
   </section>
 );
 

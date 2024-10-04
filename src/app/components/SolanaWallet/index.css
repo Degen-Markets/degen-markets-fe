@@ -4,7 +4,7 @@
 }
 
 .wallet-adapter-button-trigger {
-  @apply text-sm shadow-xl hover:shadow-2xl transition-all duration-150 font-[inherit] rounded-full bg-primary focus-visible:bg-purple-medium;
+  @apply text-sm text-main shadow-xl hover:shadow-2xl transition-all duration-150 font-[inherit] rounded-full bg-primary focus-visible:bg-purple-medium;
 }
 
 /* We override using class selector because the default class has higher specificity */
