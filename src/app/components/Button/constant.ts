@@ -19,8 +19,8 @@ export const buttonVariants = cva(
           "lg:w-56 w-full font-semibold rounded-full text-white bg-gradient-to-r border from-pink-light via-vivid-medium to-yellow-light",
       },
       size: {
-        regular: "h-10 md:h-12",
-        small: "h-8 md:h-10",
+        regular: "text-lg md:text-xl",
+        small: "text-md md:text-lg",
       },
     },
     defaultVariants: {
