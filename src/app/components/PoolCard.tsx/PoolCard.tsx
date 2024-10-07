@@ -1,27 +1,28 @@
 import Image from "next/image";
 import { Button } from "@/app/components/Button/Button";
+import { Pool } from "@/app/lib/utils/types";
+import { FC } from "react";
+import { twMerge } from "tailwind-merge";
 
-const PoolCard = () => {
+interface PoolCardProps {
+  pool: Pool;
+  className?: string;
+}
+const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
   return (
-    <div className="p-8 bg-steel-gray rounded-lg space-y-4">
-      <Image
-        src="https://degen-markets-static.s3.eu-west-1.amazonaws.com/trump_vs_elon.png"
-        alt="Trump Vs Elon"
-        width={640}
-        height={480}
-        className="rounded-lg"
-      />
-      <div className="space-y-2">
-        <h3 className="font-semibold text-base">
-          Who will be the first to mention "crypto" on tonight's interview?
-        </h3>
-        <p className="text-lavender-blue text-sm">
-          Degods reaches or crosses $1B market cap on MagicEden or Tensor by end
-          of year 2024. Option labeled "Degods" stands for yes, whereas "Frank
-          not based" stands for no.
-        </p>
+    <div className={twMerge("p-8 bg-steel-gray rounded-lg", className)}>
+      <div className="h-96 relative mb-4">
+        <Image
+          src={pool.image}
+          alt="Trump Vs Elon"
+          layout="fill"
+          objectFit="cover"
+          className="rounded-lg"
+        />
       </div>
-      <div className="flex gap-4 justify-end">
+      <h3 className="font-semibold text-base mb-2">{pool.title}</h3>
+      <p className="text-lavender-blue text-sm">{pool.description}</p>
+      <div className="flex gap-4 justify-end mt-6">
         <Button size="small" intent="primary">
           Bet Now
         </Button>
