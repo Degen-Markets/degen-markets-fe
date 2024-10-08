@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { twMerge } from "tailwind-merge";
 import PageWrapper from "@/app/components/PageWrapper";
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header";
 import { Providers } from "@/app/providers";
 import { GoogleAnalytics } from "@/app/components/GoogleAnalytics";
