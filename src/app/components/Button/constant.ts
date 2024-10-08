@@ -8,8 +8,10 @@ export const buttonVariants = cva(
         main: "bg-black-medium hover:bg-black-dark active:bg-black-dark uppercase font-bold",
         primary:
           "bg-primary hover:bg-purple-600 active:bg-purple-600 text-main",
-        outline:
+        outlineWhite:
           "bg-transparent border-2 border-white hover:bg-white active:bg-white hover:text-main active:text-main",
+        outline:
+          "bg-transparent border-2 border-primary hover:bg-primary active:bg-primary hover:text-main active:text-main text-primary active:text-main",
         secondary: "bg-blue-dark hover:bg-[#131921] active:bg-[#131921]",
         danger:
           "bg-red-light text-black-medium hover:bg-red-main active:bg-red-main",

@@ -1,7 +1,7 @@
 import { getPools } from "@/app/lib/utils/api/pools";
 import Wrapper from "@/app/components/Wrapper";
 import HeroSection from "@/app/components/Landing/HeroSection";
-import PoolsCarouselSection from "@/app/components/Landing/PoolsCarouselSection";
+import PoolsCarouselSection from "@/app/components/Landing/PoolsCarouselSection/PoolsCarouselSection";
 
 export const dynamic = "force-dynamic";
 

@@ -8,25 +8,33 @@ interface PoolCardProps {
   pool: Pool;
   className?: string;
 }
+
 const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
   return (
-    <div className={twMerge("p-8 bg-steel-gray rounded-lg", className)}>
+    <div
+      className={twMerge(
+        "flex flex-col h-full p-8 bg-steel-gray rounded-lg",
+        className,
+      )}
+    >
       <div className="h-96 relative mb-4">
         <Image
           src={pool.image}
-          alt="Trump Vs Elon"
+          alt={pool.title} // Use pool.title for better accessibility
           layout="fill"
           objectFit="cover"
           className="rounded-lg"
         />
       </div>
       <h3 className="font-semibold text-base mb-2">{pool.title}</h3>
-      <p className="text-lavender-blue text-sm">{pool.description}</p>
+      <p className="text-lavender-blue text-sm mb-4 flex-grow">
+        {pool.description}
+      </p>
       <div className="flex gap-4 justify-end mt-6">
         <Button size="small" intent="primary">
           Bet Now
         </Button>
-        <Button size="small" intent="outline">
+        <Button size="small" intent="outlineWhite">
           Share
         </Button>
       </div>
