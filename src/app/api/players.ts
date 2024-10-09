@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { API_BASE_URL } from "@/app/lib/utils/api/index";
 import { Player } from "@/app/types/player";
+import { API_BASE_URL } from "@/app/config/api";
 
 type GetPlayersParams = {
   sort?: "ASC" | "DESC";

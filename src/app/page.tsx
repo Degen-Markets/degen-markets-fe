@@ -1,4 +1,4 @@
-import { getPools } from "@/app/lib/utils/api/pools";
+import { getPools } from "@/app/api/pools";
 import Wrapper from "@/app/components/Wrapper";
 import HeroSection from "@/app/components/Landing/HeroSection";
 import PoolsCarouselSection from "@/app/components/Landing/PoolsCarouselSection/PoolsCarouselSection";

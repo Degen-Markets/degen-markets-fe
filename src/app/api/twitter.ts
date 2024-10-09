@@ -1,6 +1,7 @@
 import { Player } from "@/app/types/player";
 import axios, { AxiosResponse } from "axios";
-import { API_BASE_URL } from ".";
+
+import { API_BASE_URL } from "@/app/config/api";
 
 export const getTwitterLoginLink = () =>
   axios.get<{ url: string }>(`${API_BASE_URL}/twitter-login`);

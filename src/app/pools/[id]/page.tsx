@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Wrapper from "@/app/components/Wrapper";
 import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
-import { getPoolById } from "@/app/lib/utils/api/pools";
+import { getPoolById } from "@/app/api/pools";
 import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
 
 const PoolPage = ({ params: { id } }: { params: { id: string } }) => {

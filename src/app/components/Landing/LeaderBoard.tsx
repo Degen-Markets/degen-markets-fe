@@ -1,7 +1,7 @@
 import SectionHeader from "./SectionHeading";
 import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";
 import LeaderboardTable from "@/app/components/LeaderboardTable/LeaderboardTable";
-import { getPlayers } from "@/app/lib/utils/api/players";
+import { getPlayers } from "@/app/api/players";
 
 const LeaderBoard = async () => {
   const { data: players } = await getPlayers();

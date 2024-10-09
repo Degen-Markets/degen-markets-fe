@@ -13,7 +13,7 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
   return (
     <div
       className={twMerge(
-        "flex flex-col h-full p-8 bg-steel-gray rounded-lg",
+        "flex flex-col h-full p-4 lg:p-8 bg-steel-gray rounded-lg",
         className,
       )}
     >

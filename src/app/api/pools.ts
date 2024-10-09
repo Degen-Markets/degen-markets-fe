@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Pool, PoolsResponse } from "@/app/lib/utils/types";
-import { API_BASE_URL } from "@/app/lib/utils/api/index";
+
+import { API_BASE_URL } from "@/app/config/api";
 
 export const getPools = (): Promise<AxiosResponse<PoolsResponse>> =>
   axios.get(`${API_BASE_URL}/pools`);

@@ -3,7 +3,7 @@
 import { PoolsResponse } from "@/app/lib/utils/types";
 import { FC } from "react";
 import PoolCard from "@/app/components/PoolCard.tsx/PoolCard";
-import Section from "@/app/components/Section";
+import { Section, SectionHeadline } from "@/app/components/Section";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import { Button } from "@/app/components/Button/Button";
@@ -22,7 +22,6 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
     {
       align: "start",
       containScroll: "trimSnaps",
-      dragFree: true,
     },
     [WheelGesturesPlugin()],
   );
@@ -36,10 +35,14 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
 
   return (
     <Section className="overflow-hidden">
+      <SectionHeadline>Pools</SectionHeadline>
       <div ref={emblaRef} className="mb-6">
         <div className="flex gap-6 w-full">
           {pools.map((pool, index) => (
-            <div className="flex-[0_0_calc(100%/3.5)]" key={index}>
+            <div
+              className="flex-[0_0_100%] sm:flex-[0_0_calc(100%/2)] md:flex-[0_0_calc(100%/3.5)]"
+              key={index}
+            >
               <PoolCard pool={pool} className="h-full" />
             </div>
           ))}

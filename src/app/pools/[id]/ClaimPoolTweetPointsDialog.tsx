@@ -9,12 +9,10 @@ import { tryItAsync } from "@/app/lib/utils/tryIt";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import Input from "@/app/components/Input";
 import { Button } from "@/app/components/Button/Button";
-import { claimPoolTweetPoints } from "@/app/lib/utils/api/twitter";
+import { claimPoolTweetPoints } from "@/app/api/twitter";
 import { Player } from "@/app/types/player";
 
 const ClaimPoolTweetPointsDialog = ({
-  poolId,
-  userAddress,
   isOpen,
   onClose: handleClose,
 }: {

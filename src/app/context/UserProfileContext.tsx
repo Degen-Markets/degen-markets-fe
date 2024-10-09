@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getPlayerById } from "../lib/utils/api/players";
+import { getPlayerById } from "@/app/api/players";
 import { Player } from "../types/player";
 
 // This helps you easily change the param in all the places that use it
