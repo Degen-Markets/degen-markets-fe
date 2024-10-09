@@ -8,7 +8,6 @@ import SolanaWallet from "@/app/components/SolanaWallet";
 
 const Header: FC = () => {
   const [nav, setNav] = useState<boolean>(false);
-
   useEffect(() => {
     if (nav) {
       document.body.setAttribute("data-scroll-locked", "1");

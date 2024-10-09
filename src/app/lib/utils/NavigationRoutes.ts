@@ -32,6 +32,12 @@ const NavigationRoutes: NavigationProps = {
         isExpandable: false,
       },
       {
+        name: "Pools",
+        icon: "",
+        route: "/pools",
+        isExpandable: false,
+      },
+      {
         name: "Airdrop",
         icon: "",
         route: "/airdrop",
