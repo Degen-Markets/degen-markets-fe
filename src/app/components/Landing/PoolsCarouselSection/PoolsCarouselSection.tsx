@@ -36,7 +36,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
   return (
     <Section className="overflow-hidden">
       <SectionHeadline>Pools</SectionHeadline>
-      <div ref={emblaRef} className="mb-6">
+      <div ref={emblaRef} className="mb-3 lg:mb-6">
         <div className="flex gap-6 w-full">
           {pools.map((pool, index) => (
             <div
@@ -48,12 +48,12 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           ))}
         </div>
       </div>
-      <div className="flex gap-4 justify-end mr-[10%] mb-12">
+      <div className="flex gap-4 justify-end mr-[10%] mb-6 lg:mb-12">
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
       </div>
       <div className="flex flex-col items-center space-y-8">
-        <p className="text-lavender-blue text-base mx-[20%] text-center">
+        <p className="text-lavender-blue text-sm lg:text-base mx-[5%] lg:mx-[20%] text-center">
           You can explore more bets or create a new one by checking the
           available blinks in the list. Simply browse through the current blinks
           to see all of them, or click the option to create a new blink

@@ -38,13 +38,16 @@ const NewsletterSubscription = () => {
   };
 
   return (
-    <div className="absolute flex items-center justify-center w-full space-x-4 -top-40 bg-white rounded-lg py-12 z-10 h-40">
+    <div className="lg:absolute flex items-center justify-center w-full space-x-4 lg:-top-40 bg-white lg:rounded-lg py-12 z-10 h-40">
       <div>
-        <form onSubmit={handleSubmit} className="flex items-center space-x-12">
-          <label htmlFor="email" className="text-3xl">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col lg:flex-row items-center space-x-12 w-full"
+        >
+          <label htmlFor="email" className="text-xl lg:text-3xl mb-4 lg:mb-0">
             Subscribe to Newsletters
           </label>
-          <div className="relative">
+          <div className="relative ">
             <input
               type="email"
               name="email"
@@ -52,14 +55,14 @@ const NewsletterSubscription = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="border rounded-full px-4 py-3 pr-36 w-96"
+              className="border rounded-full px-4 py-3 lg:pr-36 lg:w-96"
               required
             />
             <Button
               size="small"
               intent="primary"
               type="submit"
-              className="absolute top-1 right-1 text-sm text-white"
+              className="lg:absolute lg:top-1 lg:right-1 text-sm text-white"
             >
               Subscribe Now
             </Button>

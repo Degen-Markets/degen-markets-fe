@@ -1,5 +1,5 @@
 const FooterWaveDecoration = () => (
-  <div className="w-full overflow-hidden">
+  <div className="w-full hidden lg:block overflow-hidden">
     <svg
       className="w-full h-auto"
       viewBox="0 0 1440 163"

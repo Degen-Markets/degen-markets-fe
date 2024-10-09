@@ -1,5 +1,5 @@
 const ShadowDecoration = () => (
-  <div className="flex items-center justify-center w-full absolute -top-16">
+  <div className="hidden lg:flex items-center justify-center w-full absolute -top-16">
     <svg
       width="1190"
       height="150"
