@@ -5,6 +5,8 @@ import { useActionSolanaWalletAdapter } from "@dialectlabs/blinks/hooks/solana";
 import { Blink, useAction } from "@dialectlabs/blinks";
 import Skeleton from "@/app/pools/[id]/Skeleton";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { formatNumberToSignificantDigits } from "@/app/lib/utils/helpers";
+import { useMemo } from "react";
 
 const RPC_URL =
   "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b";
@@ -20,6 +22,12 @@ const BlinkLoader = ({ poolId, poolValue }: BlinkCardProps) => {
   const { adapter } = useActionSolanaWalletAdapter(RPC_URL);
   const { action } = useAction({ url: actionApiUrl, adapter });
 
+  const poolVolume = useMemo(() => {
+    return formatNumberToSignificantDigits(
+      Number(poolValue) / LAMPORTS_PER_SOL,
+    );
+  }, [poolValue]);
+
   if (!action) return <Skeleton />;
 
   return (
@@ -27,7 +35,7 @@ const BlinkLoader = ({ poolId, poolValue }: BlinkCardProps) => {
       <div className="p-2 border border-b-0 rounded-2xl rounded-b-none border-purple-light bg-black-medium z-10 relative top-5 flex justify-between items-center px-5 font-semibold">
         <h4 className="">Volume:</h4>
         <span className="hover:text-purple-light cursor-default transition-all ease-in duration-200">
-          {Number(poolValue) / LAMPORTS_PER_SOL} SOL
+          {poolVolume} SOL
         </span>
       </div>
       <Blink
