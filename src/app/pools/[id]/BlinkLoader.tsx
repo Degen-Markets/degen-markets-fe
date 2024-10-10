@@ -4,14 +4,16 @@ import "@dialectlabs/blinks/index.css";
 import { useActionSolanaWalletAdapter } from "@dialectlabs/blinks/hooks/solana";
 import { Blink, useAction } from "@dialectlabs/blinks";
 import Skeleton from "@/app/pools/[id]/Skeleton";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 const RPC_URL =
   "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b";
 
 interface BlinkCardProps {
   poolId: string;
+  poolValue: string;
 }
-const BlinkLoader = ({ poolId }: BlinkCardProps) => {
+const BlinkLoader = ({ poolId, poolValue }: BlinkCardProps) => {
   // will get redirected to https://actions.degenmarkets.com/pools/${poolId} because of actions.json
   const actionApiUrl = `https://degenmarkets.com/pools/${poolId}`;
 
@@ -21,11 +23,19 @@ const BlinkLoader = ({ poolId }: BlinkCardProps) => {
   if (!action) return <Skeleton />;
 
   return (
-    <Blink
-      action={action}
-      websiteText={new URL(actionApiUrl).hostname}
-      stylePreset="x-dark"
-    />
+    <>
+      <div className="p-2 border border-b-0 rounded-2xl rounded-b-none border-purple-light bg-black-medium z-10 relative top-5 flex justify-between items-center px-5 font-semibold">
+        <h4 className="">Volume:</h4>
+        <span className="hover:text-purple-light cursor-default transition-all ease-in duration-200">
+          {Number(poolValue) / LAMPORTS_PER_SOL} SOL
+        </span>
+      </div>
+      <Blink
+        action={action}
+        websiteText={new URL(actionApiUrl).hostname}
+        stylePreset="x-dark"
+      />
+    </>
   );
 };
 export default BlinkLoader;
