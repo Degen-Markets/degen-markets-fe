@@ -1,6 +1,6 @@
 import { getPools } from "@/app/api/pools";
-import Hero from "@/app/pools/Hero";
-import PoolsSection from "@/app/pools/PoolsSection";
+import Hero from "@/app/pools/_components/Hero";
+import PoolsSection from "@/app/pools/_components/PoolsSection";
 import Wrapper from "@/app/components/Wrapper";
 
 export const dynamic = "auto";

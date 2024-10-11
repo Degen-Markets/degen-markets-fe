@@ -1,13 +1,25 @@
 import { Section } from "@/app/components/Section";
+import { Button } from "@/app/components/Button/Button";
 
 const Hero = () => {
   return (
     <div className="relative bg-primary h-[320px] lg:h-[520px]">
       <Section className="text-center z-10 relative">
-        <h3 className="px-4 lg:px-[20%] text-base lg:text-2xl">
+        <h3 className="px-4 lg:px-[20%] text-base lg:text-xl">
           All the bets posted on X are displayed here. To create your own bets,
           visit our X account and interact with the pinned tweet.
         </h3>
+        <div className="flex items-center justify-center mt-3 lg:mt-6">
+          <Button
+            className="w-40"
+            size="small"
+            intent="outlineWhite"
+            as="a"
+            href="https://x.com/DEGEN_MARKETS/status/1842242804669431887"
+          >
+            Create Bet
+          </Button>
+        </div>
       </Section>
       <svg
         className="hidden lg:block w-full absolute -bottom-2 z-10"
