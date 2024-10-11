@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="text-center  lg:px-4 mt-10 bg-primary  bg-opacity-50 py-16 rounded-xl mb-10">
+    <section className="text-sm lg:text-lg text-center lg:px-4 mt-10 bg-primary  bg-opacity-50 py-8 lg:py-16 rounded-xl mb-10">
       <div className="p-2 items-center text-white" role="alert">
         <span className="text-left flex-auto">
           Earn points by entering pools{" "}

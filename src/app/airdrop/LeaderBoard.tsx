@@ -23,7 +23,7 @@ const LeaderBoard: FC<LeaderBoardProps> = ({ players }) => {
         <tbody>
           {players.map((player, index) => (
             <tr
-              className="border-b-4 border-b-main bg-steel-gray rounded-lg"
+              className="text-sm lg:text-base border-b-4 border-b-main bg-steel-gray rounded-lg"
               key={player.address}
             >
               <th className="px-2 lg:px-6 py-2 font-medium  whitespace-nowrap">
@@ -40,7 +40,7 @@ const LeaderBoard: FC<LeaderBoardProps> = ({ players }) => {
                     width={32}
                     height={32}
                   />
-                  <div className="text-lg font-semibold">
+                  <div className="text-sm lg:text-lg font-semibold">
                     {player.twitterUsername ? (
                       <Link
                         href={`https://x.com/${player.twitterUsername}`}

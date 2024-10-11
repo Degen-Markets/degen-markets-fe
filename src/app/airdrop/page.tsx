@@ -12,9 +12,9 @@ const AirdropPage = async () => {
   const topThreePlayers = [player1, player2, player3];
 
   return (
-    <Wrapper className="flex flex-col gap-16 ">
+    <Wrapper className="flex flex-col gap-10 lg:gap-16 ">
       <Hero />
-      <div className="flex flex-col gap-20 lg:px-[10%] ">
+      <div className="flex flex-col gap-10 lg:gap-20 lg:px-[10%] ">
         <TopThree players={topThreePlayers} />
         <LeaderBoard players={otherPlayers} />
       </div>

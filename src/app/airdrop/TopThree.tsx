@@ -51,7 +51,7 @@ const TopThree: FC<Props> = ({ players }) => {
   ];
 
   return (
-    <section className="grid grid-cols-3 gap-8">
+    <section className="grid grid-cols-3 gap-2 lg:gap-8">
       {reorderedPlayers.map((player, index) => {
         const isMiddlePlayer = index === 1;
         const rankClass = RankColors[index];
@@ -69,14 +69,13 @@ const TopThree: FC<Props> = ({ players }) => {
               <UserAvatar
                 src={player.twitterPfpUrl}
                 className={twMerge(
-                  "rounded-lg h-16 w-16 lg:w-20 lg:h-20 shadow-2xl",
+                  "rounded-lg lg:rounded-2xl h-10 w-10 lg:w-20 lg:h-20 shadow-xl lg:shadow-2xl",
                   rankClass,
                 )}
                 width={90}
                 height={90}
               />
-
-              <div className="text-lg font-semibold mb-3">
+              <div className="text-xs lg:text-lg font-semibold mb-4 lg:mb-3">
                 {player.twitterUsername ? (
                   <Link
                     href={`https://x.com/${player.twitterUsername}`}
@@ -90,16 +89,18 @@ const TopThree: FC<Props> = ({ players }) => {
               </div>
             </div>
             <GradientSVG />
-            <div className="flex flex-col gap-5 items-center bg-gradient-to-b from-steel-gray w-full h-24">
+            <div className="flex flex-col gap-5 items-center bg-gradient-to-b from-steel-gray w-full h-12 lg:h-24">
               <div
                 className={twMerge(
-                  "flex items-center justify-center w-9 h-9 rounded-lg p-2 -mt-5",
+                  "flex items-center justify-center w-6 h-6 lg:w-9 lg:h-9 rounded-md lg:rounded-lg p-1 lg:p-2 -mt-5",
                   backgroundColorClass,
                 )}
               >
                 <HiTrophy size={32} className="text-steel-gray" />
               </div>
-              <div>Earn {player.points} points</div>
+              <div className="text-xs lg:text-lg">
+                Earn <b>{player.points}</b> points
+              </div>
             </div>
           </div>
         );
