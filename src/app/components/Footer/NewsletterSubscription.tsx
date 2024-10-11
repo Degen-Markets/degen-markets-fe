@@ -62,7 +62,7 @@ const NewsletterSubscription = () => {
               size="small"
               intent="primary"
               type="submit"
-              className="lg:absolute lg:top-1 lg:right-1 text-sm text-white"
+              className="relative lg:absolute lg:top-1 lg:right-1 text-sm text-white"
             >
               Subscribe Now
             </Button>

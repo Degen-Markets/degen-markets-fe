@@ -1,10 +1,16 @@
 import Wrapper from "@/app/components/Wrapper";
 import LeaderBoard from "@/app/components/Landing/LeaderBoard";
 import Link from "next/link";
+import { getPlayers } from "@/app/api/players";
+import TopThree from "@/app/airdrop/TopThree";
 
 export const dynamic = "force-dynamic";
 
 const AirdropPage = async () => {
+  const { data: players } = await getPlayers();
+  const [player1, player2, player3, ...otherPlayers] = players;
+  const topThreePlayers = [player1, player2, player3];
+
   return (
     <Wrapper className="flex flex-col gap-16">
       <div className="bg-indigo-900 text-center py-4 lg:px-4 mt-20 ">
@@ -33,7 +39,8 @@ const AirdropPage = async () => {
           </svg>
         </div>
       </div>
-      <LeaderBoard />
+      <TopThree players={topThreePlayers} />
+      <LeaderBoard players={otherPlayers} />
     </Wrapper>
   );
 };

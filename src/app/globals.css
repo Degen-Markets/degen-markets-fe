@@ -321,7 +321,3 @@ input[type="number"] {
     1px -1px #fff,
     -1px 1px #fff;
 }
-
-.steps-40 {
-  animation: typewriter 2s steps(40) forwards;
-}
