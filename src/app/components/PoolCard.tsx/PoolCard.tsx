@@ -17,7 +17,7 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
         className,
       )}
     >
-      <div className="h-96 relative mb-4">
+      <div className="h-56 lg:h-96 relative mb-4">
         <Image
           src={pool.image}
           alt={pool.title} // Use pool.title for better accessibility
