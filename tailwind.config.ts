@@ -4,6 +4,9 @@ const colors = {
   primary: "#8F7CFF",
   "lavender-blue": "#A6B1D6",
   "steel-gray": "#212131",
+  gold: "#E4D493",
+  silver: "#D2AB6D",
+  bronze: "#DCDCDC",
   black: {
     medium: "#202B38",
     dark: "#1A222C",
