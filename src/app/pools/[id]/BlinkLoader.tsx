@@ -13,7 +13,7 @@ const RPC_URL =
 
 interface BlinkCardProps {
   poolId: string;
-  poolValue: string;
+  poolValue?: string;
 }
 const BlinkLoader = ({ poolId, poolValue }: BlinkCardProps) => {
   // will get redirected to https://actions.degenmarkets.com/pools/${poolId} because of actions.json
@@ -32,12 +32,15 @@ const BlinkLoader = ({ poolId, poolValue }: BlinkCardProps) => {
 
   return (
     <>
-      <div className="p-2 border border-b-0 rounded-2xl rounded-b-none border-purple-light bg-black-medium z-10 relative top-5 flex justify-between items-center px-5 font-semibold">
-        <h4 className="">Volume:</h4>
-        <span className="hover:text-purple-light cursor-default transition-all ease-in duration-200">
-          {poolVolume} SOL
-        </span>
-      </div>
+      {poolValue && (
+        <div className="p-2 border border-b-0 rounded-2xl rounded-b-none border-purple-light bg-black-medium z-10 relative top-5 flex justify-between items-center px-5 font-semibold">
+          <h4 className="">Volume:</h4>
+
+          <span className="hover:text-purple-light cursor-default transition-all ease-in duration-200">
+            {poolVolume} SOL
+          </span>
+        </div>
+      )}
       <Blink
         action={action}
         websiteText={new URL(actionApiUrl).hostname}

@@ -7,7 +7,7 @@ import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
 const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {
   const {
     data: { value },
-  } = await getPoolById(id);
+  } = id === "create" ? { data: { value: undefined } } : await getPoolById(id);
 
   return (
     <Wrapper className="flex justify-center">
