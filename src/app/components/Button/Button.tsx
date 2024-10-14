@@ -1,17 +1,11 @@
-import { FC, ElementType } from "react";
+import { FC } from "react";
 import Link from "next/link";
 import PixelArtLoader from "../PixelArtLoading";
 import { twMerge } from "tailwind-merge";
 import { ButtonProps } from "./type";
 import { buttonVariants } from "./constant";
 
-interface PolymorphicButtonProps extends ButtonProps {
-  as?: ElementType;
-  href?: string;
-}
-
-export const Button: FC<PolymorphicButtonProps> = ({
-  as: Component = "button",
+export const Button: FC<ButtonProps> = ({
   className,
   children,
   size,
@@ -22,28 +16,12 @@ export const Button: FC<PolymorphicButtonProps> = ({
   isProcessing,
   pendingText = "Pending...",
   processingText = "Processing...",
-  icon,
-  href,
+  href, // Add href prop to support links
   ...props
 }) => {
   const isIdle = !isProcessing && !isPending;
-
-  const isLink = Component === "a" && href;
-
-  const anchorProps = isLink ? { ...props } : {};
-
-  return isLink ? (
-    <Link
-      href={href}
-      passHref
-      className={twMerge(
-        buttonVariants({ size, intent }),
-        className,
-        customStyle,
-      )}
-      {...anchorProps}
-    >
-      {isIdle && icon && <span className="pr-2">{icon}</span>}
+  const buttonContent = (
+    <>
       {isIdle && children}
       {isPending && loader && (
         <PixelArtLoader text={pendingText} textSize="2xl" />
@@ -51,25 +29,32 @@ export const Button: FC<PolymorphicButtonProps> = ({
       {isProcessing && loader && (
         <PixelArtLoader text={processingText} textSize="2xl" />
       )}
+    </>
+  );
+
+  const mergedClasses = twMerge(
+    buttonVariants({ size, intent }),
+    className,
+    customStyle,
+  );
+
+  return href ? (
+    <Link href={href}>
+      <button
+        className={mergedClasses}
+        disabled={isProcessing || isPending}
+        {...props}
+      >
+        {buttonContent}
+      </button>
     </Link>
   ) : (
-    <Component
-      className={twMerge(
-        buttonVariants({ size, intent }),
-        className,
-        customStyle,
-      )}
+    <button
+      className={mergedClasses}
       disabled={isProcessing || isPending}
       {...props}
     >
-      {isIdle && icon && <span className="pr-2">{icon}</span>}
-      {isIdle && children}
-      {isPending && loader && (
-        <PixelArtLoader text={pendingText} textSize="2xl" />
-      )}
-      {isProcessing && loader && (
-        <PixelArtLoader text={processingText} textSize="2xl" />
-      )}
-    </Component>
+      {buttonContent}
+    </button>
   );
 };

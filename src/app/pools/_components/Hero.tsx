@@ -14,7 +14,6 @@ const Hero = () => {
             className="w-40"
             size="small"
             intent="outlineWhite"
-            as="a"
             href="https://x.com/DEGEN_MARKETS/status/1842242804669431887"
           >
             Create Bet

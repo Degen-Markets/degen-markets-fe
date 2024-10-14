@@ -58,7 +58,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           available blinks in the list. Simply browse through the current blinks
           to see all of them, or click the option to create a new blink
         </p>
-        <Button intent="outline" as="a" href="/pools">
+        <Button intent="outline" href="/pools">
           See more
         </Button>
       </div>
