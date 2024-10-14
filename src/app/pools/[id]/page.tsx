@@ -4,12 +4,16 @@ import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
 import { getPoolById } from "@/app/api/pools";
 import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
 
-const PoolPage = ({ params: { id } }: { params: { id: string } }) => {
+const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {
+  const {
+    data: { value },
+  } = id === "create" ? { data: { value: undefined } } : await getPoolById(id);
+
   return (
     <Wrapper className="flex justify-center">
-      <div className="w-full md:w-2/6 text-lg">
+      <div className="w-full md:w-3/6 lg:w-2/6 text-lg">
         <ShareOnTwitterBanner poolId={id} />
-        <BlinkLoader poolId={id} />
+        <BlinkLoader poolId={id} poolValue={value} />
       </div>
     </Wrapper>
   );
