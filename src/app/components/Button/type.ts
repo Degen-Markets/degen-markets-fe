@@ -12,5 +12,4 @@ export interface ButtonProps
   pendingText?: string;
   processingText?: string;
   icon?: ReactElement;
-  href?: string;
 }

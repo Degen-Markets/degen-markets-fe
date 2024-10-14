@@ -1,5 +1,4 @@
 import { FC } from "react";
-import Link from "next/link";
 import PixelArtLoader from "../PixelArtLoading";
 import { twMerge } from "tailwind-merge";
 import { ButtonProps } from "./type";
@@ -16,12 +15,20 @@ export const Button: FC<ButtonProps> = ({
   isProcessing,
   pendingText = "Pending...",
   processingText = "Processing...",
-  href, // Add href prop to support links
   ...props
 }) => {
   const isIdle = !isProcessing && !isPending;
-  const buttonContent = (
-    <>
+
+  return (
+    <button
+      className={twMerge(
+        buttonVariants({ size, intent }),
+        className,
+        customStyle,
+      )}
+      disabled={isProcessing || isPending}
+      {...props}
+    >
       {isIdle && children}
       {isPending && loader && (
         <PixelArtLoader text={pendingText} textSize="2xl" />
@@ -29,32 +36,6 @@ export const Button: FC<ButtonProps> = ({
       {isProcessing && loader && (
         <PixelArtLoader text={processingText} textSize="2xl" />
       )}
-    </>
-  );
-
-  const mergedClasses = twMerge(
-    buttonVariants({ size, intent }),
-    className,
-    customStyle,
-  );
-
-  return href ? (
-    <Link href={href}>
-      <button
-        className={mergedClasses}
-        disabled={isProcessing || isPending}
-        {...props}
-      >
-        {buttonContent}
-      </button>
-    </Link>
-  ) : (
-    <button
-      className={mergedClasses}
-      disabled={isProcessing || isPending}
-      {...props}
-    >
-      {buttonContent}
     </button>
   );
 };

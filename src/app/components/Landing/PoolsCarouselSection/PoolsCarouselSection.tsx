@@ -12,6 +12,7 @@ import {
   PrevButton,
   usePrevNextButtons,
 } from "@/app/components/Landing/PoolsCarouselSection/CarouselArrowButtons";
+import Link from "next/link";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
@@ -58,9 +59,9 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           available blinks in the list. Simply browse through the current blinks
           to see all of them, or click the option to create a new blink
         </p>
-        <Button intent="outline" href="/pools">
-          See more
-        </Button>
+        <Link href="/pools">
+          <Button intent="outline">See more</Button>
+        </Link>
       </div>
     </Section>
   );

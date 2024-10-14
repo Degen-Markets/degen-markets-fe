@@ -3,12 +3,13 @@ import DesktopViewTable from "./DesktopViewTable";
 import MobileViewCard from "./MobileViewCard";
 import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";
 import { Activity } from "./type";
+import { SectionHeadline } from "@/app/components/Section";
 
 const ActivityTable: React.FC = () => {
   const activities: Activity[] = [];
   return (
-    <main>
-      <h3 className="font-bold mb-4 text-3xl border-b pb-5">Activity</h3>
+    <section>
+      <SectionHeadline>Activity</SectionHeadline>
 
       {activities.length > 0 ? (
         <>
@@ -26,7 +27,7 @@ const ActivityTable: React.FC = () => {
           </p>
         </div>
       )}
-    </main>
+    </section>
   );
 };
 
