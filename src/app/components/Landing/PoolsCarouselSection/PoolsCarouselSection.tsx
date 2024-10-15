@@ -38,7 +38,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
     <Section className="overflow-hidden">
       <SectionHeadline>Pools</SectionHeadline>
       <div ref={emblaRef} className="mb-3 lg:mb-6">
-        <div className="flex gap-6 w-full">
+        <div className="flex gap-6">
           {pools.map((pool, index) => (
             <div
               className="flex-[0_0_100%] sm:flex-[0_0_calc(100%/2)] md:flex-[0_0_calc(100%/3.5)]"

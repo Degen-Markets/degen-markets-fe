@@ -8,7 +8,7 @@ type SectionProps = PropsWithChildren<{
 export const Section: FC<SectionProps> = ({ children, className }) => (
   <section
     className={twMerge(
-      "md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl py-10 lg:py-20 last:pb-0 last:lg:pb-0",
+      "md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl px-4 lg:px-12 py-10 lg:py-20 last:pb-0 last:lg:pb-0",
       className,
     )}
   >

@@ -42,6 +42,63 @@ const GradientSVG = () => (
   </svg>
 );
 
+const PlayerCard: FC<{ player: Player; index: number }> = ({
+  player,
+  index,
+}) => {
+  const isMiddlePlayer = index === 1;
+  const rankClass = RankColors[index];
+  const backgroundColorClass = BackgroundColors[index];
+
+  return (
+    <div
+      key={player.address}
+      className={twMerge(
+        "flex flex-col items-center",
+        isMiddlePlayer && "-mt-10",
+      )}
+    >
+      <div className="flex flex-col items-center gap-3">
+        <UserAvatar
+          src={player.twitterPfpUrl}
+          className={twMerge(
+            "rounded-lg lg:rounded-2xl h-10 w-10 lg:w-20 lg:h-20 shadow-2xl",
+            rankClass,
+          )}
+          width={90}
+          height={90}
+        />
+        <div className="text-xs lg:text-lg font-semibold mb-4 lg:mb-3">
+          {player.twitterUsername ? (
+            <Link
+              href={`https://x.com/${player.twitterUsername}`}
+              target="_blank"
+            >
+              @{player.twitterUsername}
+            </Link>
+          ) : (
+            getDisplayNameForAddress(player.address)
+          )}
+        </div>
+      </div>
+      <GradientSVG />
+      <div className="flex flex-col gap-5 items-center bg-gradient-to-b from-steel-gray w-full h-12 lg:h-24">
+        <div
+          className={twMerge(
+            "flex items-center justify-center w-6 h-6 lg:w-9 lg:h-9 rounded-md lg:rounded-lg p-1 lg:p-2 -mt-5",
+            backgroundColorClass,
+          )}
+        >
+          <HiTrophy size={32} className="text-steel-gray" />
+        </div>
+        <div className="text-xs lg:text-lg">
+          Earn <b>{player.points}</b> points
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const TopThree: FC<Props> = ({ players }) => {
   const topThreePlayers = players.slice(0, 3);
   const reorderedPlayers = [
@@ -52,59 +109,9 @@ const TopThree: FC<Props> = ({ players }) => {
 
   return (
     <section className="grid grid-cols-3 gap-2 lg:gap-8">
-      {reorderedPlayers.map((player, index) => {
-        const isMiddlePlayer = index === 1;
-        const rankClass = RankColors[index];
-        const backgroundColorClass = BackgroundColors[index];
-
-        return (
-          <div
-            key={player.address}
-            className={twMerge(
-              "flex flex-col items-center",
-              isMiddlePlayer && "-mt-10",
-            )}
-          >
-            <div className="flex flex-col items-center gap-3">
-              <UserAvatar
-                src={player.twitterPfpUrl}
-                className={twMerge(
-                  "rounded-lg lg:rounded-2xl h-10 w-10 lg:w-20 lg:h-20 shadow-xl lg:shadow-2xl",
-                  rankClass,
-                )}
-                width={90}
-                height={90}
-              />
-              <div className="text-xs lg:text-lg font-semibold mb-4 lg:mb-3">
-                {player.twitterUsername ? (
-                  <Link
-                    href={`https://x.com/${player.twitterUsername}`}
-                    target="_blank"
-                  >
-                    @{player.twitterUsername}
-                  </Link>
-                ) : (
-                  getDisplayNameForAddress(player.address)
-                )}
-              </div>
-            </div>
-            <GradientSVG />
-            <div className="flex flex-col gap-5 items-center bg-gradient-to-b from-steel-gray w-full h-12 lg:h-24">
-              <div
-                className={twMerge(
-                  "flex items-center justify-center w-6 h-6 lg:w-9 lg:h-9 rounded-md lg:rounded-lg p-1 lg:p-2 -mt-5",
-                  backgroundColorClass,
-                )}
-              >
-                <HiTrophy size={32} className="text-steel-gray" />
-              </div>
-              <div className="text-xs lg:text-lg">
-                Earn <b>{player.points}</b> points
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {reorderedPlayers.map((player, index) => (
+        <PlayerCard key={player.address} player={player} index={index} />
+      ))}
     </section>
   );
 };
