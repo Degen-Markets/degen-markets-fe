@@ -6,7 +6,7 @@ import ShadowDecoration from "@/app/components/Footer/ShadowDecoration";
 
 function FooterBottom() {
   return (
-    <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-4 lg:pt-20  pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500 ">
+    <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-6 lg:mt-0 lg:pt-20  pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500 border-t lg:border-0">
       <div className="flex justify-between items-center w-full space-x-4">
         <div>©2024 degensmarkets, All rights reserved</div>
         <DgmLogoIcon width={80} height={80} />
@@ -25,7 +25,7 @@ function FooterBottom() {
 
 const Footer = () => {
   return (
-    <footer className="bg-white w-full text-main text-base mt-10 lg:mt-20">
+    <footer className="bg-white w-full text-main text-base mt-10 lg:mt-20 pt-8 lg:pt-0">
       <FooterWaveDecoration />
       <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2x flex gap-8 bg-white w-full relative">
         <NewsletterSubscription />
