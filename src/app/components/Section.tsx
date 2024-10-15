@@ -40,7 +40,7 @@ export const SectionHeadline: FC<SectionHeadlineProps> = ({
         >
           <path
             d="M1 3.26041C27.8714 -1.06193 67.0473 2.37336 100 1.15395M70.7714 8C77.1357 7.04605 80.4357 8 87.0357 8"
-            stroke="currentColor"
+            stroke="#FFDEAA"
             strokeWidth="2"
             strokeLinecap="round"
           />
