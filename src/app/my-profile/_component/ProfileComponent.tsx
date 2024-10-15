@@ -17,7 +17,7 @@ const ProfileComponent: FC = () => {
   }
 
   return (
-    <div className="pt-14">
+    <div className="pt-8 lg:pt-14">
       <Hero />
       <UserProfileInfo />
       <ActivityTable />

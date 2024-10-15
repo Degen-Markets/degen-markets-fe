@@ -22,7 +22,7 @@ const UserProfileInfo: React.FC = () => {
   const twitterUsername = userProfile?.twitterUsername || "Degen";
 
   return (
-    <div className="relative flex flex-col gap-y-3 lg:flex-row justify-between bg-steel-gray rounded-xl p-4 lg:p-8 -mt-16 mb-20">
+    <div className="relative flex flex-col gap-y-3 lg:flex-row justify-between bg-steel-gray rounded-xl p-4 lg:p-8 -mt-16 mb-10 lg:mb-20">
       <div className="flex gap-16 mt-16 lg:mt-0">
         {stats.map(({ title, value }, index) => (
           <ProfileStat key={index} title={title} value={value} />
