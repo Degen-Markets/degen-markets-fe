@@ -32,7 +32,7 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
       </p>
       <div className="flex gap-4 justify-end mt-6">
         <Button size="small" intent="primary">
-          Bet Now
+          {pool.isPaused ? "Claim Win" : "Bet Now"}
         </Button>
         <Button size="small" intent="outlineWhite">
           Share
