@@ -5,23 +5,19 @@ export const buttonVariants = cva(
   {
     variants: {
       intent: {
-        main: "bg-black-medium hover:bg-black-dark active:bg-black-dark uppercase font-bold",
+        main: "bg-primary hover:bg-primary-light active:bg-primary-light text-main",
         primary:
-          "bg-primary hover:bg-purple-600 active:bg-purple-600 text-main",
+          "bg-primary hover:bg-primary-light active:bg-primary-light text-main",
         outlineWhite:
           "bg-transparent border-2 border-white hover:bg-white active:bg-white hover:text-main active:text-main",
         outline:
           "bg-transparent border-2 border-primary hover:bg-primary active:bg-primary hover:text-main active:text-main text-primary active:text-main",
-        secondary: "bg-blue-dark hover:bg-[#131921] active:bg-[#131921]",
+        secondary: "bg-secondary hover:bg-opacity-80 active:bg-opacity-80",
         danger:
-          "bg-red-light text-black-medium hover:bg-red-main active:bg-red-main",
+          "bg-danger text-main hover:bg-danger-light active:bg-danger-light",
         success:
-          "bg-green-light text-black-medium hover:bg-green-main active:bg-green-main",
+          "bg-success text-main hover:bg-bg-success-light active:bg-success-light",
         transparent: "hover:bg-neutral-950/10 active:bg-neutral-950/10",
-        gradient:
-          "bg-gradient-to-r from-pink-light to-yellow-light hover:from-yellow-light hover:to-pink-light active:from-yellow-light active:to-pink-light",
-        wallet:
-          "w-full lg:w-56 font-semibold rounded-full text-white bg-gradient-to-r from-pink-light via-vivid-medium to-yellow-light",
       },
       size: {
         regular: "text-lg md:text-xl",

@@ -15,7 +15,7 @@ const TableColumn: React.FC<TableColumnProps> = ({
   return (
     <div
       className={twMerge(
-        "p-4 text-lg font-bold border-black-main border-x  border-r-0 center-all",
+        "p-4 text-lg font-bold border-main border-x  border-r-0 center-all",
         isLast && "border-r-0",
         isFirst && "border-l-0",
       )}
