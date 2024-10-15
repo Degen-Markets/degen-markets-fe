@@ -3,6 +3,7 @@ import { Button } from "@/app/components/Button/Button";
 import { Pool } from "@/app/lib/utils/types";
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
+import Link from "next/link";
 
 interface PoolCardProps {
   pool: Pool;
@@ -10,6 +11,7 @@ interface PoolCardProps {
 }
 
 const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
+  const link = `/pools/${pool.address}`;
   return (
     <div
       className={twMerge(
@@ -31,9 +33,11 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
         {pool.description}
       </p>
       <div className="flex gap-4 justify-end mt-6">
-        <Button size="small" intent="primary">
-          {pool.isPaused ? "Claim Win" : "Bet Now"}
-        </Button>
+        <Link href={link}>
+          <Button size="small" intent="primary">
+            {pool.isPaused ? "Claim Win" : "Bet Now"}
+          </Button>
+        </Link>
         <Button size="small" intent="outlineWhite">
           Share
         </Button>
