@@ -1,18 +1,25 @@
 "use client";
-import React, { useEffect } from "react";
+import { FC, useEffect } from "react";
 import UserProfileInfo from "./UserProfileInfo";
-import ProfileStatsGrid from "./ProfileStatsGrid";
 import ActivityTable from "./ActivityTable";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import { useToast } from "@/app/components/Toast/ToastProvider";
+import Hero from "@/app/my-profile/_component/Hero";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-const ProfileComponent: React.FC = () => {
+const ProfileComponent: FC = () => {
   useProfileNotFoundHandler();
+
+  const { connected } = useWallet();
+
+  if (!connected) {
+    return null;
+  }
 
   return (
     <div className="pt-14">
+      <Hero />
       <UserProfileInfo />
-      <ProfileStatsGrid />
       <ActivityTable />
     </div>
   );

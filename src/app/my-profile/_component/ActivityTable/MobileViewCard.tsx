@@ -39,7 +39,7 @@ const MobileViewCard: React.FC<ActivitiesProps> = ({ activities }) => {
           </div>
           <div className="flex justify-between items-center text-lg">
             <div className="text-white">Value: {activity.value}</div>
-            <div className="text-green-400">Payout: {activity.payout}</div>
+            <div className="text-success">Payout: {activity.payout}</div>
           </div>
         </div>
       ))}

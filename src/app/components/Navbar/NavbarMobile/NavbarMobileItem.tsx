@@ -12,7 +12,7 @@ const NavbarMobileItem: FC<{
   const handleClick = () => setNav(false);
 
   return (
-    <li className="w-full cursor-not-allowed relative text-black-medium">
+    <li className="w-full cursor-not-allowed relative text-white">
       {typeof route.route === "string" ? (
         <Link href={route.route} onClick={handleClick}>
           <div className="flex items-center space-x-2 px-3 py-2">
@@ -50,7 +50,7 @@ const NavbarMobileItem: FC<{
                 : Object.entries(route.route).map(([key, value]) => (
                     <li
                       key={key}
-                      className="hover:bg-gray-200 hover:text-black-medium rounded-md w-full text-center"
+                      className="hover:bg-gray-200 hover:text-main rounded-md w-full text-center"
                     >
                       <Link href={value}>
                         <div className="block px-4 py-2 uppercase">{key}</div>

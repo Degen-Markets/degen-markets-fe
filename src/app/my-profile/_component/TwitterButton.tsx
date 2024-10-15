@@ -29,21 +29,22 @@ const TwitterButton = () => {
     }
   }, [isSignatureRequired]);
 
+  if (userProfile?.twitterUsername) {
+    return null;
+  }
+
   return (
     <>
       <Button
-        className={twMerge(
-          "bg-black-medium bg-opacity-50 border flex items-center  justify-center cursor-pointer !rounded !px-2",
-          isDisabled && "cursor-not-allowed",
-        )}
+        className={twMerge(isDisabled && "cursor-not-allowed")}
         size={"small"}
+        intent="secondary"
         onClick={connectTwitter}
         disabled={isDisabled}
+        icon={<FaSquareXTwitter size={24} />}
       >
-        <FaSquareXTwitter size={25} className="mr-2" />
-        <p>{isSignatureRequired ? "Sign Msg" : buttonText}</p>
+        {isSignatureRequired ? "Sign Msg" : buttonText}
       </Button>
-
       {isSignatureRequired && (
         <SignatureDialog open={open} setOpen={setOpen} saveUser={saveUser} />
       )}

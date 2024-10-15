@@ -3,12 +3,13 @@ import DesktopViewTable from "./DesktopViewTable";
 import MobileViewCard from "./MobileViewCard";
 import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";
 import { Activity } from "./type";
+import { SectionHeadline } from "@/app/components/Section";
 
 const ActivityTable: React.FC = () => {
   const activities: Activity[] = [];
   return (
-    <main>
-      <h3 className="font-bold mb-4 text-3xl border-b pb-5">Activity</h3>
+    <section>
+      <SectionHeadline>Activity</SectionHeadline>
 
       {activities.length > 0 ? (
         <>
@@ -16,17 +17,17 @@ const ActivityTable: React.FC = () => {
           <MobileViewCard activities={activities} />
         </>
       ) : (
-        <div className="w-full flex flex-col items-center justify-center h-96">
+        <div className="w-full flex flex-col items-center justify-center h-56">
           <LeaderboardIcon />
-          <h3 className="text-center font-bold text-2xl text-gray-400">
+          <h3 className="text-center text-xl text-secondary">
             No recent activities.
           </h3>
-          <p className="text-center text-base">
+          <p className="text-sm text-center">
             Participate in markets to see your activity here!
           </p>
         </div>
       )}
-    </main>
+    </section>
   );
 };
 

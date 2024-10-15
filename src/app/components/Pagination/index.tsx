@@ -70,9 +70,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <button
           key={index}
           className={`p-1 px-4 rounded-lg ${
-            page === currentPage
-              ? "bg-purple-light"
-              : "bg-blue-light bg-opacity-70"
+            page === currentPage ? "bg-primary" : "bg-primary bg-opacity-70"
           }`}
           onClick={() => handlePageChange(page as number)}
         >

@@ -1,39 +1,23 @@
 import Wrapper from "@/app/components/Wrapper";
-import LeaderBoard from "@/app/components/Landing/LeaderBoard";
-import Link from "next/link";
+import LeaderBoard from "@/app/airdrop/LeaderBoard";
+import { getPlayers } from "@/app/api/players";
+import TopThree from "@/app/airdrop/TopThree";
+import Hero from "@/app/airdrop/Hero";
 
 export const dynamic = "force-dynamic";
 
 const AirdropPage = async () => {
+  const { data: players } = await getPlayers();
+  const [player1, player2, player3, ...otherPlayers] = players;
+  const topThreePlayers = [player1, player2, player3];
+
   return (
-    <Wrapper className="flex flex-col gap-16">
-      <div className="bg-indigo-900 text-center py-4 lg:px-4 mt-20 ">
-        <div
-          className="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
-          role="alert"
-        >
-          <span className="font-semibold mr-2 text-left flex-auto">
-            {" "}
-            Earn points by entering pools{" "}
-            <Link href="/" className="text-purple-light">
-              here
-            </Link>
-            , by connecting your X/Twitter account{" "}
-            <Link href="/my-profile" className="text-purple-light">
-              here
-            </Link>{" "}
-            and sharing our pools on X/Twitter.
-          </span>
-          <svg
-            className="fill-current opacity-75 h-4 w-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
-          </svg>
-        </div>
+    <Wrapper className="flex flex-col gap-10 lg:gap-16 ">
+      <Hero />
+      <div className="flex flex-col gap-10 lg:gap-20 lg:px-[10%] ">
+        <TopThree players={topThreePlayers} />
+        <LeaderBoard players={otherPlayers} />
       </div>
-      <LeaderBoard />
     </Wrapper>
   );
 };

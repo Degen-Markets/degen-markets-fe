@@ -18,7 +18,7 @@ const NavbarMobileSubItems: React.FC<NavbarMobileSubItemsProps> = ({
   return (
     <li
       className={twMerge(
-        "hover:bg-gray-200 hover:text-black-medium rounded-md w-full text-center",
+        "hover:bg-gray-200 hover:text-main rounded-md w-full text-center",
       )}
     >
       <div

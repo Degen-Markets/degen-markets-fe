@@ -5,10 +5,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useToast } from "@/app/components/Toast/ToastProvider";
 import { DialogType } from "@/app/types/dialog";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
-import {
-  getTwitterLoginLink,
-  saveTwitterProfile,
-} from "@/app/lib/utils/api/twitter";
+import { getTwitterLoginLink, saveTwitterProfile } from "@/app/api/twitter";
 
 const useTwitterAuthFlow = () => {
   const wallet = useWallet();

@@ -12,12 +12,12 @@ export const NavbarMobile: FC<{
 }> = ({ nav, setNav }) => {
   const wallet = useWallet();
   return (
-    <aside className="top-0 left-0 right-0 bottom-0fixed">
+    <aside className="top-0 left-0 right-0 bottom-0 fixed ">
       <div
         onClick={() => setNav(!nav)}
         className="absolute inset-0 bottom-0 left-0 right-0 top-0 h-full w-full bg-black bg-opacity-70 backdrop-blur-sm transition-opacity"
       ></div>
-      <div className="fixed bottom-0 right-0 h-full w-[85%] bg-white p-4 ">
+      <div className="fixed bottom-0 right-0 h-full w-[85%] bg-main p-4 ">
         <div className="flex flex-col h-full ">
           <ul className="mt-20">
             {NavigationRoutes.header.navbar.map((route) => {
@@ -38,7 +38,7 @@ export const NavbarMobile: FC<{
             <Link
               href="https://x.com/DEGEN_MARKETS"
               target="_blank"
-              className="text-black-medium flex gap-2"
+              className="text-main flex gap-2"
             >
               <FaXTwitter className="text-lg" /> @DEGEN_MARKETS
             </Link>

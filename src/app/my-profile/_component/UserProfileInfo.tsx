@@ -1,54 +1,45 @@
 import React from "react";
-import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
+import { formatNumberToSignificantDigits } from "@/app/lib/utils/helpers";
 import TwitterButton from "@/app/my-profile/_component/TwitterButton";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
-import Image from "next/image";
-import { twMerge } from "tailwind-merge";
-import PositionIcon from "@/app/components/Icons/PositionIcon";
+import ProfileStat from "@/app/my-profile/_component/ProfileStat";
+import ProfileImage from "@/app/my-profile/_component/ProfileImage";
 
 const UserProfileInfo: React.FC = () => {
   const { userProfile } = useUserProfileContext();
-  const wallet = useWallet();
-  const address = wallet.publicKey?.toBase58();
+
+  const stats = [
+    {
+      title: "Points Earned",
+      value: `${formatNumberToSignificantDigits(userProfile?.points || 0)} Pts`,
+    },
+    { title: "Profit/Loss", value: "$0" },
+    { title: "Total Volume", value: "$0" },
+  ];
+
+  const profileImage =
+    userProfile?.twitterPfpUrl || "/user-avatars/default.jpg";
+  const twitterUsername = userProfile?.twitterUsername || "Degen";
 
   return (
-    <div className="flex justify-between items-start mb-20 flex-col md:flex-row space-y-5 md:space-y-0 ">
-      <div className="flex items-center md:space-x-6 flex-col md:flex-row justify-center w-full md:w-auto space-y-5">
-        <div className="relative">
-          <Image
-            src={userProfile?.twitterPfpUrl || "/user-avatars/default.jpg"}
-            alt="Profile"
-            width={150}
-            height={150}
-            className="rounded-md border shadow"
-          />
-          <div
-            className={twMerge(
-              "absolute",
-              1 <= 3 ? "-top-10 -right-10" : "-top-5 -right-5",
-            )}
-          >
-            <PositionIcon width={100} height={100} order={1} />
-          </div>
-        </div>
-        <div className="space-y-6 font-bold">
-          <h2 className="text-xl text-center md:text-left md:text-3xl">
-            {userProfile?.twitterUsername
-              ? `@${userProfile.twitterUsername}`
-              : "@Degen"}
-          </h2>
-          <div className="flex items-center space-x-4">
-            <p className="text-gray-400 rounded-full bg-black-light py-2 px-4 text-center text-base">
-              {address ? getDisplayNameForAddress(address) : "0XXX...XXX"}
-            </p>
-            <p className="text-gray-400 text-base">Joined Oct 2024</p>
-          </div>
+    <div className="relative flex flex-col gap-y-3 lg:flex-row justify-between bg-steel-gray rounded-xl p-4 lg:p-8 -mt-16 mb-20">
+      <div className="flex gap-16 mt-16 lg:mt-0">
+        {stats.map(({ title, value }, index) => (
+          <ProfileStat key={index} title={title} value={value} />
+        ))}
+      </div>
+
+      <div className="flex w-28 h-auto">
+        <div className="absolute -top-8 lg:-top-16 left-[50%] transform -translate-x-[50%] text-center space-y-1">
+          <ProfileImage imageUrl={profileImage} className="w-20 lg:w-40" />
+          <h3 className="text-sm font-semibold">@{twitterUsername}</h3>
         </div>
       </div>
-      <div className="flex  items-center w-full md:w-auto md:flex-col justify-between md:items-start md:space-y-14">
+      <div className="flex justify-center items-center">
         <TwitterButton />
-        <p className="text-gray-400 font-bold">{`@${userProfile?.twitterUsername || "Degen"}`}</p>
+        {userProfile?.twitterUsername && (
+          <p className="text-gray-400 font-bold">@{twitterUsername}</p>
+        )}
       </div>
     </div>
   );

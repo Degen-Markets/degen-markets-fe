@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Wrapper from "@/app/components/Wrapper";
 import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
-import { getPoolById } from "@/app/lib/utils/api/pools";
+import { getPoolById } from "@/app/api/pools";
 import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
 
 const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {
@@ -11,7 +11,7 @@ const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {
 
   return (
     <Wrapper className="flex justify-center">
-      <div className="w-full md:w-3/6 lg:w-2/6 text-lg">
+      <div className="w-full md:w-3/6 lg:w-2/6 text-lg mt-4 lg:mt-8">
         <ShareOnTwitterBanner poolId={id} />
         <BlinkLoader poolId={id} poolValue={value} />
       </div>

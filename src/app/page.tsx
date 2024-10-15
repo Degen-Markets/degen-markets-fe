@@ -1,17 +1,17 @@
-import { getPools } from "@/app/lib/utils/api/pools";
+import { getPools } from "@/app/api/pools";
 import Wrapper from "@/app/components/Wrapper";
 import HeroSection from "@/app/components/Landing/HeroSection";
-import Pools from "@/app/components/Landing";
+import PoolsCarouselSection from "@/app/components/Landing/PoolsCarouselSection/PoolsCarouselSection";
 
 export const dynamic = "force-dynamic";
 
 const Home = async () => {
   const { data: pools } = await getPools();
   return (
-    <Wrapper className="flex flex-col gap-16">
+    <>
       <HeroSection />
-      <Pools pools={pools} />
-    </Wrapper>
+      <PoolsCarouselSection pools={pools} />
+    </>
   );
 };
 export default Home;

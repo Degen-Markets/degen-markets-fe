@@ -15,8 +15,8 @@ const ActivityRow: React.FC<ActivityRowProps> = ({
   payout,
   imageUrl,
 }) => (
-  <tr className="border-t border-gray-800 font-semibold">
-    <td className="py-4">
+  <tr className="text-sm lg:text-base border-b-4 border-b-main bg-steel-gray rounded-lg">
+    <td className="px-2 lg:px-6 py-2">
       <div className="flex items-center space-x-2">
         <Image
           src={imageUrl}
