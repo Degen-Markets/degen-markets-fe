@@ -24,7 +24,7 @@ const HeroSection = () => (
         </Link>
       </div>
       <div className="hidden lg:block relative w-[40%]">
-        <div className="absolute top-5 -right-16">
+        <div className="absolute top-5 right-0">
           <DotLottieReact src="/animations/hero-shape.lottie" loop autoplay />
         </div>
         <div className="absolute">
