@@ -2,10 +2,12 @@ import Link from "next/link";
 import DgmLogoIcon from "@/app/components/Icons/DgmLogoIcon";
 
 function FooterBottom() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-6 lg:mt-0 lg:pt-10  pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500 sm:border-t lg:border-0">
+    <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-6 lg:mt-0 lg:pt-10 pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500 sm:border-t lg:border-0">
       <div className="flex justify-between items-center w-full space-x-4">
-        <div>©2024 degensmarkets, All rights reserved</div>
+        <div>©{currentYear} degensmarkets, All rights reserved</div>
         <DgmLogoIcon width={80} height={80} />
         <div className="flex space-x-2">
           <Link href="/" className="text-gray-500 hover:text-main">
