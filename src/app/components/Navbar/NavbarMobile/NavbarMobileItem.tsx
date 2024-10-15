@@ -12,7 +12,7 @@ const NavbarMobileItem: FC<{
   const handleClick = () => setNav(false);
 
   return (
-    <li className="w-full cursor-not-allowed relative text-black-medium">
+    <li className="w-full cursor-not-allowed relative text-white">
       {typeof route.route === "string" ? (
         <Link href={route.route} onClick={handleClick}>
           <div className="flex items-center space-x-2 px-3 py-2">

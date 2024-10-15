@@ -28,7 +28,7 @@ const Navbar: React.FC<{
         className="cursor-pointer z-10 md:hidden ml-auto"
       >
         {nav ? (
-          <IoClose size={30} className="text-black-medium" />
+          <IoClose size={30} className="text-white" />
         ) : (
           <IoMenu size={30} />
         )}
