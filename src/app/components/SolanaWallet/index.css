@@ -11,3 +11,7 @@
 .wallet-adapter-button-trigger:not(:disabled):hover {
   @apply bg-primary-light;
 }
+
+.wallet-adapter-button-start-icon {
+  opacity: 0;
+}
