@@ -18,11 +18,7 @@ const HeroSection = () => (
           Predict Now to Claim YOUR Share of the $DGM AirDrop
         </p>
         <Link href="/bets">
-          <Button
-            intent="primary"
-            size="small"
-            icon={<HiMiniArrowTrendingUp size={24} />}
-          >
+          <Button intent="primary" icon={<HiMiniArrowTrendingUp size={24} />}>
             Predict now
           </Button>
         </Link>

@@ -21,7 +21,7 @@ export const buttonVariants = cva(
       },
       size: {
         regular: "text-lg md:text-xl",
-        small: "text-md md:text-lg",
+        small: "text-md md:text-lg py-1",
       },
     },
     defaultVariants: {
