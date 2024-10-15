@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 .blink.x-dark {
-  --blink-bg-primary: #202b38;
-  --blink-button: #ab9ff1;
+  --blink-bg-primary: #212131;
+  --blink-button: #8f7cff;
   --blink-button-disabled: #2e3a47;
-  --blink-button-hover: #8e68e5;
-  --blink-button-success: #00ae661a;
-  --blink-icon-error: #ff6565;
+  --blink-button-hover: #a596ff;
+  --blink-button-success: #3fda8d;
+  --blink-icon-error: #ff5c5c;
   --blink-icon-error-hover: #ff7a7a;
   --blink-icon-primary: #6e767d;
   --blink-icon-primary-hover: #949ca4;
@@ -19,12 +19,12 @@
   --blink-input-stroke-disabled: #2f3336;
   --blink-input-stroke-error: #ff6565;
   --blink-input-stroke-hover: #6e767d;
-  --blink-input-stroke-selected: #8e68e5;
+  --blink-input-stroke-selected: #8f7cff;
   --blink-stroke-error: #ff6565;
   --blink-stroke-primary: #ab9ff1;
   --blink-stroke-secondary: #3d4144;
   --blink-stroke-warning: #ffb545;
-  --blink-text-brand: #ab9ff1;
+  --blink-text-brand: #8f7cff;
   --blink-text-button: #202b38;
   --blink-text-button-disabled: #768088;
   --blink-text-button-success: #22c55e;
