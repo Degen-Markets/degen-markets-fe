@@ -29,6 +29,10 @@ const TwitterButton = () => {
     }
   }, [isSignatureRequired]);
 
+  if (userProfile?.twitterUsername) {
+    return null;
+  }
+
   return (
     <>
       <Button
