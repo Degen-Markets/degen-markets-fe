@@ -59,7 +59,7 @@ const NewsletterSubscription = () => {
               required
             />
             <Button
-              size="small"
+              size="regular"
               intent="primary"
               type="submit"
               className="relative lg:absolute lg:top-1 lg:right-1 text-sm text-white"

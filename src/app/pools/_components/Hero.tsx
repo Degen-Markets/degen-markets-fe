@@ -12,7 +12,7 @@ const Hero = () => {
         </h3>
         <div className="flex items-center justify-center mt-3 lg:mt-6">
           <Link href="https://x.com/DEGEN_MARKETS/status/1842242804669431887">
-            <Button className="w-40" size="small" intent="outlineWhite">
+            <Button className="w-40" size="small" intent="secondary">
               Create Bet
             </Button>
           </Link>

@@ -47,7 +47,10 @@ const UserProfileInfo: React.FC = () => {
       </div>
       <div className="flex justify-center">
         <TwitterButton />
-        <p className="text-gray-400 font-bold">{`@${userProfile?.twitterUsername || ""}`}</p>
+        <p className="text-gray-400 font-bold">
+          {userProfile?.twitterUsername !== undefined ??
+            `@${userProfile?.twitterUsername}`}
+        </p>
       </div>
     </div>
   );

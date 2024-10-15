@@ -17,12 +17,12 @@ const ActivityTable: React.FC = () => {
           <MobileViewCard activities={activities} />
         </>
       ) : (
-        <div className="w-full flex flex-col items-center justify-center h-96">
+        <div className="w-full flex flex-col items-center justify-center h-56">
           <LeaderboardIcon />
-          <h3 className="text-center font-bold text-2xl text-gray-400">
+          <h3 className="text-center text-xl text-secondary">
             No recent activities.
           </h3>
-          <p className="text-center text-base">
+          <p className="text-sm text-center">
             Participate in markets to see your activity here!
           </p>
         </div>

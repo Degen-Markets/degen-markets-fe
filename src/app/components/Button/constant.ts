@@ -12,7 +12,8 @@ export const buttonVariants = cva(
           "bg-transparent border-2 border-white hover:bg-white active:bg-white hover:text-main active:text-main",
         outline:
           "bg-transparent border-2 border-primary hover:bg-primary active:bg-primary hover:text-main active:text-main text-primary active:text-main",
-        secondary: "bg-secondary hover:bg-opacity-80 active:bg-opacity-80",
+        secondary:
+          "bg-secondary hover:bg-opacity-80 active:bg-opacity-80 text-main",
         danger:
           "bg-danger text-main hover:bg-danger-light active:bg-danger-light",
         success:
