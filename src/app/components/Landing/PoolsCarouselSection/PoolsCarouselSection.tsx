@@ -13,6 +13,7 @@ import {
   usePrevNextButtons,
 } from "@/app/components/Landing/PoolsCarouselSection/CarouselArrowButtons";
 import Link from "next/link";
+import CreateBetButton from "../../Button/CreateBetButton";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
@@ -37,6 +38,11 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
   return (
     <Section className="overflow-hidden">
       <SectionHeadline>Pools</SectionHeadline>
+      <CreateBetButton
+        intent="outlineWhite"
+        size="small"
+        className="flex justify-end mb-5"
+      />
       <div ref={emblaRef} className="mb-3 lg:mb-6">
         <div className="flex gap-6">
           {pools.map((pool, index) => (
