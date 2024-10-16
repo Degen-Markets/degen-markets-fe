@@ -40,7 +40,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
       <div className="flex justify-between items-center w-full">
         <SectionHeadline>Pools</SectionHeadline>
         <CreateBetButton
-          intent="outlineWhite"
+          intent="secondary"
           size="small"
           className="flex justify-end mb-12"
         />
