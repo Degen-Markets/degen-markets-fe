@@ -37,12 +37,14 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
 
   return (
     <Section className="overflow-hidden">
-      <SectionHeadline>Pools</SectionHeadline>
-      <CreateBetButton
-        intent="outlineWhite"
-        size="small"
-        className="flex justify-end mb-5"
-      />
+      <div className="flex justify-between items-center w-full">
+        <SectionHeadline>Pools</SectionHeadline>
+        <CreateBetButton
+          intent="outlineWhite"
+          size="small"
+          className="flex justify-end mb-12"
+        />
+      </div>
       <div ref={emblaRef} className="mb-3 lg:mb-6">
         <div className="flex gap-6">
           {pools.map((pool, index) => (
