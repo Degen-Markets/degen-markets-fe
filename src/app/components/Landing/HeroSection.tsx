@@ -17,11 +17,21 @@ const HeroSection = () => (
           Make Predictions on Events Directly on Twitter via Solana Blinks.
           Predict Now to Claim YOUR Share of the $DGM AirDrop
         </p>
-        <Link href="/pools">
-          <Button intent="primary" icon={<HiMiniArrowTrendingUp size={24} />}>
-            Predict now
-          </Button>
-        </Link>
+        <div className="flex space-x-2 items-center">
+          <Link href="/pools">
+            <Button intent="primary" icon={<HiMiniArrowTrendingUp size={24} />}>
+              Predict now
+            </Button>
+          </Link>
+          <Link href="/pools/create">
+            <Button
+              intent="outlineWhite"
+              icon={<HiMiniArrowTrendingUp size={24} />}
+            >
+              Create bet
+            </Button>
+          </Link>
+        </div>
       </div>
       <div className="hidden lg:block relative w-[40%]">
         <div className="absolute top-5 right-0">
