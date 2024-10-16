@@ -42,7 +42,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
         <CreateBetButton
           intent="secondary"
           size="small"
-          className="flex justify-end mb-12"
+          className="flex justify-end mb-5 md:mb-14"
         />
       </div>
       <div ref={emblaRef} className="mb-3 lg:mb-6">

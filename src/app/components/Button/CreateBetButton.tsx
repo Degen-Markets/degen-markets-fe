@@ -1,7 +1,9 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./Button";
 import { ButtonSizeType, ButtonIntentType } from "./constant";
+import { usePathname } from "next/navigation";
 
 const CreateBetButton = ({
   intent,
@@ -12,12 +14,16 @@ const CreateBetButton = ({
   className?: string;
   size?: ButtonSizeType;
 }) => {
+  const currentPath = usePathname();
+  const isOnPoolsPage = currentPath === "/pools";
+
   return (
     <div className={className}>
       <Link href="/pools/create">
         <Button
           intent={intent}
           size={size}
+          className={isOnPoolsPage ? "" : "size-8 md:size-auto"}
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +31,7 @@ const CreateBetButton = ({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              className="size-5 font-semibold"
+              className="size-5 font-semibold rounded-full md"
             >
               <path
                 stroke-linecap="round"
@@ -35,7 +41,9 @@ const CreateBetButton = ({
             </svg>
           }
         >
-          Create Bet
+          <span className={isOnPoolsPage ? "" : "hidden md:block"}>
+            Create Bet
+          </span>
         </Button>
       </Link>
     </div>
