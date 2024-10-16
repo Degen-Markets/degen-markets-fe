@@ -32,6 +32,14 @@ const config: Config = {
         montserrat: ["Montserrat", "sans-serif"],
       },
       colors: colors,
+      animation: {
+        border: "border 4s linear infinite",
+      },
+      keyframes: {
+        border: {
+          to: { "--border-angle": "360deg" },
+        },
+      },
     },
   },
   plugins: [],
