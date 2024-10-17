@@ -15,13 +15,9 @@ const Hero = () => {
           button below
         </h3>
         <div className="flex items-center justify-center mt-3 lg:mt-6">
-          <IconButton
-            href="/pools/create"
-            icon={<HiOutlineSquaresPlus size="22" />}
-            label="Create Bet"
-            intent="secondary"
-            size="small"
-          />
+          <Link href="/pools/create">
+            <Button>Create Bet</Button>
+          </Link>
         </div>
       </Section>
       <svg
