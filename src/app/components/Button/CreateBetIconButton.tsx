@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
-import React from "react";
 import { Button } from "./Button";
 import { ButtonSizeType, ButtonIntentType } from "./constant";
-import { usePathname } from "next/navigation";
 
-const CreateBetButton = ({
+const CreateBetIconButton = ({
   intent,
   className,
   size = "regular",
@@ -20,6 +18,7 @@ const CreateBetButton = ({
         <Button
           intent={intent}
           size={size}
+          className="size-8 md:size-auto"
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -36,12 +35,10 @@ const CreateBetButton = ({
               />
             </svg>
           }
-        >
-          Create Bet
-        </Button>
+        />
       </Link>
     </div>
   );
 };
 
-export default CreateBetButton;
+export default CreateBetIconButton;

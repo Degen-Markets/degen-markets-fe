@@ -14,6 +14,7 @@ import {
 } from "@/app/components/Landing/PoolsCarouselSection/CarouselArrowButtons";
 import Link from "next/link";
 import CreateBetButton from "../../Button/CreateBetButton";
+import CreateBetIconButton from "../../Button/CreateBetIconButton";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
@@ -42,7 +43,12 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
         <CreateBetButton
           intent="secondary"
           size="small"
-          className="flex justify-end mb-5 md:mb-14"
+          className="justify-end mb-5 md:mb-14 hidden md:flex"
+        />
+        <CreateBetIconButton
+          intent="secondary"
+          size="small"
+          className="justify-end mb-5 md:mb-14 flex md:hidden"
         />
       </div>
       <div ref={emblaRef} className="mb-3 lg:mb-6">
