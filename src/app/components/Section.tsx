@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 type SectionProps = PropsWithChildren<{
@@ -19,16 +19,23 @@ export const Section: FC<SectionProps> = ({ children, className }) => (
 type SectionHeadlineProps = PropsWithChildren<{
   className?: string;
   subHeadline?: string;
+  cta?: ReactNode;
 }>;
 
 export const SectionHeadline: FC<SectionHeadlineProps> = ({
   children,
   className,
   subHeadline,
+  cta,
 }) => (
   <header className="mb-6 md:mb-16">
-    <h2 className={twMerge("inline-block relative text-4xl", className)}>
-      <span className="relative">
+    <h2
+      className={twMerge(
+        "flex justify-between items-center relative text-4xl",
+        className,
+      )}
+    >
+      <div className="relative">
         {children}
         <svg
           className="absolute text-white w-[66px] lg:w-[101px] right-0 -bottom-2 lg:-bottom-4"
@@ -45,7 +52,9 @@ export const SectionHeadline: FC<SectionHeadlineProps> = ({
             strokeLinecap="round"
           />
         </svg>
-      </span>
+      </div>
+
+      <div>{cta}</div>
     </h2>
     {subHeadline && (
       <p className="text-base text-lavender-blue mt-6">{subHeadline}</p>

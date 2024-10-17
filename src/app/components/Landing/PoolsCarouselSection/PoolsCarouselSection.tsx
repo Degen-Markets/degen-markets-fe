@@ -13,6 +13,8 @@ import {
   usePrevNextButtons,
 } from "@/app/components/Landing/PoolsCarouselSection/CarouselArrowButtons";
 import Link from "next/link";
+import IconButton from "../../Button/IconButton";
+import { HiOutlineSquaresPlus } from "react-icons/hi2";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
@@ -36,7 +38,21 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
 
   return (
     <Section className="overflow-hidden">
-      <SectionHeadline>Pools</SectionHeadline>
+      <SectionHeadline
+        cta={
+          <IconButton
+            className="p-1.5 md:px-4 md:py-2"
+            href="/pools/create"
+            icon={<HiOutlineSquaresPlus size="24" />}
+            label="Create Bet"
+            intent="secondary"
+            size="small"
+            hideLabelOnMobile
+          />
+        }
+      >
+        Pools
+      </SectionHeadline>
       <div ref={emblaRef} className="mb-3 lg:mb-6">
         <div className="flex gap-6">
           {pools.map((pool, index) => (

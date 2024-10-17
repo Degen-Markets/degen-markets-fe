@@ -50,6 +50,13 @@ const NavigationRoutes: NavigationProps = {
         isExpandable: false,
         protected: true,
       },
+      {
+        name: "Create bet",
+        icon: "",
+        route: "/pools/create",
+        isExpandable: false,
+        protected: false,
+      },
     ],
   },
 };
