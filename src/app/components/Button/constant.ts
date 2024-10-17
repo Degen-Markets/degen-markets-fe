@@ -1,4 +1,4 @@
-import { cva } from "class-variance-authority";
+import { cva, VariantProps } from "class-variance-authority";
 
 export const buttonVariants = cva(
   "flex items-center justify-center rounded-full py-2 px-2 md:px-4 text-white text-base disabled:bg-opacity-50 disabled:text-opacity-50 disabled:pointer-events-none",
@@ -31,3 +31,6 @@ export const buttonVariants = cva(
     },
   },
 );
+
+export type ButtonSizeType = VariantProps<typeof buttonVariants>["size"];
+export type ButtonIntentType = VariantProps<typeof buttonVariants>["intent"];

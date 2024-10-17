@@ -1,6 +1,9 @@
 import { Section } from "@/app/components/Section";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
+import CreateBetButton from "@/app/components/Button/IconButton";
+import IconButton from "@/app/components/Button/IconButton";
+import { HiOutlineSquaresPlus } from "react-icons/hi2";
 
 const Hero = () => {
   return (
@@ -8,13 +11,12 @@ const Hero = () => {
       <Section className="text-center z-10 relative">
         <h3 className="px-4 lg:px-[20%] text-base lg:text-xl">
           All the bets posted on X are displayed here. To create your own bets,
-          visit our X account and interact with the pinned tweet.
+          visit our X account and interact with the pinned tweet or click the
+          button below
         </h3>
         <div className="flex items-center justify-center mt-3 lg:mt-6">
-          <Link href="https://x.com/DEGEN_MARKETS/status/1842242804669431887">
-            <Button className="w-40" size="small" intent="secondary">
-              Create Bet
-            </Button>
+          <Link href="/pools/create">
+            <Button>Create Bet</Button>
           </Link>
         </div>
       </Section>
