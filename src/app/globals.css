@@ -14,7 +14,7 @@
   --blink-icon-primary-hover: #949ca4;
   --blink-icon-warning: #ffb545;
   --blink-icon-warning-hover: #ffc875;
-  --blink-input-bg: #202b38;
+  --blink-input-bg: #212131;
   --blink-input-stroke: #3d4144;
   --blink-input-stroke-disabled: #2f3336;
   --blink-input-stroke-error: #ff6565;
@@ -320,4 +320,10 @@ input[type="number"] {
     -1px -1px #fff,
     1px -1px #fff,
     -1px 1px #fff;
+}
+
+@property --border-angle {
+  inherits: false;
+  initial-value: 0deg;
+  syntax: "<angle>";
 }
