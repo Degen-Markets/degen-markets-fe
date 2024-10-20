@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Player } from "@/app/types/player";
+import { Player, PlayerStats } from "@/app/types/player";
 import { API_BASE_URL } from "@/app/config/api";
 
 type GetPlayersParams = {
@@ -25,3 +25,8 @@ export const getPlayerById = (
   address: string,
 ): Promise<AxiosResponse<Player | null>> =>
   axios.get(`https://api.degenmarkets.com/players/${address}`);
+
+export const getPlayerStats = (
+  address: string,
+): Promise<AxiosResponse<PlayerStats>> =>
+  axios.get(`https://api.degenmarkets.com/players/${address}/stats`);

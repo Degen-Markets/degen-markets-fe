@@ -16,7 +16,7 @@ const Hero = () => {
         </h3>
         <div className="flex items-center justify-center mt-3 lg:mt-6">
           <Link href="/pools/create">
-            <Button>Create Bet</Button>
+            <Button intent={"secondary"}>Create Bet</Button>
           </Link>
         </div>
       </Section>

@@ -1,22 +1,56 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import DesktopViewTable from "./DesktopViewTable";
-import MobileViewCard from "./MobileViewCard";
 import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";
-import { Activity } from "./type";
 import { SectionHeadline } from "@/app/components/Section";
+import { PlayerStats } from "@/app/types/player";
+import { getPlayerStats } from "@/app/api/players";
+import { useWallet } from "@solana/wallet-adapter-react";
+import PixelArtLoader from "@/app/components/PixelArtLoading";
 
 const ActivityTable: React.FC = () => {
-  const activities: Activity[] = [];
-  return (
-    <section>
-      <SectionHeadline>Activity</SectionHeadline>
+  const wallet = useWallet();
+  const publicKey = wallet.publicKey?.toBase58();
+  const [isPlayerStatsLoading, setIsPlayerStatsLoading] =
+    useState<boolean>(true);
+  const [playerStats, setPlayerStats] = useState<PlayerStats | undefined>();
 
-      {activities.length > 0 ? (
-        <>
-          <DesktopViewTable activities={activities} />
-          <MobileViewCard activities={activities} />
-        </>
-      ) : (
+  const fetchPlayerStats = useCallback(async (address: string) => {
+    setIsPlayerStatsLoading(true);
+    try {
+      const { data } = await getPlayerStats(address);
+      setPlayerStats(data);
+    } catch (error) {
+      console.error("Failed to fetch user profile", error);
+    } finally {
+      setIsPlayerStatsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (wallet.connected && publicKey) {
+      fetchPlayerStats(publicKey);
+    }
+  }, [fetchPlayerStats, publicKey, wallet.connected]);
+
+  if (isPlayerStatsLoading) {
+    return (
+      <>
+        <SectionHeadline>Activity</SectionHeadline>
+        <div className="w-full flex items-center justify-center h-40">
+          <PixelArtLoader
+            size={6}
+            text="Loading Activities..."
+            loaderColor="bg-secondary"
+          />
+        </div>
+      </>
+    );
+  }
+
+  if (!playerStats?.poolEntries || playerStats.poolEntries.length === 0) {
+    return (
+      <>
+        <SectionHeadline>Activity</SectionHeadline>
         <div className="w-full flex flex-col items-center justify-center h-56">
           <LeaderboardIcon />
           <h3 className="text-center text-xl text-secondary">
@@ -26,7 +60,14 @@ const ActivityTable: React.FC = () => {
             Participate in markets to see your activity here!
           </p>
         </div>
-      )}
+      </>
+    );
+  }
+
+  return (
+    <section>
+      <SectionHeadline>Activity</SectionHeadline>
+      <DesktopViewTable poolEntries={playerStats.poolEntries} />
     </section>
   );
 };

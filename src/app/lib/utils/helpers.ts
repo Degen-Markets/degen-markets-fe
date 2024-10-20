@@ -1,3 +1,5 @@
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+
 export const getDisplayNameForAddress = (address: string): string =>
   address.slice(0, 4) + "..." + address.slice(-5);
 
@@ -31,4 +33,15 @@ export function formatNumberToSignificantDigits(number: number): string {
   return decimalPart
     ? `${formattedIntegerPart}.${decimalPart}`
     : formattedIntegerPart;
+}
+
+export function solBalance(balance: number | string) {
+  const balanceNumber =
+    typeof balance === "string" ? parseFloat(balance) : balance;
+
+  if (isNaN(balanceNumber)) {
+    return "0 SOL";
+  }
+
+  return `${Math.round((balanceNumber / LAMPORTS_PER_SOL) * 100000) / 100000} SOL`;
 }
