@@ -114,7 +114,7 @@ const DrawerProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [state, setState] = React.useState<Record<DrawerType, boolean>>({
-    [DrawerType.Settings]: false, // example use case
+    [DrawerType.Profile]: false, // example use case
   });
 
   return (

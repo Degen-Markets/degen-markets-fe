@@ -3,7 +3,7 @@ import Image from "next/image";
 import { SiSolana } from "react-icons/si";
 import { solBalance } from "@/app/lib/utils/helpers";
 import { PoolEntry } from "@/app/types/player";
-import { UserPoolDrawer } from "@/app/components/Drawer/UserPoolDrawer";
+import { UserPoolActivityDrawer } from "@/app/components/Drawer/UserPoolActivityDrawer";
 
 interface ActivityRowProps {
   entry: PoolEntry;
@@ -57,7 +57,7 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
         </span>
       </div>
 
-      <UserPoolDrawer entry={entry} open={open} setOpen={setOpen} />
+      <UserPoolActivityDrawer entry={entry} open={open} setOpen={setOpen} />
     </div>
   );
 };

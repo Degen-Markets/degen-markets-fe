@@ -5,17 +5,17 @@ import Link from "next/link";
 import { Button } from "../Button/Button";
 import Image from "next/image";
 
-interface UserActivityDrawerProps {
+interface UserPoolActivityDrawerProps {
   open: boolean;
   setOpen: (val: boolean) => void;
   entry: PoolEntry;
 }
 
-export const UserPoolDrawer = ({
+export const UserPoolActivityDrawer = ({
   entry,
   open,
   setOpen,
-}: UserActivityDrawerProps) => {
+}: UserPoolActivityDrawerProps) => {
   return (
     <>
       <Drawer open={open} onOpenChange={setOpen}>
