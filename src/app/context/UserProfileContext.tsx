@@ -49,21 +49,21 @@ export const UserProfileProvider = ({
     async (address: string) => {
       setIsProfileFetchInititated(true);
       setIsProfileLoading(true);
-      try {
-        const { data } = await getPlayerById(address);
-        setUserProfile(data);
-        const redirectPath = searchParams.get(
-          REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
-        );
-
-        if (redirectPath) {
-          router.push(redirectPath); // Redirect to given url
-        }
-      } catch (error) {
-        console.error("Failed to fetch user profile", error);
-      } finally {
-        setIsProfileLoading(false);
+      const playerData = await getPlayerById(address);
+      if (!playerData) {
+        console.error("Failed to fetch user profile");
+        return;
       }
+
+      setUserProfile(playerData);
+      const redirectPath = searchParams.get(
+        REDIRECT_AFTER_PROFILE_LOAD_SEARCH_PARAM_KEY,
+      );
+
+      if (redirectPath) {
+        router.push(redirectPath); // Redirect to given url
+      }
+      setIsProfileLoading(false);
     },
     [router, searchParams],
   );

@@ -16,7 +16,7 @@ import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 const PlayerPage: FC<{ params: { id: string } }> = async ({ params }) => {
-  const { data: player } = await getPlayerById(params.id);
+  const player = await getPlayerById(params.id);
 
   if (!player) {
     return notFound();
