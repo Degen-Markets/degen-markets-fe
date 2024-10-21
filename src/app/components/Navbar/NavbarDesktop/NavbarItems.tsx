@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
-import { IoIosArrowDown } from "react-icons/io";
 import NavDropdownMenu from "./NavDropDown";
 import Link from "next/link";
 import { NavItem } from "@/app/lib/utils/NavigationRoutes";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 interface NavbarItemProps {
   route: NavItem;
@@ -95,7 +95,7 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
         {renderIcon()}
         <span className="text-base lg:text-lg">{route.name}</span>
         {Array.isArray(route.route) && (
-          <IoIosArrowDown className="flex-shrink-0" />
+          <ChevronDownIcon width={24} className="flex-shrink-0" />
         )}
         {renderActiveIndicator()}
       </div>

@@ -3,8 +3,8 @@
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
-import { HiMiniArrowTrendingUp } from "react-icons/hi2";
 import { Section } from "@/app/components/Section";
+import { ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
 
 const HeroSection = () => (
   <Section className="space-y-5 lg:space-y-10 flex gap-4">
@@ -18,7 +18,7 @@ const HeroSection = () => (
           Predict Now to Claim YOUR Share of the $DGM AirDrop
         </p>
         <Link href="/pools">
-          <Button intent="primary" icon={<HiMiniArrowTrendingUp size={24} />}>
+          <Button intent="primary" icon={<ArrowTrendingUpIcon width={24} />}>
             Predict now
           </Button>
         </Link>

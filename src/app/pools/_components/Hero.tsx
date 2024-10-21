@@ -1,9 +1,7 @@
 import { Section } from "@/app/components/Section";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
-import CreateBetButton from "@/app/components/Button/IconButton";
-import IconButton from "@/app/components/Button/IconButton";
-import { HiOutlineSquaresPlus } from "react-icons/hi2";
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 const Hero = () => {
   return (
@@ -16,7 +14,12 @@ const Hero = () => {
         </h3>
         <div className="flex items-center justify-center mt-3 lg:mt-6">
           <Link href="/pools/create">
-            <Button>Create Bet</Button>
+            <Button
+              intent="secondary"
+              icon={<SquaresPlusIcon width={24} height={24} />}
+            >
+              Create Bet
+            </Button>
           </Link>
         </div>
       </Section>
