@@ -1,5 +1,5 @@
 import { PoolEntry } from "@/app/types/player";
-import { Drawer, DrawerContent } from "./drawer";
+import { Drawer, DrawerClose, DrawerContent } from "./drawer";
 import { solBalance } from "@/app/lib/utils/helpers";
 import Link from "next/link";
 import { Button } from "../Button/Button";
@@ -68,11 +68,18 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ entry }) => {
           </span>
         </div>
       </div>
-      <Link href={`/pools/${pool.address}`}>
-        <Button intent="primary" className="w-full">
-          View Pool
-        </Button>
-      </Link>
+      <div className="flex justify-between items-center gap-2">
+        <DrawerClose className="w-full">
+          <Button intent="outlineWhite" className="w-full" size="small">
+            Close
+          </Button>
+        </DrawerClose>
+        <Link href={`/pools/${pool.address}`} className="w-full">
+          <Button intent="primary" className="w-full" size="small">
+            View
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };

@@ -25,14 +25,16 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
         />
         <div>
           <p className="mb-1 w-full line-clamp-1">{pool.title}</p>
-          <div className="flex items-center md:space-x-2 text-sm text-gray-400">
+          <div className="flex items-center text-sm text-gray-400">
             <p className="bg-black-light font-bold hidden md:block">
               You bet:
-              <span className="text-primary-light px-1 py-0.5 mr-2">
+              <span className="text-primary-light px-1 py-0.5 ">
                 {option.title}
               </span>
+              |
             </p>
-            <div className="flex items-center space-x-1">
+
+            <div className="flex items-center space-x-1 px-1">
               <span>{solBalance(value)}</span>
               <SiSolana
                 size={12}

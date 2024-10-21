@@ -6,10 +6,12 @@ import cn from "classnames";
 import {
   DrawerContentProps,
   DrawerOverlayProps,
-  drawerOverlayVariants,
   DrawerType,
+} from "@/app/types/drawer";
+import {
+  drawerOverlayVariants,
   drawerVariants,
-} from "./type";
+} from "@/app/lib/utils/drawer/constant";
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -51,7 +53,7 @@ const DrawerContent = React.forwardRef<
       className={drawerVariants({ variant, className })}
       {...props}
     >
-      <div className="mx-auto my-4 h-2 w-[100px] rounded-full bg-lavender-blue" />
+      <div className="mx-auto mb-4 pt-2 h-2 w-[100px] rounded-full bg-lavender-blue" />
       {children}
     </DrawerPrimitive.Content>
   </DrawerPortal>
