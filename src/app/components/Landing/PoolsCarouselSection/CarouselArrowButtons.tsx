@@ -8,9 +8,9 @@ import {
 import { EmblaCarouselType } from "embla-carousel";
 import { twMerge } from "tailwind-merge";
 import {
-  HiOutlineArrowLeftCircle,
-  HiOutlineArrowRightCircle,
-} from "react-icons/hi2";
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+} from "@heroicons/react/24/outline";
 
 type UsePrevNextButtonsType = {
   prevBtnDisabled: boolean;
@@ -66,7 +66,7 @@ export const PrevButton: FC<PropType> = (props) => {
       type="button"
       {...restProps}
     >
-      <HiOutlineArrowLeftCircle size={38} />
+      <ArrowLeftCircleIcon width={38} />
       {children}
     </button>
   );
@@ -81,7 +81,7 @@ export const NextButton: FC<PropType> = (props) => {
       type="button"
       {...restProps}
     >
-      <HiOutlineArrowRightCircle size={38} />
+      <ArrowRightCircleIcon width={38} />
       {children}
     </button>
   );

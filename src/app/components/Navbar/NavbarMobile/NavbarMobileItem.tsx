@@ -1,9 +1,9 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { IoIosArrowDown } from "react-icons/io";
 import { NavItem } from "@/app/lib/utils/NavigationRoutes";
 import NavbarMobileSubItems from "./NavbarMobileSubItems";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const NavbarMobileItem: FC<{
   route: NavItem;
@@ -35,7 +35,7 @@ const NavbarMobileItem: FC<{
                 />
               )}
               <p>{route.name}</p>
-              <IoIosArrowDown className="ml-2" />
+              <ChevronDownIcon width={24} className="ml-2" />
             </div>
             <ul className="text-white border-t shadow-lg mt-3 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               {Array.isArray(route.route)

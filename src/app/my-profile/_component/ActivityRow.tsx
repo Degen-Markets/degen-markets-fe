@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { SiSolana } from "react-icons/si";
 
 interface ActivityRowProps {
   marketName: string;
@@ -33,10 +32,6 @@ const ActivityRow: React.FC<ActivityRowProps> = ({
             </span>
             <div className="flex items-center space-x-1">
               <span>1.6</span>
-              <SiSolana
-                size={12}
-                className="rounded-full bg-white p-0.5 text-black-dark"
-              />
             </div>
           </div>
         </div>

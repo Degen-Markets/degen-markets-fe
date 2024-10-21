@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import { SiSolana } from "react-icons/si";
 import { ActivitiesProps } from "./type";
 
 const MobileViewCard: React.FC<ActivitiesProps> = ({ activities }) => {
@@ -28,11 +27,7 @@ const MobileViewCard: React.FC<ActivitiesProps> = ({ activities }) => {
                   Based Trump
                 </span>
                 <div className="flex items-center space-x-1">
-                  <span>1.6</span>
-                  <SiSolana
-                    size={12}
-                    className="rounded-full bg-white p-0.5 text-black-dark"
-                  />
+                  <span>1.6 SOL</span>
                 </div>
               </div>
             </div>
