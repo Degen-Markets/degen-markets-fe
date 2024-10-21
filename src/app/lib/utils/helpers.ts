@@ -35,13 +35,19 @@ export function formatNumberToSignificantDigits(number: number): string {
     : formattedIntegerPart;
 }
 
-export function solBalance(balance: number | string) {
+export function solBalance(
+  balance: number | string,
+  showSolLabel: boolean = true,
+) {
   const balanceNumber =
     typeof balance === "string" ? parseFloat(balance) : balance;
 
   if (isNaN(balanceNumber)) {
-    return "0 SOL";
+    return showSolLabel ? "0 SOL" : "0";
   }
 
-  return `${Math.round((balanceNumber / LAMPORTS_PER_SOL) * 100000) / 100000} SOL`;
+  const formattedBalance =
+    Math.round((balanceNumber / LAMPORTS_PER_SOL) * 100000) / 100000;
+
+  return showSolLabel ? `${formattedBalance} SOL` : `${formattedBalance}`;
 }

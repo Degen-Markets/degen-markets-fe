@@ -13,7 +13,7 @@ const DesktopViewTable: React.FC<DesktopViewTableProps> = ({ poolEntries }) => {
       <div className="grid grid-cols-6 md:grid-cols-7  text-xs text-lavender-blue px-2 md:pl-4 font-bold border-b border-main divide-x-2 h-16 divide-main">
         <div className="col-span-4 text-left flex items-center">Market</div>
         <div className="hidden md:flex col-span-1 text-center  items-center justify-center">
-          Value (SOL)
+          Option TVL (SOL)
         </div>
         <div className="hidden md:flex col-span-1 text-center items-center justify-center whitespace-nowrap">
           Pool TVL (SOL)

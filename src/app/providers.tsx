@@ -17,9 +17,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ToastProvider>
           <WalletContextProvider>
             <DialogProvider>
-              {/* <DrawerProvider> */}
-              <UserProfileProvider>{children}</UserProfileProvider>
-              {/* </DrawerProvider> */}
+              <DrawerProvider>
+                <UserProfileProvider>{children}</UserProfileProvider>
+              </DrawerProvider>
             </DialogProvider>
           </WalletContextProvider>
         </ToastProvider>

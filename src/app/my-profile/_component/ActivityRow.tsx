@@ -26,11 +26,14 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
         <div>
           <p className="mb-1 w-full line-clamp-1">{pool.title}</p>
           <div className="flex items-center md:space-x-2 text-sm text-gray-400">
-            <span className="bg-black-light rounded-lg border font-bold px-2 hidden md:block">
-              {option.title}
-            </span>
+            <p className="bg-black-light font-bold hidden md:block">
+              You bet:
+              <span className="text-primary-light px-1 py-0.5 mr-2">
+                {option.title}
+              </span>
+            </p>
             <div className="flex items-center space-x-1">
-              <span>{solBalance(option.totalValue)}</span>
+              <span>{solBalance(value)}</span>
               <SiSolana
                 size={12}
                 className="rounded-full bg-white p-0.5 text-black-dark"
@@ -41,11 +44,11 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
       </div>
 
       <div className="hidden md:flex text-center h-full items-center justify-center col-span-1">
-        {solBalance(value)}
+        {solBalance(option.totalValue, false)}
       </div>
 
       <div className="hidden md:flex text-center text-green-main h-full items-center justify-center col-span-1">
-        {solBalance(pool.totalValue)}
+        {solBalance(pool.totalValue, false)}
       </div>
 
       <div className="col-span-2 md:col-span-1 text-center text-green-main h-full flex items-center justify-center">
