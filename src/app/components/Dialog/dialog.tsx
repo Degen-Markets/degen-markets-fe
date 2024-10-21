@@ -123,7 +123,7 @@ const DialogDescription = React.forwardRef<
   <DialogPrimitive.Description
     ref={ref}
     className={classNames(
-      "text-md md:text-lg text-muted-foreground mr:5 md:mr-[64px]",
+      "text-md md:text-lg text-muted-foreground mr:5 md:mr-16",
       className,
     )}
     {...props}
