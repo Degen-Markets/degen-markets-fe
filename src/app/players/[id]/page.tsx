@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { getPlayerById } from "@/app/api/players";
 import Wrapper from "@/app/components/Wrapper";
 import UserAvatar from "@/app/components/UserAvatar";
@@ -10,7 +10,6 @@ import Link from "next/link";
 import { FaXTwitter } from "react-icons/fa6";
 import ActivityTable from "@/app/my-profile/_component/ActivityTable";
 import Image from "next/image";
-import styles from "./styles.module.css";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-dynamic";
@@ -45,7 +44,7 @@ const PlayerPage: FC<{ params: { id: string } }> = async ({ params }) => {
             alt="Player background"
             width={1920}
             height={1080}
-            className={`w-full absolute group-hover:[animation-play-state:running] ${styles.profileCardImage}`}
+            className="w-full absolute [animation-play-state:paused] group-hover:[animation-play-state:running] animate-bounce-slow"
           />
           <div className="relative z-10 bg-gradient-to-t from-steel-gray from-80% mt-28 px-4 lg:px-8 pb-4">
             <div className="flex items-center gap-6 my-8">
@@ -75,17 +74,10 @@ const PlayerPage: FC<{ params: { id: string } }> = async ({ params }) => {
             </div>
             <div className="grid grid-cols-3 grid-rows-2 grid-flow-col">
               {stats.map(({ title, value }) => (
-                <>
-                  <p
-                    key={`${title}-title`}
-                    className="text-sm text-lavender-blue"
-                  >
-                    {title}
-                  </p>
-                  <p key={`${title}-value`} className="text-xl font-semibold">
-                    {value}
-                  </p>
-                </>
+                <Fragment key={title}>
+                  <p className="text-sm text-lavender-blue">{title}</p>
+                  <p className="text-xl font-semibold">{value}</p>
+                </Fragment>
               ))}
             </div>
           </div>
