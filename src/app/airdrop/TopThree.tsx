@@ -62,24 +62,20 @@ const PlayerCard: FC<{ player: Player; index: number }> = ({
         <UserAvatar
           src={player.twitterPfpUrl}
           className={twMerge(
-            "rounded-lg lg:rounded-2xl h-10 w-10 lg:w-20 lg:h-20 shadow-2xl",
+            "rounded-lg lg:rounded-2xl h-10 w-10 lg:w-20 lg:h-20 shadow-2xl block",
             rankClass,
           )}
           width={90}
           height={90}
         />
-        <div className="text-xs lg:text-lg font-semibold mb-4 lg:mb-3">
-          {player.twitterUsername ? (
-            <Link
-              href={`https://x.com/${player.twitterUsername}`}
-              target="_blank"
-            >
-              @{player.twitterUsername}
-            </Link>
-          ) : (
-            getDisplayNameForAddress(player.address)
-          )}
-        </div>
+        <Link
+          href={`/players/${player.address}`}
+          className="text-xs lg:text-lg font-semibold mb-4 lg:mb-3"
+        >
+          {player.twitterUsername
+            ? `@${player.twitterUsername}`
+            : getDisplayNameForAddress(player.address)}
+        </Link>
       </div>
       <GradientSVG />
       <div className="flex flex-col gap-5 items-center bg-gradient-to-b from-steel-gray w-full h-12 lg:h-24">
