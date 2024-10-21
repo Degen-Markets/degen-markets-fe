@@ -4,9 +4,9 @@ import { Button } from "@/app/components/Button/Button";
 import SignatureDialog from "@/app/components/Dialog/signMessageDialog";
 import { DialogType, useDialog } from "@/app/components/Dialog/dialog";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 import useTwitterAuthFlow from "./useTwitterAuthFlow";
+import XIcon from "@/app/components/Icons/XIcon";
 
 const TwitterButton = () => {
   const { open, setOpen } = useDialog(DialogType.signature);
@@ -41,7 +41,7 @@ const TwitterButton = () => {
         intent="secondary"
         onClick={connectTwitter}
         disabled={isDisabled}
-        icon={<FaSquareXTwitter size={24} />}
+        icon={<XIcon width={24} height={24} />}
       >
         {isSignatureRequired ? "Sign Msg" : buttonText}
       </Button>

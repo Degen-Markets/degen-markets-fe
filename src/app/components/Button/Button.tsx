@@ -1,44 +1,32 @@
 import { FC } from "react";
-import PixelArtLoader from "../PixelArtLoading";
 import { twMerge } from "tailwind-merge";
 import { ButtonProps } from "./type";
 import { buttonVariants } from "./constant";
+import Loader from "@/app/components/Icons/Loader";
 
 export const Button: FC<ButtonProps> = ({
+  disabled,
   className,
   children,
   size,
   intent,
-  customStyle = "",
-  loader = false,
-  isPending,
-  isProcessing,
-  pendingText = "Pending...",
-  processingText = "Processing...",
+  loading = false,
+  loadingText = "Processing...",
   icon,
   ...props
 }) => {
-  const isIdle = !isProcessing && !isPending;
+  const isDisabled = loading || disabled;
 
   return (
     <button
-      className={twMerge(
-        buttonVariants({ size, intent }),
-        className,
-        customStyle,
-      )}
-      disabled={isProcessing || isPending}
+      className={twMerge(buttonVariants({ size, intent }), className)}
+      disabled={isDisabled}
       {...props}
     >
-      {isPending && loader && (
-        <PixelArtLoader text={pendingText} textSize="2xl" />
-      )}
-      {isProcessing && loader && (
-        <PixelArtLoader text={processingText} textSize="2xl" />
-      )}
-      <div className="flex items-center justify-center gap-1">
-        {isIdle && children}
-        {isIdle && icon}
+      <div className="flex items-center justify-center gap-2">
+        {loading && <Loader />}
+        {loading ? loadingText : children}
+        {!loading && icon}
       </div>
     </button>
   );

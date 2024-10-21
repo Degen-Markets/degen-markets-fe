@@ -1,14 +1,14 @@
 "use client";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { HiOutlineWallet } from "react-icons/hi2";
 import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 import UserAvatar from "@/app/components/UserAvatar";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 
 // Import default styles and override them
-require("@solana/wallet-adapter-react-ui/styles.css");
+import "@solana/wallet-adapter-react-ui/styles.css";
 import "./index.css";
+import { WalletIcon } from "@heroicons/react/24/outline";
 
 const SolanaWallet = () => {
   const { userProfile } = useUserProfileContext();
@@ -38,7 +38,7 @@ const SolanaWallet = () => {
               "Connecting..."
             ) : (
               <>
-                <HiOutlineWallet size={24} />
+                <WalletIcon width={24} />
                 Connect Wallet
               </>
             )}

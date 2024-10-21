@@ -4,7 +4,7 @@ import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
-import { HiTrophy } from "react-icons/hi2";
+import { TrophyIcon } from "@heroicons/react/24/solid";
 
 interface Props {
   players: Player[];
@@ -89,7 +89,7 @@ const PlayerCard: FC<{ player: Player; index: number }> = ({
             backgroundColorClass,
           )}
         >
-          <HiTrophy size={32} className="text-steel-gray" />
+          <TrophyIcon width={32} className="text-steel-gray" />
         </div>
         <div className="text-xs lg:text-lg">
           Earn <b>{player.points}</b> points

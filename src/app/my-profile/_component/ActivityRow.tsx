@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { SiSolana } from "react-icons/si";
 import { solBalance } from "@/app/lib/utils/helpers";
 import { PoolEntry } from "@/app/types/player";
 import { UserPoolActivityDrawer } from "@/app/components/Drawer/UserPoolActivityDrawer";
@@ -36,10 +35,6 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
 
             <div className="flex items-center space-x-1 px-1">
               <span>{solBalance(value)}</span>
-              <SiSolana
-                size={12}
-                className="rounded-full bg-white p-0.5 text-black-dark"
-              />
             </div>
           </div>
         </div>

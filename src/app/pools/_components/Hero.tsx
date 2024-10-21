@@ -1,9 +1,7 @@
 import { Section } from "@/app/components/Section";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
-import CreateBetButton from "@/app/components/Button/IconButton";
-import IconButton from "@/app/components/Button/IconButton";
-import { HiOutlineSquaresPlus } from "react-icons/hi2";
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 const Hero = () => {
   return (
