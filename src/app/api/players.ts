@@ -29,4 +29,4 @@ export const getPlayerById = (
 export const getPlayerStats = (
   address: string,
 ): Promise<AxiosResponse<PlayerStats>> =>
-  axios.get(`https://api.degenmarkets.com/players/${address}/stats`);
+  axios.get(`${API_BASE_URL}/players/${address}/stats`);
