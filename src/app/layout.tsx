@@ -31,8 +31,8 @@ export default function RootLayout({
       lang="en"
       className={twMerge(
         "scroll-smooth",
-        montserrat.className,
-        openSans.className,
+        montserrat.variable,
+        openSans.variable,
       )}
     >
       <body className="bg-main text-white min-h-screen ">

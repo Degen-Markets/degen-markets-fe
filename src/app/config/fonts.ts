@@ -5,6 +5,7 @@ export const montserrat = Montserrat({
   style: ["normal"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--headline-font-family",
 });
 
 export const openSans = Open_Sans({
@@ -12,4 +13,5 @@ export const openSans = Open_Sans({
   style: ["normal"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--body-font-family",
 });
