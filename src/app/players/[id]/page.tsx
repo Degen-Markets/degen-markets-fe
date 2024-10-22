@@ -7,10 +7,10 @@ import {
   formatNumberToSignificantDigits,
 } from "@/app/lib/utils/helpers";
 import Link from "next/link";
-import { FaXTwitter } from "react-icons/fa6";
 import ActivityTable from "@/app/my-profile/_component/ActivityTable";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import XIcon from "@/app/components/Icons/XIcon";
 
 export const dynamic = "force-dynamic";
 
@@ -62,7 +62,7 @@ const PlayerPage: FC<{ params: { id: string } }> = async ({ params }) => {
                   <h1 className="text-2xl font-bold">{displayUsername}</h1>
                   {player.twitterUsername && (
                     <Link href={`https://x.com/${player.twitterUsername}`}>
-                      <FaXTwitter size={24} />
+                      <XIcon width={24} height={24} />
                     </Link>
                   )}
                 </div>
