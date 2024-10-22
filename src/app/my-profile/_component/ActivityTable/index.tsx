@@ -1,3 +1,4 @@
+"use client";
 import React, { useCallback, useEffect, useState } from "react";
 import DesktopViewTable from "./DesktopViewTable";
 import LeaderboardIcon from "@/app/components/Icons/LeaderboardIcon";

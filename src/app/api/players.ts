@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { Player, PlayerStats } from "@/app/types/player";
 import { API_BASE_URL } from "@/app/config/api";
+import { tryItAsync } from "../lib/utils/tryIt";
 
 type GetPlayersParams = {
   sort?: "ASC" | "DESC";
@@ -21,10 +22,19 @@ export const getPlayers = ({
     },
   });
 
-export const getPlayerById = (
+export const getPlayerById = async (
   address: string,
-): Promise<AxiosResponse<Player | null>> =>
-  axios.get(`https://api.degenmarkets.com/players/${address}`);
+): Promise<Player | null> => {
+  const trial = await tryItAsync(async () =>
+    axios.get<Player>(`${API_BASE_URL}/players/${address}`),
+  );
+  if (!trial.success) {
+    console.error(trial.err);
+    return null;
+  }
+
+  return trial.data.data;
+};
 
 export const getPlayerStats = (
   address: string,
