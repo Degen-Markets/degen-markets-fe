@@ -3,7 +3,6 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import classNames from "classnames";
 import { ReactNode, createContext, useContext, useMemo, useState } from "react";
-import { MdClose } from "react-icons/md";
 import {
   DialogContentProps,
   DialogContextProps,
@@ -15,6 +14,7 @@ import {
   dialogOverlayVariants,
   dialogVariants,
 } from "@/app/lib/utils/dialog/constant";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -65,7 +65,7 @@ const DialogContent = React.forwardRef<
           asChild
           className={dialogCloseVariants({ variant })}
         >
-          <MdClose className="text-white" />
+          <XMarkIcon width={24} className="text-white" />
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>

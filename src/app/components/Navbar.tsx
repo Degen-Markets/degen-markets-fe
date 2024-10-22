@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { IoClose, IoMenu } from "react-icons/io5";
-
 import { NavbarDesktop } from "./Navbar/NavbarDesktop";
 import { NavbarMobile } from "./Navbar/NavbarMobile";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 
 const Navbar: React.FC<{
   nav: boolean;
@@ -28,9 +27,9 @@ const Navbar: React.FC<{
         className="cursor-pointer z-10 md:hidden ml-auto"
       >
         {nav ? (
-          <IoClose size={30} className="text-white" />
+          <XMarkIcon width={30} className="text-white" />
         ) : (
-          <IoMenu size={30} />
+          <Bars3Icon width={30} />
         )}
       </div>
       {nav && <NavbarMobile nav={nav} setNav={setNav} />}

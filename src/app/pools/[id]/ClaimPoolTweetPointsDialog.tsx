@@ -79,8 +79,7 @@ const ClaimPoolTweetPointsDialog = ({
           placeholder="Enter the link to your tweet sharing this page"
         />
         <Button
-          loader
-          isProcessing={isVerifyingClaim}
+          loading={isVerifyingClaim}
           onClick={verifyClaim}
           intent="primary"
         >

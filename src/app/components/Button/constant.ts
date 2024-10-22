@@ -5,7 +5,6 @@ export const buttonVariants = cva(
   {
     variants: {
       intent: {
-        main: "bg-primary border-2 border-primary hover:border-primary-light hover:bg-primary-light active:bg-primary-light text-main",
         primary:
           "bg-primary hover:bg-primary-light active:bg-primary-light text-main border-2 border-primary hover:border-primary-light",
         outlineWhite:
@@ -26,7 +25,7 @@ export const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      intent: "main",
+      intent: "primary",
       size: "regular",
     },
   },

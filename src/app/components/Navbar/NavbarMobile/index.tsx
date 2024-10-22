@@ -3,8 +3,8 @@ import NavbarMobileItem from "./NavbarMobileItem";
 import SolanaWallet from "@/app/components/SolanaWallet";
 import { Dispatch, FC, SetStateAction } from "react";
 import Link from "next/link";
-import { FaXTwitter } from "react-icons/fa6";
 import { useWallet } from "@solana/wallet-adapter-react";
+import XIcon from "@/app/components/Icons/XIcon";
 
 export const NavbarMobile: FC<{
   nav: boolean;
@@ -38,9 +38,10 @@ export const NavbarMobile: FC<{
             <Link
               href="https://x.com/DEGEN_MARKETS"
               target="_blank"
-              className="text-main flex gap-2"
+              className="text-white flex gap-2 items-center"
             >
-              <FaXTwitter className="text-lg" /> @DEGEN_MARKETS
+              <XIcon className="text-lg" width={32} height={32} />{" "}
+              @DEGEN_MARKETS
             </Link>
           </div>
         </div>

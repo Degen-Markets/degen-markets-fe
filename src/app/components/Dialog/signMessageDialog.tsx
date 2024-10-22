@@ -70,10 +70,9 @@ const SignatureDialog = ({ open, setOpen, saveUser }: SignatureDialogProps) => {
         </DialogHeader>
         <Button
           intent={"primary"}
-          loader
           disabled={loading}
-          isPending={loading}
-          pendingText="Signing message..."
+          loading={loading}
+          loadingText="Signing message..."
           onClick={sendSignMessageAndTwitterCode}
         >
           Sign Message

@@ -14,7 +14,7 @@ import {
 } from "@/app/components/Landing/PoolsCarouselSection/CarouselArrowButtons";
 import Link from "next/link";
 import IconButton from "../../Button/IconButton";
-import { HiOutlineSquaresPlus } from "react-icons/hi2";
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
@@ -43,7 +43,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           <IconButton
             className="p-1.5 md:px-4 md:py-2"
             href="/pools/create"
-            icon={<HiOutlineSquaresPlus size="24" />}
+            icon={<SquaresPlusIcon width="24" />}
             label="Create Bet"
             intent="secondary"
             size="small"

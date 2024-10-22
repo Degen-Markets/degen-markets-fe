@@ -6,16 +6,15 @@ export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   customStyle?: string;
-  loader?: boolean;
-  isPending?: boolean;
-  isProcessing?: boolean;
-  pendingText?: string;
-  processingText?: string;
+  loading?: boolean;
+  loadingText?: string;
   icon?: ReactElement;
+  hideLabelOnMobile?: boolean;
+  href?: string;
 }
 
 export interface IconButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends ButtonHTMLAttributes<HTMLButtonElement> {
   intent: ButtonIntentType;
   className?: string;
   size?: ButtonSizeType;
