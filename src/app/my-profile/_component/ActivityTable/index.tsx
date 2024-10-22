@@ -5,7 +5,7 @@ import { SectionHeadline } from "@/app/components/Section";
 import { PlayerStats } from "@/app/types/player";
 import { getPlayerStats } from "@/app/api/players";
 import { useWallet } from "@solana/wallet-adapter-react";
-import PixelArtLoader from "@/app/components/PixelArtLoading";
+import Loader from "@/app/components/Icons/Loader";
 
 const ActivityTable: React.FC = () => {
   const wallet = useWallet();
@@ -36,12 +36,9 @@ const ActivityTable: React.FC = () => {
     return (
       <>
         <SectionHeadline>Activity</SectionHeadline>
-        <div className="w-full flex items-center justify-center h-40">
-          <PixelArtLoader
-            size={6}
-            text="Loading Activities..."
-            loaderColor="bg-secondary"
-          />
+        <div className="w-full flex items-center justify-center h-40 space-x-2">
+          <Loader />
+          <p className="text-xl">Loading Activities...</p>
         </div>
       </>
     );

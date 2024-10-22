@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const drawerVariants = cva(
-  "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] bg-steel-gray px-5 md:px-10 py-2 ",
+  "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] bg-steel-gray px-5 md:px-10 pt-2 pb-4 ",
   {
     variants: {
       variant: {

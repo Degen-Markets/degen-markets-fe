@@ -1,11 +1,12 @@
 "use client";
+
+import { useWallet } from "@solana/wallet-adapter-react";
 import { FC, useEffect } from "react";
+import Hero from "./Hero";
 import UserProfileInfo from "./UserProfileInfo";
 import ActivityTable from "./ActivityTable";
-import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import { useToast } from "@/app/components/Toast/ToastProvider";
-import Hero from "@/app/my-profile/_component/Hero";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useUserProfileContext } from "@/app/context/UserProfileContext";
 
 const ProfileComponent: FC = () => {
   useProfileNotFoundHandler();
