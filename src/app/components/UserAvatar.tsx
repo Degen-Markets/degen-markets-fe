@@ -17,7 +17,7 @@ const UserAvatar = ({
   return (
     <Image
       src={src || "/user-avatars/default.jpg"}
-      alt={address || ""}
+      alt={`Pfp for player ${address || ""}`}
       width={width}
       height={height}
       className={twMerge("rounded-full"!, className)}

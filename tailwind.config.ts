@@ -34,10 +34,15 @@ const config: Config = {
       colors: colors,
       animation: {
         border: "border 4s linear infinite",
+        "bounce-slow": "bounce-slow 20s infinite linear alternate",
       },
       keyframes: {
         border: {
           to: { "--border-angle": "360deg" },
+        },
+        "bounce-slow": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-50%)" },
         },
       },
     },
