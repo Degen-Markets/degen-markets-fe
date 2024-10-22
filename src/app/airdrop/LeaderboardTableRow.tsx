@@ -4,7 +4,7 @@ import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 import { useRouter } from "next/navigation";
 import { Player } from "../types/player";
-import { useMemo } from "react";
+import { useCallback } from "react";
 
 const LeaderboardTableRow = ({
   player,
@@ -15,10 +15,8 @@ const LeaderboardTableRow = ({
 }) => {
   const router = useRouter();
 
-  const handleClick = useMemo(() => {
-    return () => {
-      router.push(`/players/${player.address}`);
-    };
+  const handleClick = useCallback(() => {
+    router.push(`/players/${player.address}`);
   }, [player.address, router]);
   return (
     <tr
