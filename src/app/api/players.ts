@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Player } from "@/app/types/player";
+import { Player, PlayerStats } from "@/app/types/player";
 import { API_BASE_URL } from "@/app/config/api";
 import { tryItAsync } from "../lib/utils/tryIt";
 
@@ -35,3 +35,8 @@ export const getPlayerById = async (
 
   return trial.data.data;
 };
+
+export const getPlayerStats = (
+  address: string,
+): Promise<AxiosResponse<PlayerStats>> =>
+  axios.get(`${API_BASE_URL}/players/${address}/stats`);

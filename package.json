@@ -36,7 +36,8 @@
     "react-dom": "^18",
     "react-fast-marquee": "^1.6.4",
     "tailwind-merge": "^2.3.0",
-    "tweetnacl": "^1.0.3"
+    "tweetnacl": "^1.0.3",
+    "vaul": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",

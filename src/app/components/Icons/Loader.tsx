@@ -1,11 +1,12 @@
 import { FC } from "react";
 
-const Loader: FC<{ size?: string }> = ({ size = "h-6 w-6" }) => (
+const Loader: FC<{ size?: string }> = ({ size = "h-6 w-6", ...props }) => (
   <svg
     className={`animate-spin ${size}`}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
+    {...props}
   >
     <circle
       className="opacity-25"

@@ -59,12 +59,8 @@ const SignatureDialog = ({ open, setOpen, saveUser }: SignatureDialogProps) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="!text-4xl">
-            <GradientText className="text-left">
-              Sign with your Wallet
-            </GradientText>
-          </DialogTitle>
-          <DialogDescription className="!text-2xl text-left">
+          <DialogTitle>Sign with your Wallet</DialogTitle>
+          <DialogDescription className="text-left">
             Sign message to access your profile.{" "}
           </DialogDescription>
         </DialogHeader>
