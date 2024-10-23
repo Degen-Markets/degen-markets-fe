@@ -46,29 +46,35 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ entry }) => {
         <h2 className="text-lg font-bold">{pool.title}</h2>
 
         <div className="flex justify-between">
-          <p className="text-sm text-gray-400 font-bold">Selected Option</p>
-          <p className="text-sm text-gray-400 font-bold">{option.title}</p>
+          <p className="text-sm text-lavender-blue font-bold">
+            Selected Option
+          </p>
+          <p className="text-sm text-lavender-blue font-bold">{option.title}</p>
         </div>
 
         <div className="flex justify-between">
-          <p className="text-sm text-gray-400 font-bold">Option Total Value</p>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-lavender-blue font-bold">
+            Option Total Value
+          </p>
+          <p className="text-sm text-lavender-blue">
             {solBalance(option.totalValue)}
           </p>
         </div>
 
-        <div className="flex justify-between ">
-          <p className="text-sm text-gray-400 font-bold">My Bet</p>
-          <p className="text-sm text-gray-400">{solBalance(value)}</p>
-        </div>
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-semibold">Pool TVL</span>
-          <span className="text-sm font-bold">
+          <span className="text-sm text-lavender-blue font-semibold">
+            Pool TVL
+          </span>
+          <span className="text-sm text-lavender-blue font-bold">
             {solBalance(pool.totalValue)}
           </span>
         </div>
+        <div className="flex justify-between ">
+          <p className="text-sm  font-bold">My Bet</p>
+          <p className="text-sm ">{solBalance(value)}</p>
+        </div>
       </div>
-      <div className="flex justify-between items-center gap-2">
+      <div className="flex justify-between items-center gap-2  mb-2">
         <DrawerClose className="w-full">
           <Button intent="outlineWhite" className="w-full" size="small">
             Close

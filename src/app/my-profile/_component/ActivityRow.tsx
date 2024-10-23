@@ -3,6 +3,7 @@ import Image from "next/image";
 import { solBalance } from "@/app/lib/utils/helpers";
 import { PoolEntry } from "@/app/types/player";
 import { UserPoolActivityDrawer } from "@/app/components/Drawer/UserPoolActivityDrawer";
+import { Button } from "@/app/components/Button/Button";
 
 interface ActivityRowProps {
   entry: PoolEntry;
@@ -49,12 +50,13 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
       </div>
 
       <div className="col-span-2 md:col-span-1 text-center text-green-main h-full flex items-center justify-center">
-        <span
-          className="block  underline hover:text-primary underline-offset-1 cursor-pointer"
+        <Button
+          size="extraSmall"
+          intent="outlineWhite"
           onClick={() => setOpen(true)}
         >
           View
-        </span>
+        </Button>
       </div>
 
       <UserPoolActivityDrawer entry={entry} open={open} setOpen={setOpen} />

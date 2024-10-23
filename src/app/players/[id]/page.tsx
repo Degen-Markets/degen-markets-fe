@@ -82,7 +82,7 @@ const PlayerPage: FC<{ params: { id: string } }> = async ({ params }) => {
             </div>
           </div>
         </div>
-        {/* <ActivityTable /> */}
+        <ActivityTable />
       </div>
     </Wrapper>
   );
