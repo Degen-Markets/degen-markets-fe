@@ -1,32 +1,33 @@
 import React from "react";
 import ActivityRow from "../ActivityRow";
-import { ActivitiesProps } from "./type";
+import { PoolEntry } from "@/app/types/player";
+import { table } from "console";
 
-const DesktopViewTable: React.FC<ActivitiesProps> = ({ activities }) => {
+interface DesktopViewTableProps {
+  poolEntries: PoolEntry[];
+}
+
+const DesktopViewTable: React.FC<DesktopViewTableProps> = ({ poolEntries }) => {
   return (
-    <div className="hidden md:block overflow-x-auto">
-      <table className="w-full max-w-screen-2xl min-w-[900px]">
-        <thead className="text-xs text-lavender-blue">
-          <tr>
-            <th className="px-6 py-3 text-left">Market</th>
-            <th className="px-6 py-3 text-center">Value</th>
-            <th className="px-6 py-3 text-center whitespace-nowrap">
-              Est. Payout
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {activities.map((activity, index) => (
-            <ActivityRow
-              key={index}
-              marketName={activity.marketName}
-              value={activity.value}
-              payout={activity.payout}
-              imageUrl={activity.imageUrl}
-            />
-          ))}
-        </tbody>
-      </table>
+    <div className="block w-full max-w-screen-2xl overflow-x-auto">
+      <div className="grid grid-cols-6 md:grid-cols-7  text-xs text-lavender-blue px-2 md:pl-4 font-bold border-b border-main divide-x-2 h-16 divide-main">
+        <div className="col-span-4 text-left flex items-center">Market</div>
+        <div className="hidden md:flex col-span-1 text-center  items-center justify-center">
+          Option TVL (SOL)
+        </div>
+        <div className="hidden md:flex col-span-1 text-center items-center justify-center whitespace-nowrap">
+          Pool TVL (SOL)
+        </div>
+        <div className="col-span-2 md:col-span-1 text-center flex items-center justify-center whitespace-nowrap">
+          Pool
+        </div>
+      </div>
+
+      <div className="divide-main">
+        {poolEntries.map((entry) => (
+          <ActivityRow key={entry.address} entry={entry} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileComponent from "@/app/my-profile/_component/ProfileComponent";
 import Wrapper from "../components/Wrapper";
+import ProfileComponent from "./_component/ProfileComponent";
 
 const MyProfile = () => {
   return (
