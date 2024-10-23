@@ -4,6 +4,9 @@ import { solBalance } from "@/app/lib/utils/helpers";
 import Link from "next/link";
 import { Button } from "../Button/Button";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface UserPoolActivityDrawerProps {
   open: boolean;
@@ -32,6 +35,23 @@ interface ActivityCardProps {
 }
 const ActivityCard: React.FC<ActivityCardProps> = ({ entry }) => {
   const { pool, option, value } = entry;
+  const pathname = usePathname();
+  const wallet = useWallet();
+  const publicKey = wallet.publicKey?.toBase58();
+
+  const playerId = useMemo(() => {
+    const match = pathname.match(/^\/players\/([^/]+)$/);
+    return match ? match[1] : null;
+  }, [pathname]);
+
+  const isPlayerRoute = !!playerId;
+
+  const betLabel = useMemo(() => {
+    if (!isPlayerRoute) {
+      return "My Bet";
+    }
+    return publicKey === playerId ? "My Bet" : "Player Bet";
+  }, [isPlayerRoute, publicKey, playerId]);
 
   return (
     <div className="w-full text-white max-w-md mx-auto ">
@@ -70,7 +90,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ entry }) => {
           </span>
         </div>
         <div className="flex justify-between ">
-          <p className="text-sm  font-bold">My Bet</p>
+          <p className="text-sm  font-bold">{betLabel}</p>
           <p className="text-sm ">{solBalance(value)}</p>
         </div>
       </div>
