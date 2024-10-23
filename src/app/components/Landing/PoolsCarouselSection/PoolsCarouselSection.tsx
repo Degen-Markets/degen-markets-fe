@@ -23,8 +23,11 @@ interface PoolsCarouselSectionProps {
 const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
+      loop: true,
       align: "start",
       containScroll: "trimSnaps",
+      skipSnaps: false,
+      dragFree: true,
     },
     [WheelGesturesPlugin()],
   );
@@ -51,9 +54,9 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           />
         }
       >
-        Pools
+        Bets
       </SectionHeadline>
-      <div ref={emblaRef} className="mb-3 lg:mb-6">
+      <div ref={emblaRef} className="mb-3 lg:mb-6 select-none">
         <div className="flex gap-6">
           {pools.map((pool, index) => (
             <div
@@ -65,6 +68,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           ))}
         </div>
       </div>
+
       <div className="flex gap-4 justify-end mr-[10%] mb-6 lg:mb-12">
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
