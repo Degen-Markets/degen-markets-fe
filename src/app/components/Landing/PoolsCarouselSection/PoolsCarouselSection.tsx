@@ -1,7 +1,7 @@
 "use client";
 
 import { PoolsResponse } from "@/app/lib/utils/types";
-import { FC } from "react";
+import { FC, useCallback, useEffect } from "react";
 import PoolCard from "@/app/components/PoolCard.tsx/PoolCard";
 import { Section, SectionHeadline } from "@/app/components/Section";
 import useEmblaCarousel from "embla-carousel-react";
@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import IconButton from "../../Button/IconButton";
 import { SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { twMerge } from "tailwind-merge";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
@@ -60,7 +61,10 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
         <div className="flex gap-6">
           {pools.map((pool, index) => (
             <div
-              className="flex-[0_0_100%] sm:flex-[0_0_calc(100%/2)] md:flex-[0_0_calc(100%/3.5)]"
+              className={twMerge(
+                "flex-[0_0_100%] sm:flex-[0_0_calc(100%/2)] md:flex-[0_0_calc(100%/3.5)]",
+                index === 0 && "ml-6",
+              )}
               key={index}
             >
               <PoolCard pool={pool} className="h-full" />
