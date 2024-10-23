@@ -28,8 +28,8 @@ const config: Config = {
         "4xl": "35px",
       },
       fontFamily: {
-        sans: ["Open Sans", "sans-serif"],
-        montserrat: ["Montserrat", "sans-serif"],
+        sans: ["var(--body-font-family)", "sans-serif"],
+        montserrat: ["var(--headline-font-family)", "sans-serif"],
       },
       colors: colors,
       animation: {

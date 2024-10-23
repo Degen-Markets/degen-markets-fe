@@ -79,13 +79,18 @@
   @apply flex justify-center items-center text-center;
 }
 
+html,
+body {
+  font-family: var(--body-font-family), sans-serif;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: "Montserrat", sans-serif;
+  font-family: var(--headline-font-family), sans-serif;
   font-weight: 500;
   line-height: 1.6;
 }
