@@ -1,7 +1,7 @@
 "use client";
 
 import { PoolsResponse } from "@/app/lib/utils/types";
-import { FC } from "react";
+import { FC, useCallback, useEffect } from "react";
 import PoolCard from "@/app/components/PoolCard.tsx/PoolCard";
 import { Section, SectionHeadline } from "@/app/components/Section";
 import useEmblaCarousel from "embla-carousel-react";
@@ -15,16 +15,23 @@ import {
 import Link from "next/link";
 import IconButton from "../../Button/IconButton";
 import { SquaresPlusIcon } from "@heroicons/react/24/outline";
+import { twMerge } from "tailwind-merge";
+import useMediaQuery from "@/app/hooks/useMediaQuery";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
 }
 
 const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
+  const isMobile = useMediaQuery("(max-width: 640px)");
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
+      loop: true,
       align: "start",
       containScroll: "trimSnaps",
+      skipSnaps: false,
+      dragFree: !isMobile,
     },
     [WheelGesturesPlugin()],
   );
@@ -51,13 +58,16 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           />
         }
       >
-        Pools
+        Bets
       </SectionHeadline>
-      <div ref={emblaRef} className="mb-3 lg:mb-6">
+      <div ref={emblaRef} className="mb-3 lg:mb-6 select-none">
         <div className="flex gap-6">
           {pools.map((pool, index) => (
             <div
-              className="flex-[0_0_100%] sm:flex-[0_0_calc(100%/2)] md:flex-[0_0_calc(100%/3.5)]"
+              className={twMerge(
+                "flex-[0_0_100%] sm:flex-[0_0_calc(100%/2)] md:flex-[0_0_calc(100%/3.5)]",
+                index === 0 && "ml-6",
+              )}
               key={index}
             >
               <PoolCard pool={pool} className="h-full" />
@@ -65,6 +75,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
           ))}
         </div>
       </div>
+
       <div className="flex gap-4 justify-end mr-[10%] mb-6 lg:mb-12">
         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
