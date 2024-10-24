@@ -1,9 +1,13 @@
+"use client";
 import Image from "next/image";
 import { Button } from "@/app/components/Button/Button";
 import { Pool } from "@/app/lib/utils/types";
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import Link from "next/link";
+import useShareOnTwitterFlow from "@/app/hooks/useShareOnTwitterFlow";
+import { useUserProfileContext } from "@/app/context/UserProfileContext";
+import ClaimPoolTweetPointsDialog from "@/app/pools/[id]/ClaimPoolTweetPointsDialog";
 
 interface PoolCardProps {
   pool: Pool;
@@ -11,7 +15,20 @@ interface PoolCardProps {
 }
 
 const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openDialog = useCallback(() => setIsDialogOpen(true), []);
+  const closeDialog = useCallback(() => setIsDialogOpen(false), []);
+
   const link = `/pools/${pool.address}`;
+  const poolId = pool.address;
+  const { userProfile } = useUserProfileContext();
+
+  const { handleShare } = useShareOnTwitterFlow({
+    poolId,
+    openDialog,
+  });
+
   return (
     <div
       className={twMerge(
@@ -40,10 +57,18 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
             {pool.isPaused ? "Claim Win" : "Bet Now"}
           </Button>
         </Link>
-        <Button size="small" intent="outlineWhite">
-          Share
+        <Button size="small" intent="outlineWhite" onClick={handleShare}>
+          Share for points
         </Button>
       </div>
+      {isDialogOpen && !!userProfile?.address && (
+        <ClaimPoolTweetPointsDialog
+          poolId={poolId}
+          isOpen={isDialogOpen}
+          userAddress={userProfile.address}
+          onClose={closeDialog}
+        />
+      )}
     </div>
   );
 };
