@@ -10,8 +10,8 @@ function FooterBottom() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-6 lg:mt-0 lg:pt-10 pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500 sm:border-t lg:border-0">
-      <div className="flex items-center justify-between border-b pb-8">
+    <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-5 lg:mt-0 lg:pt-10 pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500">
+      <div className="flex items-center justify-between border-b mb-3 pb-3 md:pb-8">
         <div className="flex space-x-5 text-black">
           <Link href="/airdrop">Airdrop</Link>
           <Link href="/pools">Pools</Link>
@@ -25,10 +25,14 @@ function FooterBottom() {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-between items-center w-full md:space-x-4">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full">
         <div>©{currentYear} Degen Markets, All rights reserved</div>
         <div>
-          <DgmLogoIcon width={80} height={80} />
+          <DgmLogoIcon
+            width={80}
+            height={80}
+            className="w-14 h-14 md:w-20 md:h-20"
+          />
         </div>
         <div>
           <div className="flex space-x-2">
@@ -48,7 +52,7 @@ function FooterBottom() {
 const Footer = () => {
   return (
     <footer className="bg-white w-full text-main text-base mt-10 lg:mt-20 pt-0 lg:pt-0">
-      <FooterWaveDecoration />
+      {/* <FooterWaveDecoration /> */}
 
       {/* <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2x flex gap-8 bg-white w-full relative">
         <NewsletterSubscription />
