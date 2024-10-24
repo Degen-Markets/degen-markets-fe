@@ -1,21 +1,35 @@
 import Link from "next/link";
 import DgmLogoIcon from "@/app/components/Icons/DgmLogoIcon";
+import XIcon from "../Icons/XIcon";
+import TelegramIcon from "../Icons/TelegramIcon";
 
 function FooterBottom() {
   const currentYear = new Date().getFullYear();
 
   return (
     <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-6 lg:mt-0 lg:pt-10 pb-4 lg:pb-10 px-4 lg:px-12 text-sm text-gray-500 sm:border-t lg:border-0">
-      <div className="flex justify-between items-center w-full space-x-4">
+      <div className="flex flex-col md:flex-row justify-between items-center w-full md:space-x-4">
         <div>©{currentYear} Degen Markets, All rights reserved</div>
-        <DgmLogoIcon width={80} height={80} />
-        <div className="flex space-x-2">
-          <Link href="/" className="text-gray-500 hover:text-main">
-            Terms of Service
-          </Link>
-          <Link href="/" className="text-gray-500 hover:text-main">
-            Privacy Policy
-          </Link>
+        <div>
+          <DgmLogoIcon width={80} height={80} />
+        </div>
+        <div>
+          <div className="flex items-center justify-center space-x-1 mb-2">
+            <Link href="https://x.com/DEGEN_MARKETS" target="_blank">
+              <XIcon className="hover:text-black" />
+            </Link>
+            <Link href="https://t.me/+I6PUfipOKlY5MWUx" target="_blank">
+              <TelegramIcon className="hover:text-black" />
+            </Link>
+          </div>
+          <div className="flex space-x-2">
+            <Link href="/" className="text-gray-500 hover:text-main">
+              Terms of Service
+            </Link>
+            <Link href="/" className="text-gray-500 hover:text-main">
+              Privacy Policy
+            </Link>
+          </div>
         </div>
       </div>
     </div>
