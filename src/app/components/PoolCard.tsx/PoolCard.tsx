@@ -58,7 +58,7 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
           </Button>
         </Link>
         <Button size="small" intent="outlineWhite" onClick={handleShare}>
-          Share
+          Share for points
         </Button>
       </div>
       {isDialogOpen && !!userProfile?.address && (
