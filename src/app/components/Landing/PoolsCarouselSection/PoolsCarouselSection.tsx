@@ -24,9 +24,7 @@ interface PoolsCarouselSectionProps {
 
 const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
   const isMobile = useMediaQuery("(max-width: 640px)");
-  console.log({
-    isMobile,
-  });
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
