@@ -16,19 +16,24 @@ import Link from "next/link";
 import IconButton from "../../Button/IconButton";
 import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 import { twMerge } from "tailwind-merge";
+import useMediaQuery from "@/app/hooks/useMediaQuery";
 
 interface PoolsCarouselSectionProps {
   pools: PoolsResponse;
 }
 
 const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
+  const isMobile = useMediaQuery("(max-width: 640px)");
+  console.log({
+    isMobile,
+  });
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       loop: true,
       align: "start",
       containScroll: "trimSnaps",
       skipSnaps: false,
-      dragFree: true,
+      dragFree: !isMobile,
     },
     [WheelGesturesPlugin()],
   );
