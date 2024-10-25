@@ -24,12 +24,10 @@ const LeaderboardTableRow = ({
     router.push(`/players/${player.address}`);
   }, [player.address, router]);
 
-  const displayName =
-    player.twitterUsername && !isCurrentUser
-      ? `@${player.twitterUsername}`
-      : isCurrentUser
-        ? "@YOU"
-        : getDisplayNameForAddress(player.address);
+  const playerTag = player.twitterUsername
+    ? `@${player.twitterUsername}`
+    : getDisplayNameForAddress(player.address);
+  const displayName = isCurrentUser ? "YOU" : playerTag;
 
   const getClassNames = (baseClass: string, isCurrent: boolean) =>
     twMerge(baseClass, isCurrent ? "text-primary" : "");

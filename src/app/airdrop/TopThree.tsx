@@ -55,12 +55,10 @@ const PlayerCard: FC<{ player: Player; index: number }> = ({
   const publicKey = wallet.publicKey?.toBase58();
   const isCurrentUser = publicKey === player.address;
 
-  const displayName =
-    player.twitterUsername && !isCurrentUser
-      ? `@${player.twitterUsername}`
-      : isCurrentUser
-        ? "@YOU"
-        : getDisplayNameForAddress(player.address);
+  const playerTag = player.twitterUsername
+    ? `@${player.twitterUsername}`
+    : getDisplayNameForAddress(player.address);
+  const displayName = isCurrentUser ? "YOU" : playerTag;
 
   return (
     <div
