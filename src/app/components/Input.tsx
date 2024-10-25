@@ -10,7 +10,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         className={twMerge(
-          "w-full px-3 py-2 text-white bg-blue-light bg-opacity-20 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-light disabled:text-opacity-50",
+          "w-full px-3 py-2 text-black bg-blue-light bg-opacity-20 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-light disabled:text-opacity-50",
           className,
         )}
         ref={ref}
