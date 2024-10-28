@@ -35,7 +35,7 @@ function FooterBottom() {
           <Link href="/" className="hover:text-primary">
             Terms of Service
           </Link>
-          <Link href="/" className="hover:text-main">
+          <Link href="/" className="hover:text-primary">
             Privacy Policy
           </Link>
         </div>

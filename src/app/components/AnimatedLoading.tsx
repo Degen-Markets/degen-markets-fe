@@ -34,7 +34,7 @@ const AnimatedLoading = ({
         className,
       )}
     >
-      <p className="text-xl font-bold" aria-live="polite">
+      <p className="text-xl" aria-live="polite">
         {text}
         <span className="inline-block w-6">{dots}</span>
       </p>
