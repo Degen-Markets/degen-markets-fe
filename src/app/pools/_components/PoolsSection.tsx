@@ -104,7 +104,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
         endMessage={
           !hasMore && (
             <p className="mt-8 text-sm md:text-base text-lavender-blue text-center">
-              No more pools available
+              No more bets available.
             </p>
           )
         }
