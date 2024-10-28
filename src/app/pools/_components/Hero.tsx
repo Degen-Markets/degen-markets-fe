@@ -1,7 +1,6 @@
 import { Section } from "@/app/components/Section";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
-import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 const Hero = () => {
   return (

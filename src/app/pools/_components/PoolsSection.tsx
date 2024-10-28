@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC, useState, useCallback } from "react";
 import axios from "axios";
 import { PoolsResponse, Pool } from "@/app/lib/utils/types";
 import { API_BASE_URL } from "@/app/config/api";
@@ -12,6 +12,8 @@ import {
   SelectValue,
 } from "@/app/components/Select/Select";
 import PoolCard from "@/app/components/PoolCard/PoolCard";
+import InfiniteScroll from "react-infinite-scroll-component";
+import AnimatedLoading from "@/app/components/AnimatedLoading";
 
 interface PoolsSectionProps {
   initialPools: PoolsResponse;
@@ -22,7 +24,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
   const [filters, setFilters] = useState({ status: "", sortBy: "newest" });
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const fetchPools = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -38,9 +40,14 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
         },
       });
 
-      const newPools: Array<Pool> = response.data.pools || [];
-      setPools((prevPools) => [...prevPools, ...newPools]);
+      const newPools: Array<Pool> = response.data || [];
+      if (page === 0) {
+        setPools(newPools);
+      } else {
+        setPools((prevPools) => [...prevPools, ...newPools]);
+      }
       setHasMore(newPools.length > 0);
+      setPage((prevPage) => prevPage + 1);
     } catch (error) {
       console.error("Error fetching pools:", error);
     } finally {
@@ -48,30 +55,13 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
     }
   }, [filters, page, hasMore, loading]);
 
-  const handleScroll = useCallback(() => {
-    const reachedBottom =
-      window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.offsetHeight - 100;
-    if (reachedBottom) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
-
-  useEffect(() => {
-    fetchPools();
-  }, [filters, page, fetchPools]);
-
   const handleFilterChange = (name: string, value: string) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [name]: value === "*" ? "" : value,
     }));
     resetPools();
+    fetchPools();
   };
 
   const resetPools = () => {
@@ -102,18 +92,25 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
         />
       </div>
 
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {pools.map((pool, index) => (
-          <PoolCard pool={pool} key={index} />
-        ))}
-      </section>
-
-      {loading && <p className="mt-8 text-main text-center">Loading...</p>}
-      {!hasMore && (
-        <p className="mt-8 text-lavender-blue text-center">
-          No more pools available
-        </p>
-      )}
+      <InfiniteScroll
+        dataLength={pools.length}
+        next={fetchPools}
+        hasMore={hasMore}
+        loader={<AnimatedLoading className="text-main text-center" />}
+        endMessage={
+          !hasMore && (
+            <p className="mt-8 text-lavender-blue text-center">
+              No more pools available
+            </p>
+          )
+        }
+      >
+        <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {pools.map((pool, index) => (
+            <PoolCard pool={pool} key={index} />
+          ))}
+        </section>
+      </InfiniteScroll>
     </div>
   );
 };
