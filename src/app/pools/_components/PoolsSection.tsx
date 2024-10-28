@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, useCallback } from "react";
+import { FC, useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import { PoolsResponse, Pool } from "@/app/lib/utils/types";
 import { API_BASE_URL } from "@/app/config/api";
@@ -61,7 +61,6 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       [name]: value === "*" ? "" : value,
     }));
     resetPools();
-    fetchPools();
   };
 
   const resetPools = () => {
@@ -69,6 +68,10 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
     setPage(0);
     setHasMore(true);
   };
+
+  useEffect(() => {
+    fetchPools();
+  }, [filters, fetchPools]);
 
   return (
     <div className="relative -mt-[100px] lg:-mt-[264px] z-10">
@@ -79,7 +82,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
           options={[
             { value: "*", label: "All Pools" },
             { value: "ongoing", label: "Ongoing" },
-            { value: "paused", label: "Paused" },
+            { value: "completed", label: "Completed" },
           ]}
         />
         <FilterSelect
@@ -93,13 +96,14 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       </div>
 
       <InfiniteScroll
+        style={{ overflowX: "hidden" }}
         dataLength={pools.length}
         next={fetchPools}
         hasMore={hasMore}
         loader={<AnimatedLoading className="text-main text-center" />}
         endMessage={
           !hasMore && (
-            <p className="mt-8 text-lavender-blue text-center">
+            <p className="mt-8 text-sm md:text-base text-lavender-blue text-center">
               No more pools available
             </p>
           )
