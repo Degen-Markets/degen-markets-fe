@@ -28,4 +28,10 @@ export const claimPoolTweetPoints = ({
 }> =>
   axios
     .post(`${API_BASE_URL}/claim-pool-tweet-points`, { tweetUrl })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => {
+      if (axios.isAxiosError(err)) {
+        throw new Error(err.response?.data.message);
+      }
+      throw err;
+    });

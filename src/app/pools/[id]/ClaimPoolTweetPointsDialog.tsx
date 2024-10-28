@@ -34,12 +34,14 @@ const ClaimPoolTweetPointsDialog = ({
 
   const verifyClaim = useCallback(async () => {
     setIsVerifyingClaim(true);
-    const claimTrial = await tryItAsync(() =>
-      claimPoolTweetPoints({ tweetUrl }),
-    );
+    const claimTrial = await tryItAsync<
+      Awaited<ReturnType<typeof claimPoolTweetPoints>>,
+      Error
+    >(() => claimPoolTweetPoints({ tweetUrl }));
 
     if (!claimTrial.success) {
-      showToast("Failed to claim points. Please try again.", "error");
+      const errMsg = claimTrial.err.message || "Failed to claim points";
+      showToast(errMsg, "error");
       console.error(claimTrial.err);
       setIsVerifyingClaim(false);
       return;
