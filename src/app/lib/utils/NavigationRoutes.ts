@@ -38,6 +38,13 @@ const NavigationRoutes: NavigationProps = {
         isExpandable: false,
       },
       {
+        name: "Create bet",
+        icon: "",
+        route: "/pools/create",
+        isExpandable: false,
+        protected: false,
+      },
+      {
         name: "Airdrop",
         icon: "",
         route: "/airdrop",
@@ -49,13 +56,6 @@ const NavigationRoutes: NavigationProps = {
         route: "/my-profile",
         isExpandable: false,
         protected: true,
-      },
-      {
-        name: "Create bet",
-        icon: "",
-        route: "/pools/create",
-        isExpandable: false,
-        protected: false,
       },
     ],
   },

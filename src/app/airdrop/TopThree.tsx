@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 import { Player } from "@/app/types/player";
 import UserAvatar from "@/app/components/UserAvatar";
@@ -5,6 +6,7 @@ import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { TrophyIcon } from "@heroicons/react/24/solid";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Props {
   players: Player[];
@@ -46,9 +48,17 @@ const PlayerCard: FC<{ player: Player; index: number }> = ({
   player,
   index,
 }) => {
+  const wallet = useWallet();
   const isMiddlePlayer = index === 1;
   const rankClass = RankColors[index];
   const backgroundColorClass = BackgroundColors[index];
+  const publicKey = wallet.publicKey?.toBase58();
+  const isCurrentUser = publicKey === player.address;
+
+  const playerTag = player.twitterUsername
+    ? `@${player.twitterUsername}`
+    : getDisplayNameForAddress(player.address);
+  const displayName = isCurrentUser ? "YOU" : playerTag;
 
   return (
     <div
@@ -70,11 +80,12 @@ const PlayerCard: FC<{ player: Player; index: number }> = ({
         />
         <Link
           href={`/players/${player.address}`}
-          className="text-xs lg:text-lg font-semibold mb-4 lg:mb-3"
+          className={twMerge(
+            "text-xs lg:text-lg font-semibold mb-4 lg:mb-3",
+            isCurrentUser && "text-primary",
+          )}
         >
-          {player.twitterUsername
-            ? `@${player.twitterUsername}`
-            : getDisplayNameForAddress(player.address)}
+          {displayName}
         </Link>
       </div>
       <GradientSVG />

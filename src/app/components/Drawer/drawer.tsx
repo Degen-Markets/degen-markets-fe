@@ -11,7 +11,7 @@ import {
 import {
   drawerOverlayVariants,
   drawerVariants,
-} from "@/app/lib/utils/drawer/constant";
+} from "@/app/lib/utils/drawer/constants";
 
 const Drawer = ({
   shouldScaleBackground = true,

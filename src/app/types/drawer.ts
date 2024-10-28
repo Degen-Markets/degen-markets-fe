@@ -3,7 +3,7 @@ import { Drawer as DrawerPrimitive } from "vaul";
 import {
   drawerOverlayVariants,
   drawerVariants,
-} from "../lib/utils/drawer/constant";
+} from "../lib/utils/drawer/constants";
 
 export interface DrawerOverlayProps
   extends React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>,
