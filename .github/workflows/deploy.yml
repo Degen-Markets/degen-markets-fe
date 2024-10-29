@@ -54,8 +54,8 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-          API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          NEXT_PUBLIC_HELIUS_URL: ${{ secrets.HELIUS_URL }}
+          NEXT_PUBLIC_API_BASE_URL: "https://api.degenmarkets.com"
+          NEXT_PUBLIC_HELIUS_URL: "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b"
         run: |
           npm install -g vercel
 
@@ -67,7 +67,7 @@ jobs:
             --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log
           else
             # Preview deployment
-            vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID
+            vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID \
             --env API_BASE_URL=$API_BASE_URL \
             --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log
           fi

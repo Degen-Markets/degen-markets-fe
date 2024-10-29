@@ -10,7 +10,7 @@ on:
         options: ["dev"]
       api_url:
         description: "API URL"
-        default: "https://api.degenmarkets.com"
+        default: "https://dev-api.degenmarkets.com"
         type: string
       helius_rpc_url:
         description: "Helius RPC URL"
