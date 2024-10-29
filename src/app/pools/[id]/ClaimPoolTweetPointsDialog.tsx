@@ -40,7 +40,7 @@ const ClaimPoolTweetPointsDialog = ({
     >(() => claimPoolTweetPoints({ tweetUrl }));
 
     if (!claimTrial.success) {
-      const errMsg = claimTrial.err.message || "Failed to claim points";
+      const errMsg = claimTrial.err.message;
       showToast(errMsg, "error");
       console.error(claimTrial.err);
       setIsVerifyingClaim(false);
