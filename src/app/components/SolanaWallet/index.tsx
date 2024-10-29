@@ -9,15 +9,30 @@ import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import "@solana/wallet-adapter-react-ui/styles.css";
 import "./index.css";
 import { WalletIcon } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import { getFreeNameDomainByAddress } from "@/app/api/freename";
 
 const SolanaWallet = () => {
   const { userProfile } = useUserProfileContext();
   const { publicKey, connected, connecting } = useWallet();
+  const [freenameDomain, setFreenameDomain] = useState<string | null>(null);
 
   const publicKeyStr = publicKey?.toBase58();
   const walletAddrDisplayStr = publicKeyStr
     ? getDisplayNameForAddress(publicKeyStr)
     : null;
+
+  useEffect(() => {
+    const fetchDomain = async () => {
+      if (publicKeyStr) {
+        const response = await getFreeNameDomainByAddress(publicKeyStr);
+        if (response) {
+          setFreenameDomain(response);
+        }
+      }
+    };
+    fetchDomain();
+  }, [publicKeyStr]);
 
   return (
     <WalletMultiButton>
@@ -30,7 +45,7 @@ const SolanaWallet = () => {
               width={90}
               height={90}
             />
-            {walletAddrDisplayStr}
+            {freenameDomain || walletAddrDisplayStr}
           </>
         ) : (
           <>
