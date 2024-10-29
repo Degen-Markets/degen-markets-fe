@@ -1,0 +1,78 @@
+name: Deploy to Dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      env_name:
+        description: "Environment"
+        default: "dev"
+        type: choice
+        options: ["dev"]
+      api_url:
+        description: "API URL"
+        default: "https://dev-api.degenmarkets.com"
+        type: string
+      helius_rpc_url:
+        description: "Helius RPC URL"
+        default: "https://devnet.helius-rpc.com/?api-key=d89de0bd-ea34-4f41-9f17-5e0715a54d78"
+        type: string
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Linting with ESLint
+        run: npm run lint
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Remove .vercel directory
+        run: rm -rf .vercel
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          NEXT_PUBLIC_API_BASE_URL: ${{ github.event.inputs.api_url }}
+          NEXT_PUBLIC_HELIUS_URL: ${{ github.event.inputs.helius_rpc_url }}
+        run: |
+          npm install -g vercel
+          # Deploy to Vercel and capture the deployment URL
+          DEPLOYMENT_URL=$(vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --yes --env NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log | grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app')
+          echo "Primary Deployment URL: $DEPLOYMENT_URL"
+
+          # Attempt to assign the alias and capture any errors
+          set -o pipefail
+          vercel alias set $DEPLOYMENT_URL dev.degenmarkets.com --token $VERCEL_TOKEN || {
+            echo "Failed to set alias. Check domain permissions."
+            exit 1
+          }
