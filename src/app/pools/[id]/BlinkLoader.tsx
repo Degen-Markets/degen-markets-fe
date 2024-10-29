@@ -8,7 +8,8 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { formatNumberToSignificantDigits } from "@/app/lib/utils/helpers";
 import { useMemo } from "react";
 
-const RPC_URL =
+const HELIUS_RPC_URL =
+  process.env.NEXT_PUBLIC_HELIUS_URL ||
   "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b";
 
 interface BlinkCardProps {
@@ -19,7 +20,7 @@ const BlinkLoader = ({ poolId, poolValue }: BlinkCardProps) => {
   // will get redirected to https://actions.degenmarkets.com/pools/${poolId} because of actions.json
   const actionApiUrl = `https://degenmarkets.com/pools/${poolId}`;
 
-  const { adapter } = useActionSolanaWalletAdapter(RPC_URL);
+  const { adapter } = useActionSolanaWalletAdapter(HELIUS_RPC_URL);
   const { action } = useAction({ url: actionApiUrl, adapter });
 
   const poolVolume = useMemo(() => {
