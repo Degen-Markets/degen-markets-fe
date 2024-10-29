@@ -5,8 +5,8 @@ export const getFreeNameDomainByAddress = async (
   address: string,
 ): Promise<string | null> => {
   const response = await axios.get(
-    `${FREENAME_API_BASE_URL}resolver/resolve/address/${address}`,
+    `${FREENAME_API_BASE_URL}/resolver/resolve/address/${address}`,
     {},
   );
-  return response.data;
+  return response.data.data.host;
 };
