@@ -100,7 +100,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
         dataLength={pools.length}
         next={fetchPools}
         hasMore={hasMore}
-        loader={<AnimatedLoading className="text-main text-center" />}
+        loader={<AnimatedLoading className="text-white text-center" />}
         endMessage={
           !hasMore && (
             <p className="mt-8 text-sm md:text-base text-lavender-blue text-center">
