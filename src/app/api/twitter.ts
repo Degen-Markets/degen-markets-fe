@@ -28,4 +28,12 @@ export const claimPoolTweetPoints = ({
 }> =>
   axios
     .post(`${API_BASE_URL}/claim-pool-tweet-points`, { tweetUrl })
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .catch((err) => {
+      let errMsg = "Failed to claim points";
+      if (axios.isAxiosError(err)) {
+        errMsg = err.response?.data.message;
+      }
+
+      throw new Error(errMsg);
+    });
