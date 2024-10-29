@@ -72,7 +72,7 @@ jobs:
 
           # Attempt to assign the alias and capture any errors
           set -o pipefail
-          vercel alias set $DEPLOYMENT_URL dev.degenmarkets.com --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID || {
+          vercel alias set $(echo $DEPLOYMENT_URL | sed 's|https\?://||') dev.degenmarkets.com --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID || {
             echo "Failed to set alias. Check domain permissions."
             exit 1
           }
