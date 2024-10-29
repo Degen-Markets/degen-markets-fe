@@ -63,12 +63,12 @@ jobs:
           if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
             # Production deployment
             vercel --prod --token $VERCEL_TOKEN \
-            --env API_BASE_URL=$API_BASE_URL \
+            --env NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
             --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log
           else
             # Preview deployment
             vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID \
-            --env API_BASE_URL=$API_BASE_URL \
+            --env NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
             --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log
           fi
 
