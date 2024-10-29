@@ -147,7 +147,7 @@ export default function NotFound() {
             className="transition-all duration-500"
           />
         </svg>
-        <h1 className="text-4xl font-bold text-swhite mb-4 animate-fade-in-down">
+        <h1 className="text-4xl font-bold text-white mb-4 animate-fade-in-down">
           404 - Page Not Found
         </h1>
         <p className="text-xl text-lavender-blue mb-8 animate-fade-in-up">
