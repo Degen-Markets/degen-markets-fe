@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, useCallback, useEffect } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { PoolsResponse, Pool } from "@/app/lib/utils/types";
 import { API_BASE_URL } from "@/app/config/api";
@@ -25,8 +25,9 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const skipInitialFetch = useRef(true);
 
-  const fetchPools = useCallback(async () => {
+  const fetchPools = async () => {
     if (loading || !hasMore) return;
 
     setLoading(true);
@@ -53,7 +54,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
     } finally {
       setLoading(false);
     }
-  }, [filters, page, hasMore, loading]);
+  };
 
   const handleFilterChange = (name: string, value: string) => {
     setFilters((prevFilters) => ({
@@ -70,8 +71,12 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
   };
 
   useEffect(() => {
-    fetchPools();
-  }, [filters, fetchPools]);
+    if (skipInitialFetch.current) {
+      skipInitialFetch.current = false;
+      return;
+    }
+    fetchPools().then();
+  }, [filters]);
 
   return (
     <div className="relative -mt-[100px] lg:-mt-[264px] z-10">
