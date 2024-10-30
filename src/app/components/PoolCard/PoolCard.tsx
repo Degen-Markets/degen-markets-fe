@@ -55,8 +55,7 @@ const PoolCard: FC<PoolCardProps> = ({
   return (
     <div
       className={twMerge(
-        "relative flex flex-col h-full p-4 lg:p-8 bg-steel-gray rounded-lg lg:rounded-2xl transition-transform duration-300 hover:scale-105 animate-border",
-        "[background:linear-gradient(45deg,#212131,#212131,#212131)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,theme(colors.indigo.500)_86%,theme(colors.indigo.300)_90%,theme(colors.indigo.500)_94%,theme(colors.slate.600/.48))_border-box]",
+        "relative flex bg-steel-gray flex-col h-full p-4 lg:p-8  rounded-lg lg:rounded-2xl [background:linear-gradient(45deg,#212131,#212131,#212131)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.slate.600/.48)_80%,theme(colors.indigo.500)_86%,theme(colors.indigo.300)_90%,theme(colors.indigo.500)_94%,theme(colors.slate.600/.48))_border-box] hover:border border-transparent animate-border transform transition duration-300 hover:scale-105",
         className,
       )}
     >
