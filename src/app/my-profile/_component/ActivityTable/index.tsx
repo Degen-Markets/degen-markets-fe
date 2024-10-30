@@ -8,51 +8,12 @@ import { getPlayerStats } from "@/app/api/players";
 import { useWallet } from "@solana/wallet-adapter-react";
 import Loader from "@/app/components/Icons/Loader";
 import { usePathname } from "next/navigation";
+import usePlayerStats from "@/app/hooks/usePlayerStats";
 
 const ActivityTable: React.FC = () => {
-  const pathname = usePathname();
-  const wallet = useWallet();
-  const publicKey = wallet.publicKey?.toBase58();
-  const [isPlayerStatsLoading, setIsPlayerStatsLoading] =
-    useState<boolean>(true);
-  const [playerStats, setPlayerStats] = useState<PlayerStats | undefined>();
+  const { isLoading, playerStats } = usePlayerStats();
 
-  const address = useMemo(() => {
-    const match = pathname.match(/^\/players\/([^/]+)$/);
-    return match ? match[1] : publicKey;
-  }, [pathname, publicKey]);
-
-  const fetchPlayerStats = useCallback(async (address: string) => {
-    setIsPlayerStatsLoading(true);
-    try {
-      const { data } = await getPlayerStats(address);
-      setPlayerStats(data);
-    } catch (error) {
-      console.error("Failed to fetch user profile", error);
-    } finally {
-      setIsPlayerStatsLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (address) {
-      fetchPlayerStats(address);
-    }
-  }, [fetchPlayerStats, address]);
-
-  if (isPlayerStatsLoading) {
-    return (
-      <>
-        <SectionHeadline>Activity</SectionHeadline>
-        <div className="w-full flex items-center justify-center h-40 space-x-2">
-          <Loader />
-          <p className="text-xl">Loading Activities...</p>
-        </div>
-      </>
-    );
-  }
-
-  if (isPlayerStatsLoading) {
+  if (isLoading) {
     return (
       <>
         <SectionHeadline>Activity</SectionHeadline>

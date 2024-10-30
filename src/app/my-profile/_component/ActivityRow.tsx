@@ -4,6 +4,7 @@ import { solBalance } from "@/app/lib/utils/helpers";
 import { PoolEntry } from "@/app/types/player";
 import { UserPoolActivityDrawer } from "@/app/components/Drawer/UserPoolActivityDrawer";
 import { Button } from "@/app/components/Button/Button";
+import { usePlayerBetLabel } from "@/app/hooks/usePlayerBetLabel";
 
 interface ActivityRowProps {
   entry: PoolEntry;
@@ -12,7 +13,7 @@ interface ActivityRowProps {
 const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
   const { option, pool, value } = entry;
   const [open, setOpen] = useState<boolean>(false);
-
+  const betLabel = usePlayerBetLabel();
   return (
     <div className="grid grid-cols-6 md:grid-cols-7 gap-4 items-center px-2 md:pl-4  bg-steel-gray h-20 border-b-4 border-b-main">
       <div className="col-span-4 flex items-center space-x-2">
@@ -27,7 +28,7 @@ const ActivityRow: React.FC<ActivityRowProps> = ({ entry }) => {
           <p className="mb-1 w-full line-clamp-1">{pool.title}</p>
           <div className="flex items-center text-sm text-gray-400">
             <p className="bg-black-light font-bold hidden md:block">
-              You bet:
+              {betLabel}:
               <span className="text-primary-light px-1 py-0.5 ">
                 {option.title}
               </span>

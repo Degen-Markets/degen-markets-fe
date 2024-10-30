@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { usePlayerBetLabel } from "@/app/hooks/usePlayerBetLabel";
 
 interface UserPoolActivityDrawerProps {
   open: boolean;
@@ -35,23 +36,7 @@ interface ActivityCardProps {
 }
 const ActivityCard: React.FC<ActivityCardProps> = ({ entry }) => {
   const { pool, option, value } = entry;
-  const pathname = usePathname();
-  const wallet = useWallet();
-  const publicKey = wallet.publicKey?.toBase58();
-
-  const playerId = useMemo(() => {
-    const match = pathname.match(/^\/players\/([^/]+)$/);
-    return match ? match[1] : null;
-  }, [pathname]);
-
-  const isPlayerRoute = !!playerId;
-
-  const betLabel = useMemo(() => {
-    if (!isPlayerRoute) {
-      return "My Bet";
-    }
-    return publicKey === playerId ? "My Bet" : "Player Bet";
-  }, [isPlayerRoute, publicKey, playerId]);
+  const betLabel = usePlayerBetLabel();
 
   return (
     <div className="w-full text-white max-w-md mx-auto ">
