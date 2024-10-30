@@ -40,12 +40,12 @@ const PoolCard: FC<PoolCardProps> = ({
 
   const badgeDetails = useMemo(() => {
     if (poolValue > 0.5) {
-      return { variant: "text-danger", text: "Hot" };
+      return { className: "text-danger", text: "Hot" };
     }
     if (isWithinTwoWeeks(pool.createdAt)) {
-      return { variant: "text-success", text: "New" };
+      return { className: "text-success", text: "New" };
     }
-    return { variant: "", text: "" };
+    return { className: "", text: "" };
   }, [poolValue, pool.createdAt]);
 
   const shouldDisplayBadge =
@@ -64,7 +64,7 @@ const PoolCard: FC<PoolCardProps> = ({
         <Badge
           className={twMerge(
             "z-10 absolute left-0 top-12 rounded-l-none pr-4",
-            badgeDetails.variant,
+            badgeDetails.className,
           )}
         >
           {badgeDetails.text}
