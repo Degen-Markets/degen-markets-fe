@@ -17,6 +17,7 @@ export type Pool = {
   image: `https://${string}`;
   isPaused: boolean;
   value: string;
+  createdAt: string;
 };
 
 export type PoolsResponse = Pool[];
