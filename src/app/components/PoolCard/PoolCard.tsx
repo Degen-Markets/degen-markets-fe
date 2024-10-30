@@ -14,8 +14,6 @@ import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import isWithinTwoWeeks from "@/app/lib/utils/isWithinTwoWeeks";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
-type BadgeVariant = "secondary" | "default" | "outline" | "success" | "danger";
-
 interface PoolCardProps {
   pool: Pool;
   className?: string;
@@ -42,12 +40,12 @@ const PoolCard: FC<PoolCardProps> = ({
 
   const badgeDetails = useMemo(() => {
     if (poolValue > 0.5) {
-      return { variant: "text-danger" as BadgeVariant, text: "Hot" };
+      return { variant: "text-danger", text: "Hot" };
     }
     if (isWithinTwoWeeks(pool.createdAt)) {
-      return { variant: "text-success" as BadgeVariant, text: "New" };
+      return { variant: "text-success", text: "New" };
     }
-    return { variant: "" as BadgeVariant, text: "" };
+    return { variant: "", text: "" };
   }, [poolValue, pool.createdAt]);
 
   const shouldDisplayBadge =
