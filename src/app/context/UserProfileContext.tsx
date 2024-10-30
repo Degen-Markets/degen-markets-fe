@@ -18,7 +18,7 @@ type UserProfile = Player | null;
 export interface UserContextType {
   userProfile: UserProfile;
   isProfileLoading: boolean;
-  isProfileFetchInititated: boolean;
+  isProfileFetchInitiated: boolean;
   setUserProfile: React.Dispatch<React.SetStateAction<UserProfile>>;
 }
 
@@ -37,7 +37,7 @@ export const UserProfileProvider = ({
   const [userProfile, setUserProfile] =
     useState<UserProfile>(initialUserProfile);
   const [isProfileLoading, setIsProfileLoading] = useState<boolean>(false);
-  const [isProfileFetchInititated, setIsProfileFetchInititated] =
+  const [isProfileFetchInitiated, setIsProfileFetchInitiated] =
     useState<boolean>(false);
 
   const router = useRouter();
@@ -47,11 +47,13 @@ export const UserProfileProvider = ({
 
   const fetchUserProfile = useCallback(
     async (address: string) => {
-      setIsProfileFetchInititated(true);
+      setIsProfileFetchInitiated(true);
       setIsProfileLoading(true);
       const playerData = await getPlayerById(address);
       if (!playerData) {
         console.error("Failed to fetch user profile");
+        setIsProfileLoading(false);
+        setIsProfileFetchInitiated(false);
         return;
       }
 
@@ -73,7 +75,7 @@ export const UserProfileProvider = ({
       fetchUserProfile(publicKey);
     } else if (!wallet.connected) {
       setUserProfile(initialUserProfile); // Reset profile on wallet disconnection
-      setIsProfileFetchInititated(false);
+      setIsProfileFetchInitiated(false);
     }
   }, [wallet.connected, publicKey, fetchUserProfile]);
 
@@ -83,7 +85,7 @@ export const UserProfileProvider = ({
         userProfile,
         setUserProfile,
         isProfileLoading,
-        isProfileFetchInititated,
+        isProfileFetchInitiated,
       }}
     >
       {children}

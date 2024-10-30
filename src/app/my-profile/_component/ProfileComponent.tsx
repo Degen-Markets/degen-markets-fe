@@ -28,15 +28,15 @@ const ProfileComponent: FC = () => {
 
 const useProfileNotFoundHandler = () => {
   const { showToast } = useToast();
-  const { userProfile, isProfileLoading, isProfileFetchInititated } =
+  const { userProfile, isProfileLoading, isProfileFetchInitiated } =
     useUserProfileContext();
 
   useEffect(() => {
     // if profile was not available on backend
-    if (isProfileFetchInititated && !isProfileLoading && !userProfile) {
+    if (isProfileFetchInitiated && !isProfileLoading && !userProfile) {
       showToast("Profile not found! Please connect to X", "error");
     }
-  }, [isProfileFetchInititated, isProfileLoading, userProfile, showToast]);
+  }, [isProfileFetchInitiated, isProfileLoading, userProfile, showToast]);
 };
 
 export default ProfileComponent;
