@@ -78,9 +78,7 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
 
   const totalPnL = totalWinningAmount - totalBetAmount;
   const pnlPercentage =
-    totalBetAmount > 0
-      ? ((totalWinningAmount - totalBetAmount) / totalBetAmount) * 100
-      : 0; // Handle division by zero case
+    totalBetAmount > 0 ? (totalPnL / totalBetAmount) * 100 : 0; // Handle division by zero case
 
   return {
     totalPnL,
