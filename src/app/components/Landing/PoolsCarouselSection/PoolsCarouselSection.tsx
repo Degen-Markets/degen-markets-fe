@@ -1,8 +1,8 @@
 "use client";
 
 import { PoolsResponse } from "@/app/lib/utils/types";
-import { FC, useCallback, useEffect } from "react";
-import PoolCard from "@/app/components/PoolCard.tsx/PoolCard";
+import { FC } from "react";
+import PoolCard from "@/app/components/PoolCard/PoolCard";
 import { Section, SectionHeadline } from "@/app/components/Section";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";

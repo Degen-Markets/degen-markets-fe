@@ -1,18 +1,17 @@
 import { Section } from "@/app/components/Section";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
-import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 const Hero = () => {
   return (
-    <div className="relative bg-primary h-[320px] lg:h-[520px]">
-      <Section className="text-center z-10 relative">
-        <h3 className="px-4 lg:px-[20%] text-base lg:text-xl">
+    <div className="relative bg-primary h-[330px] lg:h-[520px]">
+      <Section className="md:text-center z-10 relative">
+        <h3 className="md:px-4 lg:px-[20%] text-base lg:text-xl">
           All the bets posted on X are displayed here. To create your own bets,
           visit our X account and interact with the pinned tweet or click the
           button below
         </h3>
-        <div className="flex items-center justify-center mt-3 lg:mt-6">
+        <div className="flex items-center md:justify-center mt-3 lg:mt-6">
           <Link href="/pools/create">
             <Button intent="secondary">Create Bet</Button>
           </Link>
