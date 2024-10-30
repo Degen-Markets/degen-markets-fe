@@ -11,6 +11,7 @@ const colors = {
   "success-light": "#6EE7A9",
   "lavender-blue": "#A6B1D6",
   "steel-gray": "#212131",
+  gunmetal: "#525E64",
   gold: "#E4D493",
   silver: "#D2AB6D",
   bronze: "#DCDCDC",

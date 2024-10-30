@@ -11,7 +11,7 @@ const PoolsPage = async () => {
     <div>
       <Hero />
       <Wrapper>
-        <PoolsSection pools={pools} />
+        <PoolsSection initialPools={pools} />
       </Wrapper>
     </div>
   );
