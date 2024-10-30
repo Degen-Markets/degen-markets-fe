@@ -92,7 +92,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
         />
         <FilterSelect
           onValueChange={(value) => handleFilterChange("sortBy", value)}
-          placeholder="Sort By:"
+          placeholder="Sort By"
           options={[
             { value: "newest", label: "Newest" },
             { value: "highestVolume", label: "Highest Volume" },
@@ -101,7 +101,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       </div>
 
       <InfiniteScroll
-        style={{ overflowX: "hidden" }}
+        style={{ overflow: "initial" }}
         dataLength={pools.length}
         next={fetchPools}
         hasMore={hasMore}
