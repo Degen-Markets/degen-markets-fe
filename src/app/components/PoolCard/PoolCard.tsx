@@ -48,7 +48,7 @@ const PoolCard: FC<PoolCardProps> = ({ pool, className }) => {
         </Link>
       </div>
       <h3 className="font-semibold text-base mb-2">{pool.title}</h3>
-      <p className="text-lavender-blue text-sm mb-4 flex-grow text-wrap">
+      <p className="text-lavender-blue text-sm mb-4 flex-grow text-wrap break-words">
         {pool.description}
       </p>
       <div className="flex gap-4 justify-end mt-6">
