@@ -53,7 +53,7 @@ const useConnectProfileThen = () => {
     const isAuthFlowPending =
       visible || // wallet modal is open
       userProfileContext.isProfileLoading || // profile is still loading
-      !userProfileContext.isProfileFetchInititated; // or profile load has not yet been attempted
+      !userProfileContext.isProfileFetchInitiated; // or profile load has not yet been attempted
 
     if (isAuthFlowPending) {
       return;
@@ -71,7 +71,7 @@ const useConnectProfileThen = () => {
     connected,
     userProfileContext.userProfile,
     userProfileContext.isProfileLoading,
-    userProfileContext.isProfileFetchInititated,
+    userProfileContext.isProfileFetchInitiated,
     visible,
   ]);
 
