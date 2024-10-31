@@ -49,7 +49,7 @@ const usePlayerStats = () => {
   const totalVolume = useMemo(() => {
     if (!playerStats.poolEntries) return 0n;
     return playerStats.poolEntries.reduce(
-      (sum, entry) => sum + (entry.value ? BigInt(entry.value) : 0n),
+      (sum, entry) => sum + BigInt(entry.value),
       0n,
     );
   }, [playerStats]);

@@ -16,7 +16,7 @@ const UserProfileInfo: React.FC = () => {
     if (playerStats) {
       return calculatePlayerPnL(playerStats);
     }
-    return { totalPnL: 0, pnlPercentage: 0 };
+    return { totalPnL: 0n, pnlPercentage: 0 };
   }, [playerStats]);
 
   const stats = [
@@ -31,7 +31,7 @@ const UserProfileInfo: React.FC = () => {
           <span
             className={twMerge(
               "text-xs",
-              totalPnL < 0 ? "text-danger" : "text-success",
+              totalPnL < 0n ? "text-danger" : "text-success",
             )}
           >
             {`(${pnlPercentage < 0 ? "" : "+"}${pnlPercentage.toFixed(2)}%)`}

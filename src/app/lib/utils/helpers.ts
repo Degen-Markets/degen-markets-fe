@@ -1,4 +1,5 @@
 import { PlayerStats } from "@/app/types/player";
+import { BigIntFormatter } from "./bigintFormat";
 
 export const getDisplayNameForAddress = (address: string): string =>
   address.slice(0, 4) + "..." + address.slice(-5);
@@ -36,7 +37,7 @@ export function formatNumberToSignificantDigits(number: number): string {
 }
 
 export function solBalance(
-  balance: number | string | bigint,
+  balance: string | bigint,
   showSolLabel: boolean = true,
 ): string {
   const formatter = new BigIntFormatter(balance);
@@ -45,7 +46,7 @@ export function solBalance(
 }
 
 export function calculatePlayerPnL(playerStats: PlayerStats): {
-  totalPnL: number;
+  totalPnL: bigint;
   pnlPercentage: number;
 } {
   let totalWinningAmount = 0n;
@@ -65,79 +66,14 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
   });
 
   const totalPnL = totalWinningAmount - totalBetAmount;
+  let pnlPercentage = 0;
 
-  const formatter = new BigIntFormatter(totalPnL);
-  const pnlPercentage = +formatter.calculatePercentage(totalBetAmount);
-
+  if (totalBetAmount !== 0n) {
+    const formatter = new BigIntFormatter(totalPnL);
+    pnlPercentage = +formatter.calculatePercentage(totalBetAmount);
+  }
   return {
-    totalPnL: Number(totalPnL),
+    totalPnL,
     pnlPercentage,
   };
-}
-
-class BigIntFormatter {
-  private value: bigint;
-
-  constructor(value: bigint | number | string) {
-    this.value = typeof value === "bigint" ? value : BigInt(value);
-  }
-
-  // Returns the integer and decimal parts with desired precision
-  formatWithPrecision(
-    divisor: bigint,
-    decimalPlaces: number,
-    showLabel: string = "",
-  ): string {
-    if (this.value === 0n) {
-      return showLabel ? `0 ${showLabel}` : "0";
-    }
-
-    const isNegative = this.value < 0n;
-    const absValue = isNegative ? -this.value : this.value;
-
-    // Integer part and decimal part calculation
-    const integerPart = absValue / divisor;
-    const remainder = absValue % divisor;
-    const decimalPart = (remainder * BigInt(10 ** decimalPlaces)) / divisor;
-
-    // Format decimal part with padding and trimming
-    let formattedDecimalPart = decimalPart
-      .toString()
-      .padStart(decimalPlaces, "0");
-    formattedDecimalPart = formattedDecimalPart.replace(/0+$/, "");
-
-    return `${isNegative ? "-" : ""}${integerPart}${formattedDecimalPart ? "." + formattedDecimalPart : ""}${showLabel ? ` ${showLabel}` : ""}`;
-  }
-
-  // Specific method for Solana balance (with 5 decimal places)
-  formatSolBalance(showLabel: boolean = true): string {
-    const LAMPORTS_PER_SOL = 1_000_000_000n;
-    return this.formatWithPrecision(
-      LAMPORTS_PER_SOL,
-      5,
-      showLabel ? "SOL" : "",
-    );
-  }
-
-  // Specific method for calculating percentage with 2 decimal places
-  calculatePercentage(totalAmount: bigint, decimalPlaces: number = 2): string {
-    if (totalAmount === 0n) {
-      return "0.00";
-    }
-    const isNegative = this.value < 0n;
-    const absValue = isNegative ? -this.value : this.value;
-
-    const percentage =
-      (absValue * BigInt(10 ** (decimalPlaces + 2))) / totalAmount;
-    const integerPart = percentage / BigInt(10 ** decimalPlaces);
-    const decimalPart = percentage % BigInt(10 ** decimalPlaces);
-
-    let formattedDecimalPart = decimalPart
-      .toString()
-      .padStart(decimalPlaces, "0");
-
-    formattedDecimalPart = formattedDecimalPart.replace(/0+$/, "");
-
-    return `${isNegative ? "-" : ""}${integerPart}.${formattedDecimalPart}`;
-  }
 }
