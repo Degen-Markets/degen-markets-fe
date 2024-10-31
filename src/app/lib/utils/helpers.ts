@@ -1,5 +1,5 @@
 import { PlayerStats } from "@/app/types/player";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+const LAMPORTS_PER_SOL = 1_000_000_000n;
 
 export const getDisplayNameForAddress = (address: string): string =>
   address.slice(0, 4) + "..." + address.slice(-5);
@@ -37,48 +37,49 @@ export function formatNumberToSignificantDigits(number: number): string {
 }
 
 export function solBalance(
-  balance: number | string,
+  balance: number | string | bigint,
   showSolLabel: boolean = true,
 ) {
-  const balanceNumber =
-    typeof balance === "string" ? parseFloat(balance) : balance;
+  const balanceBigInt = typeof balance === "bigint" ? balance : BigInt(balance);
 
-  if (isNaN(balanceNumber)) {
+  if (balanceBigInt === 0n) {
     return showSolLabel ? "0 SOL" : "0";
   }
 
-  const formattedBalance =
-    Math.round((balanceNumber / LAMPORTS_PER_SOL) * 100000) / 100000;
+  const solBalance = balanceBigInt / LAMPORTS_PER_SOL;
+  const remainder = balanceBigInt % LAMPORTS_PER_SOL;
 
-  return showSolLabel ? `${formattedBalance} SOL` : `${formattedBalance}`;
+  const formattedBalance = `${solBalance}.${((remainder * 100000n) / LAMPORTS_PER_SOL).toString().padStart(5, "0")}`;
+
+  return showSolLabel ? `${formattedBalance} SOL` : formattedBalance;
 }
 
 export function calculatePlayerPnL(playerStats: PlayerStats): {
-  totalPnL: number;
-  pnlPercentage: number;
+  totalPnL: bigint;
+  pnlPercentage: bigint;
 } {
-  const winningOptions: Record<string, number> = {};
-  let totalWinningAmount = 0;
-  let totalBetAmount = 0;
+  const winningOptions: Record<string, bigint> = {};
+  let totalWinningAmount = 0n;
+  let totalBetAmount = 0n;
 
   playerStats.poolEntries.forEach((entry) => {
-    const userAmount = parseFloat(entry.value);
-    const poolValue = parseFloat(entry.pool.totalValue);
-    const totalValue = parseFloat(entry.option.totalValue);
+    const userAmount = BigInt(entry.value);
+    const poolValue = BigInt(entry.pool.totalValue);
+    const totalValue = BigInt(entry.option.totalValue);
 
     totalBetAmount += userAmount;
 
-    if (totalValue > 0) {
+    if (totalValue !== 0n) {
       winningOptions[entry.option.address] = totalValue;
 
-      const winningAmount = (userAmount / totalValue) * poolValue;
+      const winningAmount = (userAmount * poolValue) / totalValue;
       totalWinningAmount += winningAmount;
     }
   });
 
   const totalPnL = totalWinningAmount - totalBetAmount;
   const pnlPercentage =
-    totalBetAmount > 0 ? (totalPnL / totalBetAmount) * 100 : 0; // Handle division by zero case
+    totalBetAmount === 0n ? 0n : (totalPnL * 100n) / totalBetAmount;
 
   return {
     totalPnL,

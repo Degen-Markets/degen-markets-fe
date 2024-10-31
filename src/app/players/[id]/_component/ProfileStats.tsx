@@ -10,7 +10,7 @@ import {
 import { Player } from "@/app/types/player";
 import Image from "next/image";
 import Link from "next/link";
-import { Fragment, useMemo } from "react";
+import { useMemo } from "react";
 import { twMerge } from "tailwind-merge";
 
 const ProfileStats = ({ player }: { player: Player }) => {
@@ -25,7 +25,7 @@ const ProfileStats = ({ player }: { player: Player }) => {
     if (playerStats) {
       return calculatePlayerPnL(playerStats);
     }
-    return { totalPnL: 0, pnlPercentage: 0 };
+    return { totalPnL: BigInt(0), pnlPercentage: BigInt(0) };
   }, [playerStats]);
   const stats = [
     {
@@ -42,7 +42,7 @@ const ProfileStats = ({ player }: { player: Player }) => {
               totalPnL < 0 ? "text-danger" : "text-success",
             )}
           >
-            {`(${pnlPercentage < 0 ? "" : "+"}${pnlPercentage.toFixed(2)}%)`}
+            {`(${pnlPercentage < 0 ? "" : "+"}${pnlPercentage}%)`}
           </span>
         </>
       ),

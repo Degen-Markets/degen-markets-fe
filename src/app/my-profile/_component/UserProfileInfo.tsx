@@ -1,6 +1,5 @@
-import React, { Fragment, useMemo } from "react";
+import React, { useMemo } from "react";
 import TwitterButton from "@/app/my-profile/_component/TwitterButton";
-import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import ProfileStat from "@/app/my-profile/_component/ProfileStat";
 import ProfileImage from "@/app/my-profile/_component/ProfileImage";
 import usePlayerStats from "@/app/hooks/usePlayerStats";
@@ -17,7 +16,7 @@ const UserProfileInfo: React.FC = () => {
     if (playerStats) {
       return calculatePlayerPnL(playerStats);
     }
-    return { totalPnL: 0, pnlPercentage: 0 };
+    return { totalPnL: BigInt(0), pnlPercentage: BigInt(0) };
   }, [playerStats]);
 
   const stats = [
@@ -35,7 +34,7 @@ const UserProfileInfo: React.FC = () => {
               totalPnL < 0 ? "text-danger" : "text-success",
             )}
           >
-            {`(${pnlPercentage < 0 ? "" : "+"}${pnlPercentage.toFixed(2)}%)`}
+            {`(${pnlPercentage < 0 ? "" : "+"}${pnlPercentage}%)`}
           </span>
         </>
       ),
