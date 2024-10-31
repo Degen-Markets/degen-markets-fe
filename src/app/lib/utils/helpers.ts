@@ -35,7 +35,6 @@ export function formatNumberToSignificantDigits(number: number): string {
     ? `${formattedIntegerPart}.${decimalPart}`
     : formattedIntegerPart;
 }
-
 export function solBalance(
   balance: number | string | bigint,
   showSolLabel: boolean = true,
@@ -49,14 +48,25 @@ export function solBalance(
   const solBalance = balanceBigInt / LAMPORTS_PER_SOL;
   const remainder = balanceBigInt % LAMPORTS_PER_SOL;
 
-  const formattedBalance = `${solBalance}.${((remainder * 100000n) / LAMPORTS_PER_SOL).toString().padStart(5, "0")}`;
+  const decimalPart = (remainder * 100000n) / LAMPORTS_PER_SOL;
+
+  let formattedDecimalPart = decimalPart.toString().padStart(5, "0");
+
+  formattedDecimalPart = formattedDecimalPart.replace(/0+$/, "");
+
+  // Handle case where there are no digits left after the decimal point
+  if (formattedDecimalPart.length === 0) {
+    formattedDecimalPart = "0"; // if it's all zeros, we just set it to '0'
+  }
+
+  const formattedBalance = `${solBalance}${formattedDecimalPart.length > 0 ? "." + formattedDecimalPart : ""}`;
 
   return showSolLabel ? `${formattedBalance} SOL` : formattedBalance;
 }
 
 export function calculatePlayerPnL(playerStats: PlayerStats): {
-  totalPnL: bigint;
-  pnlPercentage: bigint;
+  totalPnL: number;
+  pnlPercentage: number;
 } {
   const winningOptions: Record<string, bigint> = {};
   let totalWinningAmount = 0n;
@@ -78,11 +88,14 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
   });
 
   const totalPnL = totalWinningAmount - totalBetAmount;
+
   const pnlPercentage =
-    totalBetAmount === 0n ? 0n : (totalPnL * 100n) / totalBetAmount;
+    totalBetAmount === 0n
+      ? 0
+      : Number(totalPnL * 100n) / Number(totalBetAmount);
 
   return {
-    totalPnL,
+    totalPnL: Number(totalPnL),
     pnlPercentage,
   };
 }
