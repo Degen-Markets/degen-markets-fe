@@ -47,10 +47,10 @@ const usePlayerStats = () => {
   }, [fetchPlayerStats, address]);
 
   const totalVolume = useMemo(() => {
-    if (!playerStats) return 0;
+    if (!playerStats.poolEntries) return 0n;
     return playerStats.poolEntries.reduce(
-      (sum, entry) => sum + parseFloat(entry.value || "0"),
-      0,
+      (sum, entry) => sum + (entry.value ? BigInt(entry.value) : 0n),
+      0n,
     );
   }, [playerStats]);
 
