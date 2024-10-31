@@ -25,7 +25,9 @@ const ActivityTable: React.FC = () => {
   const fetchPlayerStats = useCallback(async (address: string) => {
     setIsPlayerStatsLoading(true);
     try {
-      const { data } = await getPlayerStats(address);
+      const { data } = await getPlayerStats(address, {
+        sort: { field: "createdAt", direction: "DESC" },
+      });
       setPlayerStats(data);
     } catch (error) {
       console.error("Failed to fetch user profile", error);

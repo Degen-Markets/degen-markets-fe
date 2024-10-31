@@ -38,5 +38,12 @@ export const getPlayerById = async (
 
 export const getPlayerStats = (
   address: string,
+  { sort }: { sort?: { field: "createdAt"; direction: "ASC" | "DESC" } } = {},
 ): Promise<AxiosResponse<PlayerStats>> =>
-  axios.get(`${API_BASE_URL}/players/${address}/stats`);
+  axios.get(`${API_BASE_URL}/players/${address}/stats`, {
+    params: {
+      ...(sort && {
+        sort: `${sort.field}:${sort.direction}`,
+      }),
+    },
+  });
