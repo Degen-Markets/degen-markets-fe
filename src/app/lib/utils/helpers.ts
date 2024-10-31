@@ -68,7 +68,6 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
   totalPnL: number;
   pnlPercentage: number;
 } {
-  const winningOptions: Record<string, bigint> = {};
   let totalWinningAmount = 0n;
   let totalBetAmount = 0n;
 
@@ -80,8 +79,6 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
     totalBetAmount += userAmount;
 
     if (totalValue !== 0n) {
-      winningOptions[entry.option.address] = totalValue;
-
       const winningAmount = (userAmount * poolValue) / totalValue;
       totalWinningAmount += winningAmount;
     }
