@@ -70,7 +70,7 @@ const PoolsCarouselSection: FC<PoolsCarouselSectionProps> = ({ pools }) => {
               )}
               key={index}
             >
-              <PoolCard pool={pool} className="h-full" />
+              <PoolCard pool={pool} className="h-full" showBadge={true} />
             </div>
           ))}
         </div>
