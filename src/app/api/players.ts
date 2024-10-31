@@ -42,8 +42,6 @@ export const getPlayerStats = (
 ): Promise<AxiosResponse<PlayerStats>> =>
   axios.get(`${API_BASE_URL}/players/${address}/stats`, {
     params: {
-      ...(sort && {
-        sort: `${sort.field}:${sort.direction}`,
-      }),
+      ...(sort ? { sort: `${sort.field}:${sort.direction}` } : {}),
     },
   });
