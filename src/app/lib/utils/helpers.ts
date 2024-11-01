@@ -64,6 +64,15 @@ function validateInput(value: bigint | string): bigint {
   }
 }
 
+function getAbsoluteValue(value: bigint): {
+  isNegative: boolean;
+  absValue: bigint;
+} {
+  const isNegative = value < 0n;
+  const absValue = isNegative ? -value : value;
+  return { isNegative, absValue };
+}
+
 function validateDecimalPlaces(decimalPlaces: number): void {
   if (decimalPlaces < 0 || decimalPlaces > 10) {
     throw new Error(`Decimal places must be between 0 and 10`);
@@ -74,7 +83,7 @@ export function formatWithPrecision(
   value: bigint | string,
   divisor: bigint,
   decimalPlaces: number,
-  showLabel: string = "",
+  showLabel: boolean = false,
 ): string {
   const validatedValue = validateInput(value);
   validateDecimalPlaces(decimalPlaces);
@@ -84,11 +93,10 @@ export function formatWithPrecision(
   }
 
   if (validatedValue === 0n) {
-    return showLabel ? `0 ${showLabel}` : "0";
+    return showLabel ? `0 SOL` : "0";
   }
 
-  const isNegative = validatedValue < 0n;
-  const absValue = isNegative ? -validatedValue : validatedValue;
+  const { isNegative, absValue } = getAbsoluteValue(validatedValue);
 
   const integerPart = absValue / divisor;
   const remainder = absValue % divisor;
@@ -99,23 +107,18 @@ export function formatWithPrecision(
   let formattedDecimalPart = decimalPart
     .toString()
     .padStart(decimalPlaces, "0")
-    .replace(/0+$/, "");
+    .replace(/0+$/, ""); // remove trailing zeros eg *.003001200 -> *.0030012 etc
 
   return `${isNegative ? "-" : ""}${integerPart}${
     formattedDecimalPart ? "." + formattedDecimalPart : ""
-  }${showLabel ? ` ${showLabel}` : ""}`.trim();
+  }${showLabel ? ` SOL` : ""}`.trim();
 }
 
 export function formatSolBalance(
   value: bigint | string,
   showLabel: boolean = true,
 ): string {
-  return formatWithPrecision(
-    value,
-    LAMPORTS_PER_SOL,
-    5,
-    showLabel ? "SOL" : "",
-  );
+  return formatWithPrecision(value, LAMPORTS_PER_SOL, 5, showLabel);
 }
 
 export function calculatePercentage(
@@ -130,8 +133,7 @@ export function calculatePercentage(
     return "0.00";
   }
 
-  const isNegative = validatedValue < 0n;
-  const absValue = isNegative ? -validatedValue : validatedValue;
+  const { isNegative, absValue } = getAbsoluteValue(validatedValue);
 
   const multiplier = BigInt(10 ** (decimalPlaces + 2));
   const percentage = (absValue * multiplier) / divisor;
@@ -171,7 +173,7 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
     totalBetAmount += userAmount;
 
     if (optionValue !== 0n) {
-      const winningAmount = (userAmount * optionValue) / poolValue;
+      const winningAmount = (userAmount / optionValue) * poolValue;
       totalWinningAmount += winningAmount;
     }
   });
