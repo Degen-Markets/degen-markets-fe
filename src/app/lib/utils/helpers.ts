@@ -177,12 +177,6 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
   });
 
   const totalPnL = totalWinningAmount - totalBetAmount;
-
-  console.log({
-    totalWinningAmount,
-    totalBetAmount,
-    totalPnL,
-  });
   let pnlPercentage = 0;
 
   if (totalBetAmount !== 0n) {
