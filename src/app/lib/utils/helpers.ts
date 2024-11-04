@@ -118,7 +118,7 @@ export function formatSolBalance(
   value: bigint | string,
   showLabel: boolean = true,
 ): string {
-  return formatWithPrecision(value, LAMPORTS_PER_SOL, 5, showLabel);
+  return formatWithPrecision(value, LAMPORTS_PER_SOL, 2, showLabel);
 }
 
 export function calculatePercentage(
@@ -145,7 +145,7 @@ export function calculatePercentage(
     .toString()
     .padStart(decimalPlaces, "0");
 
-  return `${isNegative ? "-" : ""}${integerPart}.${formattedDecimalPart.padEnd(
+  return `${isNegative ? "-" : "+"}${integerPart}.${formattedDecimalPart.padEnd(
     decimalPlaces,
     "0",
   )}`;
@@ -160,7 +160,7 @@ export function solBalance(
 
 export function calculatePlayerPnL(playerStats: PlayerStats): {
   totalPnL: bigint;
-  pnlPercentage: number;
+  pnlPercentage: string;
 } {
   let totalWinningAmount = 0n;
   let totalBetAmount = 0n;
@@ -173,18 +173,17 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
     totalBetAmount += userAmount;
 
     if (optionValue !== 0n) {
-      const winningAmount = (userAmount / optionValue) * poolValue;
+      const winningAmount = (userAmount * optionValue) / poolValue;
       totalWinningAmount += winningAmount;
     }
   });
 
   const totalPnL = totalWinningAmount - totalBetAmount;
-  let pnlPercentage = 0;
+  let pnlPercentage = "0";
 
   if (totalBetAmount !== 0n) {
-    pnlPercentage = +calculatePercentage(totalPnL, totalBetAmount);
+    pnlPercentage = calculatePercentage(totalPnL, totalBetAmount);
   }
-
   return {
     totalPnL,
     pnlPercentage,

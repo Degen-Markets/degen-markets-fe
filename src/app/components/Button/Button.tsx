@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { ButtonProps } from "./type";
-import { buttonVariants } from "./constant";
+import { buttonVariants } from "./constants";
 import Loader from "@/app/components/Icons/Loader";
 
 export const Button: FC<ButtonProps> = ({

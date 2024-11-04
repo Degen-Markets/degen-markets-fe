@@ -25,7 +25,7 @@ const ProfileStats = ({ player }: { player: Player }) => {
     if (playerStats) {
       return calculatePlayerPnL(playerStats);
     }
-    return { totalPnL: 0n, pnlPercentage: 0 };
+    return { totalPnL: 0n, pnlPercentage: "0%" };
   }, [playerStats]);
   const stats = [
     {
@@ -42,7 +42,7 @@ const ProfileStats = ({ player }: { player: Player }) => {
               totalPnL < 0n ? "text-danger" : "text-success",
             )}
           >
-            {`(${pnlPercentage < 0 ? "" : "+"}${pnlPercentage}%)`}
+            {`(${pnlPercentage}%)`}
           </span>
         </>
       ),
