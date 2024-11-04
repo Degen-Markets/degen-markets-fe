@@ -124,7 +124,7 @@ export function formatSolBalance(
   value: bigint | string,
   showLabel: boolean = true,
 ): string {
-  return formatWithPrecision(value, LAMPORTS_PER_SOL, 5, showLabel);
+  return formatWithPrecision(value, LAMPORTS_PER_SOL, 2, showLabel);
 }
 
 export function calculatePercentage(
