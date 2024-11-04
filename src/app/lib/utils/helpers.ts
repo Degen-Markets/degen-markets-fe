@@ -98,6 +98,12 @@ export function formatWithPrecision(
 
   const { isNegative, absValue } = getAbsoluteValue(validatedValue);
 
+  // Using absValue, simplifies mathematical operations (division, remainder)
+  // by working with positive numbers. This prevents issues that can arise
+  // from operating on negative numbers. We reintroduce the sign later to
+  // ensure the output accurately reflects the original value without
+  // risking output like "-1.-1 SOL". etc
+
   const integerPart = absValue / divisor;
   const remainder = absValue % divisor;
 
@@ -118,7 +124,7 @@ export function formatSolBalance(
   value: bigint | string,
   showLabel: boolean = true,
 ): string {
-  return formatWithPrecision(value, LAMPORTS_PER_SOL, 2, showLabel);
+  return formatWithPrecision(value, LAMPORTS_PER_SOL, 5, showLabel);
 }
 
 export function calculatePercentage(
@@ -173,7 +179,7 @@ export function calculatePlayerPnL(playerStats: PlayerStats): {
     totalBetAmount += userAmount;
 
     if (optionValue !== 0n) {
-      const winningAmount = (userAmount * optionValue) / poolValue;
+      const winningAmount = (userAmount * poolValue) / optionValue;
       totalWinningAmount += winningAmount;
     }
   });
