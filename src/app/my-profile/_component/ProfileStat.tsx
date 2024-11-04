@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 interface ProfileStatsProps {
-  title: string;
+  title: string | ReactElement;
   value: string | number;
 }
 

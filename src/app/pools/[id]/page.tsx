@@ -5,14 +5,15 @@ import { getPoolById } from "@/app/api/pools";
 import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
 
 const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {
+  const isCreateBet = id === "create";
   const {
     data: { value },
-  } = id === "create" ? { data: { value: undefined } } : await getPoolById(id);
+  } = isCreateBet ? { data: { value: undefined } } : await getPoolById(id);
 
   return (
     <Wrapper className="flex justify-center">
       <div className="w-full md:w-3/6 lg:w-2/6 text-lg mt-4 lg:mt-8">
-        <ShareOnTwitterBanner poolId={id} />
+        {!isCreateBet && <ShareOnTwitterBanner poolId={id} />}
         <BlinkLoader poolId={id} poolValue={value} />
       </div>
     </Wrapper>
