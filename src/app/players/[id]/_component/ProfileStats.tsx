@@ -42,7 +42,7 @@ const ProfileStats = ({ player }: { player: Player }) => {
               totalPnL < 0n ? "text-danger" : "text-success",
             )}
           >
-            {`(${pnlPercentage}%)`}
+            ({pnlPercentage})
           </span>
         </>
       ),

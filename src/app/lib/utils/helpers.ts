@@ -148,7 +148,7 @@ export function calculatePercentage(
   return `${isNegative ? "-" : "+"}${integerPart}.${formattedDecimalPart.padEnd(
     decimalPlaces,
     "0",
-  )}`;
+  )}%`;
 }
 
 export function solBalance(
