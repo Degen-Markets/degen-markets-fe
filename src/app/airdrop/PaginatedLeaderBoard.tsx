@@ -30,7 +30,7 @@ const PaginatedLeaderboard = ({
   }, [initialPlayers]);
 
   const fetchPlayers = useCallback(async (page: number) => {
-    if (page === 1) return; // Skip fetching if it's the first page (we already have the data)
+    if (page === 1) return;
 
     try {
       setIsLoading(true);
@@ -51,8 +51,11 @@ const PaginatedLeaderboard = ({
   useEffect(() => {
     if (currentPage > 1) {
       fetchPlayers(currentPage);
+    } else {
+      // Reset players to initial data when returning to page 1
+      setPlayers(initialPlayers.slice(3));
     }
-  }, [currentPage, fetchPlayers]);
+  }, [currentPage, fetchPlayers, initialPlayers]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
