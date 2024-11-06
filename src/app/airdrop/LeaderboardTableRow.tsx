@@ -45,7 +45,7 @@ const LeaderboardTableRow = ({
           width={24}
           className={getClassNames("text-lavender-blue", isCurrentUser)}
         />
-        <span className={getClassNames("", isCurrentUser)}>{index + 4}</span>
+        <span className={getClassNames("", isCurrentUser)}>{index + 1}</span>
       </div>
       <div className="px-2 lg:px-6 py-2 col-span-3 flex items-center gap-3">
         <UserAvatar

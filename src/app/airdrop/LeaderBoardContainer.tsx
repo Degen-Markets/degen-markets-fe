@@ -9,21 +9,25 @@ import { PLAYERS_PER_PAGE } from "../components/Pagination/constants";
 import InfiniteScrollContainer from "../components/InfiniteScrollContainer/InfiniteScrollContainer";
 import LeaderboardTableRow from "./LeaderboardTableRow";
 
-interface PaginatedLeaderboardProps {
+interface LeaderBoardContainerProps {
   initialPlayers: Player[];
 }
 
-const PaginatedLeaderboard = ({
+const LeaderBoardContainer = ({
   initialPlayers,
-}: PaginatedLeaderboardProps) => {
+}: LeaderBoardContainerProps) => {
   const [topThreePlayers, setTopThreePlayers] = useState<Player[]>([]);
 
   useEffect(() => {
-    const [p1, p2, p3] = initialPlayers;
-    setTopThreePlayers([p1, p2, p3]);
+    setTopThreePlayers(initialPlayers.slice(0, 3));
   }, [initialPlayers]);
 
   const fetchPlayers = async (page: number) => {
+    // Skip the first page fetch since we already have it from initialData
+    if (page === 1) {
+      return initialPlayers.slice(3);
+    }
+
     const offset = (page - 1) * PLAYERS_PER_PAGE;
     const response = await getPlayers({
       limit: PLAYERS_PER_PAGE,
@@ -46,9 +50,9 @@ const PaginatedLeaderboard = ({
           <div>
             {data.map((player, index) => (
               <LeaderboardTableRow
-                key={player.address + index}
+                key={player.address}
                 player={player}
-                index={index}
+                index={index + 3}
               />
             ))}
           </div>
@@ -61,7 +65,7 @@ const PaginatedLeaderboard = ({
     <>
       <TopThree players={topThreePlayers} />
       <InfiniteScrollContainer
-        initialData={initialPlayers}
+        initialData={initialPlayers.slice(3)} // Start from the fourth player
         fetchData={fetchPlayers}
         renderSection={(data) => renderPlayer(data)}
         SkeletonLoader={<PlayerSkeletonLoader />}
@@ -70,4 +74,4 @@ const PaginatedLeaderboard = ({
   );
 };
 
-export default PaginatedLeaderboard;
+export default LeaderBoardContainer;
