@@ -48,13 +48,16 @@ const LeaderBoardContainer = ({
             </div>
           </div>
           <div>
-            {data.map((player, index) => (
-              <LeaderboardTableRow
-                key={player.address}
-                player={player}
-                index={index + 3}
-              />
-            ))}
+            {data.map((player, index) => {
+              const playerRank = index + 3;
+              return (
+                <LeaderboardTableRow
+                  key={`${playerRank}:${player.address}`}
+                  player={player}
+                  index={playerRank}
+                />
+              );
+            })}
           </div>
         </div>
       </section>
