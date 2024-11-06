@@ -1,4 +1,5 @@
 "use client";
+
 import { TrophyIcon } from "@heroicons/react/24/solid";
 import UserAvatar from "@/app/components/UserAvatar";
 import { getDisplayNameForAddress } from "@/app/lib/utils/helpers";
@@ -33,45 +34,38 @@ const LeaderboardTableRow = ({
     twMerge(baseClass, isCurrent ? "text-primary" : "");
 
   return (
-    <tr
-      className="text-sm lg:text-base border-b-4 border-b-main bg-steel-gray hover:bg-slate-700 rounded-lg cursor-pointer hover:scale-[1.01] transition-all duration-200"
-      key={player.address}
+    <div
+      className="grid grid-cols-5 lg:text-base border-b-4 border-b-main bg-steel-gray hover:bg-slate-700 cursor-pointer hover:scale-[1.01] transition-all duration-200 items-center"
       onClick={handleClick}
       role="link"
       aria-label={`View player ${player.address}`}
     >
-      <th className="px-2 lg:px-6 py-2 font-medium whitespace-nowrap">
-        <div
-          className={getClassNames("flex items-center gap-1", isCurrentUser)}
-        >
-          <TrophyIcon
-            width={24}
-            className={getClassNames("text-lavender-blue", isCurrentUser)}
-          />{" "}
-          {index + 4}
+      <div className="px-2 lg:px-6 py-2 font-medium col-span-1 flex items-center gap-2">
+        <TrophyIcon
+          width={24}
+          className={getClassNames("text-lavender-blue", isCurrentUser)}
+        />
+        <span className={getClassNames("", isCurrentUser)}>{index + 4}</span>
+      </div>
+      <div className="px-2 lg:px-6 py-2 col-span-3 flex items-center gap-3">
+        <UserAvatar
+          src={player.twitterPfpUrl}
+          className="h-8 w-8 lg:w-12 lg:h-12"
+          width={32}
+          height={32}
+        />
+        <div className="text-sm lg:text-lg font-semibold">
+          <span className={isCurrentUser ? "text-primary font-extrabold" : ""}>
+            {displayName}
+          </span>
         </div>
-      </th>
-      <td className="px-2 lg:px-6 py-2">
-        <div className="flex gap-3 items-center">
-          <UserAvatar
-            src={player.twitterPfpUrl}
-            className="h-8 w-8 lg:w-12 lg:h-12"
-            width={32}
-            height={32}
-          />
-          <div className="text-sm lg:text-lg font-semibold">
-            <span
-              className={isCurrentUser ? "text-primary font-extrabold" : ""}
-            >
-              {displayName}
-            </span>
-          </div>
-        </div>
-      </td>
-      <td className={getClassNames("px-2 lg:px-6 py-2", isCurrentUser)}>
+      </div>
+      <div
+        className={getClassNames("px-2 lg:px-6 py-2 col-span-1", isCurrentUser)}
+      >
         {player.points}
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 };
 
