@@ -1,78 +1,89 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Player } from "../types/player";
-import { getPlayers } from "../api/players";
 import TopThree from "./TopThree";
 import PlayerSkeletonLoader from "../Skeleton/PlayerSkeletonLoader";
 import { PLAYERS_PER_PAGE } from "../components/Pagination/constants";
-import InfiniteScrollContainer from "../components/InfiniteScrollContainer/InfiniteScrollContainer";
 import LeaderboardTableRow from "./LeaderboardTableRow";
+import { usePlayersQuery } from "../hooks/usePlayerQuery";
+import InfiniteScroll from "react-infinite-scroll-component";
+import LeaderBoardError from "./LeaderBoardError";
 
 interface LeaderBoardContainerProps {
-  initialPlayers: Player[];
+  initialPlayers?: Player[];
 }
 
 const LeaderBoardContainer = ({
-  initialPlayers,
+  initialPlayers = [],
 }: LeaderBoardContainerProps) => {
-  const [topThreePlayers, setTopThreePlayers] = useState<Player[]>([]);
+  const { data, fetchNextPage, hasNextPage, status } = usePlayersQuery({
+    initialPlayers,
+  });
 
-  useEffect(() => {
-    setTopThreePlayers(initialPlayers.slice(0, 3));
-  }, [initialPlayers]);
+  const topThreePlayers = useMemo(
+    () => initialPlayers.slice(0, 3),
+    [initialPlayers],
+  );
 
-  const fetchPlayers = async (page: number) => {
-    // Skip the first page fetch since we already have it from initialData
-    if (page === 1) {
-      return initialPlayers.slice(3);
-    }
+  const renderLeaderboardHeader = () => (
+    <div className="text-xs text-lavender-blue">
+      <div className="grid grid-cols-5">
+        <div className="px-2 md:px-6 py-3 col-span-1">Place</div>
+        <div className="px-6 py-3 col-span-3">Username</div>
+        <div className="px-2 md:px-6 py-3 col-span-1">Points</div>
+      </div>
+    </div>
+  );
 
-    const offset = (page - 1) * PLAYERS_PER_PAGE;
-    const response = await getPlayers({
-      limit: PLAYERS_PER_PAGE,
-      offset,
-    });
-    return response.data || [];
-  };
+  if (status === "pending") return <PlayerSkeletonLoader />;
+  if (status === "error") return <LeaderBoardError />;
 
-  const renderPlayer = (data: Player[]) => {
-    return (
-      <section>
-        <div className="w-full text-sm text-left mt-10 lg:mt">
-          <div className="text-xs text-lavender-blue">
-            <div className="grid grid-cols-5">
-              <div className="px-2 md:px-6 py-3 col-span-1">Place</div>
-              <div className="px-6 py-3 col-span-3">Username</div>
-              <div className="px-2 md:px-6 py-3 col-span-1">Points</div>
-            </div>
-          </div>
-          <div>
-            {data.map((player, index) => {
-              const playerRank = index + 3;
-              return (
-                <LeaderboardTableRow
-                  key={`${playerRank}:${player.address}`}
-                  player={player}
-                  index={playerRank}
-                />
-              );
-            })}
-          </div>
-        </div>
-      </section>
-    );
+  const renderPlayers = () => {
+    return data.pages.map((page, pageIndex) => (
+      <div key={pageIndex}>
+        {page.data.map((player: Player, index: number) => {
+          const playerRank = index + 3 + pageIndex * PLAYERS_PER_PAGE;
+          return (
+            <LeaderboardTableRow
+              key={`${playerRank}:${player.address}`}
+              player={player}
+              index={playerRank}
+            />
+          );
+        })}
+      </div>
+    ));
   };
 
   return (
     <>
       <TopThree players={topThreePlayers} />
-      <InfiniteScrollContainer
-        initialData={initialPlayers.slice(3)} // Start from the fourth player
-        fetchData={fetchPlayers}
-        renderSection={(data) => renderPlayer(data)}
-        SkeletonLoader={<PlayerSkeletonLoader />}
-      />
+      <section>
+        <div className="w-full text-sm text-left mt-10 lg:mt-20">
+          {renderLeaderboardHeader()}
+
+          <InfiniteScroll
+            style={{ overflow: "initial" }}
+            dataLength={data.pages.reduce(
+              (acc, page) => acc + page.data.length,
+              0,
+            )} // total players
+            next={fetchNextPage}
+            hasMore={hasNextPage}
+            loader={<PlayerSkeletonLoader />}
+            endMessage={
+              !hasNextPage && (
+                <p className="mt-8 text-sm md:text-base text-lavender-blue text-center">
+                  No more data available.
+                </p>
+              )
+            }
+          >
+            {renderPlayers()}
+          </InfiniteScroll>
+        </div>
+      </section>
     </>
   );
 };
