@@ -56,6 +56,8 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           NEXT_PUBLIC_API_BASE_URL: "https://api.degenmarkets.com"
           NEXT_PUBLIC_HELIUS_URL: "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b"
+          NEXT_PUBLIC_ACTION_API_URL: "https://degenmarkets.com"
+          NEXT_PUBLIC_ACTION_API_PATH: "https://actions.degenmarkets.com"
         run: |
           npm install -g vercel
 
@@ -64,12 +66,16 @@ jobs:
             # Production deployment
             vercel --prod --token $VERCEL_TOKEN \
             --env NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
-            --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log
+            --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL \
+            --env NEXT_PUBLIC_ACTION_API_URL=$NEXT_PUBLIC_ACTION_API_URL \
+            --env NEXT_PUBLIC_ACTION_API_PATH=$NEXT_PUBLIC_ACTION_API_PATH | tee deployment.log
           else
             # Preview deployment
             vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID \
             --env NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL \
-            --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL | tee deployment.log
+            --env NEXT_PUBLIC_HELIUS_URL=$NEXT_PUBLIC_HELIUS_URL \
+            --env NEXT_PUBLIC_ACTION_API_URL=$NEXT_PUBLIC_ACTION_API_URL \
+            --env NEXT_PUBLIC_ACTION_API_PATH=$NEXT_PUBLIC_ACTION_API_PATH | tee deployment.log
           fi
 
           # Extract deployment URL
