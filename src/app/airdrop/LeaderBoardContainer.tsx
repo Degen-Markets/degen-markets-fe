@@ -3,8 +3,8 @@
 import { useMemo } from "react";
 import { Player } from "../types/player";
 import TopThree from "./TopThree";
-import PlayerSkeletonLoader from "../Skeleton/PlayerSkeletonLoader";
-import { PLAYERS_PER_PAGE } from "../components/Pagination/constants";
+import PlayerSkeletonLoader from "../components/Skeletons/PlayerSkeletonLoader";
+import { PLAYERS_PER_PAGE } from "../components/InfiniteScrollContainer/constants";
 import LeaderboardTableRow from "./LeaderboardTableRow";
 import { usePlayersQuery } from "../hooks/usePlayerQuery";
 import InfiniteScroll from "react-infinite-scroll-component";

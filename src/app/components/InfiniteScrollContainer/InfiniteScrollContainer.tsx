@@ -96,6 +96,7 @@ const InfiniteScrollContainer = <T, F>({
 
       <InfiniteScroll
         style={{ overflow: "initial" }}
+        scrollThreshold={0.8} // Triggers fetchMoreData when 80% of the container is scrolled
         dataLength={data.length}
         next={fetchMoreData}
         hasMore={hasMore}

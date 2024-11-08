@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getPlayers } from "../api/players";
-import { PLAYERS_PER_PAGE } from "../components/Pagination/constants";
+import { PLAYERS_PER_PAGE } from "../components/InfiniteScrollContainer/constants";
 import { Player } from "../types/player";
 
 interface UsePlayersQueryProps {

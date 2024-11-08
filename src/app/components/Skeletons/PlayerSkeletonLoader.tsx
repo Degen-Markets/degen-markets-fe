@@ -1,10 +1,12 @@
-const PlayerSkeletonLoader = () => {
-  const rows = Array.from({ length: 10 });
+import { PLAYERS_PER_PAGE } from "../InfiniteScrollContainer/constants";
+
+const PlayerSkeletonLoader = ({ rows = PLAYERS_PER_PAGE }) => {
+  const skeletonRows = Array.from({ length: rows });
 
   return (
     <div className="w-full text-sm lg:text-base">
       <div>
-        {rows.map((_, index) => (
+        {skeletonRows.map((_, index) => (
           <div
             key={index}
             className="grid grid-cols-5 lg:text-base border-b-4 border-b-main bg-steel-gray animate-pulse items-center"

@@ -43,7 +43,7 @@ export default function QueryClientProvider({
     <>
       <TanStackQueryClientProvider client={client}>
         {children}
-        <ReactQueryDevtools initialIsOpen={true} />{" "}
+        <ReactQueryDevtools initialIsOpen={false} />
         {/* ReactQueryDevtools only visible on dev environment not in production */}
       </TanStackQueryClientProvider>
     </>

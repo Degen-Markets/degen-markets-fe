@@ -1,5 +1,5 @@
 import { getPlayers } from "@/app/api/players";
-import { PLAYERS_PER_PAGE } from "../components/Pagination/constants";
+import { PLAYERS_PER_PAGE } from "../components/InfiniteScrollContainer/constants";
 import LeaderBoardContainer from "./LeaderBoardContainer";
 import Wrapper from "../components/Wrapper";
 import Hero from "./Hero";
