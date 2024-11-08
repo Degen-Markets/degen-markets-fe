@@ -48,11 +48,12 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          NEXT_PUBLIC_ENV: "development"
 
         run: |
           npm install -g vercel
           # Deploy to Vercel and capture the deployment URL
-          DEPLOYMENT_URL=$(vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --yes | tee deployment.log | grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app')
+          DEPLOYMENT_URL=$(vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --yes --env NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV | tee deployment.log | grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app')
           echo "Primary Deployment URL: $DEPLOYMENT_URL"
 
           # Attempt to assign the alias and capture any errors

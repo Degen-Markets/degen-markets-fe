@@ -14,6 +14,7 @@ const prodConfig = {
   ACTION_API_PATH: "https://actions.degenmarkets.com",
 };
 
-const Config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
+const Config =
+  process.env.NEXT_PUBLIC_ENV === "development" ? devConfig : prodConfig;
 
 export default Config;
