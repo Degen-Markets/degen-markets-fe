@@ -3,6 +3,7 @@ import Wrapper from "@/app/components/Wrapper";
 import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
 import { getPoolById } from "@/app/api/pools";
 import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
+import { ACTION_API_URL } from "@/app/config/api";
 
 const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {
   const isCreateBet = id === "create";
@@ -49,7 +50,7 @@ export const generateMetadata = async ({
       type: "website",
       title: pool.title,
       images: [replaceGifExtension(pool.image)],
-      url: `https://degenmarkets.com/pools/${pool.address}`,
+      url: `${ACTION_API_URL}/pools/${pool.address}`,
     },
     twitter: {
       card: "summary_large_image",

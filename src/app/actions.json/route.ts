@@ -1,11 +1,12 @@
 import { ACTIONS_CORS_HEADERS, ActionsJson } from "@solana/actions";
+import { ACTION_API_PATH } from "../config/api";
 
 export const GET = async () => {
   const payload: ActionsJson = {
     rules: [
       {
         pathPattern: "/pools/*",
-        apiPath: "https://actions.degenmarkets.com/pools/*",
+        apiPath: `${ACTION_API_PATH}/pools/*`,
       },
     ],
   };
