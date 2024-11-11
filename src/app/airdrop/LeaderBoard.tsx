@@ -1,14 +1,16 @@
 import { FC } from "react";
 import { Player } from "@/app/types/player";
 import LeaderboardTableRow from "./LeaderboardTableRow";
+
 interface LeaderBoardProps {
   players: Player[];
+  indexOffset: number;
 }
 
-const LeaderBoard: FC<LeaderBoardProps> = ({ players }) => {
+const LeaderBoard = ({ players, indexOffset }: LeaderBoardProps) => {
   return (
     <section>
-      <table className="w-full text-sm text-left">
+      <table className="w-full text-sm text-left mt-10 lg:mt">
         <thead className="text-xs text-lavender-blue">
           <tr>
             <th className="px-6 py-3">Place</th>
@@ -19,9 +21,9 @@ const LeaderBoard: FC<LeaderBoardProps> = ({ players }) => {
         <tbody>
           {players.map((player, index) => (
             <LeaderboardTableRow
-              player={player}
-              index={index}
               key={player.address}
+              player={player}
+              index={index + indexOffset} // Add offset to display correct index
             />
           ))}
         </tbody>

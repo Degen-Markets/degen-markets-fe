@@ -3,7 +3,7 @@ import "@dialectlabs/blinks/index.css";
 
 import { useActionSolanaWalletAdapter } from "@dialectlabs/blinks/hooks/solana";
 import { Blink, useAction } from "@dialectlabs/blinks";
-import Skeleton from "@/app/pools/[id]/Skeleton";
+import Skeleton from "@/app/components/Skeletons/Skeleton";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { formatNumberToSignificantDigits } from "@/app/lib/utils/helpers";
 import { useMemo } from "react";

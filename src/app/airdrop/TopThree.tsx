@@ -107,11 +107,19 @@ const PlayerCard: FC<{ player: Player; index: number }> = ({
 };
 
 const TopThree: FC<Props> = ({ players }) => {
+  if (!players || players.length === 0) {
+    return null;
+  }
+
   const topThreePlayers = players.slice(0, 3);
+  if (topThreePlayers.length < 3) {
+    return null;
+  }
+
   const reorderedPlayers = [
-    topThreePlayers[2],
-    topThreePlayers[0],
-    topThreePlayers[1],
+    topThreePlayers[2], // 3rd
+    topThreePlayers[0], // 1st
+    topThreePlayers[1], // 2nd
   ];
 
   return (
