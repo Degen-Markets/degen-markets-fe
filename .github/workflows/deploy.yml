@@ -46,6 +46,10 @@ jobs:
       - name: Remove .vercel directory
         run: rm -rf .vercel
 
+      - name: Create env file
+        run: |
+          echo "NEXT_PUBLIC_ENV=production" > .env
+
       - name: Build project
         run: npm run build
 
