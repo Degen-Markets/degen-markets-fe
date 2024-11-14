@@ -1,0 +1,99 @@
+name: Deploy to Prod & Dev
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Linting with ESLint
+        run: npm run lint
+
+  deploy:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Remove .vercel directory
+        run: rm -rf .vercel
+
+      - name: Create env file for production
+        run: echo "NEXT_PUBLIC_ENV=production" > .env
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Vercel (Production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npm install -g vercel
+          DEPLOYMENT_URL=$(vercel --prod --token $VERCEL_TOKEN | tee deployment.log | grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app')
+          echo "Production deployment successful!"
+          echo "Access your application at: $DEPLOYMENT_URL"
+
+  deploy-dev:
+    needs: deploy # Ensure development deployment happens after production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Remove .vercel directory
+        run: rm -rf .vercel
+
+      - name: Create env file for development
+        run: echo "NEXT_PUBLIC_ENV=development" > .env
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Vercel (Development)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          npm install -g vercel
+          DEPLOYMENT_URL=$(vercel --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID --yes | tee deployment.log | grep -o 'https:\/\/[a-zA-Z0-9.-]*\.vercel\.app')
+          # Set alias for development
+          vercel alias set $(echo $DEPLOYMENT_URL | sed 's|https\?://||') dev.degenmarkets.com --token $VERCEL_TOKEN --scope $VERCEL_ORG_ID || {
+            echo "Failed to set alias. Check domain permissions."
+            exit 1
+          }
+          echo "Development deployment successful!"
+          echo "Access your application at: $DEPLOYMENT_URL"
