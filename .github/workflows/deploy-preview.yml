@@ -23,7 +23,7 @@ jobs:
       - name: Linting with ESLint
         run: npm run lint
 
-  deploy:
+  deploy-previews:
     runs-on: ubuntu-latest
     needs: lint
 
