@@ -28,13 +28,13 @@ const PoolCard: FC<PoolCardProps> = ({
   const [isDialogOpen, setDialogOpen] = useState(false);
   const { userProfile } = useUserProfileContext();
 
-  const openDialog = useCallback(() => setDialogOpen(true), []);
+  // const openDialog = useCallback(() => setDialogOpen(true), []);
   const closeDialog = useCallback(() => setDialogOpen(false), []);
 
-  const { handleShare } = useShareOnTwitterFlow({
-    poolId: pool.address,
-    openDialog,
-  });
+  // const { handleShare } = useShareOnTwitterFlow({
+  //   poolId: pool.address,
+  //   openDialog,
+  // });
 
   const poolValue = Number(pool.value) / LAMPORTS_PER_SOL;
 
@@ -91,9 +91,9 @@ const PoolCard: FC<PoolCardProps> = ({
             {pool.isPaused ? "Claim Win" : "Bet Now"}
           </Button>
         </Link>
-        <Button size="small" intent="outlineWhite" onClick={handleShare}>
+        {/* <Button size="small" intent="outlineWhite" onClick={handleShare}>
           Share for points
-        </Button>
+        </Button> */}
       </div>
 
       {isDialogOpen && userProfile?.address && (
