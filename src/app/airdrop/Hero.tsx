@@ -12,9 +12,9 @@ const Hero = () => {
           </Link>
           , by connecting your X/Twitter account{" "}
           <Link href="/my-profile" className="font-semibold text-main">
-            here
+            here.
           </Link>{" "}
-          and sharing our pools on X/Twitter.
+          {/* and sharing our pools on X/Twitter. */}
         </span>
       </div>
     </section>
