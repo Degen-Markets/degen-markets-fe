@@ -87,7 +87,7 @@ const InfiniteScrollContainer = <T, F>({
             <FilterSelect
               key={name.toString()}
               onValueChange={(value) => handleFilterChange(name, value)}
-              placeholder={`Filter by ${name.toString()}`}
+              placeholder={`${name.toString()}`}
               options={options}
             />
           ))}
