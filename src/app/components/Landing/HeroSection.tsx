@@ -4,22 +4,21 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
 import { Section } from "@/app/components/Section";
-import { ArrowTrendingUpIcon } from "@heroicons/react/24/outline";
+import RobotIcon from "@/app/components/Icons/RobotIcon";
 
 const HeroSection = () => (
-  <Section className="space-y-5 lg:space-y-10 flex gap-4">
+  <Section className="space-y-5 lg:space-y-10 flex gap-4 bg-hero md:max-w-screen lg:max-w-screen">
     <>
       <div className="w-full lg:w-[60%]">
         <h1 className="text-2xl md:text-6xl md:leading-snug  mb-8">
-          Decentralized Prediction Market on Blinks
+          Dare to disagree with the prophecies?
         </h1>
         <p className="w-[80%] lg:w-[60%] text-base md:text-md text-lavender-blue mb-6">
-          Make Predictions on Events Directly on Twitter via Solana Blinks.
-          Predict Now to Claim YOUR Share of the $DGM AirDrop
+          Go head to head against AI predictions
         </p>
         <Link href="/pools">
-          <Button intent="primary" icon={<ArrowTrendingUpIcon width={24} />}>
-            Predict now
+          <Button intent="primary" icon={<RobotIcon width={30} />}>
+            Bet Against AI
           </Button>
         </Link>
       </div>
