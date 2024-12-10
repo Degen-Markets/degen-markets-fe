@@ -7,7 +7,9 @@ import { Section } from "@/app/components/Section";
 import RobotIcon from "@/app/components/Icons/RobotIcon";
 
 const HeroSection = () => (
-  <Section className="space-y-5 lg:space-y-10 flex gap-4 bg-hero md:max-w-screen lg:max-w-screen">
+  <div className="bg-hero">  
+     <Section className="space-y-5 lg:space-y-10 flex gap-4 ">
+
     <>
       <div className="w-full lg:w-[60%]">
         <h1 className="text-2xl md:text-6xl md:leading-snug  mb-8">
