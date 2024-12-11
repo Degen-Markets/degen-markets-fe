@@ -1,47 +1,62 @@
-import { getLatestPool, getPoolById } from "@/app/api/pools";
-import HeroSection from "@/app/components/Landing/HeroSection";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "./Tabs/tabs";
+import HeroSection from "./components/Landing/HeroSection";
+import { getLatestPool, getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
+import { TabsVertical } from "./components/tabs/VerticalTab";
+import Story from "./components/tabs/Story";
+import { storyContent, tokenomicsData } from "./components/tabs/constant";
+import TokenomicsChart from "./components/tabs/TokenomicsChart";
+import Tokenomics from "./components/tabs/Tokenomics";
 
 export const dynamic = "force-dynamic";
 
 const Home = async () => {
-  // const { data: pools } = await getPools();
   const { data: pool } = await getLatestPool({});
   const poolId = pool[0].address;
-  console.log({
-    listenToLatestPool: pool,
-  });
   const {
     data: { value },
   } = await getPoolById(poolId);
 
+  const tabs = [
+    {
+      id: "bet",
+      label: "Bet",
+      content: (
+        <div className="w-full max-w-2xl mx-auto">
+          <BlinkLoader poolId={poolId} poolValue={value} />
+        </div>
+      ),
+    },
+    {
+      id: "tokenomics",
+      label: "Tokenomics",
+      content: (
+        <>
+          {/* <Tokenomics
+          totalSupply={tokenomicsData.totalSupply}
+          allocations={tokenomicsData.allocations}
+          /> */}
+          <TokenomicsChart
+            totalSupply={tokenomicsData.totalSupply}
+            allocations={tokenomicsData.allocations}
+          />
+        </>
+      ),
+    },
+    {
+      id: "story",
+      label: "Story",
+      content: (
+        <Story title={storyContent.title} content={storyContent.content} />
+      ),
+    },
+  ];
+
   return (
     <>
       <HeroSection />
-
-      <>
-        <Tabs className="w-full" defaultValue="active">
-          <TabsList className="!flex">
-            <TabsTrigger value="active" className="flex flex-1">
-              Bet
-            </TabsTrigger>
-            <TabsTrigger value="inactive" className="flex flex-1">
-              Tokenimic
-            </TabsTrigger>
-            <TabsTrigger value="inactive" className="flex flex-1">
-              Story
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="active">
-            <BlinkLoader poolId={poolId} poolValue={value} />
-          </TabsContent>
-          <TabsContent value="inactive"> Tokenimic </TabsContent>
-          <TabsContent value="inactive"> Story</TabsContent>
-        </Tabs>
-      </>
-      {/* <PoolsCarouselSection pools={pools} /> */}
+      <TabsVertical tabs={tabs} />
     </>
   );
 };
+
 export default Home;
