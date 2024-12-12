@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -8,8 +8,17 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+declare global {
+  namespace Chart {
+    interface PluginOptionsByType<TType> {
+      datalabels: any;
+    }
+  }
+}
+
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 interface TokenAllocation {
   name: string;
@@ -27,15 +36,28 @@ const TokenomicsChart: React.FC<TokenomicsChartProps> = ({
   totalSupply,
   allocations,
 }) => {
+  // Find index of highest percentage allocation
+  const highestIndex = allocations.reduce(
+    (maxIndex, current, index, array) =>
+      current.percentage > array[maxIndex].percentage ? index : maxIndex,
+    0,
+  );
+
+  const [selectedAllocation, setSelectedAllocation] = useState<number | null>(
+    highestIndex,
+  );
+
   const chartData = {
     labels: allocations.map((a) => a.name),
     datasets: [
       {
         data: allocations.map((a) => a.percentage),
-        backgroundColor: allocations.map((a) => a.color),
+        backgroundColor: allocations.map((a, index) => a.color),
         borderColor: "#fff",
         borderWidth: 2,
-        offset: 2,
+        offset: allocations.map((_, index) =>
+          index === selectedAllocation ? 30 : 2,
+        ),
         hoverOffset: 30,
       },
     ],
@@ -59,13 +81,34 @@ const TokenomicsChart: React.FC<TokenomicsChartProps> = ({
           },
         },
       },
+      datalabels: {
+        color: "#fff",
+        font: {
+          weight: "bold",
+          size: 14,
+        },
+        formatter: (value: number) => `${value}%`,
+        display: (context: { dataIndex: number }) =>
+          context.dataIndex === selectedAllocation,
+      },
     },
     animation: {
       animateScale: true,
       animateRotate: true,
+      duration: 500,
     },
     radius: "90%",
     rotation: -45,
+    onClick: (event, elements) => {
+      if (elements.length > 0) {
+        const index = elements[0].index;
+        setSelectedAllocation((prevIndex) =>
+          prevIndex === index ? null : index,
+        );
+      } else {
+        setSelectedAllocation(null);
+      }
+    },
   };
 
   const calculateTokenAmount = (percentage: number): string => {
@@ -78,7 +121,7 @@ const TokenomicsChart: React.FC<TokenomicsChartProps> = ({
       <h2 className="text-2xl mb-6 font-bold">Tokenomics</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className=" rounded-lg relative lg:col-span-2">
+        <div className="rounded-lg relative lg:col-span-2">
           <div className="w-full h-full flex items-center justify-center relative">
             <Pie data={chartData} options={chartOptions} />
           </div>
@@ -98,7 +141,10 @@ const TokenomicsChart: React.FC<TokenomicsChartProps> = ({
           {allocations.map((allocation, index) => (
             <div
               key={index}
-              className="bg-[#1A1F24] p-4 rounded-lg transition-transform hover:scale-[1.02]"
+              className={`bg-[#1A1F24] p-4 rounded-lg transition-transform cursor-pointer ${
+                selectedAllocation === index ? "scale-[1.02]" : ""
+              }`}
+              onClick={() => setSelectedAllocation(index)}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">

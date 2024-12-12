@@ -30,6 +30,7 @@
     "axios": "1.7.4",
     "bs58": "^6.0.0",
     "chart.js": "^4.4.7",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "class-variance-authority": "0.7.0",
     "classnames": "^2.5.1",
     "embla-carousel-react": "^8.3.0",
