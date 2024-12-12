@@ -31,7 +31,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
 
   const filterOptions = [
     {
-      name: "Filter",
+      name: "status",
       options: [
         { value: "*", label: "All Pools" },
         { value: "ongoing", label: "Ongoing" },
@@ -39,7 +39,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       ],
     },
     {
-      name: "Sort",
+      name: "sortBy",
       options: [
         { value: "newest", label: "Newest" },
         { value: "highestVolume", label: "Highest Volume" },
