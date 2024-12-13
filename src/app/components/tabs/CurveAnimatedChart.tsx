@@ -62,168 +62,96 @@ const EndpointComponent: React.FC<{
  * Uses a central circle with multiple animated paths spreading outward
  */
 const AnimatedSpreadingLines: React.FC = () => {
-  const centerX = 190;
-  const centerY = 190;
+  // Core positioning
+  const centerX = 200;
+  const centerY = 200;
   const innerRadius = 95;
   const outerRadius = 100;
 
-  // Endpoint coordinates matching the line configurations
+  // Line length constants
+  const LINE_CONSTANTS = {
+    STRAIGHT_LENGTH: 300, // Length of straight segments
+    EXTENSION_LENGTH: 80, // Additional length for extended segments
+    VERTICAL_OFFSET: {
+      SMALL: 80, // Small vertical bends
+      MEDIUM: 120, // Medium vertical bends
+      LARGE: 200, // Large vertical movements
+      LARGE_2: 250, // Large vertical movements
+    },
+    CONTROL_POINT: {
+      HALF: 40, // Half distance for control points
+      FULL: 80, // Full distance for control points
+    },
+    SPACING: {
+      VERTICAL: 10, // Vertical spacing between parallel lines
+    },
+  } as const;
+
+  // Update endpointConfigurations using constants
   const endpointConfigurations = {
     right: {
-      x: centerX + 450,
-      y: centerY - 120,
+      x:
+        centerX +
+        LINE_CONSTANTS.STRAIGHT_LENGTH +
+        LINE_CONSTANTS.EXTENSION_LENGTH,
+      y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
       text: "Right Node",
     },
     top: {
-      x: centerX + 350,
-      y: centerY - 350,
+      x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+      y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
       text: "Top Node",
     },
     leftFirst: {
-      x: centerX - 450,
-      y: centerY + 180,
+      x:
+        centerX -
+        (LINE_CONSTANTS.STRAIGHT_LENGTH + LINE_CONSTANTS.EXTENSION_LENGTH),
+      y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
       text: "Left First Node",
     },
     leftSecond: {
-      x: centerX - 450,
-      y: centerY - 180,
+      x:
+        centerX -
+        (LINE_CONSTANTS.STRAIGHT_LENGTH + LINE_CONSTANTS.EXTENSION_LENGTH),
+      y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
       text: "Left Second Node",
     },
     down: {
-      x: centerX + 350,
-      y: centerY + 350,
+      x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+      y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
       text: "Bottom Node",
     },
   };
 
-  // Curve configurations for different lines
-  //   const lineConfigurations: Record<string, LineConfiguration> = {
-  //     right: {
-  //       initialPoint: { x: 200, y: 200 },
-  //       segments: [
-  //         {
-  //           x: 400,
-  //           y: 200,
-  //           curve: { type: "linear" }, // Explicitly typed
-  //         },
-  //       ],
-  //     },
-  //     top: {
-  //       initialPoint: { x: 200, y: 200 },
-  //       segments: [
-  //         {
-  //           x: 200,
-  //           y: 100,
-  //           curve: { type: "linear" },
-  //         },
-  //         {
-  //           x: 280,
-  //           y: 50,
-  //           curve: { type: "cubic", controlPoints: [200, 100, 240, 75] },
-  //         },
-  //         {
-  //           x: 350,
-  //           y: 50,
-  //           curve: { type: "linear" },
-  //         },
-  //       ],
-  //     },
-  //     leftFirst: {
-  //       initialPoint: { x: 200, y: 200 },
-  //       segments: [
-  //         {
-  //           x: 100,
-  //           y: 200,
-  //           curve: { type: "linear" },
-  //         },
-  //         {
-  //           x: 100,
-  //           y: 280,
-  //           curve: { type: "cubic", controlPoints: [100, 200, 100, 240] },
-  //         },
-  //         {
-  //           x: 50,
-  //           y: 280,
-  //           curve: { type: "linear" },
-  //         },
-  //       ],
-  //     },
-  //     leftSecond: {
-  //       initialPoint: { x: 200, y: 205 },
-  //       segments: [
-  //         {
-  //           x: 100,
-  //           y: 205,
-  //           curve: { type: "linear" },
-  //         },
-  //         {
-  //           x: 100,
-  //           y: 120,
-  //           curve: { type: "cubic", controlPoints: [100, 205, 100, 165] },
-  //         },
-  //         {
-  //           x: 50,
-  //           y: 120,
-  //           curve: { type: "linear" },
-  //         },
-  //       ],
-  //     },
-  //     down: {
-  //       initialPoint: { x: 200, y: 200 },
-  //       segments: [
-  //         {
-  //           x: 200,
-  //           y: 300,
-  //           curve: { type: "linear" },
-  //         },
-  //         {
-  //           x: 300,
-  //           y: 350,
-  //           curve: { type: "cubic", controlPoints: [200, 300, 250, 325] },
-  //         },
-  //         {
-  //           x: 400,
-  //           y: 350,
-  //           curve: { type: "linear" },
-  //         },
-  //       ],
-  //     },
-  //   };
-
-  /**
-   * Defines all the paths that spread out from the center
-   * Each path consists of:
-   * - initialPoint: Where the line starts (connects to central circle)
-   * - segments: Array of points and curves that define the path
-   */
+  // Update lineConfigurations using constants
   const lineConfigurations: Record<string, LineConfiguration> = {
     right: {
       initialPoint: { x: centerX + outerRadius, y: centerY },
       segments: [
         {
-          // First segment - move right
-          x: centerX + 350,
+          x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
           y: centerY,
           curve: { type: "linear" },
         },
-        // {
-        //   // Second segment - bend up
-        //   x: centerX + 350,
-        //   y: centerY - 120,
-        //   curve: {
-        //     type: "cubic",
-        //     controlPoints: [
-        //       centerX + 350,
-        //       centerY,
-        //       centerX + 350,
-        //       centerY - 60,
-        //     ],
-        //   },
-        // },
         {
-          // Final segment - move right
-          x: centerX + 450,
-          y: centerY - 120,
+          x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
+          curve: {
+            type: "cubic",
+            controlPoints: [
+              centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+              centerY,
+              centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+              centerY - LINE_CONSTANTS.CONTROL_POINT.HALF,
+            ],
+          },
+        },
+        {
+          x:
+            centerX +
+            LINE_CONSTANTS.STRAIGHT_LENGTH +
+            LINE_CONSTANTS.EXTENSION_LENGTH,
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
           curve: { type: "linear" },
         },
       ],
@@ -232,91 +160,92 @@ const AnimatedSpreadingLines: React.FC = () => {
       initialPoint: { x: centerX, y: centerY - outerRadius },
       segments: [
         {
-          // First segment - move up
           x: centerX,
-          y: centerY - 300,
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
           curve: { type: "linear" },
         },
         {
-          // Second segment - curve right
-          x: centerX + 280,
-          y: centerY - 350,
+          x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.8,
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
           curve: {
             type: "cubic",
             controlPoints: [
               centerX,
-              centerY - 300,
-              centerX + 240,
-              centerY - 325,
+              centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+              centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.4,
+              centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
             ],
           },
         },
         {
-          // Final segment - continue right
-          x: centerX + 350,
-          y: centerY - 350,
+          x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
           curve: { type: "linear" },
         },
       ],
     },
     leftFirst: {
-      initialPoint: { x: centerX - outerRadius, y: centerY - 10 },
+      initialPoint: {
+        x: centerX - outerRadius,
+        y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+      },
       segments: [
         {
-          // First segment - move left
-          x: centerX - 350,
-          y: centerY - 10,
+          x: centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
           curve: { type: "linear" },
         },
         {
-          // Second segment - bend down
-          x: centerX - 350,
-          y: centerY + 180,
+          x: centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
           curve: {
             type: "cubic",
             controlPoints: [
-              centerX - 350,
-              centerY - 5,
-              centerX - 350,
-              centerY + 90,
+              centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+              centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+              centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+              centerY + LINE_CONSTANTS.CONTROL_POINT.FULL,
             ],
           },
         },
         {
-          // Final segment - move left
-          x: centerX - 450,
-          y: centerY + 180,
+          x:
+            centerX -
+            (LINE_CONSTANTS.STRAIGHT_LENGTH + LINE_CONSTANTS.EXTENSION_LENGTH),
+          y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
           curve: { type: "linear" },
         },
       ],
     },
     leftSecond: {
-      initialPoint: { x: centerX - outerRadius, y: centerY + 10 },
+      initialPoint: {
+        x: centerX - outerRadius,
+        y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+      },
       segments: [
         {
-          // First segment - move left
-          x: centerX - 350,
-          y: centerY + 10,
+          x: centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
           curve: { type: "linear" },
         },
         {
-          // Second segment - bend up
-          x: centerX - 350,
-          y: centerY - 180,
+          x: centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
           curve: {
             type: "cubic",
             controlPoints: [
-              centerX - 350,
-              centerY + 5,
-              centerX - 350,
-              centerY - 90,
+              centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+              centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+              centerX - LINE_CONSTANTS.STRAIGHT_LENGTH,
+              centerY - LINE_CONSTANTS.CONTROL_POINT.FULL,
             ],
           },
         },
         {
-          // Final segment - move left
-          x: centerX - 450,
-          y: centerY - 180,
+          x:
+            centerX -
+            (LINE_CONSTANTS.STRAIGHT_LENGTH + LINE_CONSTANTS.EXTENSION_LENGTH),
+          y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
           curve: { type: "linear" },
         },
       ],
@@ -325,29 +254,26 @@ const AnimatedSpreadingLines: React.FC = () => {
       initialPoint: { x: centerX, y: centerY + outerRadius },
       segments: [
         {
-          // First segment - move down
           x: centerX,
-          y: centerY + 300,
+          y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
           curve: { type: "linear" },
         },
         {
-          // Second segment - curve right
-          x: centerX + 280,
-          y: centerY + 350,
+          x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.8,
+          y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
           curve: {
             type: "cubic",
             controlPoints: [
               centerX,
-              centerY + 300,
-              centerX + 140,
-              centerY + 325,
+              centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+              centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.4,
+              centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
             ],
           },
         },
         {
-          // Final segment - continue right
-          x: centerX + 350,
-          y: centerY + 350,
+          x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+          y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
           curve: { type: "linear" },
         },
       ],
