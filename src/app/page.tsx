@@ -6,6 +6,7 @@ import Story from "./components/tabs/Story";
 import { storyContent, tokenomicsData } from "./components/tabs/constant";
 import TokenomicsChart from "./components/tabs/TokenomicsChart";
 import Tokenomics from "./components/tabs/Tokenomics";
+import CurveAnimatedChart from "./components/tabs/CurveAnimatedChart";
 
 export const dynamic = "force-dynamic";
 
@@ -35,10 +36,11 @@ const Home = async () => {
           totalSupply={tokenomicsData.totalSupply}
           allocations={tokenomicsData.allocations}
           /> */}
-          <TokenomicsChart
+          {/* <TokenomicsChart
             totalSupply={tokenomicsData.totalSupply}
             allocations={tokenomicsData.allocations}
-          />
+          /> */}
+          <CurveAnimatedChart />
         </>
       ),
     },
