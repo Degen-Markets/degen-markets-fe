@@ -17,7 +17,11 @@ const HeroSection = () => (
           <p className="w-[80%] lg:w-[60%] text-base md:text-md text-lavender-blue mb-6">
             Go head to head against AI predictions
           </p>
-          <Link href="/pools">
+          <Link
+            href="https://x.com/tiresiasai"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button intent="primary" icon={<RobotIcon width={30} />}>
               Bet Against AI
             </Button>
