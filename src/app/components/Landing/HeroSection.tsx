@@ -15,7 +15,7 @@ const HeroSection = () => (
             Human, do you dare to bet against AI?
           </h1>
           <p className="w-[80%] lg:w-[60%] text-base md:text-md text-lavender-blue mb-6">
-            Go head to head against AI predictions
+            AI Generated Prediction Markets coming soon
           </p>
           <Link
             href="https://x.com/tiresiasai"
