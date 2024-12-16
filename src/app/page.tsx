@@ -4,9 +4,7 @@ import BlinkLoader from "./pools/[id]/BlinkLoader";
 import { TabsVertical } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";
 import { storyContent, tokenomicsData } from "./components/tabs/constant";
-import TokenomicsChart from "./components/tabs/TokenomicsChart";
-import Tokenomics from "./components/tabs/Tokenomics";
-import CurveAnimatedChart from "./components/tabs/CurveAnimatedChart";
+import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimatedChart";
 
 export const dynamic = "force-dynamic";
 
@@ -41,6 +39,7 @@ const Home = async () => {
             allocations={tokenomicsData.allocations}
           /> */}
           <CurveAnimatedChart />
+          {/* <SimpleCurveChart /> */}
         </>
       ),
     },
