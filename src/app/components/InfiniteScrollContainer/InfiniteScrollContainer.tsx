@@ -18,6 +18,7 @@ interface InfiniteScrollContainerProps<T, F> {
   setFilters?: Dispatch<SetStateAction<F>>;
   filterOptions?: Array<{
     name: keyof F;
+    label: string;
     options: Array<{ value: string; label: string }>;
   }>;
   containerClassName?: string;
@@ -83,11 +84,11 @@ const InfiniteScrollContainer = <T, F>({
     <div className={containerClassName}>
       {filters && setFilters && filterOptions.length > 0 && (
         <div className="flex justify-end space-x-4 mb-8">
-          {filterOptions.map(({ name, options }) => (
+          {filterOptions.map(({ name, options, label }) => (
             <FilterSelect
               key={name.toString()}
               onValueChange={(value) => handleFilterChange(name, value)}
-              placeholder={`${name.toString()}`}
+              placeholder={`${label}`}
               options={options}
             />
           ))}

@@ -13,15 +13,15 @@ interface PoolsSectionProps {
 
 const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
   const [filters, setFilters] = useState<Record<string, string>>({
-    status: "",
-    sortBy: "newest",
+    filter: "",
+    sort: "newest",
   });
 
   const fetchPools = async (page: number, filters?: Record<string, string>) => {
     const response = await axios.get(`${API_BASE_URL}/pools`, {
       params: {
-        status: filters?.status,
-        sortBy: filters?.sortBy,
+        status: filters?.filter,
+        sortBy: filters?.sort,
         limit: 18,
         offset: page * 18,
       },
@@ -31,7 +31,8 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
 
   const filterOptions = [
     {
-      name: "status",
+      name: "filter",
+      label: "Filter",
       options: [
         { value: "*", label: "All Pools" },
         { value: "ongoing", label: "Ongoing" },
@@ -39,7 +40,8 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       ],
     },
     {
-      name: "sortBy",
+      name: "sort",
+      label: "Sort",
       options: [
         { value: "newest", label: "Newest" },
         { value: "highestVolume", label: "Highest Volume" },
