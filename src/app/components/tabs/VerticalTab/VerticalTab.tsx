@@ -15,8 +15,8 @@ export function TabsVertical({ tabs }: TabsVerticalProps) {
           <TabContent content={activeContent || ""} />
         </div>
       </div>
-      <div className="min-h-screen flex items-center justify-between">
-        <div className="flex flex-col h-[500px]  w-52 justify-center items-center gap-5">
+      <div className="min-h-screen h-[1000px] flex items-center justify-between">
+        <div className="flex flex-col h-[600px]  w-52 justify-center items-center gap-5">
           {tabs.map((tab) => (
             <TabButton
               key={tab.id}

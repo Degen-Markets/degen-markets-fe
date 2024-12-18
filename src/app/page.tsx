@@ -3,7 +3,7 @@ import { getLatestPool, getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
 import { TabsVertical } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";
-import { storyContent, tokenomicsData } from "./components/tabs/constant";
+import { storyContent } from "./components/tabs/constant";
 import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimatedChart";
 
 export const dynamic = "force-dynamic";
@@ -30,16 +30,7 @@ const Home = async () => {
       label: "Tokenomics",
       content: (
         <>
-          {/* <Tokenomics
-          totalSupply={tokenomicsData.totalSupply}
-          allocations={tokenomicsData.allocations}
-          /> */}
-          {/* <TokenomicsChart
-            totalSupply={tokenomicsData.totalSupply}
-            allocations={tokenomicsData.allocations}
-          /> */}
           <CurveAnimatedChart />
-          {/* <SimpleCurveChart /> */}
         </>
       ),
     },

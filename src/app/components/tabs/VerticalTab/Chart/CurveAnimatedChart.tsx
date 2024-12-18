@@ -340,7 +340,7 @@ const AnimatedSpreadingLines: React.FC = () => {
         <circle cx={centerX} cy={centerY} r={innerRadius} fill="#8F7CFF" />
 
         {/* Render pie segments */}
-        {/* {createPieSegments(segments)} */}
+        {createPieSegments(segments)}
 
         {/* Content group */}
         <g>
