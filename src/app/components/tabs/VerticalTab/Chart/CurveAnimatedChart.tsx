@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { TokenDistribution } from "./TokenDistribution";
 import useMediaQuery from "@/app/hooks/useMediaQuery";
+import { tokenSaleData } from "./constants";
 
 interface CurveSegment {
   x: number;
@@ -75,7 +76,7 @@ const AnimatedSpreadingLines: React.FC = () => {
   const outerRadius = baseSize * 0.425 * scale;
 
   const MOBILE_CONSTANTS = {
-    VERTICAL_SPACING: 180, // Spacing between nodes
+    VERTICAL_SPACING: 250, // Spacing between nodes
     LINE_LENGTH: 120, // Length of each line
     CURVE_OFFSET: 40, // Curve control point offset
   };
@@ -108,27 +109,27 @@ const AnimatedSpreadingLines: React.FC = () => {
     const baseY = centerY + innerRadius + 50;
     return {
       first: {
-        x: centerX,
+        x: centerX + outerRadius + 30,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 0,
         text: "First Node",
       },
       second: {
-        x: centerX,
+        x: centerX + outerRadius + 30,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 1,
         text: "Second Node",
       },
       third: {
-        x: centerX,
+        x: centerX + outerRadius + 20,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 2,
         text: "Third Node",
       },
       fourth: {
-        x: centerX,
+        x: centerX - outerRadius - 30,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 3,
         text: "Fourth Node",
       },
       fifth: {
-        x: centerX,
+        x: centerX - outerRadius - 40,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 4,
         text: "Fifth Node",
       },
@@ -177,110 +178,139 @@ const AnimatedSpreadingLines: React.FC = () => {
   // Mobile-specific line configurations
   const getMobileLineConfigurations = (): MobileLineConfigs => {
     const mobileEndpoints = getMobileEndpoints();
+
+    // Horizontal extension lengths for lines
+    const RIGHT_EXTENSION = 50;
+    const RIGHT_EXTENSION_MEDIUM = 60;
+    const RIGHT_EXTENSION_MEDIUM_2 = 40;
+    const LEFT_EXTENSION = 60;
+    const LEFT_EXTENSION_MEDIUM = 40;
+
     const baseConfigs: MobileLineConfigs = {
+      // First line (Right side, topmost)
       first: {
         initialPoint: {
-          x: centerX + outerRadius * 0.5,
-          y: centerY + outerRadius * 0.5,
+          x: centerX + outerRadius,
+          y: centerY,
         },
         segments: [
+          // 1. Extend horizontally to the right
+          {
+            x: centerX + outerRadius + RIGHT_EXTENSION,
+            y: centerY,
+            curve: { type: "linear" },
+          },
+          // 2. Go straight down
+          {
+            x: centerX + outerRadius + RIGHT_EXTENSION,
+            y: mobileEndpoints.first.y - 20,
+            curve: { type: "linear" },
+          },
+          // 3. Short curve to endpoint
           {
             x: mobileEndpoints.first.x,
             y: mobileEndpoints.first.y,
-            curve: {
-              type: "cubic" as const,
-              controlPoints: [
-                centerX + MOBILE_CONSTANTS.CURVE_OFFSET,
-                centerY + outerRadius,
-                centerX + MOBILE_CONSTANTS.CURVE_OFFSET,
-                mobileEndpoints.first.y - MOBILE_CONSTANTS.CURVE_OFFSET,
-              ],
-            },
+            curve: { type: "linear" },
           },
         ],
         color: "#E4D493",
       },
+      // Second line (Right side, middle)
       second: {
         initialPoint: {
-          x: centerX + outerRadius * 0.25,
-          y: centerY + outerRadius * 0.75,
+          x: centerX + outerRadius * Math.cos(-Math.PI / 6),
+          y: centerY + outerRadius * Math.sin(-Math.PI / 6),
         },
         segments: [
           {
+            x: centerX + outerRadius + RIGHT_EXTENSION_MEDIUM,
+            y: centerY + outerRadius * Math.sin(-Math.PI / 6),
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX + outerRadius + RIGHT_EXTENSION_MEDIUM,
+            y: mobileEndpoints.second.y - 20,
+            curve: { type: "linear" },
+          },
+          {
             x: mobileEndpoints.second.x,
             y: mobileEndpoints.second.y,
-            curve: {
-              type: "cubic" as const,
-              controlPoints: [
-                centerX + MOBILE_CONSTANTS.CURVE_OFFSET * 0.5,
-                centerY + outerRadius,
-                centerX + MOBILE_CONSTANTS.CURVE_OFFSET * 0.5,
-                mobileEndpoints.second.y - MOBILE_CONSTANTS.CURVE_OFFSET,
-              ],
-            },
+            curve: { type: "linear" },
           },
         ],
         color: "#A6B1D6",
       },
+      // Third line (Right side, bottom)
       third: {
-        initialPoint: { x: centerX, y: centerY + outerRadius },
+        initialPoint: {
+          x: centerX + outerRadius * Math.cos(Math.PI / 6),
+          y: centerY + outerRadius * Math.sin(Math.PI / 6),
+        },
         segments: [
+          {
+            x: centerX + outerRadius + RIGHT_EXTENSION_MEDIUM_2,
+            y: centerY + outerRadius * Math.sin(Math.PI / 6),
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX + outerRadius + RIGHT_EXTENSION_MEDIUM_2,
+            y: mobileEndpoints.third.y - 20,
+            curve: { type: "linear" },
+          },
           {
             x: mobileEndpoints.third.x,
             y: mobileEndpoints.third.y,
-            curve: {
-              type: "cubic" as const,
-              controlPoints: [
-                centerX,
-                centerY + outerRadius,
-                centerX,
-                mobileEndpoints.third.y - MOBILE_CONSTANTS.CURVE_OFFSET,
-              ],
-            },
+            curve: { type: "linear" },
           },
         ],
         color: "#DCDCDC",
       },
+      // Fourth line (Left side, top)
       fourth: {
         initialPoint: {
-          x: centerX - outerRadius * 0.25,
-          y: centerY + outerRadius * 0.75,
+          x: centerX - outerRadius * Math.cos(-Math.PI / 6),
+          y: centerY + outerRadius * Math.sin(-Math.PI / 6),
         },
         segments: [
           {
+            x: centerX - outerRadius - LEFT_EXTENSION_MEDIUM,
+            y: centerY + outerRadius * Math.sin(-Math.PI / 6),
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX - outerRadius - LEFT_EXTENSION_MEDIUM,
+            y: mobileEndpoints.fourth.y - 20,
+            curve: { type: "linear" },
+          },
+          {
             x: mobileEndpoints.fourth.x,
             y: mobileEndpoints.fourth.y,
-            curve: {
-              type: "cubic" as const,
-              controlPoints: [
-                centerX - MOBILE_CONSTANTS.CURVE_OFFSET * 0.5,
-                centerY + outerRadius,
-                centerX - MOBILE_CONSTANTS.CURVE_OFFSET * 0.5,
-                mobileEndpoints.fourth.y - MOBILE_CONSTANTS.CURVE_OFFSET,
-              ],
-            },
+            curve: { type: "linear" },
           },
         ],
         color: "#3FDA8D",
       },
+      // Fifth line (Left side, bottom)
       fifth: {
         initialPoint: {
-          x: centerX - outerRadius * 0.5,
-          y: centerY + outerRadius * 0.5,
+          x: centerX - outerRadius * Math.cos(Math.PI / 6),
+          y: centerY + outerRadius * Math.sin(Math.PI / 6),
         },
         segments: [
           {
+            x: centerX - outerRadius - LEFT_EXTENSION,
+            y: centerY + outerRadius * Math.sin(Math.PI / 6),
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX - outerRadius - LEFT_EXTENSION,
+            y: mobileEndpoints.fifth.y - 20,
+            curve: { type: "linear" },
+          },
+          {
             x: mobileEndpoints.fifth.x,
             y: mobileEndpoints.fifth.y,
-            curve: {
-              type: "cubic" as const,
-              controlPoints: [
-                centerX - MOBILE_CONSTANTS.CURVE_OFFSET,
-                centerY + outerRadius,
-                centerX - MOBILE_CONSTANTS.CURVE_OFFSET,
-                mobileEndpoints.fifth.y - MOBILE_CONSTANTS.CURVE_OFFSET,
-              ],
-            },
+            curve: { type: "linear" },
           },
         ],
         color: "#8F7CFF",
@@ -289,149 +319,156 @@ const AnimatedSpreadingLines: React.FC = () => {
     return baseConfigs;
   };
 
+  const getDesktopLineConfigurations = (): DesktopLineConfigs => {
+    const desktopEndpoints = getDesktopEndpoints();
+
+    const baseConfigs: DesktopLineConfigs = {
+      right: {
+        initialPoint: { x: centerX + outerRadius, y: centerY },
+        segments: [
+          {
+            x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+            y: centerY,
+            curve: { type: "linear" },
+          },
+        ],
+        color: "#E4D493",
+      },
+      top: {
+        initialPoint: { x: centerX, y: centerY - outerRadius },
+        segments: [
+          {
+            x: centerX,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.8,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
+            curve: {
+              type: "cubic",
+              controlPoints: [
+                centerX,
+                centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
+                centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.4,
+                centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
+              ],
+            },
+          },
+          {
+            x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
+            curve: { type: "linear" },
+          },
+        ],
+        color: "#A6B1D6",
+      },
+      leftFirst: {
+        initialPoint: {
+          x: centerX - outerRadius,
+          y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+        },
+        segments: [
+          {
+            // First segment - straight line to the left
+            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+            y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+            curve: { type: "linear" },
+          },
+          {
+            // Second segment - curve downward
+            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            curve: {
+              type: "linear",
+              controlPoints: [
+                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+                centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+                centerY + LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
+              ],
+            },
+          },
+          {
+            // Final segment - extend left
+            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.LARGE,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            curve: { type: "linear" },
+          },
+        ],
+        color: "#DCDCDC",
+      },
+      leftSecond: {
+        initialPoint: {
+          x: centerX - outerRadius,
+          y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+        },
+        segments: [
+          {
+            // First segment - straight line to the left
+            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+            y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+            curve: { type: "linear" },
+          },
+          {
+            // Second segment - curve upward
+            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            curve: {
+              type: "linear",
+              controlPoints: [
+                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+                centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+                centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
+              ],
+            },
+          },
+          {
+            // Final segment - extend left
+            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.LARGE,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            curve: { type: "linear" },
+          },
+        ],
+        color: "#3FDA8D",
+      },
+      down: {
+        initialPoint: { x: centerX, y: centerY + outerRadius },
+        segments: [
+          {
+            x: centerX,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.8,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+            curve: {
+              type: "linear",
+              controlPoints: [
+                centerX,
+                centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+                centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.4,
+                centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+              ],
+            },
+          },
+          {
+            x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
+            curve: { type: "linear" },
+          },
+        ],
+        color: "#8F7CFF",
+      },
+    };
+
+    return baseConfigs;
+  };
   const lineConfigurations: MobileLineConfigs | DesktopLineConfigs = isMobile
     ? getMobileLineConfigurations()
-    : {
-        right: {
-          initialPoint: { x: centerX + outerRadius, y: centerY },
-          segments: [
-            {
-              x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
-              y: centerY,
-              curve: { type: "linear" },
-            },
-          ],
-          color: "#E4D493",
-        },
-        top: {
-          initialPoint: { x: centerX, y: centerY - outerRadius },
-          segments: [
-            {
-              x: centerX,
-              y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
-              curve: { type: "linear" },
-            },
-            {
-              x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.8,
-              y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
-              curve: {
-                type: "cubic",
-                controlPoints: [
-                  centerX,
-                  centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
-                  centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.4,
-                  centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
-                ],
-              },
-            },
-            {
-              x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
-              y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
-              curve: { type: "linear" },
-            },
-          ],
-          color: "#A6B1D6",
-        },
-        leftFirst: {
-          initialPoint: {
-            x: centerX - outerRadius,
-            y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
-          },
-          segments: [
-            {
-              // First segment - straight line to the left
-              x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-              y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
-              curve: { type: "linear" },
-            },
-            {
-              // Second segment - curve downward
-              x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-              y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-              curve: {
-                type: "linear",
-                controlPoints: [
-                  centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                  centerY - LINE_CONSTANTS.SPACING.VERTICAL,
-                  centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                  centerY + LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
-                ],
-              },
-            },
-            {
-              // Final segment - extend left
-              x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.LARGE,
-              y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-              curve: { type: "linear" },
-            },
-          ],
-          color: "#DCDCDC",
-        },
-        leftSecond: {
-          initialPoint: {
-            x: centerX - outerRadius,
-            y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
-          },
-          segments: [
-            {
-              // First segment - straight line to the left
-              x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-              y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
-              curve: { type: "linear" },
-            },
-            {
-              // Second segment - curve upward
-              x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-              y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-              curve: {
-                type: "linear",
-                controlPoints: [
-                  centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                  centerY + LINE_CONSTANTS.SPACING.VERTICAL,
-                  centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                  centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
-                ],
-              },
-            },
-            {
-              // Final segment - extend left
-              x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.LARGE,
-              y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-              curve: { type: "linear" },
-            },
-          ],
-          color: "#3FDA8D",
-        },
-        down: {
-          initialPoint: { x: centerX, y: centerY + outerRadius },
-          segments: [
-            {
-              x: centerX,
-              y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
-              curve: { type: "linear" },
-            },
-            {
-              x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.8,
-              y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
-              curve: {
-                type: "linear",
-                controlPoints: [
-                  centerX,
-                  centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
-                  centerX + LINE_CONSTANTS.STRAIGHT_LENGTH * 0.4,
-                  centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
-                ],
-              },
-            },
-            {
-              x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
-              y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
-              curve: { type: "linear" },
-            },
-          ],
-          color: "#8F7CFF",
-        },
-      };
+    : getDesktopLineConfigurations();
 
   const CurvedLine: React.FC<{
     segments: CurveSegment[];
@@ -476,11 +513,11 @@ const AnimatedSpreadingLines: React.FC = () => {
   };
 
   const pieSegments: PieSegment[] = [
-    { percentage: 20, color: "#E4D493" }, // gold
-    { percentage: 20, color: "#A6B1D6" }, // steel-gray
-    { percentage: 10, color: "#DCDCDC" }, // main
-    { percentage: 20, color: "#3FDA8D" }, // success
-    { percentage: 30, color: "#8F7CFF" }, // primary
+    { percentage: 20, color: "#E4D493" },
+    { percentage: 20, color: "#A6B1D6" },
+    { percentage: 10, color: "#DCDCDC" },
+    { percentage: 20, color: "#3FDA8D" },
+    { percentage: 30, color: "#8F7CFF" },
   ];
 
   const CenterContent: React.FC<{ segments: PieSegment[] }> = ({
@@ -546,93 +583,11 @@ const AnimatedSpreadingLines: React.FC = () => {
     );
   };
 
-  const tokenSaleData = [
-    {
-      title: "PRIVATE SALE (10-12%)",
-      items: [
-        { text: "External investors and Super Crew holders" },
-        { text: "6-month lockup", isLocked: true },
-        {
-          text: "1/10 Unlocked after 6 months",
-          highlight: true,
-          isLocked: false,
-        },
-        { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-      ],
-      progress: 10,
-      totalTokens: {
-        amount: 759_000_000,
-        total: 7_590_000_000,
-        symbol: "MEME",
-      },
-    },
-    {
-      title: "PUBLIC SALE (10-12%)",
-      items: [
-        { text: "Public sale" },
-        { text: "10-month lockup", isLocked: true },
-        { text: "1/10 Unlocked after 10 months", isLocked: false },
-        { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-      ],
-      progress: 50,
-      totalTokens: {
-        amount: 759_000_000,
-        total: 7_590_000_000,
-        symbol: "MEME",
-      },
-    },
-    {
-      title: "TEAM (10-12%)",
-      items: [
-        { text: "Team and advisors" },
-        { text: "10-month lockup", isLocked: true },
-        { text: "1/10 Unlocked after 10 months", isLocked: false },
-        { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-      ],
-      progress: 60,
-      totalTokens: {
-        amount: 759_000_000,
-        total: 7_590_000_000,
-        symbol: "MEME",
-      },
-    },
-    {
-      title: "REWARDS (10-12%)",
-      items: [
-        { text: "Community rewards" },
-        { text: "10-month lockup", isLocked: true },
-        { text: "1/10 Unlocked after 10 months", isLocked: false },
-        { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-      ],
-      progress: 20,
-      totalTokens: {
-        amount: 759_000_000,
-        total: 7_590_000_000,
-        symbol: "MEME",
-      },
-    },
-    {
-      title: "REWARDS (10-12%)",
-      items: [
-        { text: "Community rewards" },
-        { text: "10-month lockup", isLocked: true },
-        { text: "1/10 Unlocked after 10 months", isLocked: false },
-        { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-      ],
-      progress: 80,
-      totalTokens: {
-        amount: 759_000_000,
-        total: 7_590_000_000,
-        symbol: "MEME",
-      },
-    },
-  ];
-
   return (
     <>
       <div className="flex justify-center items-center w-full h-full">
         <div
-          className={`relative ${isMobile ? "w-[300px] h-[1200px]" : "w-[400px] h-[400px]"}`}
+          className={`relative ${isMobile ? "w-[300px] h-[1500px]" : "w-[400px] h-[400px]"}`}
         >
           <svg
             width="100%"
@@ -688,46 +643,71 @@ const AnimatedSpreadingLines: React.FC = () => {
 
           {/* TokenDistribution Components */}
           {tokenSaleData.map((data, index) => {
-            const position = isMobile
-              ? {
-                  x: centerX,
-                  y:
-                    getMobileEndpoints()[
-                      `${["first", "second", "third", "fourth", "fifth"][index] as keyof MobileEndpoints}`
-                    ].y + 60,
+            const position = (() => {
+              if (isMobile) {
+                const mobileEndpoints = getMobileEndpoints();
+                switch (index) {
+                  case 0: // first
+                    return {
+                      x: centerX - 120, // 120px from the horizontal line of the first node
+                      y: mobileEndpoints.first.y - 20, // 20px from the bottom vertical line of the first node
+                    };
+                  case 1: // second
+                    return {
+                      x: centerX - 120,
+                      y: mobileEndpoints.second.y - 20,
+                    };
+                  case 2: // third
+                    return {
+                      x: centerX - 120,
+                      y: mobileEndpoints.third.y - 20,
+                    };
+                  case 3: // fourth
+                    return {
+                      x: centerX - 120,
+                      y: mobileEndpoints.fourth.y - 20,
+                    };
+                  case 4: // fifth
+                    return {
+                      x: centerX - 120,
+                      y: mobileEndpoints.fifth.y - 20,
+                    };
+                  default:
+                    return { x: 0, y: 0 };
                 }
-              : (() => {
-                  const endpoints = getDesktopEndpoints();
-                  switch (index) {
-                    case 0: // right
-                      return {
-                        x: endpoints.right.x - 80,
-                        y: endpoints.right.y + 180,
-                      };
-                    case 1: // top
-                      return {
-                        x: endpoints.top.x,
-                        y: endpoints.top.y - 20,
-                      };
-                    case 2: // leftFirst
-                      return {
-                        x: endpoints.leftFirst.x - 200,
-                        y: endpoints.leftFirst.y - 25,
-                      };
-                    case 3: // leftSecond
-                      return {
-                        x: endpoints.leftSecond.x - 220,
-                        y: endpoints.leftSecond.y - 25,
-                      };
-                    case 4: // down
-                      return {
-                        x: endpoints.down.x,
-                        y: endpoints.down.y - 20,
-                      };
-                    default:
-                      return { x: 0, y: 0 };
-                  }
-                })();
+              } else {
+                const endpoints = getDesktopEndpoints();
+                switch (index) {
+                  case 0: // right
+                    return {
+                      x: endpoints.right.x - 80,
+                      y: endpoints.right.y + 180,
+                    };
+                  case 1: // top
+                    return {
+                      x: endpoints.top.x,
+                      y: endpoints.top.y - 20,
+                    };
+                  case 2: // leftFirst
+                    return {
+                      x: endpoints.leftFirst.x - 200,
+                      y: endpoints.leftFirst.y - 25,
+                    };
+                  case 3: // leftSecond
+                    return {
+                      x: endpoints.leftSecond.x - 220,
+                      y: endpoints.leftSecond.y - 25,
+                    };
+                  case 4: // down
+                    return {
+                      x: endpoints.down.x,
+                      y: endpoints.down.y - 20,
+                    };
+                  default:
+                    return { x: 0, y: 0 };
+                }
+              }
+            })();
 
             return (
               <TokenDistribution
