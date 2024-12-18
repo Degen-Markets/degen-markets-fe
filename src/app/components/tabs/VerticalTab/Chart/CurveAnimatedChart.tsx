@@ -4,64 +4,14 @@ import { motion } from "framer-motion";
 import { TokenDistribution } from "./TokenDistribution";
 import useMediaQuery from "@/app/hooks/useMediaQuery";
 import { tokenSaleData } from "./constants";
-
-interface CurveSegment {
-  x: number;
-  y: number;
-  curve: {
-    type: "linear" | "cubic";
-    controlPoints?: [number, number, number, number];
-  };
-}
-
-type LineConfiguration = {
-  initialPoint: { x: number; y: number };
-  segments: CurveSegment[];
-  color: string;
-};
-
-interface PieSegment {
-  percentage: number;
-  color: string;
-}
-
-interface EndpointConfig {
-  x: number;
-  y: number;
-  text: string;
-}
-
-interface MobileEndpoints {
-  first: EndpointConfig;
-  second: EndpointConfig;
-  third: EndpointConfig;
-  fourth: EndpointConfig;
-  fifth: EndpointConfig;
-}
-
-interface DesktopEndpoints {
-  right: EndpointConfig;
-  top: EndpointConfig;
-  leftFirst: EndpointConfig;
-  leftSecond: EndpointConfig;
-  down: EndpointConfig;
-}
-
-interface MobileLineConfigs {
-  first: LineConfiguration;
-  second: LineConfiguration;
-  third: LineConfiguration;
-  fourth: LineConfiguration;
-  fifth: LineConfiguration;
-}
-
-interface DesktopLineConfigs {
-  right: LineConfiguration;
-  top: LineConfiguration;
-  leftFirst: LineConfiguration;
-  leftSecond: LineConfiguration;
-  down: LineConfiguration;
-}
+import {
+  CurveSegment,
+  DesktopEndpoints,
+  DesktopLineConfigs,
+  MobileEndpoints,
+  MobileLineConfigs,
+  PieSegment,
+} from "./types";
 
 const AnimatedSpreadingLines: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -649,8 +599,8 @@ const AnimatedSpreadingLines: React.FC = () => {
                 switch (index) {
                   case 0: // first
                     return {
-                      x: centerX - 120, // 120px from the horizontal line of the first node
-                      y: mobileEndpoints.first.y - 20, // 20px from the bottom vertical line of the first node
+                      x: centerX - 120, // 120px from the horizontal movement of the  node
+                      y: mobileEndpoints.first.y - 20, // 20px from the bottom vertical movement of the first node
                     };
                   case 1: // second
                     return {

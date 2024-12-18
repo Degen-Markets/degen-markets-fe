@@ -1,4 +1,7 @@
 "use client";
+
+// TODO: Old tokenomics chart, remove after new one is implemented
+
 import React, { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import {
