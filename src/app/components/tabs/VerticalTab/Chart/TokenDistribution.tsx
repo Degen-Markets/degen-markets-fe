@@ -18,6 +18,7 @@ interface TokenDistributionProps {
   };
   x: number;
   y: number;
+  isMobile?: boolean;
 }
 
 export function TokenDistribution({
@@ -27,18 +28,19 @@ export function TokenDistribution({
   totalTokens,
   x,
   y,
+  isMobile = false,
 }: TokenDistributionProps) {
   return (
     <motion.div
-      className="absolute w-full h-full  rounded-lg p-2 flex flex-col  "
+      className="absolute w-full h-full rounded-lg p-2 flex flex-col"
       style={{
         left: `${x}px`,
         top: `${y}px`,
-        width: "350px",
+        width: isMobile ? "250px" : "350px",
         height: "fit-content",
         transform: "translate(-50%, -50%)",
         color: "white",
-        fontSize: "0.875rem",
+        fontSize: isMobile ? "0.75rem" : "0.875rem",
       }}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
@@ -48,14 +50,20 @@ export function TokenDistribution({
       }}
     >
       <div>
-        <h2 className="font-extrabold text-xl text-secondary">{title}</h2>
+        <h2
+          className={`font-extrabold ${isMobile ? "text-lg" : "text-xl"} text-secondary`}
+        >
+          {title}
+        </h2>
       </div>
       <div className="space-y-1">
-        <ul className="space-y-1 text-sm list-disc pl-4 text-secondary">
+        <ul
+          className={`space-y-1 ${isMobile ? "text-xs" : "text-sm"} list-disc pl-4 text-secondary`}
+        >
           {items.map((item, index) => (
             <li key={index} className="flex items-center gap-2 text-secondary">
               {item.isLocked !== undefined && (
-                <span className="text-xs">
+                <span className={isMobile ? "text-[10px]" : "text-xs"}>
                   {item.isLocked ? (
                     <LockClosedIcon className="text-danger" />
                   ) : (
@@ -75,13 +83,19 @@ export function TokenDistribution({
         </ul>
 
         <div className="space-y-2">
-          <h3 className="text-sm font-medium text-zinc-200">Token Unlock</h3>
+          <h3
+            className={`${isMobile ? "text-xs" : "text-sm"} font-medium text-zinc-200`}
+          >
+            Token Unlock
+          </h3>
           <div className="relative">
             <ProgressBar progress={progress} />
           </div>
         </div>
 
-        <div className="text-sm font-medium text-success">
+        <div
+          className={`${isMobile ? "text-xs" : "text-sm"} font-medium text-success`}
+        >
           ~{totalTokens.amount.toLocaleString()} / ~
           {totalTokens.total.toLocaleString()}{" "}
           <span className="text-yellow-500">${totalTokens.symbol}</span>

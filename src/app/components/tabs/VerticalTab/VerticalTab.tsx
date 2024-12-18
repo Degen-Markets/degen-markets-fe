@@ -15,7 +15,7 @@ export function TabsVertical({ tabs }: TabsVerticalProps) {
           <TabContent content={activeContent || ""} />
         </div>
       </div>
-      <div className="md:min-h-screen md:h-[1000px] mx-5 my-10 md:my-0 md:mx-0 flex items-center justify-between">
+      <div className="md:min-h-screen md:h-[1000px] mx-2 mt-10 md:my-0 md:mx-0 flex items-center justify-between">
         <div className="flex md:flex-col flex-row  md:h-[600px] w-full md:w-20 justify-center items-center gap-5 my-10 md:my-0">
           {tabs.map((tab) => (
             <TabButton
