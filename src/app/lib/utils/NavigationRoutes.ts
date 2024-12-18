@@ -32,7 +32,7 @@ const NavigationRoutes: NavigationProps = {
         isExpandable: false,
       },
       {
-        name: "Bet against AI",
+        name: "Bets",
         icon: "",
         route: "/pools",
         isExpandable: false,

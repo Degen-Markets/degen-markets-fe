@@ -12,12 +12,16 @@ const HeroSection = () => (
       <>
         <div className="w-full lg:w-[60%]">
           <h1 className="text-2xl md:text-6xl md:leading-snug  mb-8">
-            Dare to disagree with the prophecies?
+            Human, do you dare to bet against AI?
           </h1>
           <p className="w-[80%] lg:w-[60%] text-base md:text-md text-lavender-blue mb-6">
-            Go head to head against AI predictions
+            AI Generated Prediction Markets coming soon
           </p>
-          <Link href="/pools">
+          <Link
+            href="https://x.com/tiresiasai"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button intent="primary" icon={<RobotIcon width={30} />}>
               Bet Against AI
             </Button>
