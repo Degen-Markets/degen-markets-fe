@@ -51,13 +51,14 @@ export const tokenomicsData = {
 export const getTabButtonStyles = (isActive: boolean) => ({
   buttonStyles: `
         flex-1 w-[60px] relative group cursor-pointer uppercase
-        ${isActive ? "border-l-4 border-l-secondary text-primary" : "border-l-4  border-l-gunmetal"}
+        ${isActive ? "border-b-4 border-b-secondary md:border-l-4 md:border-l-secondary text-primary md:border-b-0" : "md:border-l-4  md:border-l-gunmetal border-b-4 border-b-gunmetal md:border-b-0"}
         transition-colors duration-200
+         px-4
       `,
   labelStyles: `
-        absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 
-        whitespace-nowrap origin-center -rotate-90
-        font-medium text-xl
+        absolute left-1/2 md:bottom-1/2 -translate-x-1/2 md:translate-y-1/2 bottom-full -translate-y-[30%]
+        whitespace-nowrap origin-center md:-rotate-90
+        font-medium text-md md:text-xl
         ${isActive ? "text-primary" : "text-gray-600"}
         group-hover:text-primary transition-colors
       `,

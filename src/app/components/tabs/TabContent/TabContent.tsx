@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
-import { TabContentProps } from "./TabContentType";
+
+interface TabContentProps {
+  content: React.ReactNode;
+}
 
 export function TabContent({ content }: TabContentProps) {
   return <div className="w-full">{content}</div>;

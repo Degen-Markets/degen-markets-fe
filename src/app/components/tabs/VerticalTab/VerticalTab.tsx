@@ -9,14 +9,14 @@ export function TabsVertical({ tabs }: TabsVerticalProps) {
   const { activeTab, activeContent, setActiveTab } = useActiveTab(tabs);
 
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 flex-col-reverse md:flex-row">
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full p-8">
           <TabContent content={activeContent || ""} />
         </div>
       </div>
-      <div className="min-h-screen h-[1000px] flex items-center justify-between">
-        <div className="flex flex-col h-[600px]  w-52 justify-center items-center gap-5">
+      <div className="md:min-h-screen md:h-[1000px] mx-5 my-10 md:my-0 md:mx-0 flex items-center justify-between">
+        <div className="flex md:flex-col flex-row  md:h-[600px] w-full md:w-20 justify-center items-center gap-5 my-10 md:my-0">
           {tabs.map((tab) => (
             <TabButton
               key={tab.id}

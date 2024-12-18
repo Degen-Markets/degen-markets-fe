@@ -11,7 +11,7 @@ interface StoryProps {
 
 const Story: React.FC<StoryProps> = ({ title, content }) => {
   return (
-    <div className="p-8 text-white">
+    <div className="text-white">
       <h2 className="text-2xl mb-6">{title}</h2>
       {content.paragraphs.map((paragraph, index) => (
         <p key={index} className="mb-6 leading-relaxed text-gray-400">
