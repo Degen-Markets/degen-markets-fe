@@ -58,16 +58,20 @@ export function TokenDistribution({
       </div>
       <div className="space-y-1">
         <ul
-          className={`space-y-1 ${isMobile ? "text-xs" : "text-sm"} list-disc pl-4 text-secondary`}
+          className={`space-y-1 ${isMobile ? "text-xs" : "text-sm"} list-disc list-outside pl-5 text-secondary`}
+          style={{ listStyleType: "disc" }}
         >
           {items.map((item, index) => (
-            <li key={index} className="flex items-center gap-2 text-secondary">
+            <li
+              key={index}
+              className="flex items-start gap-2 text-zinc-200 marker:text-secondary"
+            >
               {item.isLocked !== undefined && (
                 <span className={isMobile ? "text-[10px]" : "text-xs"}>
                   {item.isLocked ? (
-                    <LockClosedIcon className="text-danger" />
+                    <LockClosedIcon className="text-danger w-4 h-4" />
                   ) : (
-                    <LockOpenIcon className="text-success" />
+                    <LockOpenIcon className="text-success w-4 h-4" />
                   )}
                 </span>
               )}

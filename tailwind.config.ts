@@ -34,6 +34,11 @@ const config: Config = {
         montserrat: ["var(--headline-font-family)", "sans-serif"],
       },
       colors: colors,
+      listStyleType: {
+        none: "none",
+        disc: "disc",
+        decimal: "decimal",
+      },
       animation: {
         border: "border 4s linear infinite",
         "bounce-slow": "bounce-slow 20s infinite linear alternate",
