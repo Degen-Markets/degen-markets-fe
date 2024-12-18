@@ -1,2 +1,2 @@
-export * from "./VerticalTab";
-export * from "./VerticalTabType";
+export * from "./SecondSection";
+export * from "./SecondSectionType";

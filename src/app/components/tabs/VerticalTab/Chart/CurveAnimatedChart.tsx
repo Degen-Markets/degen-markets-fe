@@ -517,7 +517,6 @@ const AnimatedSpreadingLines: React.FC = () => {
 
         {/* Content group */}
         <g>
-          {/* Image */}
           <image
             x={centerX - innerRadius * 0.2}
             y={centerY - innerRadius * 0.2}
@@ -527,7 +526,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             style={{ objectFit: "contain", borderRadius: "50%" }}
           />
 
-          {/* Text group - centered horizontally */}
+          {/* Text group - if required */}
         </g>
       </g>
     );

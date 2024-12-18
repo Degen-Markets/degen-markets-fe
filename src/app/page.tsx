@@ -1,7 +1,7 @@
 import HeroSection from "./components/Landing/HeroSection";
 import { getLatestPool, getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
-import { TabsVertical } from "./components/tabs/VerticalTab";
+import { SecondSection } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";
 import { storyContent } from "./components/tabs/constant";
 import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimatedChart";
@@ -46,7 +46,7 @@ const Home = async () => {
   return (
     <>
       <HeroSection />
-      <TabsVertical tabs={tabs} />
+      <SecondSection tabs={tabs} />
     </>
   );
 };

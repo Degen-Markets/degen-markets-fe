@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { TabContent } from "../TabContent";
 import { useActiveTab } from "./hooks/useActiveTab";
-import { TabsVerticalProps } from "./VerticalTabType";
 import { TabButton } from "../ButtonTab/TabButton";
+import { SecondSectionProps } from "./SecondSectionType";
 
-export function TabsVertical({ tabs }: TabsVerticalProps) {
+export function SecondSection({ tabs }: SecondSectionProps) {
   const { activeTab, activeContent, setActiveTab } = useActiveTab(tabs);
 
   return (
