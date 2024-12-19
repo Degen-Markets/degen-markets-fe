@@ -21,7 +21,6 @@ export interface PieSegment {
 export interface EndpointConfig {
   x: number;
   y: number;
-  text: string;
 }
 
 export interface MobileEndpoints {

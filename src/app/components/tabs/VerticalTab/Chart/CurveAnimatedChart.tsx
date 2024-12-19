@@ -60,28 +60,23 @@ const AnimatedSpreadingLines: React.FC = () => {
     return {
       first: {
         x: centerX + outerRadius + 30,
-        y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 0,
-        text: "First Node",
+        y: baseY,
       },
       second: {
         x: centerX + outerRadius + 30,
-        y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 1,
-        text: "Second Node",
+        y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING,
       },
       third: {
         x: centerX + outerRadius + 20,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 2,
-        text: "Third Node",
       },
       fourth: {
         x: centerX - outerRadius - 30,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 3,
-        text: "Fourth Node",
       },
       fifth: {
         x: centerX - outerRadius - 40,
         y: baseY + MOBILE_CONSTANTS.VERTICAL_SPACING * 4,
-        text: "Fifth Node",
       },
     };
   };
@@ -93,31 +88,26 @@ const AnimatedSpreadingLines: React.FC = () => {
         LINE_CONSTANTS.STRAIGHT_LENGTH +
         LINE_CONSTANTS.EXTENSION_LENGTH,
       y: 0,
-      text: "Right Node",
     },
     top: {
       x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
       y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.LARGE_2,
-      text: "Top Node",
     },
     leftFirst: {
       x:
         centerX -
         (LINE_CONSTANTS.STRAIGHT_LENGTH + LINE_CONSTANTS.EXTENSION_LENGTH),
       y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-      text: "Left First Node",
     },
     leftSecond: {
       x:
         centerX -
         (LINE_CONSTANTS.STRAIGHT_LENGTH + LINE_CONSTANTS.EXTENSION_LENGTH),
       y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-      text: "Left Second Node",
     },
     down: {
       x: centerX + LINE_CONSTANTS.STRAIGHT_LENGTH,
       y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.LARGE,
-      text: "Bottom Node",
     },
   });
 
