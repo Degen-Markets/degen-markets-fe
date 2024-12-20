@@ -111,10 +111,6 @@ const AnimatedSpreadingLines: React.FC = () => {
     },
   });
 
-  const endpointConfigurations = isMobile
-    ? getMobileEndpoints()
-    : getDesktopEndpoints();
-
   // Mobile-specific line configurations
   const getMobileLineConfigurations = (): MobileLineConfigs => {
     const mobileEndpoints = getMobileEndpoints();
@@ -178,7 +174,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#A6B1D6",
+        color: "#8F7CFF",
       },
       // Third line (Right side, bottom)
       third: {
@@ -203,7 +199,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#DCDCDC",
+        color: "#3FDA8D",
       },
       // Fourth line (Left side, top)
       fourth: {
@@ -228,7 +224,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#3FDA8D",
+        color: "#DCDCDC",
       },
       // Fifth line (Left side, bottom)
       fifth: {
@@ -253,15 +249,13 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#8F7CFF",
+        color: "#7061CC",
       },
     };
     return baseConfigs;
   };
 
   const getDesktopLineConfigurations = (): DesktopLineConfigs => {
-    const desktopEndpoints = getDesktopEndpoints();
-
     const baseConfigs: DesktopLineConfigs = {
       right: {
         initialPoint: { x: centerX + outerRadius, y: centerY },
@@ -272,7 +266,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#E4D493",
+        color: "#7061CC",
       },
       top: {
         initialPoint: { x: centerX, y: centerY - outerRadius },
@@ -301,7 +295,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#A6B1D6",
+        color: "#8F7CFF",
       },
       leftFirst: {
         initialPoint: {
@@ -336,7 +330,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#DCDCDC",
+        color: "#C67BFF",
       },
       leftSecond: {
         initialPoint: {
@@ -371,7 +365,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#3FDA8D",
+        color: "#F57CFF",
       },
       down: {
         initialPoint: { x: centerX, y: centerY + outerRadius },
@@ -400,7 +394,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#8F7CFF",
+        color: "#F99EEB",
       },
     };
 
@@ -453,10 +447,10 @@ const AnimatedSpreadingLines: React.FC = () => {
   };
 
   const pieSegments: PieSegment[] = [
-    { percentage: 20, color: "#E4D493" },
-    { percentage: 20, color: "#A6B1D6" },
-    { percentage: 10, color: "#DCDCDC" },
-    { percentage: 20, color: "#3FDA8D" },
+    { percentage: 20, color: "#7061CC" },
+    { percentage: 20, color: "#F99EEB" },
+    { percentage: 10, color: "#F57CFF" },
+    { percentage: 20, color: "#C67BFF" },
     { percentage: 30, color: "#8F7CFF" },
   ];
 
@@ -508,11 +502,12 @@ const AnimatedSpreadingLines: React.FC = () => {
         {/* Content group */}
         <g>
           <image
-            x={centerX - innerRadius * 0.2}
-            y={centerY - innerRadius * 0.2}
-            width={innerRadius * 0.4}
-            height={innerRadius * 0.4}
-            href="/user-avatars/default.jpg"
+            x={centerX - innerRadius * 0.3}
+            y={centerY - innerRadius * 0.3}
+            width={innerRadius * 0.5}
+            height={innerRadius * 0.5}
+            href="/images/degen_coin.png"
+            className="rounded-full"
             style={{ objectFit: "contain", borderRadius: "50%" }}
           />
 

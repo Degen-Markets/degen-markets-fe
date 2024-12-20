@@ -1,7 +1,5 @@
-"use client";
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import ProgressBar from "./ProgressBar";
 
 interface TokenDistributionProps {
   title: string;
@@ -24,7 +22,6 @@ interface TokenDistributionProps {
 export function TokenDistribution({
   title,
   items,
-  progress,
   totalTokens,
   x,
   y,
@@ -51,12 +48,12 @@ export function TokenDistribution({
     >
       <div>
         <h2
-          className={`font-extrabold ${isMobile ? "text-lg" : "text-xl"} text-secondary`}
+          className={`font-semibold ${isMobile ? "text-lg" : "text-xl"} text-lavender-blue mb-2`}
         >
           {title}
         </h2>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-2">
         <ul
           className={`space-y-1 ${isMobile ? "text-xs" : "text-sm"} list-disc list-outside pl-5 text-secondary`}
           style={{ listStyleType: "disc" }}
@@ -69,9 +66,9 @@ export function TokenDistribution({
               {item.isLocked !== undefined && (
                 <span className={isMobile ? "text-[10px]" : "text-xs"}>
                   {item.isLocked ? (
-                    <LockClosedIcon className="text-danger w-4 h-4" />
+                    <LockClosedIcon className="text-orange-700 w-4 h-4" />
                   ) : (
-                    <LockOpenIcon className="text-success w-4 h-4" />
+                    <LockOpenIcon className="text-teal-500 w-4 h-4" />
                   )}
                 </span>
               )}
@@ -85,24 +82,12 @@ export function TokenDistribution({
             </li>
           ))}
         </ul>
-
-        <div className="space-y-2">
-          <h3
-            className={`${isMobile ? "text-xs" : "text-sm"} font-medium text-zinc-200`}
-          >
-            Token Unlock
-          </h3>
-          <div className="relative">
-            <ProgressBar progress={progress} />
-          </div>
-        </div>
-
         <div
-          className={`${isMobile ? "text-xs" : "text-sm"} font-medium text-success`}
+          className={`${isMobile ? "text-xs" : "text-sm"} font-medium text-teal-600`}
         >
           ~{totalTokens.amount.toLocaleString()} / ~
           {totalTokens.total.toLocaleString()}{" "}
-          <span className="text-yellow-500">${totalTokens.symbol}</span>
+          <span className="text-orange-300">${totalTokens.symbol}</span>
         </div>
       </div>
     </motion.div>
