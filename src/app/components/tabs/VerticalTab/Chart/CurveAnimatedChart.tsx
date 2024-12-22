@@ -149,7 +149,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#E4D493",
+        color: "#7061CC",
       },
       // Second line (Right side, middle)
       second: {
@@ -174,7 +174,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#8F7CFF",
+        color: "#F99EEB",
       },
       // Third line (Right side, bottom)
       third: {
@@ -199,7 +199,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#3FDA8D",
+        color: "#F57CFF",
       },
       // Fourth line (Left side, top)
       fourth: {
@@ -224,7 +224,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#DCDCDC",
+        color: "#C67BFF",
       },
       // Fifth line (Left side, bottom)
       fifth: {
@@ -249,7 +249,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#7061CC",
+        color: "#8F7CFF",
       },
     };
     return baseConfigs;
@@ -304,28 +304,14 @@ const AnimatedSpreadingLines: React.FC = () => {
         },
         segments: [
           {
-            // First segment - straight line to the left
-            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-            y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+            // First segment - straight line down to the outer radius
+            x: centerX - outerRadius,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
             curve: { type: "linear" },
           },
           {
-            // Second segment - curve downward
-            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-            curve: {
-              type: "linear",
-              controlPoints: [
-                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                centerY - LINE_CONSTANTS.SPACING.VERTICAL,
-                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                centerY + LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
-              ],
-            },
-          },
-          {
-            // Final segment - extend left
-            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.LARGE,
+            // Second segment - straight line to the left
+            x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
             y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
             curve: { type: "linear" },
           },
@@ -339,28 +325,14 @@ const AnimatedSpreadingLines: React.FC = () => {
         },
         segments: [
           {
-            // First segment - straight line to the left
-            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-            y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+            // First segment - straight line down to the outer radius
+            x: centerX - outerRadius,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
             curve: { type: "linear" },
           },
           {
-            // Second segment - curve upward
-            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-            curve: {
-              type: "linear",
-              controlPoints: [
-                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                centerY + LINE_CONSTANTS.SPACING.VERTICAL,
-                centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
-                centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
-              ],
-            },
-          },
-          {
-            // Final segment - extend left
-            x: centerX - LINE_CONSTANTS.HORIZONTAL_OFFSET.LARGE,
+            // Second segment - straight line to the left
+            x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
             y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
             curve: { type: "linear" },
           },
@@ -498,21 +470,6 @@ const AnimatedSpreadingLines: React.FC = () => {
 
         {/* Render pie segments */}
         {createPieSegments(segments)}
-
-        {/* Content group */}
-        <g>
-          <image
-            x={centerX - innerRadius * 0.3}
-            y={centerY - innerRadius * 0.3}
-            width={innerRadius * 0.5}
-            height={innerRadius * 0.5}
-            href="/images/degen_coin.png"
-            className="rounded-full"
-            style={{ objectFit: "contain", borderRadius: "50%" }}
-          />
-
-          {/* Text group - if required */}
-        </g>
       </g>
     );
   };

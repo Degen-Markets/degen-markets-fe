@@ -33,6 +33,7 @@ export const tokenSaleData = [
       symbol: "MEME",
     },
   },
+
   {
     title: "TEAM (10-12%)",
     items: [
