@@ -304,15 +304,9 @@ const AnimatedSpreadingLines: React.FC = () => {
         },
         segments: [
           {
-            // First segment - straight line down to the outer radius
-            x: centerX - outerRadius,
-            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
-            curve: { type: "linear" },
-          },
-          {
             // Second segment - straight line to the left
             x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
             curve: { type: "linear" },
           },
         ],
@@ -325,15 +319,9 @@ const AnimatedSpreadingLines: React.FC = () => {
         },
         segments: [
           {
-            // First segment - straight line down to the outer radius
-            x: centerX - outerRadius,
-            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.SMALL,
-            curve: { type: "linear" },
-          },
-          {
             // Second segment - straight line to the left
             x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
             curve: { type: "linear" },
           },
         ],
