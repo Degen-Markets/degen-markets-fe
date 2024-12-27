@@ -28,11 +28,7 @@ const Home = async () => {
     {
       id: "tokenomics",
       label: "Tokenomics",
-      content: (
-        <>
-          <CurveAnimatedChart />
-        </>
-      ),
+      content: <CurveAnimatedChart />,
     },
     {
       id: "story",

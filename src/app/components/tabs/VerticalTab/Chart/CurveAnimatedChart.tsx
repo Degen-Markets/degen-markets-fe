@@ -14,7 +14,7 @@ import {
 } from "./types";
 
 const AnimatedSpreadingLines: React.FC = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 640px)");
 
   // Dynamic dimensions based on viewport
   const baseSize = isMobile ? 300 : 400;
