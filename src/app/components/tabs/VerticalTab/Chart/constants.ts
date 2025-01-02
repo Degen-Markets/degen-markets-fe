@@ -1,82 +1,53 @@
 export const tokenSaleData = [
   {
-    title: "PRIVATE SALE (10-12%)",
+    title: "Liquidity (20%)",
+    items: [{ text: "Liquidity provided for CEXs & DEXs" }],
+    totalTokens: {
+      amount: 20_000_000,
+      symbol: "BETAI",
+    },
+  },
+  {
+    title: "Ecosystem (35%)",
     items: [
-      { text: "External investors and Super Crew holders" },
-      { text: "6-month lockup", isLocked: true },
       {
-        text: "1/10 Unlocked after 6 months",
-        highlight: true,
-        isLocked: false,
+        text: "Tokens reserved for the incentivisation of growth of the platform",
       },
-      { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
+      // { text: "6-month lockup", isLocked: true },
+      // {
+      //   text: "1/10 Unlocked after 6 months",
+      //   highlight: true,
+      //   isLocked: false,
+      // },
+      // { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
     ],
-    progress: 10,
     totalTokens: {
-      amount: 759_000_000,
-      total: 7_590_000_000,
-      symbol: "MEME",
+      amount: 35_000_000,
+      symbol: "BETAI",
     },
   },
   {
-    title: "PUBLIC SALE (10-12%)",
-    items: [
-      { text: "Public sale" },
-      { text: "10-month lockup", isLocked: true },
-      { text: "1/10 Unlocked after 10 months", isLocked: false },
-      { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-    ],
-    progress: 50,
+    title: "Internal (15.5%)",
+    items: [{ text: "Funds for the development team, investors and advisors" }],
     totalTokens: {
-      amount: 759_000_000,
-      total: 7_590_000_000,
-      symbol: "MEME",
-    },
-  },
-
-  {
-    title: "TEAM (10-12%)",
-    items: [
-      { text: "Team and advisors" },
-      { text: "10-month lockup", isLocked: true },
-      { text: "1/10 Unlocked after 10 months", isLocked: false },
-      { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-    ],
-    progress: 60,
-    totalTokens: {
-      amount: 759_000_000,
-      total: 7_590_000_000,
-      symbol: "MEME",
+      amount: 15_500_000,
+      symbol: "BETAI",
     },
   },
   {
-    title: "REWARDS (10-12%)",
-    items: [
-      { text: "Community rewards" },
-      { text: "10-month lockup", isLocked: true },
-      { text: "1/10 Unlocked after 10 months", isLocked: false },
-      { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-    ],
-    progress: 20,
+    title: "Marketing (9%)",
+    items: [{ text: "Funds allocated to ensure the growth of the project" }],
     totalTokens: {
-      amount: 759_000_000,
-      total: 7_590_000_000,
-      symbol: "MEME",
+      amount: 9_000_000,
+      symbol: "BETAI",
     },
   },
   {
-    title: "REWARDS (10-12%)",
-    items: [
-      { text: "Community rewards" },
-      { text: "10-month lockup", isLocked: true },
-      { text: "1/10 Unlocked after 10 months", isLocked: false },
-      { text: "9/10 Locked (daily unlock over 18 months)", isLocked: true },
-    ],
-    progress: 80,
+    title: "Sale (20.5%)",
+    items: [{ text: "Public and private rounds of sales" }],
     totalTokens: {
-      amount: 759_000_000,
-      total: 7_590_000_000,
-      symbol: "MEME",
+      amount: 20_500_000,
+      symbol: "BETAI",
     },
   },
 ];

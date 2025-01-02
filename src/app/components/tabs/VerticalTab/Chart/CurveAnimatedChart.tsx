@@ -458,6 +458,19 @@ const AnimatedSpreadingLines: React.FC = () => {
 
         {/* Render pie segments */}
         {createPieSegments(segments)}
+        <g>
+          <image
+            x={centerX - innerRadius * 0.3}
+            y={centerY - innerRadius * 0.3}
+            width={innerRadius * 0.5}
+            height={innerRadius * 0.5}
+            href="/images/tiresias.jpg"
+            className="rounded-full"
+            style={{ objectFit: "contain", borderRadius: "50%" }}
+          />
+
+          {/* Text group - if required */}
+        </g>
       </g>
     );
   };
@@ -595,7 +608,6 @@ const AnimatedSpreadingLines: React.FC = () => {
                 y={position.y}
                 title={data.title}
                 items={data.items}
-                progress={data.progress}
                 totalTokens={data.totalTokens}
                 isMobile={isMobile}
               />

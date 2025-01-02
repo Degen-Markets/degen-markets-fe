@@ -1,6 +1,8 @@
 import { LockClosedIcon, LockOpenIcon } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 
+const MAX_SUPPLY = 100_000_000;
+
 interface TokenDistributionProps {
   title: string;
   items: {
@@ -8,11 +10,9 @@ interface TokenDistributionProps {
     highlight?: boolean;
     isLocked?: boolean;
   }[];
-  progress: number;
   totalTokens: {
     amount: number;
     symbol: string;
-    total: number;
   };
   x: number;
   y: number;
@@ -86,7 +86,7 @@ export function TokenDistribution({
           className={`${isMobile ? "text-xs" : "text-sm"} font-medium text-teal-600`}
         >
           ~{totalTokens.amount.toLocaleString()} / ~
-          {totalTokens.total.toLocaleString()}{" "}
+          {MAX_SUPPLY.toLocaleString()}{" "}
           <span className="text-orange-300">${totalTokens.symbol}</span>
         </div>
       </div>
