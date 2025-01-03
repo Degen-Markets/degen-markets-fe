@@ -4,7 +4,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Button } from "@/app/components/Button/Button";
 import Link from "next/link";
 import { Section } from "@/app/components/Section";
-import RobotIcon from "@/app/components/Icons/RobotIcon";
+import { SquaresPlusIcon } from "@heroicons/react/24/outline";
 
 const HeroSection = () => (
   <div className="bg-hero pb-20">
@@ -22,8 +22,8 @@ const HeroSection = () => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button intent="primary" icon={<RobotIcon width={30} />}>
-              Bet Against AI
+            <Button intent="primary" icon={<SquaresPlusIcon width={30} />}>
+              Bet
             </Button>
           </Link>
         </div>
