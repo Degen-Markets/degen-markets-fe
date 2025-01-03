@@ -6,7 +6,7 @@ export const tokenSaleData = [
       amount: 20_000_000,
       symbol: "BETAI",
     },
-    color: "#7061CC",
+    color: "#B6A6E9",
     percentage: 20,
   },
   {
@@ -16,7 +16,7 @@ export const tokenSaleData = [
       amount: 20_500_000,
       symbol: "BETAI",
     },
-    color: "#F99EEB",
+    color: "#876FD4",
     percentage: 20.5,
   },
   {
@@ -26,7 +26,7 @@ export const tokenSaleData = [
       amount: 15_500_000,
       symbol: "BETAI",
     },
-    color: "#F57CFF",
+    color: "#5E40BE",
     percentage: 15.5,
   },
   {
@@ -36,7 +36,7 @@ export const tokenSaleData = [
       amount: 9_000_000,
       symbol: "BETAI",
     },
-    color: "#C67BFF",
+    color: "#3D2785",
     percentage: 9,
   },
   {
@@ -57,7 +57,7 @@ export const tokenSaleData = [
       amount: 35_000_000,
       symbol: "BETAI",
     },
-    color: "#8F7CFF",
+    color: "#21134D",
     percentage: 35,
   },
 ];
