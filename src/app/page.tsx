@@ -1,19 +1,20 @@
 import HeroSection from "./components/Landing/HeroSection";
-import { getPool, getPoolById } from "./api/pools";
+import { getPools, getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
 import { FeatureTabs } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";
 import { storyContent } from "./components/tabs/constant";
 import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimatedChart";
+import { PoolsResponse } from "./lib/utils/types";
 
 export const dynamic = "force-dynamic";
 
 const Home = async () => {
-  const { data: pool } = await getPool({
+  const { data: pools } = await getPools({
     sortBy: "newest",
   });
-  console.log(pool);
-  const poolId = pool[0].address;
+  const poolsData = pools as PoolsResponse;
+  const poolId = poolsData[0].address;
   const {
     data: { value },
   } = await getPoolById(poolId);
