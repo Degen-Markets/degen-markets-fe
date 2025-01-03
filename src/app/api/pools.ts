@@ -3,8 +3,8 @@ import { Pool, PoolsResponse } from "@/app/lib/utils/types";
 
 import { API_BASE_URL } from "@/app/config/api";
 
-export type Status = "ongoing" | "completed" | undefined;
-export type SortBy = "highestVolume" | "newest" | undefined;
+export type Status = "ongoing" | "completed" | "";
+export type SortBy = "highestVolume" | "newest" | "";
 
 type GetPoolParams = {
   status?: Status;

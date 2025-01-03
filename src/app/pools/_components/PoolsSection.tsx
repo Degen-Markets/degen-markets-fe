@@ -1,8 +1,6 @@
 "use client";
 import { FC, useState } from "react";
-import axios from "axios";
 import { Pool, PoolsResponse } from "@/app/lib/utils/types";
-import { API_BASE_URL } from "@/app/config/api";
 import PoolCard from "@/app/components/PoolCard/PoolCard";
 import AnimatedLoading from "@/app/components/AnimatedLoading";
 import InfiniteScrollContainer from "@/app/components/InfiniteScrollContainer/InfiniteScrollContainer";

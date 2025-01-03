@@ -8,7 +8,7 @@ export const dynamic = "auto";
 
 const PoolsPage = async () => {
   const { data: pools } = await getPools({
-    sortBy: undefined,
+    sortBy: "",
   });
   const poolsData = pools as PoolsResponse;
 
