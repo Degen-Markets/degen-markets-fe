@@ -1,5 +1,5 @@
 import HeroSection from "./components/Landing/HeroSection";
-import { getLatestPool, getPoolById } from "./api/pools";
+import { getPool, getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
 import { FeatureTabs } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";
@@ -9,7 +9,10 @@ import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimate
 export const dynamic = "force-dynamic";
 
 const Home = async () => {
-  const { data: pool } = await getLatestPool({});
+  const { data: pool } = await getPool({
+    sortBy: "newest",
+  });
+  console.log(pool);
   const poolId = pool[0].address;
   const {
     data: { value },

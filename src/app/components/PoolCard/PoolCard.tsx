@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { FC, useCallback, useState, useMemo } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
@@ -9,7 +9,6 @@ import { Badge } from "@/app/components/Badge/Badge";
 import ClaimPoolTweetPointsDialog from "@/app/pools/[id]/ClaimPoolTweetPointsDialog";
 
 import { Pool } from "@/app/lib/utils/types";
-import useShareOnTwitterFlow from "@/app/hooks/useShareOnTwitterFlow";
 import { useUserProfileContext } from "@/app/context/UserProfileContext";
 import isWithinTwoWeeks from "@/app/lib/utils/isWithinTwoWeeks";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";

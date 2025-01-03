@@ -3,9 +3,9 @@ import { Pool, PoolsResponse } from "@/app/lib/utils/types";
 
 import { API_BASE_URL } from "@/app/config/api";
 
-type GetLatestPoolParams = {
+type GetPoolParams = {
   status?: "ongoing" | "completed";
-  sortBy?: "highestVolume" | "lowestVolume";
+  sortBy?: "highestVolume" | "newest";
   limit?: string;
   offset?: string;
 };
@@ -13,12 +13,12 @@ type GetLatestPoolParams = {
 export const getPools = (): Promise<AxiosResponse<PoolsResponse>> =>
   axios.get(`${API_BASE_URL}/pools`);
 
-export const getLatestPool = ({
-  status = "ongoing",
+export const getPool = ({
+  status,
   sortBy = "highestVolume",
   limit = "1",
   offset = "0",
-}: GetLatestPoolParams): Promise<AxiosResponse<PoolsResponse>> => {
+}: GetPoolParams): Promise<AxiosResponse<PoolsResponse>> => {
   return axios.get(`${API_BASE_URL}/pools`, {
     params: {
       status,
