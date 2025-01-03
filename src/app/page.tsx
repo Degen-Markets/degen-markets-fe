@@ -17,12 +17,10 @@ const Home = async () => {
 
   const tabs = [
     {
-      id: "bet",
-      label: "Bet",
+      id: "story",
+      label: "Story",
       content: (
-        <div className="w-full max-w-2xl mx-auto">
-          <BlinkLoader poolId={poolId} poolValue={value} />
-        </div>
+        <Story title={storyContent.title} content={storyContent.content} />
       ),
     },
     {
@@ -31,10 +29,12 @@ const Home = async () => {
       content: <CurveAnimatedChart />,
     },
     {
-      id: "story",
-      label: "Story",
+      id: "bet",
+      label: "Bet",
       content: (
-        <Story title={storyContent.title} content={storyContent.content} />
+        <div className="w-full max-w-2xl mx-auto">
+          <BlinkLoader poolId={poolId} poolValue={value} />
+        </div>
       ),
     },
   ];
