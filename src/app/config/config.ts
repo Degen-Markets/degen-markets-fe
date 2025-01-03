@@ -9,7 +9,7 @@ const devConfig = {
 const prodConfig = {
   API_BASE_URL: "https://api.degenmarkets.com",
   HELIUS_RPC_URL:
-    "https://mainnet.helius-rpc.com/?api-key=e56ebb46-0709-4b0c-907e-4b6aa24d281b",
+    "https://mainnet.helius-rpc.com/?api-key=65f89118-0a6a-4902-b838-7dabdc387164",
   ACTION_API_URL: "https://degenmarkets.com",
   ACTION_API_PATH: "https://actions.degenmarkets.com",
 };
