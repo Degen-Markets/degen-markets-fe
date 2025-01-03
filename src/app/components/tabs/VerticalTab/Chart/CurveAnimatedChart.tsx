@@ -295,7 +295,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#8F7CFF",
+        color: "#F99EEB",
       },
       leftFirst: {
         initialPoint: {
@@ -372,7 +372,7 @@ const AnimatedSpreadingLines: React.FC = () => {
             curve: { type: "linear" },
           },
         ],
-        color: "#F99EEB",
+        color: "#8F7CFF",
       },
     };
 
@@ -432,10 +432,17 @@ const AnimatedSpreadingLines: React.FC = () => {
   const CenterContent: React.FC<{ segments: PieSegment[] }> = ({
     segments,
   }) => {
-    // Function to create pie chart segments
     const createPieSegments = (segments: PieSegment[]) => {
+      const orderedSegments = [
+        segments[4], // Ecosystem
+        segments[2], // Internal
+        segments[3], // Marketing
+        segments[1], // Sale
+        segments[0], // Liquidity
+      ];
+
       let currentAngle = 0;
-      return segments.map((segment, index) => {
+      return orderedSegments.map((segment, index) => {
         const startAngle = currentAngle;
         const angle = (segment.percentage / 100) * 2 * Math.PI;
         currentAngle += angle;
@@ -445,17 +452,35 @@ const AnimatedSpreadingLines: React.FC = () => {
         const x2 = centerX + innerRadius * Math.cos(startAngle + angle);
         const y2 = centerY + innerRadius * Math.sin(startAngle + angle);
 
+        // Calculate position for the percentage text
+        const midAngle = startAngle + angle / 2;
+        const textRadius = innerRadius * 0.65;
+        const textX = centerX + textRadius * Math.cos(midAngle);
+        const textY = centerY + textRadius * Math.sin(midAngle);
+
         const largeArcFlag = segment.percentage > 50 ? 1 : 0;
 
         return (
-          <path
-            key={index}
-            d={`M ${centerX} ${centerY}
-                L ${x1} ${y1}
-                A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 1 ${x2} ${y2}
-                Z`}
-            fill={segment.color}
-          />
+          <g key={index}>
+            <path
+              d={`M ${centerX} ${centerY}
+                  L ${x1} ${y1}
+                  A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 1 ${x2} ${y2}
+                  Z`}
+              fill={segment.color}
+            />
+            <text
+              x={textX}
+              y={textY}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fill="white"
+              fontSize={isMobile ? "12px" : "14px"}
+              fontWeight="bold"
+            >
+              {`${segment.percentage}%`}
+            </text>
+          </g>
         );
       });
     };
