@@ -25,6 +25,15 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      tablet: "870px",
+      lg: "1024px",
+      desktop: "1200px",
+      xl: "1280px",
+      "2xl": "1536px",
+    },
     extend: {
       borderRadius: {
         "4xl": "35px",
@@ -34,6 +43,11 @@ const config: Config = {
         montserrat: ["var(--headline-font-family)", "sans-serif"],
       },
       colors: colors,
+      listStyleType: {
+        none: "none",
+        disc: "disc",
+        decimal: "decimal",
+      },
       animation: {
         border: "border 4s linear infinite",
         "bounce-slow": "bounce-slow 20s infinite linear alternate",

@@ -1,17 +1,50 @@
-import { getPools } from "@/app/api/pools";
-import Wrapper from "@/app/components/Wrapper";
-import HeroSection from "@/app/components/Landing/HeroSection";
-import PoolsCarouselSection from "@/app/components/Landing/PoolsCarouselSection/PoolsCarouselSection";
+import HeroSection from "./components/Landing/HeroSection";
+import { getLatestPool, getPoolById } from "./api/pools";
+import BlinkLoader from "./pools/[id]/BlinkLoader";
+import { FeatureTabs } from "./components/tabs/VerticalTab";
+import Story from "./components/tabs/Story";
+import { storyContent } from "./components/tabs/constant";
+import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimatedChart";
 
 export const dynamic = "force-dynamic";
 
 const Home = async () => {
-  const { data: pools } = await getPools();
+  const { data: pool } = await getLatestPool({});
+  const poolId = pool[0].address;
+  const {
+    data: { value },
+  } = await getPoolById(poolId);
+
+  const tabs = [
+    {
+      id: "bet",
+      label: "Bet",
+      content: (
+        <div className="w-full max-w-2xl mx-auto">
+          <BlinkLoader poolId={poolId} poolValue={value} />
+        </div>
+      ),
+    },
+    {
+      id: "tokenomics",
+      label: "Tokenomics",
+      content: <CurveAnimatedChart />,
+    },
+    {
+      id: "story",
+      label: "Story",
+      content: (
+        <Story title={storyContent.title} content={storyContent.content} />
+      ),
+    },
+  ];
+
   return (
     <>
       <HeroSection />
-      <PoolsCarouselSection pools={pools} />
+      <FeatureTabs tabs={tabs} />
     </>
   );
 };
+
 export default Home;
