@@ -2,11 +2,11 @@
 import { TabContent } from "../TabContent";
 import { useActiveTab } from "./hooks/useActiveTab";
 import { TabButton } from "../ButtonTab/TabButton";
-import { SecondSectionProps } from "./SecondSectionType";
+import { FeatureTabsProps } from "./FeatureTabsTypes";
 import Wrapper from "@/app/components/Wrapper";
 import { twMerge } from "tailwind-merge";
 
-export function SecondSection({ tabs }: SecondSectionProps) {
+export function FeatureTabs({ tabs }: FeatureTabsProps) {
   const { activeTab, activeContent, setActiveTab } = useActiveTab(tabs);
   const isTokenomics = activeContent?.id === "tokenomics";
 

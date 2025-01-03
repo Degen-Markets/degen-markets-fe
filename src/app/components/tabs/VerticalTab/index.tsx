@@ -1,2 +1,2 @@
-export * from "./SecondSection";
-export * from "./SecondSectionType";
+export * from "./FeatureTabs";
+export * from "./FeatureTabsTypes";

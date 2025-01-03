@@ -5,6 +5,7 @@ const MAX_SUPPLY = 100_000_000;
 
 interface TokenDistributionProps {
   title: string;
+  percentage: number;
   items: {
     text: string;
     highlight?: boolean;
@@ -23,6 +24,7 @@ export function TokenDistribution({
   title,
   items,
   totalTokens,
+  percentage,
   x,
   y,
   isMobile = false,
@@ -50,7 +52,7 @@ export function TokenDistribution({
         <h2
           className={`font-semibold ${isMobile ? "text-lg" : "text-xl"} text-lavender-blue mb-2`}
         >
-          {title}
+          {`${title} (${percentage}%)`}
         </h2>
       </div>
       <div className="space-y-2">

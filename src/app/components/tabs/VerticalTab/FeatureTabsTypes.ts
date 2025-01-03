@@ -1,4 +1,4 @@
-export interface SecondSectionProps {
+export interface FeatureTabsProps {
   tabs: Tab[];
 }
 

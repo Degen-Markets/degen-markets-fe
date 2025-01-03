@@ -1,14 +1,46 @@
 export const tokenSaleData = [
   {
-    title: "Liquidity (20%)",
+    title: "Liquidity",
     items: [{ text: "Liquidity provided for CEXs & DEXs" }],
     totalTokens: {
       amount: 20_000_000,
       symbol: "BETAI",
     },
+    color: "#7061CC",
+    percentage: 20,
   },
   {
-    title: "Ecosystem (35%)",
+    title: "Sale",
+    items: [{ text: "Public and private rounds of sales" }],
+    totalTokens: {
+      amount: 20_500_000,
+      symbol: "BETAI",
+    },
+    color: "#F99EEB",
+    percentage: 20.5,
+  },
+  {
+    title: "Internal",
+    items: [{ text: "Funds for the development team, investors and advisors" }],
+    totalTokens: {
+      amount: 15_500_000,
+      symbol: "BETAI",
+    },
+    color: "#F57CFF",
+    percentage: 15.5,
+  },
+  {
+    title: "Marketing",
+    items: [{ text: "Funds allocated to ensure the growth of the project" }],
+    totalTokens: {
+      amount: 9_000_000,
+      symbol: "BETAI",
+    },
+    color: "#C67BFF",
+    percentage: 9,
+  },
+  {
+    title: "Ecosystem",
     items: [
       {
         text: "Tokens reserved for the incentivisation of growth of the platform",
@@ -25,29 +57,7 @@ export const tokenSaleData = [
       amount: 35_000_000,
       symbol: "BETAI",
     },
-  },
-  {
-    title: "Internal (15.5%)",
-    items: [{ text: "Funds for the development team, investors and advisors" }],
-    totalTokens: {
-      amount: 15_500_000,
-      symbol: "BETAI",
-    },
-  },
-  {
-    title: "Marketing (9%)",
-    items: [{ text: "Funds allocated to ensure the growth of the project" }],
-    totalTokens: {
-      amount: 9_000_000,
-      symbol: "BETAI",
-    },
-  },
-  {
-    title: "Sale (20.5%)",
-    items: [{ text: "Public and private rounds of sales" }],
-    totalTokens: {
-      amount: 20_500_000,
-      symbol: "BETAI",
-    },
+    color: "#8F7CFF",
+    percentage: 35,
   },
 ];

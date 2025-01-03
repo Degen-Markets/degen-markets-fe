@@ -304,9 +304,18 @@ const AnimatedSpreadingLines: React.FC = () => {
         },
         segments: [
           {
-            // Second segment - straight line to the left
+            x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+            y: centerY - LINE_CONSTANTS.SPACING.VERTICAL,
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+            y: centerY - (LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM + 5),
+            curve: { type: "linear" },
+          },
+          {
             x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
-            y: centerY - LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            y: centerY - (LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM + 5),
             curve: { type: "linear" },
           },
         ],
@@ -319,7 +328,16 @@ const AnimatedSpreadingLines: React.FC = () => {
         },
         segments: [
           {
-            // Second segment - straight line to the left
+            x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+            y: centerY + LINE_CONSTANTS.SPACING.VERTICAL,
+            curve: { type: "linear" },
+          },
+          {
+            x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.SMALL,
+            y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
+            curve: { type: "linear" },
+          },
+          {
             x: centerX - outerRadius - LINE_CONSTANTS.HORIZONTAL_OFFSET.MEDIUM,
             y: centerY + LINE_CONSTANTS.VERTICAL_OFFSET.MEDIUM,
             curve: { type: "linear" },
@@ -406,13 +424,10 @@ const AnimatedSpreadingLines: React.FC = () => {
     );
   };
 
-  const pieSegments: PieSegment[] = [
-    { percentage: 20, color: "#7061CC" },
-    { percentage: 20, color: "#F99EEB" },
-    { percentage: 10, color: "#F57CFF" },
-    { percentage: 20, color: "#C67BFF" },
-    { percentage: 30, color: "#8F7CFF" },
-  ];
+  const pieSegments: PieSegment[] = tokenSaleData.map((data) => ({
+    percentage: data.percentage,
+    color: data.color,
+  }));
 
   const CenterContent: React.FC<{ segments: PieSegment[] }> = ({
     segments,
@@ -462,11 +477,9 @@ const AnimatedSpreadingLines: React.FC = () => {
           <image
             x={centerX - innerRadius * 0.3}
             y={centerY - innerRadius * 0.3}
-            width={innerRadius * 0.5}
-            height={innerRadius * 0.5}
-            href="/images/tiresias.jpg"
-            className="rounded-full"
-            style={{ objectFit: "contain", borderRadius: "50%" }}
+            width={innerRadius * 0.58}
+            height={innerRadius * 0.58}
+            href="/images/tiresias.svg"
           />
 
           {/* Text group - if required */}
@@ -609,6 +622,7 @@ const AnimatedSpreadingLines: React.FC = () => {
                 title={data.title}
                 items={data.items}
                 totalTokens={data.totalTokens}
+                percentage={data.percentage}
                 isMobile={isMobile}
               />
             );
