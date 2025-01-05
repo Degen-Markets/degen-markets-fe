@@ -2,8 +2,6 @@ import { Dispatch, FC, SetStateAction } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { NavItem } from "@/app/lib/utils/NavigationRoutes";
-import NavbarMobileSubItems from "./NavbarMobileSubItems";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 const NavbarMobileItem: FC<{
   route: NavItem;
