@@ -98,7 +98,14 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
         }
       >
         {renderIcon()}
-        <span className="text-base lg:text-lg">{route.name}</span>
+        <span
+          className={twMerge(
+            "text-base lg:text-lg",
+            route.disabled && "text-gray-400",
+          )}
+        >
+          {route.name}
+        </span>
 
         {route.statusLabel && (
           <span className="ml-1 inline-flex items-center px-1 py-0.5 text-xs font-semibold  bg-primary bg-opacity-80 text-main rounded-full">
