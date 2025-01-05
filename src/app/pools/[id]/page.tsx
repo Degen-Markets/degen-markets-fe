@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Wrapper from "@/app/components/Wrapper";
 import BlinkLoader from "@/app/pools/[id]/BlinkLoader";
 import { getPoolById } from "@/app/api/pools";
-import ShareOnTwitterBanner from "./ShareOnTwitterBanner";
 import { ACTION_API_URL } from "@/app/config/api";
 
 const PoolPage = async ({ params: { id } }: { params: { id: string } }) => {

@@ -45,9 +45,9 @@ const NavigationRoutes: NavigationProps = {
         protected: false,
       },
       {
-        name: "Airdrop",
+        name: "Leaderboard",
         icon: "",
-        route: "/airdrop",
+        route: "/leaderboard",
         isExpandable: false,
       },
       {

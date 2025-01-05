@@ -8,15 +8,12 @@ import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimate
 
 export const dynamic = "force-dynamic";
 
+const featuredPoolId = "FNyJQZa1QeXAxEwsQA7uV42QD4XfECV2zJq1Z9pHh2Jr";
+
 const Home = async () => {
-  const { data: pool } = await getPool({
-    sortBy: "newest",
-  });
-  console.log(pool);
-  const poolId = pool[0].address;
   const {
     data: { value },
-  } = await getPoolById(poolId);
+  } = await getPoolById(featuredPoolId);
 
   const tabs = [
     {
@@ -36,7 +33,7 @@ const Home = async () => {
       label: "Bet",
       content: (
         <div className="w-full max-w-2xl mx-auto">
-          <BlinkLoader poolId={poolId} poolValue={value} />
+          <BlinkLoader poolId={featuredPoolId} poolValue={value} />
         </div>
       ),
     },

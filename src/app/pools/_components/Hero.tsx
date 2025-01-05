@@ -27,7 +27,7 @@ const Hero = () => {
       </svg>
       <div
         className="absolute bg-contain top-0 bottom-0 left-0 right-0 opacity-20 "
-        style={{ backgroundImage: "url('/pattrens/hero.svg')" }}
+        style={{ backgroundImage: "url('/patterns/hero.svg')" }}
       ></div>
     </div>
   );

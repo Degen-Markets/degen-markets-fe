@@ -8,9 +8,9 @@ const Hero = () => {
           Earn points by entering pools{" "}
           <Link href="/" className="font-semibold text-main">
             {" "}
-            here{" "}
-          </Link>
-          , by connecting your X/Twitter account{" "}
+            here
+          </Link>{" "}
+          or by connecting your X/Twitter account{" "}
           <Link href="/my-profile" className="font-semibold text-main">
             here.
           </Link>{" "}
