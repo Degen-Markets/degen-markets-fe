@@ -21,7 +21,7 @@ export const getPools = ({
   sortBy,
   limit = "1",
   offset = "0",
-}: GetPoolParams): Promise<AxiosResponse<PoolsResponse | Pool>> => {
+}: GetPoolParams): Promise<AxiosResponse<PoolsResponse>> => {
   if (sortBy) {
     return axios.get(`${API_BASE_URL}/pools`, {
       params: {

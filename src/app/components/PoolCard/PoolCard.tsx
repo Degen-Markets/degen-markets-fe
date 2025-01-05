@@ -48,7 +48,9 @@ const PoolCard: FC<PoolCardProps> = ({
   }, [poolValue, pool.createdAt]);
 
   const shouldDisplayBadge =
-    showBadge && (poolValue > 0.5 || isWithinTwoWeeks(pool.createdAt));
+    showBadge &&
+    (poolValue > 0.5 || isWithinTwoWeeks(pool.createdAt)) &&
+    !pool.isPaused;
   const poolLink = `/pools/${pool.address}`;
 
   return (

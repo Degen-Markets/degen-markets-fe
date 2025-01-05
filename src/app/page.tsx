@@ -1,21 +1,19 @@
 import HeroSection from "./components/Landing/HeroSection";
-import { getPools, getPoolById } from "./api/pools";
+import { getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
 import { FeatureTabs } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";
 import { storyContent } from "./components/tabs/constant";
 import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimatedChart";
-import { PoolsResponse } from "./lib/utils/types";
 
 export const dynamic = "force-dynamic";
 
+const featuredPoolId = "FNyJQZa1QeXAxEwsQA7uV42QD4XfECV2zJq1Z9pHh2Jr";
+
 const Home = async () => {
-  const { data: pools } = await getPools({
-    sortBy: "newest",
-  });
-  const poolsData = pools as PoolsResponse;
-  const poolId = poolsData[0].address;
-  const value = poolsData[0].value;
+  const {
+    data: { value },
+  } = await getPoolById(featuredPoolId);
 
   const tabs = [
     {
@@ -35,7 +33,7 @@ const Home = async () => {
       label: "Bet",
       content: (
         <div className="w-full max-w-2xl mx-auto">
-          <BlinkLoader poolId={poolId} poolValue={value} />
+          <BlinkLoader poolId={featuredPoolId} poolValue={value} />
         </div>
       ),
     },

@@ -27,7 +27,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       offset: (page * 18).toString(),
     });
 
-    return response.data as PoolsResponse;
+    return response.data;
   };
 
   const filterOptions = [
@@ -57,7 +57,7 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
       renderSection={(data) => (
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {data.map((pool: Pool, index) => (
-            <PoolCard pool={pool} key={index} />
+            <PoolCard pool={pool} key={index} showBadge />
           ))}
         </section>
       )}

@@ -10,7 +10,7 @@ function FooterBottom() {
     <div className="md:mx-auto md:max-w-screen-xl lg:max-w-screen-2xl pt-0 mt-5 lg:mt-0 lg:pt-10 pb-4 lg:pb-5 px-4 lg:px-12 text-sm">
       <div className="flex items-center justify-between border-b mb-3 pb-3 md:pb-8 text-main font-semibold">
         <div className="flex space-x-5 text-">
-          <Link href="/airdrop">Airdrop</Link>
+          <Link href="/leaderboard">Leaderboard</Link>
           <Link href="/pools">Pools</Link>
         </div>
         <div className="flex items-center justify-center space-x-2 mb-2">

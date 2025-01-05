@@ -10,7 +10,7 @@ const PoolsPage = async () => {
   const { data: pools } = await getPools({
     sortBy: "",
   });
-  const poolsData = pools as PoolsResponse;
+  const poolsData = pools;
 
   return (
     <div>

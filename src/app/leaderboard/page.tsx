@@ -6,7 +6,7 @@ import Hero from "./Hero";
 
 export const dynamic = "force-dynamic";
 
-const AirdropPage = async () => {
+const LeaderboardPage = async () => {
   const { data: initialPlayers } = await getPlayers({
     limit: PLAYERS_PER_PAGE,
     offset: 0,
@@ -22,4 +22,4 @@ const AirdropPage = async () => {
   );
 };
 
-export default AirdropPage;
+export default LeaderboardPage;
