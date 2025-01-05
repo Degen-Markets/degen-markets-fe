@@ -39,13 +39,6 @@ const NavigationRoutes: NavigationProps = {
         isExpandable: false,
       },
       {
-        name: "Bet against AI",
-        route: "/bet-against-ai",
-        disabled: true,
-        statusLabel: "Coming Soon",
-        isExpandable: false,
-      },
-      {
         name: "Create bet",
         route: "/pools/create",
         isExpandable: false,
@@ -61,6 +54,13 @@ const NavigationRoutes: NavigationProps = {
         route: "/my-profile",
         isExpandable: false,
         protected: true,
+      },
+      {
+        name: "Bet against AI",
+        route: "/bet-against-ai",
+        disabled: true,
+        statusLabel: "Coming Soon",
+        isExpandable: false,
       },
     ],
   },
