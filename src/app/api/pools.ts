@@ -23,7 +23,6 @@ export const getPools = ({
   offset = "0",
 }: GetPoolParams): Promise<AxiosResponse<PoolsResponse | Pool>> => {
   if (sortBy) {
-    console.log("sortBy", sortBy);
     return axios.get(`${API_BASE_URL}/pools`, {
       params: {
         status,

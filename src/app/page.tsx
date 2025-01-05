@@ -15,9 +15,7 @@ const Home = async () => {
   });
   const poolsData = pools as PoolsResponse;
   const poolId = poolsData[0].address;
-  const {
-    data: { value },
-  } = await getPoolById(poolId);
+  const value = poolsData[0].value;
 
   const tabs = [
     {
