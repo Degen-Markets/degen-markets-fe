@@ -7,10 +7,12 @@ export interface RouteItem {
 
 export interface NavItem {
   name: string;
-  icon: string;
+  icon?: string;
   route: RouteItem[] | { [key: string]: string } | string;
   isExpandable: boolean;
   protected?: boolean;
+  disabled?: boolean;
+  statusLabel?: string;
 }
 
 interface NavigationProps {
@@ -27,7 +29,6 @@ const NavigationRoutes: NavigationProps = {
     navbar: [
       {
         name: "Home",
-        icon: "",
         route: "/",
         isExpandable: false,
       },
@@ -39,23 +40,27 @@ const NavigationRoutes: NavigationProps = {
       },
       {
         name: "Create bet",
-        icon: "",
         route: "/pools/create",
         isExpandable: false,
         protected: false,
       },
       {
         name: "Leaderboard",
-        icon: "",
         route: "/leaderboard",
         isExpandable: false,
       },
       {
         name: "Profile",
-        icon: "",
         route: "/my-profile",
         isExpandable: false,
         protected: true,
+      },
+      {
+        name: "Bet against AI",
+        route: "/bet-against-ai",
+        disabled: true,
+        statusLabel: "Coming Soon",
+        isExpandable: false,
       },
     ],
   },

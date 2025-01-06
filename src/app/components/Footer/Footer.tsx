@@ -11,7 +11,7 @@ function FooterBottom() {
       <div className="flex items-center justify-between border-b mb-3 pb-3 md:pb-8 text-main font-semibold">
         <div className="flex space-x-5 text-">
           <Link href="/leaderboard">Leaderboard</Link>
-          <Link href="/pools">Pools</Link>
+          <Link href="/pools">Bets</Link>
         </div>
         <div className="flex items-center justify-center space-x-2 mb-2">
           <Link href="https://x.com/DEGEN_MARKETS" target="_blank">

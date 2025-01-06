@@ -87,13 +87,32 @@ const NavbarItem: React.FC<NavbarItemProps> = ({ route }) => {
     <li className="relative group">
       <div
         className={twMerge(
-          "flex justify-center items-center cursor-pointer",
+          "flex justify-center items-center",
           isActive && "font-semibold",
+          !route.disabled && "cursor-pointer",
         )}
-        onClick={typeof route.route === "string" ? handleClick : undefined}
+        onClick={
+          typeof route.route === "string" && !route.disabled
+            ? handleClick
+            : undefined
+        }
       >
         {renderIcon()}
-        <span className="text-base lg:text-lg">{route.name}</span>
+        <span
+          className={twMerge(
+            "text-base lg:text-lg",
+            route.disabled && "text-gray-400",
+          )}
+        >
+          {route.name}
+        </span>
+
+        {route.statusLabel && (
+          <span className="ml-1 inline-flex items-center px-1 py-0.5 text-xs font-semibold  bg-primary bg-opacity-80 text-main rounded-full">
+            {route.statusLabel}
+          </span>
+        )}
+
         {Array.isArray(route.route) && (
           <ChevronDownIcon width={24} className="flex-shrink-0" />
         )}
