@@ -1,5 +1,5 @@
 import HeroSection from "./components/Landing/HeroSection";
-import { getPool, getPoolById } from "./api/pools";
+import { getPoolById } from "./api/pools";
 import BlinkLoader from "./pools/[id]/BlinkLoader";
 import { FeatureTabs } from "./components/tabs/VerticalTab";
 import Story from "./components/tabs/Story";

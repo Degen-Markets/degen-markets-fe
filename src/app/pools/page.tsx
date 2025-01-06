@@ -7,6 +7,7 @@ export const dynamic = "auto";
 
 const PoolsPage = async () => {
   const { data: pools } = await getPools();
+
   return (
     <div>
       <Hero />

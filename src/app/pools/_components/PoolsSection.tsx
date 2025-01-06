@@ -1,11 +1,10 @@
 "use client";
 import { FC, useState } from "react";
-import axios from "axios";
-import { Pool } from "@/app/lib/utils/types";
-import { API_BASE_URL } from "@/app/config/api";
+import { Pool, PoolsResponse } from "@/app/lib/utils/types";
 import PoolCard from "@/app/components/PoolCard/PoolCard";
 import AnimatedLoading from "@/app/components/AnimatedLoading";
 import InfiniteScrollContainer from "@/app/components/InfiniteScrollContainer/InfiniteScrollContainer";
+import { getPools, SortBy, Status } from "@/app/api/pools";
 
 interface PoolsSectionProps {
   initialPools: Pool[];
@@ -17,16 +16,18 @@ const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
     sort: "newest",
   });
 
-  const fetchPools = async (page: number, filters?: Record<string, string>) => {
-    const response = await axios.get(`${API_BASE_URL}/pools`, {
-      params: {
-        status: filters?.filter,
-        sortBy: filters?.sort,
-        limit: 18,
-        offset: page * 18,
-      },
+  const fetchPools = async (
+    page: number,
+    filters?: Record<string, string>,
+  ): Promise<PoolsResponse> => {
+    const response = await getPools({
+      status: filters?.filter as Status,
+      sortBy: filters?.sort as SortBy,
+      limit: "18",
+      offset: (page * 18).toString(),
     });
-    return response.data || [];
+
+    return response.data;
   };
 
   const filterOptions = [

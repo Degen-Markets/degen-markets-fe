@@ -3,23 +3,26 @@ import { Pool, PoolsResponse } from "@/app/lib/utils/types";
 
 import { API_BASE_URL } from "@/app/config/api";
 
+export type Status = "ongoing" | "completed";
+export type SortBy = "highestVolume" | "newest";
+
 type GetPoolParams = {
-  status?: "ongoing" | "completed";
-  sortBy?: "highestVolume" | "newest";
+  status?: Status;
+  sortBy?: SortBy;
   limit?: string;
   offset?: string;
 };
 
-export const getPools = (): Promise<AxiosResponse<PoolsResponse>> =>
-  axios.get(`${API_BASE_URL}/pools`);
+export const getPoolById = (id: string): Promise<AxiosResponse<Pool>> =>
+  axios.get(`${API_BASE_URL}/pools/${id}`);
 
-export const getPool = ({
+export const getPools = ({
   status,
-  sortBy = "highestVolume",
-  limit = "1",
-  offset = "0",
-}: GetPoolParams): Promise<AxiosResponse<PoolsResponse>> => {
-  return axios.get(`${API_BASE_URL}/pools`, {
+  sortBy,
+  limit,
+  offset,
+}: GetPoolParams = {}): Promise<AxiosResponse<PoolsResponse>> =>
+  axios.get(`${API_BASE_URL}/pools`, {
     params: {
       status,
       sortBy,
@@ -27,7 +30,3 @@ export const getPool = ({
       offset,
     },
   });
-};
-
-export const getPoolById = (id: string): Promise<AxiosResponse<Pool>> =>
-  axios.get(`${API_BASE_URL}/pools/${id}`);
