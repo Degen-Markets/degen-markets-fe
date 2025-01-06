@@ -6,9 +6,7 @@ import Wrapper from "@/app/components/Wrapper";
 export const dynamic = "auto";
 
 const PoolsPage = async () => {
-  const { data: pools } = await getPools({
-    sortBy: "",
-  });
+  const { data: pools } = await getPools();
 
   return (
     <div>

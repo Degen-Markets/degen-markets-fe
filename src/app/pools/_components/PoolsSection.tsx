@@ -11,14 +11,14 @@ interface PoolsSectionProps {
 }
 
 const PoolsSection: FC<PoolsSectionProps> = ({ initialPools }) => {
-  const [filters, setFilters] = useState<Record<string, Status | SortBy>>({
-    filter: "ongoing",
+  const [filters, setFilters] = useState<Record<string, string>>({
+    filter: "",
     sort: "newest",
   });
 
   const fetchPools = async (
     page: number,
-    filters?: Record<string, Status | SortBy | undefined>,
+    filters?: Record<string, string>,
   ): Promise<PoolsResponse> => {
     const response = await getPools({
       status: filters?.filter as Status,
