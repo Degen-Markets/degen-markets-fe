@@ -8,7 +8,7 @@ export type SortBy = "highestVolume" | "newest" | "";
 
 type GetPoolParams = {
   status?: Status;
-  sortBy: SortBy;
+  sortBy?: SortBy;
   limit?: string;
   offset?: string;
 };
@@ -19,19 +19,14 @@ export const getPoolById = (id: string): Promise<AxiosResponse<Pool>> =>
 export const getPools = ({
   status,
   sortBy,
-  limit = "1",
-  offset = "0",
-}: GetPoolParams): Promise<AxiosResponse<PoolsResponse>> => {
-  if (sortBy) {
-    return axios.get(`${API_BASE_URL}/pools`, {
-      params: {
-        status,
-        sortBy,
-        limit,
-        offset,
-      },
-    });
-  }
-
-  return axios.get(`${API_BASE_URL}/pools`);
-};
+  limit,
+  offset,
+}: GetPoolParams = {}): Promise<AxiosResponse<PoolsResponse>> =>
+  axios.get(`${API_BASE_URL}/pools`, {
+    params: {
+      status,
+      sortBy,
+      limit,
+      offset,
+    },
+  });
