@@ -32,7 +32,7 @@ const Home = async () => {
       id: "bet",
       label: "Bet",
       content: (
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full max-w-md mx-auto">
           <BlinkLoader poolId={featuredPoolId} poolValue={value} />
         </div>
       ),
