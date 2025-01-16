@@ -31,7 +31,7 @@ function FooterBottom() {
             className="w-14 h-14 md:w-20 md:h-20"
           />
         </div>
-        <div className="w-full lg:w-auto flex space-x-4 justify-between">
+        <div className="w-full lg:w-auto flex space-x-4 justify-between hidden">
           <Link href="/" className="hover:text-primary">
             Terms of Service
           </Link>
