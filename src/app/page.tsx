@@ -8,7 +8,7 @@ import CurveAnimatedChart from "./components/tabs/VerticalTab/Chart/CurveAnimate
 
 export const dynamic = "force-dynamic";
 
-const featuredPoolId = "FNyJQZa1QeXAxEwsQA7uV42QD4XfECV2zJq1Z9pHh2Jr";
+const featuredPoolId = "DztrRg83Cm1WfEhX7vvfr7B5vsjkGPRgUsjsd277KqXh";
 
 const Home = async () => {
   const {
